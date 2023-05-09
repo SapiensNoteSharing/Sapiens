@@ -1,7 +1,8 @@
 <script>
 import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
-    import Searchbar from '../lib/components/Searchbar.svelte';
+import Searchbar from '$lib/components/Searchbar.svelte';
+import { view } from '$lib/stores';
 
 let courses = [
     {
@@ -30,13 +31,39 @@ let courses = [
     }
 ]
 
+function search() {
+}
 </script>
 
-<div>
-    <Searchbar/>
-    <button></button>
+<div class="d-flex flex-column content">
+    <div class="d-flex align-items-center my-5">
+        <h2 class="ms-auto me-auto display-2">I Miei Corsi</h2>
+        <i class="bi bi-gear display-6"></i>
+    </div>
+        <div class="d-flex justify-content-between mb-5">
+            <div/>
+            
+            <Searchbar class=""></Searchbar>
+
+            <div class="btn-group" role="group">
+                <input type="radio" class="btn-check" name="view" id="btnradio1" autocomplete="off" value="list" class:active={$view == 'list'} bind:group={$view}>
+                <label class="btn btn-outline-primary" for="btnradio1"><i class="bi bi-list"></i></label>
+        
+                <input type="radio" class="btn-check" name="view" id="btnradio2" autocomplete="off" value="grid" class:active={$view == 'grid'} bind:group={$view}>
+                <label class="btn btn-outline-primary" for="btnradio2"><i class="bi bi-border-all"></i></label>
+
+                <input type="radio" class="btn-check" name="view" id="btnradio3" autocomplete="off" value="graph" class:active={$view == 'graph'} bind:group={$view}>
+                <label class="btn btn-outline-primary" for="btnradio3"><i class="bi bi-diagram-3-fill"></i></label>
+            </div>
+        </div>
+        {#each courses as course}
+            <Course {course} class="mb-3"/>
+        {/each}
 </div>
 
-{#each courses as course}
-    <Course {course} class="mb-3"/>
-{/each}
+<style>
+    .content{
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+</style>

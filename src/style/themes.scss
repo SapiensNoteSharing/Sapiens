@@ -1,0 +1,131 @@
+@import './variables.scss';
+
+.support {
+    background-color: $gray-500;
+    border-radius: $border-rounded;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    &.dark {
+        background-color: $gray-900;
+    }
+    &.light {
+        background-color: $light;
+    }
+    &.primary {
+        background-color: $primary-shade-1;
+    }
+    &.secondary {
+        background-color: $secondary-shade-1;
+    }
+}
+.number {
+    font-family: Poppins;
+    &.primary {
+        color: $primary;
+        &.active {
+            color: $secondary;
+        }
+    }
+    &.secondary {
+        color: $secondary;
+    }
+    &.dark {
+        color: $dark;
+    }
+    &.display-1 {
+        line-height: map-get($display-font-sizes, 1);
+    }
+    &.display-2 {
+        line-height: map-get($display-font-sizes, 2);
+    }
+    &.display-3 {
+        line-height: map-get($display-font-sizes, 3);
+        font-weight: normal;
+    }
+    &.display-4 {
+        line-height: map-get($display-font-sizes, 4);
+    }
+    &.display-5 {
+        line-height: map-get($display-font-sizes, 5);
+    }
+    &.display-6 {
+        line-height: map-get($display-font-sizes, 6);
+    }
+}
+.row {
+    margin-bottom: 1rem;
+}
+.btn-primary.active {
+    background-color: $secondary !important;
+    color: $light
+}
+.percentage-sm {
+    font-weight: bold;
+    font-size: 0.7rem; //0.875rem;
+    line-height: 0.7rem; //0.875rem;
+    font-family: Poppins;
+    color: $light !important;
+}
+.percentage-1 {
+    font-weight: bold;
+    font-size: map-get($display-font-sizes, 2);
+    line-height: map-get($display-font-sizes, 2);
+    letter-spacing: -0.8px;
+    font-family: Poppins;
+}
+
+span.header{
+    font-family: Poppins;
+    font-weight: bold;
+    font-size: 0.9rem;
+    &.light{
+        color: $light;
+    }
+}
+span.text{
+    font-family: Inter;
+    &.light {
+        color: $light;
+    }
+}
+a.text {
+    text-decoration: none;
+    font-family: Inter;
+    &.light {
+        color: $light;
+    }
+}
+span.description {
+    color: $gray-800;
+    font-family: Inter;
+    font-size: 0.8rem
+}
+.border-round-xs {
+    border-radius: $border-rounded-xs;
+}
+.border-round-sm {
+    border-radius: $border-rounded-sm;
+}
+.border-round {
+    border-radius: $border-rounded;
+}
+.border-round-xl {
+    border-radius: $border-rounded-xl;
+}
+i.bi.primary {
+    color: $primary
+}
+.percentage-2 {
+    font-weight: bold;
+    font-size: map-get($display-font-sizes, 6);
+    line-height: map-get($display-font-sizes, 6);
+    fill: $primary;
+    letter-spacing: -0.8px;
+    color: $primary;
+    font-family: Poppins;
+}
+.w-33 {
+    width: 33.3333% !important;
+}
+.hidden {
+    display: none;
+}

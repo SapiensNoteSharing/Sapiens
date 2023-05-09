@@ -1,0 +1,147 @@
+/* Theme colors */
+
+$primary: #61D1BB;
+$primary-shade-1: #F5FCFB;
+
+$secondary: #5C4AB0;
+$secondary-shade-1: #EEEDF7;
+
+$success: #B377BC;
+$info: #80C1E8;
+$warning: #ED9E69;
+$danger: #DD6B6B;
+$light: #FFFFFF;
+$dark: #0F121F;
+
+$yellow: #EDDB5D;
+$blue: #3865A5;
+
+/*  scss-docs-start gray-color-variables */
+$gray-500: #F7F8F8 !default;
+$gray-600: #EEEEEF !default;
+$gray-700: #DBDCDE !default;
+$gray-800: #9C9DA3 !default;
+$gray-900: #444650 !default;
+$black:    #0F121F !default;
+
+/* scss-docs-end gray-color-variables */
+
+/* scss-docs-start card-variables */
+
+$card-border-radius: 20px !default;
+$card-box-shadow: none !default;
+$card-bg: $gray-500 !default;
+
+/* scss-docs-end card-variables */
+
+
+$btn-font-family: "Inter" !default;
+$btn-font-size: 0.8rem !default; //1rem !default;
+$btn-white-space: nowrap !default; 
+
+$btn-font-weight: 700 !default;
+$btn-focus-width: 0px !default;
+$btn-focus-box-shadow: none !default;
+$btn-active-box-shadow: none !default;
+$btn-border-radius: 10px !default;
+
+/* Text*/
+
+$display-font-sizes: (
+  1: 6rem, //7.5rem, //9.375rem,
+  2: 3.2rem, //4rem, //5rem,
+  3: 3rem, //3.75rem, //4.688rem,
+  4: 2.24rem, //2.8rem, //3.5rem,
+  5: 1.92rem, //2.4rem, //3rem,
+  6: 1.6rem, //2rem, //2.5rem
+);
+
+$display-font-family: Poppins;
+$display-font-style:  null;
+$display-font-weight: 700; 
+
+
+$headings-line-height: normal;
+$headings-font-family: Poppins;
+$display-line-height: $headings-line-height;
+
+h1 {
+  font-weight: 400;
+  letter-spacing: normal;
+  &.light {
+    color: $light;
+  }
+}
+
+h2 {
+  font-weight: 700;
+  letter-spacing: normal;
+  &.light {
+    color: $light;
+  }
+}
+
+h3 {
+  font-weight: 700;
+  letter-spacing: normal;
+  &.light {
+    color: $light;
+  }
+}
+
+h4 {
+  font-weight: 400 !important;
+  letter-spacing: normal;
+  &.light {
+    color: $light;
+  }
+}
+
+h5 {
+  font-weight: 400;
+  letter-spacing: normal;
+  &.light {
+    color: $light;
+  }
+}
+
+h6 {
+  font-weight: 400;
+  letter-spacing: normal;
+  &.light {
+    color: $light;
+  }
+}
+
+html {
+  scrollbar-width: none;
+}
+
+$h1-font-size: 1.2rem; //1.5rem; //1.875rem
+$h2-font-size: 1.04rem; //1.3rem; //1.625rem
+$h3-font-size: 0.96rem; //1.2rem; //1.5rem
+$h4-font-size: 0.96rem; //1.2rem; //1.5rem
+$h5-font-size: 0.8rem; //1rem; //1.25rem
+
+//aggiunte
+$border-rounded-xs: 5px;
+$border-rounded-sm: 10px;
+$border-rounded: 20px;
+$border-rounded-xl: 50px;
+
+$gray-text-header: #9D9FA0 !default;
+$gray-nav-active: #41434E !default;
+$gray-nav-text: #9C9DA3 !default;
+
+//dropdown
+$dropdown-header-color: $gray-800;
+
+//nav
+$nav-link-color: $black;
+
+//nav tabs
+$nav-tabs-link-active-color: $black;
+$nav-tabs-border-radius: $border-rounded !default;
+
+//carousel
+$carousel-control-width: 8%;
