@@ -1,4 +1,5 @@
 <script>
+    import Accordion from "./Accordion.svelte";
     import Icon from "./Icon.svelte";
 
     export let course = {};
@@ -8,19 +9,19 @@
 </script>
 
 <div class="rounded {classes}" {style}>
-    <div class="confined rounded-top dark course-top" style="background-color: #f0fbf8;">
-        <div class="d-flex justify-content-between">
-            <div class=d-flex>
-                <a class="icon me-2 dark"><i class="bi bi-caret-right-fill"></i></a>
-                <h4 style="margin: 0px;">{course.codice} - {course.name}</h4>
-            </div>
-            <div class="d-flex">
+    <Accordion>
+        <div slot="name" class="d-flex">
+            <h4 class="d-block">{course.codice} - {course.name}</h4>
+            <div class="d-flex ms-auto">
                 <a class="icon me-2 dark" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
                 <a class="icon me-2 dark" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
                 <a class="icon me-2 dark" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
             </div>
         </div>
-    </div>
+        <div slot="body">
+
+        </div>
+    </Accordion>
     <div class="confined rounded-bottom course-bottom d-flex light" style="background-color: #2d594d; justify-content: space-between">
         <div>
             {#each course.professors as professor, i}

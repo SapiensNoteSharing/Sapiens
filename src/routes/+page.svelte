@@ -1,6 +1,7 @@
 <script>
 import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
+    import Searchbar from '../lib/components/Searchbar.svelte';
 
 let courses = [
     {
@@ -30,6 +31,11 @@ let courses = [
 ]
 
 </script>
+
+<div>
+    <Searchbar/>
+    <button></button>
+</div>
 
 {#each courses as course}
     <Course {course} class="mb-3"/>
