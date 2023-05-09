@@ -20,8 +20,8 @@ let hovering = false;
 
 
 <style>
-.icon {
-    width: 30px;
-    height: 20px;
-}
+    .icon {
+        width: 30px;
+        height: 20px;
+    }
 </style>
