@@ -11,7 +11,7 @@
 <div class="rounded {classes}" {style}>
     <Accordion>
         <div slot="name" class="d-flex">
-            <h4 class="d-block">{course.codice} - {course.name}</h4>
+            <h4 class="d-block">{course.code} - {course.name}</h4>
             <div class="d-flex ms-auto">
                 <a class="icon me-2 dark" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
                 <a class="icon me-2 dark" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
@@ -22,7 +22,7 @@
 
         </div>
     </Accordion>
-    <div class="confined rounded-bottom course-bottom d-flex light" style="background-color: #2d594d; justify-content: space-between">
+    <div class="confined rounded-bottom course-bottom d-flex light" style="justify-content: space-between">
         <div>
             {#each course.professors as professor, i}
                 <a class='light' href='/professors/{professor}'>{professor}</a>{i != course.professors.length-1 ? ' / ' : ''}

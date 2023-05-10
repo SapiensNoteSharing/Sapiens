@@ -12,6 +12,7 @@
 
 <style>
     .searchbutton {
-        background: green;
+        position: relative;
+        right: 2rem;
     }
 </style>
