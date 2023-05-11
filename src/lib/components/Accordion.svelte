@@ -1,27 +1,23 @@
 <script>
-    
+    let classes = "";
+    export {classes as class};
+
+    let styles = "";
+    export {styles as style};
+
+    let id = Math.random(1);
 </script>
 
-<div class="accordion">
-    <div class="accordion-item confined rounded-top dark">
-        <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#panelsStayOpen-collapseOne"
-            aria-expanded="false"
-            aria-controls="panelsStayOpen-collapseOne"
-            >
-            <div class="d-flex">
-                <slot name="name"/>
-            </div>
-        </button>
-        <div
-            id="panelsStayOpen-collapseOne"
-            class="accordion-collapse collapse"
-            aria-labelledby="panelsStayOpen-headingOne"
-            style=""
-        >
+<div class="accordion" style="{styles}">
+    <div class="accordion-item {classes}">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#{id}">
+                <div class="d-flex">
+                    <slot name="name"/>
+                </div>
+            </button>
+        </h2>
+        <div id="{id}" class="accordion-collapse collapse">
             <div class="accordion-body">
                 <slot name="body"/>
             </div>
@@ -30,7 +26,5 @@
 </div>
 
 <style>
-    .confined {
-        border: 1px solid #0b1613;
-    }
+
 </style>

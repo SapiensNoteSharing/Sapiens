@@ -12,28 +12,32 @@ let courses = [
         code: 'B003273',
         name: 'Geometria e algebra Lineare',
         CFU: '6',
-        match: 0
+        match: 0,
+        rating: 5
     },
     {
         professors: ['Serena Matucci'],
         code: 'B019481',
         name: 'Analisi Matematica I',
         CFU: '9',
-        match: 0
+        match: 0,
+        rating: 3.5
     },
     {
         professors: ['Fabio Cinti'],
         code: 'B003273',
         name: 'Fisica I',
         CFU: '6',
-        match: 0
+        match: 4,
+        rating: 2
     },
     {
         professors: ['Stefano Berretti'],
         code: 'B003273',
         name: 'Fondamenti di Informatica',
         CFU: '9',
-        match: 0
+        match: 1,
+        rating: 4
     }
 ];
 
@@ -42,7 +46,6 @@ let filtered = [...courses];
 $: value != undefined && search()
 
 function search() {
-    console.clear();
     // if search bar value is empty string show all courses
     if (value == "")
         filtered = [...courses];
@@ -121,7 +124,6 @@ function search() {
                 if (min_dist <= dist_threshold) {
                     add_course = true;
                     course.match_value = match_value;
-                    console.log(course.name, match_value);
                 }
             }
             
@@ -137,10 +139,9 @@ function edit_distance(x, y) {
     let n = y.length;
 
     let copy_cost = 0;
-    let replace_cost = 5;
     let delete_cost = 1;
     let insert_cost = 1;
-    let twiddle_cost = 1;
+    let twiddle_cost = 0.5;
 
     // initialize two new matrixes m x n
     let c = Array(m).fill().map(() => Array(n).fill())
@@ -164,7 +165,7 @@ function edit_distance(x, y) {
                 op[i][j] = "copy";
             }
             if (x.charAt(i) != y.charAt(j) && c[i - 1][j - 1] + replace_cost < c[i][j]) {
-                c[i][j] = c[i - 1][j - 1] + replace_cost;
+                c[i][j] = c[i - 1][j - 1] + replace_cost(x.charAt(i), y.charAt(j));
                 op[i][j] = "replace";
             }
             if (c[i - 1][j] + delete_cost < c[i][j]) {
@@ -183,11 +184,59 @@ function edit_distance(x, y) {
     }
     return c[i - 1][j - 1];
 }
+
+function replace_cost(key1, key2) {
+    // Mappa delle posizioni dei tasti sulla tastiera QWERTY
+    const keyboardMap = {
+        q: { row: 0, col: 0 },
+        w: { row: 0, col: 1 },
+        e: { row: 0, col: 2 },
+        r: { row: 0, col: 3 },
+        t: { row: 0, col: 4 },
+        y: { row: 0, col: 5 },
+        u: { row: 0, col: 6 },
+        i: { row: 0, col: 7 },
+        o: { row: 0, col: 8 },
+        p: { row: 0, col: 9 },
+        a: { row: 1, col: 0 },
+        s: { row: 1, col: 1 },
+        d: { row: 1, col: 2 },
+        f: { row: 1, col: 3 },
+        g: { row: 1, col: 4 },
+        h: { row: 1, col: 5 },
+        j: { row: 1, col: 6 },
+        k: { row: 1, col: 7 },
+        l: { row: 1, col: 8 },
+        z: { row: 2, col: 0 },
+        x: { row: 2, col: 1 },
+        c: { row: 2, col: 2 },
+        v: { row: 2, col: 3 },
+        b: { row: 2, col: 4 },
+        n: { row: 2, col: 5 },
+        m: { row: 2, col: 6 }
+    };
+
+    max_dist = Math.sqrt(9 ** 2 + 2 ** 2);
+
+    // Assicuriamoci che i caratteri siano in minuscolo
+    key1 = key1.toLowerCase();
+    key2 = key2.toLowerCase();
+
+    // Verifichiamo se i caratteri sono presenti nella mappa
+    if (!keyboardMap.hasOwnProperty(key1) || !keyboardMap.hasOwnProperty(key2))
+        return "Caratteri non validi";
+
+    const rowDistance = Math.abs(keyboardMap[key1].row - keyboardMap[key2].row);
+    const colDistance = Math.abs(keyboardMap[key1].col - keyboardMap[key2].col);
+    const distance = Math.sqrt(rowDistance ** 2 + colDistance ** 2);
+
+    return Math.map(distance, 0, max_dist, 0, 2);
+}
 </script>
 
-<div class="d-flex flex-column content">
+<div class="d-flex flex-column content bg-light scrollbar-primary">
     <div class="d-flex align-items-center my-5">
-        <h2 class="ms-auto me-auto display-2">I Miei Corsi</h2>
+        <h2 class="ms-auto me-auto display-2 text-dark">Tutti i Corsi</h2>
         <i class="bi bi-gear display-6 text-secondary"></i>
     </div>
         <div class="d-flex justify-content-between mb-5">
@@ -207,7 +256,7 @@ function edit_distance(x, y) {
             </div>
         </div>
         {#each filtered as course}
-            <Course {course} class="mb-3 bg-primary dark btn-outline-dark"/>
+            <Course {course} class="mb-3 bg-primary"/>
         {/each}
 </div>
 

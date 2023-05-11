@@ -1,5 +1,6 @@
 <script>
     import Accordion from "./Accordion.svelte";
+    import Rating from "./Rating.svelte";
     import Icon from "./Icon.svelte";
 
     export let course = {};
@@ -8,21 +9,22 @@
     export let style = '';
 </script>
 
-<div class="rounded {classes}" {style}>
-    <Accordion>
+<div class="rounded {classes} confined border-dark" {style}>
+    <Accordion class="confined rounded-top dark" style="border-bottom: 1px solid #0b1613;">
         <div slot="name" class="d-flex">
-            <h4 class="d-block">{course.code} - {course.name}</h4>
-            <div class="d-flex ms-auto">
+            <h4 class="d-block m-0">{course.code} - {course.name}</h4>
+            <div class="d-flex">
                 <a class="icon me-2 text-secondary" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
                 <a class="icon me-2 text-secondary" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
                 <a class="icon me-2 text-secondary" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
             </div>
+            <!-- <Rating {course} class=""/> -->
         </div>
         <div slot="body">
             
         </div>
     </Accordion>
-    <div class="confined rounded-bottom course-bottom d-flex dark" style="justify-content: space-between">
+    <div class="course-bottom d-flex dark px-3 py-2" style="justify-content: space-between">
         <div>
             {#each course.professors as professor, i}
                 <a class='dark' href='/professors/{professor}'>{professor}</a>{i != course.professors.length-1 ? ' / ' : ''}
@@ -39,7 +41,7 @@
     }
 
     .confined {
-        border: 1px solid #0b1613;
+        border: 1px solid;
     }
 
     .course-top, .course-bottom {
