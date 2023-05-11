@@ -10,7 +10,8 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 		alias: {
-			'$css': 'src/style'
+			'$css': 'src/style',
+			'$route': 'src/routes'
 		}
 	}
 };

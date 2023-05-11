@@ -10,13 +10,13 @@
 
 <div class="d-flex {classes}">
     {#each Array(filled_stars) as _, index (index)}
-        <i class="bi bi-star-fill icon me-2 text-warning"></i>
+        <i class="bi bi-star-fill icon me-2 text-success"></i>
     {/each}
     {#if half_star}
-        <i class="bi bi-star-half icon me-2 text-warning"></i>
+        <i class="bi bi-star-half icon me-2 text-success"></i>
     {/if}
     {#each Array(empty_stars) as _, index (index)}
-        <i class="bi bi-star icon me-2 text-warning"></i>
+        <i class="bi bi-star icon me-2 text-success"></i>
     {/each}
 </div>
 

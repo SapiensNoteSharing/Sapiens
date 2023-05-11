@@ -2,9 +2,7 @@
 import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
 import Searchbar from '$lib/components/Searchbar.svelte';
-import { view } from '$lib/stores';
-
-let value = undefined;
+import { view, value } from '$lib/stores';
 
 let courses = [
     {
@@ -13,7 +11,9 @@ let courses = [
         name: 'Geometria e algebra Lineare',
         CFU: '6',
         match: 0,
-        rating: 5
+        rating: 5,
+        new: true,
+        best_seller: false
     },
     {
         professors: ['Serena Matucci'],
@@ -21,113 +21,119 @@ let courses = [
         name: 'Analisi Matematica I',
         CFU: '9',
         match: 0,
-        rating: 3.5
+        rating: 3.5,
+        new: false,
+        best_seller: false
     },
     {
         professors: ['Fabio Cinti'],
         code: 'B003273',
         name: 'Fisica I',
         CFU: '6',
-        match: 4,
-        rating: 2
+        match: 0,
+        rating: 2,
+        new: false,
+        best_seller: true
     },
     {
         professors: ['Stefano Berretti'],
         code: 'B003273',
         name: 'Fondamenti di Informatica',
         CFU: '9',
-        match: 1,
-        rating: 4
+        match: 0,
+        rating: 4,
+        new: true,
+        best_seller: false
     }
 ];
 
 let filtered = [...courses];
 
-$: value != undefined && search()
+// $: value != undefined && search()
 
-function search() {
-    // if search bar value is empty string show all courses
-    if (value == "")
-        filtered = [...courses];
-    // else
-    else {
-        filtered = [];
-        let max_match, match_value, min_dist, add_course;
+// function search() {
+//     // if search bar value is empty string show all courses
+//     if (value == "")
+//         filtered = [...courses];
+//     // else
+//     else {
+//         filtered = [];
+//         let max_match, match_value, min_dist, add_course;
         
-        let dist_threshold = 3;
-        let n;
-        // split the search bar input in its single words
-        let values = value.split(" ");
-        // search in every course a correspondence, comparing it with:
-        for (let course of courses) {
-            min_dist = Infinity;
-            match_value = 0;
-            add_course = false;
-            n = 0;
-            for (let input of values) {
-                if (input != "" && input != "e" && input != "di" && input != "dei" && input != "I") {
-                    max_match = 0;
-                    n++;
+//         let dist_threshold = 2;
+//         let n;
+//         // split the search bar input in its single words
+//         let values = value.split(" ");
+//         // search in every course a correspondence, comparing it with:
+//         for (let course of courses) {
+//             min_dist = Infinity;
+//             match_value = 0;
+//             add_course = false;
+//             n = 0;
+//             for (let input of values) {
+//                 if (input != "" && input != "e" && input != "di" && input != "dei" && input != "I") {
+//                     max_match = 0;
+//                     n++;
 
-                    // the course's name
-                    let words = course.name.split(" ");
-                    for (let word of words) {
-                        if (word != "" && word != "e" && word != "di" && word != "dei" && word != "I") {
-                            if (word.toLowerCase().includes(input.toLowerCase())) {
-                                min_dist = 0;
-                                max_match = 1;
-                            } else {
-                                min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
-                                max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
-                            }
-                        }
-                    } 
+//                     // the course's name
+//                     let words = course.name.split(" ");
+//                     for (let word of words) {
+//                         if (word != "" && word != "e" && word != "di" && word != "dei" && word != "I") {
+//                             if (word.toLowerCase().includes(input.toLowerCase())) {
+//                                 min_dist = 0;
+//                                 max_match = 1;
+//                             } else {
+//                                 min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
+//                                 max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
+//                             }
+//                         }
+//                     } 
 
-                    // the course's code
-                    if (course.code.toLowerCase().includes(input.toLowerCase())) {
-                        min_dist = 0;
-                        max_match = 1;
-                    } else {
-                        min_dist = Math.min(min_dist, edit_distance(course.code.toLowerCase(), input.toLowerCase()));                               
-                        max_match = Math.max(max_match, 1 - edit_distance(course.code.toLowerCase(), input.toLowerCase()) / course.code.length);
-                    }
+//                     // the course's code
+//                     if (course.code.toLowerCase().includes(input.toLowerCase())) {
+//                         min_dist = 0;
+//                         max_match = 1;
+//                     } else {
+//                         min_dist = Math.min(min_dist, edit_distance(course.code.toLowerCase(), input.toLowerCase()));                               
+//                         max_match = Math.max(max_match, 1 - edit_distance(course.code.toLowerCase(), input.toLowerCase()) / course.code.length);
+//                     }
 
-                    // the course's professors' names
-                    for (let professor of course.professors) {
-                        let words = professor.split(" ");
-                        for (let word of words) {
-                            if (word.toLowerCase().includes(input.toLowerCase())) {
-                                min_dist = 0;
-                                max_match = 1;
-                            } else {
-                                min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
-                                max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
-                            }       
-                        }
-                    }
-                    match_value += max_match;
+//                     // the course's professors' names
+//                     for (let professor of course.professors) {
+//                         let words = professor.split(" ");
+//                         for (let word of words) {
+//                             if (word.toLowerCase().includes(input.toLowerCase())) {
+//                                 min_dist = 0;
+//                                 max_match = 1;
+//                             } else {
+//                                 min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
+//                                 max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
+//                             }       
+//                         }
+//                     }
+//                     match_value += max_match;
 
-                    if (min_dist <= dist_threshold)
-                        add_course = true;
-                }
-            }
-            match_value /= n;
-            if (add_course) {
-                course.match = match_value;
-                filtered.push(course);
-            }
-        }
+//                     if (min_dist <= dist_threshold)
+//                         add_course = true;
+//                 }
+//             }
+//             match_value /= n;
+//             if (add_course) {
+//                 course.match = match_value;
+//                 filtered.push(course);
+//             }
+//         }
 
-        filtered.sort((a, b) => {
-            if (a.match < b.match)
-                return 1;
-            else if (a.match == b.match) 
-                return 0;
-            else
-                return -1;
-        })
-    }
-}
+//         filtered.sort((a, b) => {
+//             if (a.match < b.match)
+//                 return 1;
+//             else if (a.match == b.match) 
+//                 return 0;
+//             else
+//                 return -1;
+//         })
+//     }
+// }
     
 
 function edit_distance(x, y) {
@@ -182,7 +188,7 @@ function edit_distance(x, y) {
 }
 
 function replace_cost(key1, key2) {
-    // Mappa delle posizioni dei tasti sulla tastiera QWERTY
+    // QWERTY keys position table
     const keyboardMap = {
         q: { row: 0, col: 0 },
         w: { row: 0, col: 1 },
@@ -212,34 +218,29 @@ function replace_cost(key1, key2) {
         m: { row: 2, col: 6 }
     };
 
-    max_dist = Math.sqrt(9 ** 2 + 2 ** 2);
-
-    // Assicuriamoci che i caratteri siano in minuscolo
+    // check if the table includes the two input characters
     key1 = key1.toLowerCase();
     key2 = key2.toLowerCase();
-
-    // Verifichiamo se i caratteri sono presenti nella mappa
     if (!keyboardMap.hasOwnProperty(key1) || !keyboardMap.hasOwnProperty(key2))
-        return "Caratteri non validi";
+        return "Error";
 
+    // calculate the distance bewteen the two inputs
     const rowDistance = Math.abs(keyboardMap[key1].row - keyboardMap[key2].row);
     const colDistance = Math.abs(keyboardMap[key1].col - keyboardMap[key2].col);
     const distance = Math.sqrt(rowDistance ** 2 + colDistance ** 2);
 
+    // get the maximum possible distance
+    max_dist = Math.sqrt(Math.abs(keyboardMap.p.row - keyboardMap.z.row) ** 2 + Math.abs(keyboardMap.p.col - keyboardMap.z.col) ** 2);
+    // and normalize the calculated distance
     return Math.map(distance, 0, max_dist, 0, 2);
 }
 </script>
 
-<div class="d-flex flex-column content bg-light scrollbar-primary">
-    <div class="d-flex align-items-center my-5">
-        <h2 class="ms-auto me-auto display-2 text-dark">Tutti i Corsi</h2>
-        <i class="bi bi-gear display-6 text-secondary"></i>
-    </div>
-        <div class="d-flex mb-5">
-            <div></div>
-            
-            <Searchbar class="align-self-center ms-auto me-auto" bind:value></Searchbar>
-
+<div class="d-flex flex-column content bg-light custom-scrollbar">
+    <div class="d-flex justify-content-between mb-5 my-5">
+        <span class="display-6 text-dark">Risultati per: {value}</span>
+        <div class="d-flex">
+            <!-- <Searchbar bind:value></Searchbar> -->
             <div class="btn-group" role="group">
                 <input type="radio" class="btn-check" name="view" id="btnradio1" autocomplete="off" value="list" class:active={$view == 'list'} bind:group={$view}>
                 <label class="btn btn-outline-primary" for="btnradio1"><i class="bi bi-list"></i></label>
@@ -251,14 +252,28 @@ function replace_cost(key1, key2) {
                 <label class="btn btn-outline-primary"  for="btnradio3"><i class="bi bi-diagram-3"></i></label>
             </div>
         </div>
-        {#each filtered as course}
-            <Course {course} class="mb-3 bg-primary"/>
-        {/each}
+    </div>
+    {#each filtered as course}
+        <Course {course} class="mb-3 bg-primary"/>
+    {/each}
 </div>
 
-<style>
+<style lang="scss">
+    @import '$css/variables.scss';
+
     .content {
         padding-left: 5rem;
         padding-right: 5rem;
+    }
+
+    .custom-scrollbar {
+        scroll-behavior: smooth;
+    }
+
+    :root {
+        --scroll-size: 10px;
+        --scroll-track: $light;
+        --scroll-thumb: $primary;
+        --scroll-thumb-radius: 5px;
     }
 </style>

@@ -10,11 +10,17 @@
     export let style = '';
 </script>
 
-<div class="rounded {classes} confined border-dark" {style}>
+<div class="rounded {classes} confined" {style}>
     <Accordion keepOpen>
         <AccordionItem>
             <div slot="name" class="d-flex align-items-center w-100">
                 <h4 class="mb-0">{course.code} - {course.name}</h4>
+                {#if course.new}
+                    <span class="badge bg-success ms-3">New!</span>
+                {/if}
+                {#if course.best_seller}
+                    <span class="badge bg-secondary ms-3">Best Seller</span>
+                {/if}
                 <div class="d-flex ms-auto me-3">
                     <a class="icon me-2 text-secondary" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
                     <a class="icon me-2 text-secondary" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>

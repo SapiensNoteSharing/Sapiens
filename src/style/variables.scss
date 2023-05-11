@@ -1,14 +1,14 @@
 /* Theme colors */
 
-$primary: #c3e7dd;
+$primary: rgb(195, 231, 221);
 $primary-shade-1: #F5FCFB;
 
 $secondary: #fa4d6a;
 $secondary-shade-1: #EEEDF7;
 
-$success: #B377BC;
+$success: #7b54c3;
 $info: #80C1E8;
-$warning: #7b54c3;
+$warning: #c38054;
 $danger: #DD6B6B;
 $light: #fafffe;
 $dark: #0b1613;
@@ -145,3 +145,5 @@ $nav-tabs-border-radius: $border-rounded !default;
 
 //carousel
 $carousel-control-width: 8%;
+
+// $accordion-border-color: $dark;

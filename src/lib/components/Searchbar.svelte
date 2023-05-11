@@ -1,12 +1,11 @@
 <script>
     let classes = "";
     export {classes as class};
-
-    export let value = "";
+    import { value } from "$lib/stores";
 </script>
 
 <div class="d-flex position-relative {classes}">
-    <input class="form-control confined bg-primary dark pe-5 ms-5" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value>
+    <input class="form-control confined bg-light pe-5 mx-3" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value={$value}>
     <span class="searchbutton py-1 px-2"><i class="bi bi-search"></i></span>
 </div>
 
@@ -15,8 +14,8 @@
 
     .searchbutton {
         position: absolute;
-        right: 4px;
-        top: 2px
+        right: 1.5rem;
+        top: 2px;
     }
 
     .confined {
@@ -26,6 +25,6 @@
 
     ::placeholder {
         color: $dark;
-        opacity: 0.5;
+        opacity: 1;
     }
 </style>
