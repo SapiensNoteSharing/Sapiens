@@ -6,11 +6,13 @@
 </script>
 
 <div class="d-flex position-relative {classes}">
-    <input class="form-control confined placeholder col-12 bg-primary dark" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value>
+    <input class="form-control confined bg-primary dark pe-5 ms-5" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value>
     <span class="searchbutton py-1 px-2"><i class="bi bi-search"></i></span>
 </div>
 
-<style>
+<style lang="scss">
+    @import "$css/variables.scss";
+
     .searchbutton {
         position: absolute;
         right: 4px;
@@ -18,11 +20,12 @@
     }
 
     .confined {
-        border: 1px solid #0b1613;
+        border: 1px solid $dark;
         border-radius: 5px;
     }
 
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: #0b1613;
+    ::placeholder {
+        color: $dark;
+        opacity: 0.5;
     }
 </style>

@@ -52,84 +52,80 @@ function search() {
     // else
     else {
         filtered = [];
-        // console.clear();
+        let max_match, match_value, min_dist, add_course;
+        
         let dist_threshold = 3;
-        let min_dist, name_dist, code_dist, professor_dist;
-        let match_value, name_match, code_match, professor_match;
-        let add_course;
+        let n;
         // split the search bar input in its single words
         let values = value.split(" ");
         // search in every course a correspondence, comparing it with:
         for (let course of courses) {
+            min_dist = Infinity;
+            match_value = 0;
             add_course = false;
+            n = 0;
             for (let input of values) {
-                if (input.length > 3) {
+                if (input != "" && input != "e" && input != "di" && input != "dei" && input != "I") {
+                    max_match = 0;
+                    n++;
+
+                    // the course's name
                     let words = course.name.split(" ");
-                    min_dist = Infinity;
                     for (let word of words) {
-                        if (word.length > 3) {
+                        if (word != "" && word != "e" && word != "di" && word != "dei" && word != "I") {
                             if (word.toLowerCase().includes(input.toLowerCase())) {
                                 min_dist = 0;
-                                name_dist = 0;
-                                name_match = 1;
-                            } else
-                                min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));
+                                max_match = 1;
+                            } else {
+                                min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
+                                max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
+                            }
                         }
                     } 
-                    name_dist += min_dist;
-                    name_match = 1 - name_dist / course.name.length;
 
                     // the course's code
-                    min_dist = Infinity;
-                    code_match = 0;
                     if (course.code.toLowerCase().includes(input.toLowerCase())) {
                         min_dist = 0;
-                        code_dist = 0;
-                        code_match = 1;
-                    } else if (edit_distance(course.code.toLowerCase(), input.toLowerCase()) < min_dist) {
-                        min_dist = edit_distance(course.code.toLowerCase(), input.toLowerCase());
-                        code_dist = min_dist;
-                        code_match = 1 - code_dist / course.code.length;
+                        max_match = 1;
+                    } else {
+                        min_dist = Math.min(min_dist, edit_distance(course.code.toLowerCase(), input.toLowerCase()));                               
+                        max_match = Math.max(max_match, 1 - edit_distance(course.code.toLowerCase(), input.toLowerCase()) / course.code.length);
                     }
-                    
 
-                    professor_dist = Infinity;
+                    // the course's professors' names
                     for (let professor of course.professors) {
                         let words = professor.split(" ");
                         for (let word of words) {
-                            // calculate the distance with the course's code
                             if (word.toLowerCase().includes(input.toLowerCase())) {
-                                professor_dist = 0;
-                                professor_match = 1;
-                            } else if (edit_distance(word.toLowerCase(), input.toLowerCase()) < professor_dist) {
-                                professor_dist = edit_distance(word.toLowerCase(), input.toLowerCase());
-                                professor_match = 1 - professor_dist / word.length;
-                            }
+                                min_dist = 0;
+                                max_match = 1;
+                            } else {
+                                min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
+                                max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
+                            }       
                         }
                     }
-                }
-                min_dist = Infinity;
-                if (name_dist < min_dist) {
-                    min_dist = name_dist;
-                    match_value = name_match;
-                }
-                if (code_dist < min_dist) {
-                    min_dist = code_dist;
-                    match_value = code_match;
-                }
-                if (professor_dist < min_dist) {
-                    min_dist = professor_dist;
-                    match_value = professor_match;
-                }
-                if (min_dist <= dist_threshold) {
-                    add_course = true;
-                    course.match_value = match_value;
+                    match_value += max_match;
+
+                    if (min_dist <= dist_threshold)
+                        add_course = true;
                 }
             }
-            
-            if (add_course)
+            match_value /= n;
+            if (add_course) {
+                course.match = match_value;
                 filtered.push(course);
+            }
         }
+
+        filtered.sort((a, b) => {
+            if (a.match < b.match)
+                return 1;
+            else if (a.match == b.match) 
+                return 0;
+            else
+                return -1;
+        })
     }
 }
     

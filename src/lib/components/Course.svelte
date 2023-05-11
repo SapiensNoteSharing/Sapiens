@@ -20,17 +20,16 @@
                     <a class="icon me-2 text-secondary" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
                     <a class="icon me-2 text-secondary" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
                 </div>
-                <!-- <Rating {course} class=""/> -->
             </div>
             <div slot="body">
-
+                <Rating {course} class=""/>
             </div>
         </AccordionItem>
     </Accordion>
     <div class="course-bottom d-flex dark px-3 py-2" style="justify-content: space-between">
         <div>
             {#each course.professors as professor, i}
-                <a class='dark' href='/professors/{professor}'>{professor}</a>{i != course.professors.length-1 ? ' / ' : ''}
+                <a class="dark" href="/professors/{professor}">{professor}</a>{i != course.professors.length-1 ? " / " : ""}
             {/each}
         </div>
         <p class="dark" style="margin: 0px;">{course.CFU} CFU</p>
@@ -53,14 +52,6 @@
 
     .course-bottom {
         border-top: 0px;
-    }
-
-    .light {
-        color: #f0fbf8;
-    }
-
-    .dark {
-        color: #0b1613;
     }
 
     a {

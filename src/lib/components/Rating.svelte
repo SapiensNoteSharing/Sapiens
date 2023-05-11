@@ -12,9 +12,9 @@
     {#each Array(filled_stars) as _, index (index)}
         <i class="bi bi-star-fill icon me-2 text-warning"></i>
     {/each}
-    {#each Array(half_star) as _, index (index)}
+    {#if half_star}
         <i class="bi bi-star-half icon me-2 text-warning"></i>
-    {/each}
+    {/if}
     {#each Array(empty_stars) as _, index (index)}
         <i class="bi bi-star icon me-2 text-warning"></i>
     {/each}
