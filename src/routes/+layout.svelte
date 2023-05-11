@@ -7,10 +7,10 @@ import '$css/global.scss';
 </script>
 
 
-<div class="row">
+<div class="d-flex">
     <div class="sidebar position-relative">
     </div>
-    <div class="col pe-4">
+    <div class="pe-4 flex-grow-1">
         <slot></slot>
     </div>
 

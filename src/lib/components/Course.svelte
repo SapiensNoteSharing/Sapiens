@@ -1,5 +1,6 @@
 <script>
     import Accordion from "./Accordion.svelte";
+    import AccordionItem from "./AccordionItem.svelte";
     import Icon from "./Icon.svelte";
 
     export let course = {};
@@ -9,18 +10,20 @@
 </script>
 
 <div class="rounded {classes}" {style}>
-    <Accordion>
-        <div slot="name" class="d-flex">
-            <h4 class="d-block">{course.code} - {course.name}</h4>
-            <div class="d-flex ms-auto">
-                <a class="icon me-2 dark" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
-                <a class="icon me-2 dark" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
-                <a class="icon me-2 dark" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
+    <Accordion keepOpen>
+        <AccordionItem>
+            <div slot="name" class="d-flex align-items-center w-100">
+                <h4 class="mb-0">{course.code} - {course.name}</h4>
+                <div class="d-flex ms-auto me-3">
+                    <a class="icon me-2 dark" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
+                    <a class="icon me-2 dark" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
+                    <a class="icon me-2 dark" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
+                </div>
             </div>
-        </div>
-        <div slot="body">
+            <div slot="body">
 
-        </div>
+            </div>
+        </AccordionItem>
     </Accordion>
     <div class="confined rounded-bottom course-bottom d-flex light" style="justify-content: space-between">
         <div>
