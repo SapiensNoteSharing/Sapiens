@@ -28,3 +28,9 @@
         </div>
     </div>
 </div>
+
+<style>
+    .confined {
+        border: 1px solid #0b1613;
+    }
+</style>

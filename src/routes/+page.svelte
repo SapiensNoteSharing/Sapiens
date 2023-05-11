@@ -52,96 +52,81 @@ function search() {
         // console.clear();
         let dist_threshold = 3;
         let min_dist, name_dist, code_dist, professor_dist;
-        let match_value, name_match, code_match, professor_match, match;
+        let match_value, name_match, code_match, professor_match;
+        let add_course;
         // split the search bar input in its single words
         let values = value.split(" ");
         // search in every course a correspondence, comparing it with:
         for (let course of courses) {
+            add_course = false;
             for (let input of values) {
                 if (input.length > 3) {
-                    // the course's names
                     let words = course.name.split(" ");
-                    name_dist = 0;
                     min_dist = Infinity;
-                    name_match = 0;
-                    match = false;
-                    // if it's not empty
-                    if (!match) {
-                        // calculate the distance with every word of the course's name
-                        min_dist = Infinity;
-                        for (let word of words) {
-                            if (word.length > 3) {
-                                if (word.toLowerCase().includes(input.toLowerCase())) {
-                                    min_dist = 0;
-                                    name_dist = 0;
-                                    name_match = 1;
-                                    match = true;
-                                } else
-                                    min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));
-                            }
+                    for (let word of words) {
+                        if (word.length > 3) {
+                            if (word.toLowerCase().includes(input.toLowerCase())) {
+                                min_dist = 0;
+                                name_dist = 0;
+                                name_match = 1;
+                            } else
+                                min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));
                         }
-                    }
+                    } 
                     name_dist += min_dist;
                     name_match = 1 - name_dist / course.name.length;
 
                     // the course's code
-                    code_dist = Infinity;
                     min_dist = Infinity;
                     code_match = 0;
-                    match = false;
-                    // if it's not empty
-                    if (!match) {
-                        // calculate the distance with the course's code
-                        if (course.code.toLowerCase().includes(input.toLowerCase())) {
-                            min_dist = 0;
-                            code_match = 1;
-                            match = true;
-                        } else if (edit_distance(course.code.toLowerCase(), input.toLowerCase()) < min_dist) {
-                            min_dist = edit_distance(course.code.toLowerCase(), input.toLowerCase());
-                            code_match = 1 - code_dist / course.code.length;
-                        }
+                    if (course.code.toLowerCase().includes(input.toLowerCase())) {
+                        min_dist = 0;
+                        code_dist = 0;
+                        code_match = 1;
+                    } else if (edit_distance(course.code.toLowerCase(), input.toLowerCase()) < min_dist) {
+                        min_dist = edit_distance(course.code.toLowerCase(), input.toLowerCase());
+                        code_dist = min_dist;
+                        code_match = 1 - code_dist / course.code.length;
                     }
                     
 
-                    // the course's professors' names
                     professor_dist = Infinity;
-                    match = false;
                     for (let professor of course.professors) {
                         let words = professor.split(" ");
                         for (let word of words) {
-                            if (!match) {
-                                // calculate the distance with the course's code
-                                if (word.toLowerCase().includes(input.toLowerCase())) {
-                                    professor_dist = 0;
-                                    professor_match = 1;
-                                    match = true;
-                                } else if (edit_distance(word.toLowerCase(), input.toLowerCase()) < professor_dist) {
-                                    professor_dist = edit_distance(word.toLowerCase(), input.toLowerCase());
-                                    professor_match = 1 - professor_dist / word.length;
-                                }
+                            // calculate the distance with the course's code
+                            if (word.toLowerCase().includes(input.toLowerCase())) {
+                                professor_dist = 0;
+                                professor_match = 1;
+                            } else if (edit_distance(word.toLowerCase(), input.toLowerCase()) < professor_dist) {
+                                professor_dist = edit_distance(word.toLowerCase(), input.toLowerCase());
+                                professor_match = 1 - professor_dist / word.length;
                             }
                         }
                     }
                 }
+                min_dist = Infinity;
+                if (name_dist < min_dist) {
+                    min_dist = name_dist;
+                    match_value = name_match;
+                }
+                if (code_dist < min_dist) {
+                    min_dist = code_dist;
+                    match_value = code_match;
+                }
+                if (professor_dist < min_dist) {
+                    min_dist = professor_dist;
+                    match_value = professor_match;
+                }
+                if (min_dist <= dist_threshold) {
+                    add_course = true;
+                    course.match_value = match_value;
+                    console.log(course.name, match_value);
+                }
             }
-            min_dist = Infinity;
-            if (name_dist < min_dist) {
-                min_dist = name_dist;
-                match_value = name_match;
-            }
-            if (code_dist < min_dist) {
-                min_dist = code_dist;
-                match_value = code_match;
-            }
-            if (professor_dist < min_dist) {
-                min_dist = professor_dist;
-                match_value = professor_match;
-            }
-            if (min_dist <= dist_threshold) {
-                course.match_value = match_value;
-                console.log(course.name, match_value);
+            
+            if (add_course)
                 filtered.push(course);
-            }
         }
     }
 }
@@ -203,7 +188,7 @@ function edit_distance(x, y) {
 <div class="d-flex flex-column content">
     <div class="d-flex align-items-center my-5">
         <h2 class="ms-auto me-auto display-2">I Miei Corsi</h2>
-        <i class="bi bi-gear display-6"></i>
+        <i class="bi bi-gear display-6 text-secondary"></i>
     </div>
         <div class="d-flex justify-content-between mb-5">
             <div/>
@@ -218,16 +203,16 @@ function edit_distance(x, y) {
                 <label class="btn btn-outline-primary" for="btnradio2"><i class="bi bi-border-all"></i></label>
 
                 <input type="radio" class="btn-check" name="view" id="btnradio3" autocomplete="off" value="graph" class:active={$view == 'graph'} bind:group={$view}>
-                <label class="btn btn-outline-primary" for="btnradio3"><i class="bi bi-diagram-3-fill"></i></label>
+                <label class="btn btn-outline-primary"  for="btnradio3"><i class="bi bi-diagram-3"></i></label>
             </div>
         </div>
         {#each filtered as course}
-            <Course {course} class="mb-3 bg-primary"/>
+            <Course {course} class="mb-3 bg-primary dark btn-outline-dark"/>
         {/each}
 </div>
 
 <style>
-    .content{
+    .content {
         padding-left: 5rem;
         padding-right: 5rem;
     }

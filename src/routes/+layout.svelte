@@ -19,12 +19,13 @@ import '$css/global.scss';
 <style lang="scss">
     @import '$css/variables.scss';
     .sidebar{
-        width: 270px;
+        position: relative;
+        width: 25%;
         height: 100vh;
-        background-color: $light;
+        background-color: $primary;
         border-right: 1px solid $dark;
         resize: horizontal;
-        min-width: 200px;
-        max-width: 350px;
+        min-width: 20%;
+        max-width: 30%;
     }
 </style>

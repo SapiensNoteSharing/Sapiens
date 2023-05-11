@@ -13,22 +13,22 @@
         <div slot="name" class="d-flex">
             <h4 class="d-block">{course.code} - {course.name}</h4>
             <div class="d-flex ms-auto">
-                <a class="icon me-2 dark" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
-                <a class="icon me-2 dark" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
-                <a class="icon me-2 dark" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
+                <a class="icon me-2 text-secondary" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
+                <a class="icon me-2 text-secondary" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
+                <a class="icon me-2 text-secondary" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
             </div>
         </div>
         <div slot="body">
-
+            
         </div>
     </Accordion>
-    <div class="confined rounded-bottom course-bottom d-flex light" style="justify-content: space-between">
+    <div class="confined rounded-bottom course-bottom d-flex dark" style="justify-content: space-between">
         <div>
             {#each course.professors as professor, i}
-                <a class='light' href='/professors/{professor}'>{professor}</a>{i != course.professors.length-1 ? ' / ' : ''}
+                <a class='dark' href='/professors/{professor}'>{professor}</a>{i != course.professors.length-1 ? ' / ' : ''}
             {/each}
         </div>
-        <p class="light" style="margin: 0px;">{course.CFU} CFU</p>
+        <p class="dark" style="margin: 0px;">{course.CFU} CFU</p>
     </div>
 </div>
 

@@ -6,13 +6,23 @@
 </script>
 
 <div class="d-flex {classes}">
-    <input class="form-control" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value>
+    <input class="form-control confined placeholder col-12 bg-primary" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value>
     <span class="searchbutton py-1 px-2"><i class="bi bi-search"></i></span>
 </div>
 
 <style>
     .searchbutton {
         position: relative;
-        right: 2rem;
+        right: 2.3rem;
+        top: 0.1rem;
+    }
+
+    .confined {
+        border: 1px solid #0b1613;
+        border-radius: 5px;
+    }
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #0b1613;
     }
 </style>
