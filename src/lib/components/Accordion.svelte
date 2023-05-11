@@ -5,24 +5,13 @@
     let styles = "";
     export {styles as style};
 
-    let id = Math.random(1);
+    export let id = Math.floor(Math.random() * 1000);
+    export let keepOpen = false;
+    let open = false
 </script>
 
-<div class="accordion" style="{styles}">
-    <div class="accordion-item {classes}">
-        <h2 class="accordion-header">
-            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#{id}">
-                <div class="d-flex">
-                    <slot name="name"/>
-                </div>
-            </button>
-        </h2>
-        <div id="{id}" class="accordion-collapse collapse">
-            <div class="accordion-body">
-                <slot name="body"/>
-            </div>
-        </div>
-    </div>
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <slot></slot>
 </div>
 
 <style>

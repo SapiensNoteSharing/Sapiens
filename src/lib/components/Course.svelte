@@ -1,5 +1,6 @@
 <script>
     import Accordion from "./Accordion.svelte";
+    import AccordionItem from "./AccordionItem.svelte";
     import Rating from "./Rating.svelte";
     import Icon from "./Icon.svelte";
 
@@ -10,19 +11,21 @@
 </script>
 
 <div class="rounded {classes} confined border-dark" {style}>
-    <Accordion class="confined rounded-top dark" style="border-bottom: 1px solid #0b1613;">
-        <div slot="name" class="d-flex">
-            <h4 class="d-block m-0">{course.code} - {course.name}</h4>
-            <div class="d-flex">
-                <a class="icon me-2 text-secondary" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
-                <a class="icon me-2 text-secondary" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
-                <a class="icon me-2 text-secondary" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
+    <Accordion keepOpen>
+        <AccordionItem>
+            <div slot="name" class="d-flex align-items-center w-100">
+                <h4 class="mb-0">{course.code} - {course.name}</h4>
+                <div class="d-flex ms-auto me-3">
+                    <a class="icon me-2 text-secondary" href="/corsi/{course.id}/formulario"><i class="bi bi-percent"></i></a>
+                    <a class="icon me-2 text-secondary" href="/corsi/{course.id}/note"><i class="bi bi-journal-text"></i></a>
+                    <a class="icon me-2 text-secondary" href="/corsi/{course.id}/test"><i class="bi bi-pencil"></i></a>
+                </div>
+                <!-- <Rating {course} class=""/> -->
             </div>
-            <!-- <Rating {course} class=""/> -->
-        </div>
-        <div slot="body">
-            
-        </div>
+            <div slot="body">
+
+            </div>
+        </AccordionItem>
     </Accordion>
     <div class="course-bottom d-flex dark px-3 py-2" style="justify-content: space-between">
         <div>

@@ -8,7 +8,7 @@ import '$css/global.scss';
 </script>
 
 
-<div class="row">
+<div class="d-flex">
     <div class="sidebar px-3 position-relative">
         <div class="d-flex align-items-center my-5">
             <h2 class="ms-auto me-auto display-6 text-dark">I Miei Appunti</h2>
@@ -52,7 +52,7 @@ import '$css/global.scss';
             </div>
           </div>
     </div>
-    <div class="col pe-4">
+    <div class="pe-4 flex-grow-1">
         <slot></slot>
     </div>
 </div>

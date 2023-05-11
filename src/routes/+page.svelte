@@ -239,10 +239,10 @@ function replace_cost(key1, key2) {
         <h2 class="ms-auto me-auto display-2 text-dark">Tutti i Corsi</h2>
         <i class="bi bi-gear display-6 text-secondary"></i>
     </div>
-        <div class="d-flex justify-content-between mb-5">
-            <div/>
+        <div class="d-flex mb-5">
+            <div></div>
             
-            <Searchbar class="" bind:value></Searchbar>
+            <Searchbar class="align-self-center ms-auto me-auto" bind:value></Searchbar>
 
             <div class="btn-group" role="group">
                 <input type="radio" class="btn-check" name="view" id="btnradio1" autocomplete="off" value="list" class:active={$view == 'list'} bind:group={$view}>
