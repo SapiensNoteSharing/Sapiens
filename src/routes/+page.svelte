@@ -7,56 +7,285 @@ import { view, value, filter_tags } from '$lib/stores';
 
 let courses = [
     {
-        professors: ['Caterina Stoppato', 'Giorgio Ottaviani'],
-        code: 'B003273',
         name: 'Geometria e algebra Lineare',
         CFU: '6',
-        match: 0,
-        rating: 5,
+        code: 'B003273',
+        cdl_code: 'B047',
+        cdl_name: 'Ingegneria Informatica',
+        curriculum_code: 'E69',
+        curriculum_name: 'Tecnico Scientifico',
+        professors: ['Caterina Stoppato', 'Giorgio Ottaviani'],
+        degree: "Triennale",
+        year: "Primo anno",
+        semester: "Primo semestre",
         tags: [],
         favourite: true,
-        year: "Primo anno",
-        semester: "Primo semestre",
-        in_cart: false
+        in_cart: false,
+        owned: false,
+        content: "",
+        chapters: [
+            {
+                title: "1. Spazio euclideo e vettori",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "2. Sistemi lineari",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "3. Algebra delle matrici",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "4. Spazi vettoriali e applicazioni lineari",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "5. Determinante",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "6. Autovalori e autovettori",
+                paragraphs: [
+                    "",
+                ],
+            }, 
+            {
+                title: "7. Spazi euclidei",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "8. Teorema spettrale e forme quadratiche",
+                paragraphs: [
+                    "",
+                ],
+            },
+        ],
+        rating: 5,
+        reviews_number: 13,
+        match: 0,
     },
     {
-        professors: ['Serena Matucci'],
-        code: 'B019481',
         name: 'Analisi Matematica I',
         CFU: '9',
-        match: 0,
-        rating: 3.5,
+        code: 'B019481',
+        cdl_code: 'B047',
+        cdl_name: 'Ingegneria Informatica',
+        curriculum_code: 'E69',
+        curriculum_name: 'Tecnico Scientifico',
+        professors: ['Serena Matucci'],
+        degree: "Triennale",
+        year: "Primo anno",
+        semester: "Primo semestre",
         tags: ["New!"],
         favourite: false,
-        year: "Primo anno",
-        semester: "Primo semestre",
-        in_cart: false
+        in_cart: false,
+        owned: true,
+        chapters: [
+            {
+                title: "1. Spazio euclideo e vettori",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "2. Sistemi lineari",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "3. Algebra delle matrici",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "4. Spazi vettoriali e applicazioni lineari",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "5. Determinante",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "6. Autovalori e autovettori",
+                paragraphs: [
+                    "",
+                ],
+            }, 
+            {
+                title: "7. Spazi euclidei",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "8. Teorema spettrale e forme quadratiche",
+                paragraphs: [
+                    "",
+                ],
+            },
+        ],
+        rating: 3.5,
+        reviews_number: 2,
+        match: 0,
     },
     {
-        professors: ['Fabio Cinti'],
-        code: 'B003273',
         name: 'Fisica I',
         CFU: '6',
-        match: 0,
-        rating: 2,
+        code: 'B006853',
+        cdl_code: 'B047',
+        cdl_name: 'Ingegneria Informatica',
+        curriculum_code: 'E69',
+        curriculum_name: 'Tecnico Scientifico',
+        professors: ['Fabio Cinti'],
+        degree: "Triennale",
+        year: "Primo anno",
+        semester: "Primo semestre",
         tags: ["New!", "Best Seller"],
         favourite: true,
-        year: "Primo anno",
-        semester: "Primo semestre",
-        in_cart: false
+        in_cart: false,
+        owned: true,
+        chapters: [
+            {
+                title: "1. Spazio euclideo e vettori",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "2. Sistemi lineari",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "3. Algebra delle matrici",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "4. Spazi vettoriali e applicazioni lineari",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "5. Determinante",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "6. Autovalori e autovettori",
+                paragraphs: [
+                    "",
+                ],
+            }, 
+            {
+                title: "7. Spazi euclidei",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "8. Teorema spettrale e forme quadratiche",
+                paragraphs: [
+                    "",
+                ],
+            },
+        ],
+        rating: 2,
+        reviews_number: 9,
+        match: 0,
     },
     {
-        professors: ['Stefano Berretti'],
-        code: 'B003273',
         name: 'Fondamenti di Informatica',
         CFU: '9',
-        match: 0,
-        rating: 4,
-        tags: ["Best Seller"],
-        favourite: false,
+        code: 'B024280',
+        cdl_code: 'B047',
+        cdl_name: 'Ingegneria Informatica',
+        curriculum_code: 'E69',
+        curriculum_name: 'Tecnico Scientifico',
+        professors: ['Stefano Berretti'],
+        degree: "Triennale",
         year: "Primo anno",
         semester: "Primo semestre",
-        in_cart: false
+        tags: ["Best Seller"],
+        favourite: false,
+        in_cart: false,
+        owned: false,
+        chapters: [
+            {
+                title: "1. Spazio euclideo e vettori",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "2. Sistemi lineari",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "3. Algebra delle matrici",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "4. Spazi vettoriali e applicazioni lineari",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "5. Determinante",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "6. Autovalori e autovettori",
+                paragraphs: [
+                    "",
+                ],
+            }, 
+            {
+                title: "7. Spazi euclidei",
+                paragraphs: [
+                    "",
+                ],
+            },
+            {
+                title: "8. Teorema spettrale e forme quadratiche",
+                paragraphs: [
+                    "",
+                ],
+            },
+        ],
+        rating: 4,
+        reviews_number: 5,
+        match: 0,
     }
 ];
 
@@ -165,7 +394,6 @@ function search() {
         })
     }
 }
-    
 
 function edit_distance(x, y) {
     let m = x.length;
@@ -267,7 +495,7 @@ function replace_cost(key1, key2) {
 }
 </script>
 
-<div class="d-flex flex-column content bg-light custom-scrollbar">
+<div class="d-flex flex-column content bg-light">
     <div class="d-flex justify-content-between mt-5">
         {#if $value == undefined || $value == ""}
             <span class="display-6 text-dark">Tutti i corsi</span>
@@ -304,9 +532,9 @@ function replace_cost(key1, key2) {
         </div>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="icon text-dark bi bi-cart"></i>
-            <span class="badge bg-secondary rounded-pill" style="right: 0.8rem; top: -0.8rem;">0</span>
+            <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">0</span>
         </button>
     </div>
 
@@ -327,7 +555,7 @@ function replace_cost(key1, key2) {
         <!-- graph view -->
     {/if}
 
-    <!-- Modal -->
+    <!-- Carrello -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -340,7 +568,7 @@ function replace_cost(key1, key2) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary">Procedi all'acquisto</button>
                 </div>
             </div>
         </div>

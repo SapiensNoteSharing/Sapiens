@@ -13,7 +13,7 @@
   <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
     <div class="container-fluid">
       <!-- <a class="display-2 text-dark text-decoration-none ms-2" href="#">Sapiens</a> -->
-      <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens-logo.svg" alt="Sapiens-Logo">
+      <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -35,16 +35,37 @@
 </div>
 
 <div class="d-flex">
-  <div class="sidebar px-3 position-relative">
-    <div class="d-flex align-items-center my-5">
-        <h2 class="ms-auto me-auto display-6 text-dark">Filtri</h2>
+  <div class="sidebar align-self-stretch px-3 position-relative">
+    <div class="d-flex align-items-center mt-5 mb-4">
+        <h2 class="mx-auto display-6 text-dark">Filtri</h2>
     </div>
 
     <!-- filter according to input -->
     <Searchbar class="align-self-center ms-auto me-auto" bind:value={$value}></Searchbar>
 
-    <!-- filter according to year and semester -->
-    <div class="accordion my-3 mx-3 accordion-border-color-dark" id="accordionPanelsStayOpenExample">
+    <div class="accordion my-4 mx-3 accordion-border-color-dark" id="accordionPanelsStayOpenExample">
+      <!-- filter according to degree type -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="Tags_title">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tags_collapse" aria-expanded="true" aria-controls="tags_collapse">
+            Tipo di Laurea
+          </button>
+        </h2>
+        <div id="tags_collapse" class="accordion-collapse collapse show" aria-labelledby="Tags_title">
+          <div class="accordion-body d-flex flex-wrap">
+            <div class="me-2 mb-2">
+              <input type="checkbox" class="btn-check" id="Triennale" autocomplete="off">
+              <label class="btn btn-outline-secondary" for="Triennale">Triennale</label><br>
+            </div>       
+            <div class="me-2 mb-2">
+              <input type="checkbox" class="btn-check" id="Magistrale" autocomplete="off">
+              <label class="btn btn-outline-success" for="Magistrale">Magistrale</label><br>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+      <!-- filter according to year and semester -->
       <div class="accordion-item">
         <h2 class="accordion-header" id="year_title">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#year_collapse" aria-expanded="true" aria-controls="year_collapse">
@@ -53,19 +74,19 @@
         </h2>
         <div id="year_collapse" class="accordion-collapse collapse show" aria-labelledby="year_title">
           <div class="accordion-body">
-            <div class="my-2">
+            <div class="me-2 mb-2">
               <input type="checkbox" class="btn-check" id="Primo anno primo semestre" autocomplete="off">
               <label class="btn btn-outline-primary" for="Primo anno primo semestre">Primo anno - Primo semestre</label><br>
             </div>
-            <div class="my-2">
+            <div class="me-2 mb-2">
               <input type="checkbox" class="btn-check" id="Primo anno secondo semestre" autocomplete="off">
               <label class="btn btn-outline-primary" for="Primo anno secondo semestre">Primo anno - Secondo semestre</label><br>
             </div>
-            <div class="my-2">
+            <div class="me-2 mb-2">
               <input type="checkbox" class="btn-check" id="Secondo anno" autocomplete="off">
               <label class="btn btn-outline-secondary" for="Secondo anno">Secondo anno</label><br>
             </div>
-            <div class="my-2">
+            <div class="me-2 mb-2">
               <input type="checkbox" class="btn-check" id="Terzo anno" autocomplete="off">
               <label class="btn btn-outline-success" for="Terzo anno">Terzo anno</label><br>
             </div>
@@ -96,43 +117,12 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="Tags_title">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tags_collapse" aria-expanded="true" aria-controls="tags_collapse">
-            Rating
+            Valutazione
           </button>
         </h2>
         <div id="tags_collapse" class="accordion-collapse collapse show" aria-labelledby="Tags_title">
           <div class="accordion-body d-flex flex-wrap">
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Best Seller" autocomplete="off">
-              <label class="btn btn-outline-secondary" for="Best Seller">Best Seller</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="New" autocomplete="off">
-              <label class="btn btn-outline-success" for="New">New</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Best Seller" autocomplete="off">
-              <label class="btn btn-outline-secondary" for="Best Seller">Best Seller</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="New" autocomplete="off">
-              <label class="btn btn-outline-success" for="New">New</label><br>
-            </div>
-            <div class="me-2">
-              <input type="checkbox" class="btn-check" id="Best Seller" autocomplete="off">
-              <label class="btn btn-outline-secondary" for="Best Seller">Best Seller</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="New" autocomplete="off">
-              <label class="btn btn-outline-success" for="New">New</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Best Seller" autocomplete="off">
-              <label class="btn btn-outline-secondary" for="Best Seller">Best Seller</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="New" autocomplete="off">
-              <label class="btn btn-outline-success" for="New">New</label><br>
-            </div>
+            <!-- Rating filter -->
           </div>
         </div>
       </div>
@@ -149,10 +139,9 @@
 
     .sidebar {
         width: 25%;
-        height: 100%;
         background-color: $primary;
         border-right: 1px solid $dark;
-        resize: horizontal;
+        // overflow-y: scroll;
     }
 
     .hoverable {
@@ -162,5 +151,9 @@
     .hoverable:hover {
       opacity: 1;
       transition: 0.3s;
+    }
+
+    .custom-scrollbar {
+        scroll-behavior: smooth;
     }
 </style>
