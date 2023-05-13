@@ -2,11 +2,16 @@
   import { onMount } from "svelte";
   import Accordion from '$lib/components/Accordion.svelte';
   import Searchbar from '$lib/components/Searchbar.svelte';
-  import 'bootstrap/dist/css/bootstrap.min.css'
-  import 'bootstrap-icons/font/bootstrap-icons.css'
   import '$css/global.scss';
 
   import { value, filter_tags, dna } from '$lib/stores'
+
+let bootstrap;
+
+onMount(async () => {
+  bootstrap = await import('bootstrap')
+})
+
 </script>
 
 <div class="d-flex">
