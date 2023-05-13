@@ -1,4 +1,17 @@
 import { writable } from 'svelte/store';
 
-export const view = writable('list');
+export let view = writable('list');
 export let value = writable("");
+export let dna = writable(3);
+export let filter_tags = writable([
+    {
+        name: "Best Seller",
+        color: "secondary",
+        selected: false
+    },
+    {
+        name: "New!",
+        color: "success",
+        selected: false
+    }
+]);

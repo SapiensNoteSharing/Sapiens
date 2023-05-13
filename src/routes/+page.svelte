@@ -1,8 +1,9 @@
 <script>
 import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
+import CourseCard from '$lib/components/CourseCard.svelte';
 import Searchbar from '$lib/components/Searchbar.svelte';
-import { view, value } from '$lib/stores';
+import { view, value, filter_tags } from '$lib/stores';
 
 let courses = [
     {
@@ -12,8 +13,11 @@ let courses = [
         CFU: '6',
         match: 0,
         rating: 5,
-        new: true,
-        best_seller: false
+        tags: [],
+        favourite: true,
+        year: "Primo anno",
+        semester: "Primo semestre",
+        in_cart: false
     },
     {
         professors: ['Serena Matucci'],
@@ -22,8 +26,11 @@ let courses = [
         CFU: '9',
         match: 0,
         rating: 3.5,
-        new: false,
-        best_seller: false
+        tags: ["New!"],
+        favourite: false,
+        year: "Primo anno",
+        semester: "Primo semestre",
+        in_cart: false
     },
     {
         professors: ['Fabio Cinti'],
@@ -32,8 +39,11 @@ let courses = [
         CFU: '6',
         match: 0,
         rating: 2,
-        new: false,
-        best_seller: true
+        tags: ["New!", "Best Seller"],
+        favourite: true,
+        year: "Primo anno",
+        semester: "Primo semestre",
+        in_cart: false
     },
     {
         professors: ['Stefano Berretti'],
@@ -42,98 +52,119 @@ let courses = [
         CFU: '9',
         match: 0,
         rating: 4,
-        new: true,
-        best_seller: false
+        tags: ["Best Seller"],
+        favourite: false,
+        year: "Primo anno",
+        semester: "Primo semestre",
+        in_cart: false
     }
 ];
 
 let filtered = [...courses];
 
-// $: value != undefined && search()
+$: $value != undefined && search()
+$: $filter_tags && search()
 
-// function search() {
-//     // if search bar value is empty string show all courses
-//     if (value == "")
-//         filtered = [...courses];
-//     // else
-//     else {
-//         filtered = [];
-//         let max_match, match_value, min_dist, add_course;
+function search() {
+    // if search bar value is empty string show all courses that follow the 
+    if ($value == "" || $value == undefined) {
+        filtered = [];
+        for (let course of courses) {
+            let filtered_out = false;
+            for (let filter_tag of $filter_tags)
+                if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
+                    filtered_out = true;
+
+            if (!filtered_out)
+                filtered.push(course);
+        }
+    }
+    // else
+    else {
+        filtered = [];
+        let max_match, match_value, min_dist, add_course;
         
-//         let dist_threshold = 2;
-//         let n;
-//         // split the search bar input in its single words
-//         let values = value.split(" ");
-//         // search in every course a correspondence, comparing it with:
-//         for (let course of courses) {
-//             min_dist = Infinity;
-//             match_value = 0;
-//             add_course = false;
-//             n = 0;
-//             for (let input of values) {
-//                 if (input != "" && input != "e" && input != "di" && input != "dei" && input != "I") {
-//                     max_match = 0;
-//                     n++;
+        let dist_threshold = 2;
+        let n;
+        // split the search bar input in its single words
+        let values = $value.split(" ");
+        // search in every course a correspondence, comparing it with:
+        for (let course of courses) {
+            let filtered_out = false;
+            for (let filter_tag of $filter_tags)
+                if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
+                    filtered_out = true;
 
-//                     // the course's name
-//                     let words = course.name.split(" ");
-//                     for (let word of words) {
-//                         if (word != "" && word != "e" && word != "di" && word != "dei" && word != "I") {
-//                             if (word.toLowerCase().includes(input.toLowerCase())) {
-//                                 min_dist = 0;
-//                                 max_match = 1;
-//                             } else {
-//                                 min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
-//                                 max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
-//                             }
-//                         }
-//                     } 
+            if (!filtered_out) {
+                min_dist = Infinity;
+                match_value = 0;
+                add_course = false;
+                n = 0;
+                for (let input of values) {
+                    if (input != "" && input != "e" && input != "di" && input != "dei" && input != "I") {
+                        max_match = 0;
+                        n++;
 
-//                     // the course's code
-//                     if (course.code.toLowerCase().includes(input.toLowerCase())) {
-//                         min_dist = 0;
-//                         max_match = 1;
-//                     } else {
-//                         min_dist = Math.min(min_dist, edit_distance(course.code.toLowerCase(), input.toLowerCase()));                               
-//                         max_match = Math.max(max_match, 1 - edit_distance(course.code.toLowerCase(), input.toLowerCase()) / course.code.length);
-//                     }
+                        // the course's name
+                        let words = course.name.split(" ");
+                        for (let word of words) {
+                            if (word != "" && word != "e" && word != "di" && word != "dei" && word != "I") {
+                                if (word.toLowerCase().includes(input.toLowerCase())) {
+                                    min_dist = 0;
+                                    max_match = 1;
+                                } else {
+                                    min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
+                                    max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
+                                }
+                            }
+                        } 
 
-//                     // the course's professors' names
-//                     for (let professor of course.professors) {
-//                         let words = professor.split(" ");
-//                         for (let word of words) {
-//                             if (word.toLowerCase().includes(input.toLowerCase())) {
-//                                 min_dist = 0;
-//                                 max_match = 1;
-//                             } else {
-//                                 min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
-//                                 max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
-//                             }       
-//                         }
-//                     }
-//                     match_value += max_match;
+                        // the course's code
+                        if (course.code.toLowerCase().includes(input.toLowerCase())) {
+                            min_dist = 0;
+                            max_match = 1;
+                        } else {
+                            min_dist = Math.min(min_dist, edit_distance(course.code.toLowerCase(), input.toLowerCase()));                               
+                            max_match = Math.max(max_match, 1 - edit_distance(course.code.toLowerCase(), input.toLowerCase()) / course.code.length);
+                        }
 
-//                     if (min_dist <= dist_threshold)
-//                         add_course = true;
-//                 }
-//             }
-//             match_value /= n;
-//             if (add_course) {
-//                 course.match = match_value;
-//                 filtered.push(course);
-//             }
-//         }
+                        // the course's professors' names
+                        for (let professor of course.professors) {
+                            let words = professor.split(" ");
+                            for (let word of words) {
+                                if (word.toLowerCase().includes(input.toLowerCase())) {
+                                    min_dist = 0;
+                                    max_match = 1;
+                                } else {
+                                    min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
+                                    max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
+                                }       
+                            }
+                        }
+                        match_value += max_match;
 
-//         filtered.sort((a, b) => {
-//             if (a.match < b.match)
-//                 return 1;
-//             else if (a.match == b.match) 
-//                 return 0;
-//             else
-//                 return -1;
-//         })
-//     }
-// }
+                        if (min_dist <= dist_threshold)
+                            add_course = true;
+                    }
+                }
+                match_value /= n;
+                if (add_course) {
+                    course.match = match_value;
+                    filtered.push(course);
+                }
+            }
+        }
+
+        filtered.sort((a, b) => {
+            if (a.match < b.match)
+                return 1;
+            else if (a.match == b.match) 
+                return 0;
+            else
+                return -1;
+        })
+    }
+}
     
 
 function edit_distance(x, y) {
@@ -237,10 +268,13 @@ function replace_cost(key1, key2) {
 </script>
 
 <div class="d-flex flex-column content bg-light custom-scrollbar">
-    <div class="d-flex justify-content-between mb-5 my-5">
-        <span class="display-6 text-dark">Risultati per: {value}</span>
+    <div class="d-flex justify-content-between mt-5">
+        {#if $value == undefined || $value == ""}
+            <span class="display-6 text-dark">Tutti i corsi</span>
+        {:else}
+            <span class="display-6 text-dark">Risultati per: {$value}</span>
+        {/if}
         <div class="d-flex">
-            <!-- <Searchbar bind:value></Searchbar> -->
             <div class="btn-group" role="group">
                 <input type="radio" class="btn-check" name="view" id="btnradio1" autocomplete="off" value="list" class:active={$view == 'list'} bind:group={$view}>
                 <label class="btn btn-outline-primary" for="btnradio1"><i class="bi bi-list"></i></label>
@@ -248,14 +282,69 @@ function replace_cost(key1, key2) {
                 <input type="radio" class="btn-check" name="view" id="btnradio2" autocomplete="off" value="grid" class:active={$view == 'grid'} bind:group={$view}>
                 <label class="btn btn-outline-primary" for="btnradio2"><i class="bi bi-border-all"></i></label>
 
-                <input type="radio" class="btn-check" name="view" id="btnradio3" autocomplete="off" value="graph" class:active={$view == 'graph'} bind:group={$view}>
+                <input type="radio" class="btn-check" name="view" id="btnradio3" autocomplete="off" value="graph" disabled class:active={$view == 'graph'} bind:group={$view}>
                 <label class="btn btn-outline-primary"  for="btnradio3"><i class="bi bi-diagram-3"></i></label>
             </div>
         </div>
     </div>
-    {#each filtered as course}
-        <Course {course} class="mb-3 bg-primary"/>
-    {/each}
+
+    <!-- filters and cart -->
+    <div class="d-flex my-4 justify-content-between">
+        <div class="d-flex">
+            {#if $filter_tags.length == 0}
+                <span class="py-2"><i class="icon bi bi-funnel"></i></span>
+            {:else}
+                <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
+            {/if}
+            {#each $filter_tags as tag}
+                {#if tag.selected}
+                    <span class="badge my-auto p-2 bg-{ tag.color } ms-3 ">{ tag.name }</span>
+                {/if}
+            {/each}
+        </div>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="icon text-dark bi bi-cart"></i>
+            <span class="badge bg-secondary rounded-pill" style="right: 0.8rem; top: -0.8rem;">0</span>
+        </button>
+    </div>
+
+    <!-- courses -->
+    {#if $view == "list"}
+        <!-- list view -->
+        {#each filtered as course}
+            <Course {course} class="mb-3 bg-primary"/>
+        {/each}
+    {:else if $view == "grid"}
+        <!-- grid view -->
+        <div class="d-flex flex-wrap justify-content-between align-content-between">
+            {#each filtered as course}
+                <CourseCard {course} class="g-col-6 g-col-md-4 mb-3 me-3 bg-primary border-dark"/>
+            {/each}
+        </div>
+    {:else}
+        <!-- graph view -->
+    {/if}
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ... 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style lang="scss">
@@ -268,6 +357,10 @@ function replace_cost(key1, key2) {
 
     .custom-scrollbar {
         scroll-behavior: smooth;
+    }
+
+    .icon {
+        font-size: 24px;
     }
 
     :root {
