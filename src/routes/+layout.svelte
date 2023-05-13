@@ -6,18 +6,17 @@
 
   import { value, filter_tags, dna } from '$lib/stores'
 
-let bootstrap;
+  let bootstrap;
 
-onMount(async () => {
-  bootstrap = await import('bootstrap')
-})
+  onMount(async () => {
+    bootstrap = await import('bootstrap')
+  })
 
 </script>
 
 <div class="d-flex">
   <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
     <div class="container-fluid">
-      <!-- <a class="display-2 text-dark text-decoration-none ms-2" href="#">Sapiens</a> -->
       <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -32,7 +31,7 @@ onMount(async () => {
         <span class="me-5">
           <a class="display-6 text-decoration-none text-dark hoverable" href="#">Area personale</a>
         </span>
-        <span class="display-5 text-dark">18</span>
+        <span class="display-5 text-dark me-2">{$dna}</span>
         <img class="me-3" style="width: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
       </div>
     </div>
@@ -134,9 +133,11 @@ onMount(async () => {
     </div>
   </div>
 
-  <div class="flex-grow-1">
+  <div class="flex-grow-1 position-relative">
+    <!-- <img src="/src/style/DNA.svg" alt="" class="position-absolute background-image"> -->
     <slot></slot>
   </div>
+
 </div>
 
 <style lang="scss">
@@ -146,7 +147,6 @@ onMount(async () => {
         width: 25%;
         background-color: $primary;
         border-right: 1px solid $dark;
-        // overflow-y: scroll;
     }
 
     .hoverable {
@@ -159,6 +159,11 @@ onMount(async () => {
     }
 
     .custom-scrollbar {
-        scroll-behavior: smooth;
+      scroll-behavior: smooth;
+    }
+
+    .background-image {
+      z-index: 0;
+      filter: opacity(1);
     }
 </style>

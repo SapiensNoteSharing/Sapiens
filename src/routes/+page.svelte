@@ -3,7 +3,7 @@ import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
 import CourseCard from '$lib/components/CourseCard.svelte';
 import Searchbar from '$lib/components/Searchbar.svelte';
-import { view, value, filter_tags } from '$lib/stores';
+import { view, value, filter_tags, dna } from '$lib/stores';
 
 let courses = [
     {
@@ -294,6 +294,8 @@ let filtered = [...courses];
 $: $value != undefined && search()
 $: $filter_tags && search()
 
+let cart_items = [...courses];
+
 function search() {
     // if search bar value is empty string show all courses that follow the 
     if ($value == "" || $value == undefined) {
@@ -493,6 +495,14 @@ function replace_cost(key1, key2) {
     // and normalize the calculated distance
     return Math.map(distance, 0, max_dist, 0, 2);
 }
+
+function buy_cart() {
+    if ($dna >= 70) {
+        $dna -= 70;
+    } else {
+
+    }
+}
 </script>
 
 <div class="d-flex flex-column content bg-light">
@@ -534,41 +544,84 @@ function replace_cost(key1, key2) {
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="icon text-dark bi bi-cart"></i>
-            <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">0</span>
+            <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{cart_items.length}</span>
         </button>
     </div>
 
     <!-- courses -->
-    {#if $view == "list"}
-        <!-- list view -->
-        {#each filtered as course}
-            <Course {course} class="mb-3 bg-primary"/>
-        {/each}
-    {:else if $view == "grid"}
-        <!-- grid view -->
-        <div class="d-flex flex-wrap justify-content-between align-content-between">
+    {#if filtered.length != 0}
+        {#if $view == "list"}
+            <!-- list view -->
             {#each filtered as course}
-                <CourseCard {course} class="g-col-6 g-col-md-4 mb-3 me-3 bg-primary border-dark"/>
+                <Course {course} class="mb-3 bg-primary"/>
             {/each}
-        </div>
+        {:else if $view == "grid"}
+            <!-- grid view -->
+            <div class="d-flex flex-wrap justify-content-between align-content-between">
+                {#each filtered as course}
+                    <CourseCard {course} class="g-col-6 g-col-md-4 mb-3 me-3 bg-primary border-dark"/>
+                {/each}
+            </div>
+        {:else}
+            <!-- graph view -->
+        {/if}
     {:else}
-        <!-- graph view -->
+        <h2>Nessun risultato trovato</h2>
     {/if}
 
     <!-- Carrello -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-1" id="exampleModalLabel">Carrello</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    ... 
+                <div class="modal-body p-0">
+                    {#each cart_items as cart_item}
+                        <div class="d-flex m-4 justify-content-between">
+                            <div>
+                                <h2>{cart_item.code} - {cart_item.name}</h2>
+                                {#each cart_item.professors as professor, i}
+                                    <span class="text-dark">{professor}{i != cart_item.professors.length - 1 ? " / " : ""}</span>
+                                {/each}
+                                <div class="d-flex mt-3">
+                                    <div class="form-check me-4">
+                                        <input class="form-check-input" type="radio" name="{cart_item.name} accesso" id="{cart_item.name} base">
+                                        <label class="form-check-label" for="{cart_item.name} base">
+                                            Base
+                                        </label>
+                                    </div>
+                                    <div class="form-check me-4">
+                                        <input class="form-check-input" type="radio" name="{cart_item.name} accesso" id="{cart_item.name} Completo" checked>
+                                        <label class="form-check-label" for="{cart_item.name} Completo">
+                                            Completo
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <!-- * (document.getElementById(`${curr.name} base`).checked ? 0.8 : 1) -->
+                                <h2 class="align-self-center fs-1 my-0">{5 + cart_item.CFU * 5 / 3}</h2>
+                                <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                            </div>
+                        </div>
+                        <hr class="m-0">
+                    {/each }
+                    <div class="d-flex m-4 justify-content-between">
+                        <h2 class="m-0 fs-1 align-self-center">Totale</h2>
+                        <div class="d-flex">
+                            <h2 class="m-0 fs-1 align-self-center">{cart_items.reduce((acc, curr) => {
+                                acc += 5 + curr.CFU * 5 / 3;
+                                return acc;
+                            }, 0)}</h2>
+                            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Procedi all'acquisto</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="button" class="btn btn-primary" onclick="buy_cart();">Acquista</button>
                 </div>
             </div>
         </div>

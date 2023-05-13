@@ -12,17 +12,17 @@
 </script>
 
 <div class="rounded {classes} confined" {style}>
-    <Accordion keepOpen>
+    <Accordion let:id>
         <AccordionItem>
             <div slot="name" class="d-flex align-items-center w-100">
-                <h2 class="mb-0">{course.cdl_code} - {course.name} ({course.code})</h2>
+                <h2 class="mb-0">{course.code} - {course.name}</h2>
                 {#each course.tags as tag}
                     <span class="badge bg-{ tag.color } ms-3">{ tag.name }</span>
                 {/each}
                 <div class="d-flex ms-auto me-3">
-                    <a class="" href="/corsi/{course.id}/formulario"><i class="icon mx-2 text-secondary bi bi-percent"></i></a>
+                    <!-- <a class="" href="/corsi/{course.id}/formulario"><i class="icon mx-2 text-secondary bi bi-percent"></i></a>
                     <a class="" href="/corsi/{course.id}/note"><i class="icon mx-2 text-secondary bi bi-journal-text"></i></a>
-                    <a class="" href="/corsi/{course.id}/test"><i class="icon mx-2 text-secondary bi bi-pencil"></i></a>
+                    <a class="" href="/corsi/{course.id}/test"><i class="icon mx-2 text-secondary bi bi-pencil"></i></a> -->
                     <label for="{course.name} favourite">
                         <input type="checkbox" class="hidden cursor-pointer" id="{course.name} favourite" bind:checked={course.favourite}>
                         {#if course.favourite}
@@ -34,7 +34,7 @@
                                 <i class="icon mx-2 bi bi-heart"></i>
                             </div>
                         {/if}
-                      </label>
+                    </label>
                     <label for="{course.name} in cart">
                         <input type="checkbox" class="hidden cursor-pointer" id="{course.name} in cart" bind:checked={course.in_cart}>
                         {#if course.owned}
@@ -55,10 +55,14 @@
                 <!-- Course content -->
                 <div>
                     <h2>Argomenti del corso</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet. Est tempora perferendis eos quia rerum a rerum laborum eum atque eligendi ut laboriosam optio 33 fugiat quae. At nihil nostrum et Quis magnam ab aliquam temporibus est ipsa reiciendis sed facilis odit aut mollitia consequatur. Aut consectetur veritatis ea adipisci ratione et iste quaerat. Ut beatae obcaecati est harum unde et galisum similique ut officia architecto sed nesciunt delectus.
+                    </p>
                 </div>
 
                 <!-- Chapters and paragraphs -->
                 <div>
+                    <h2>Indice</h2>
                     <ul class="list-group">
                         {#each course.chapters as chapter}
                             <li class="list-group-item">{chapter.title}
