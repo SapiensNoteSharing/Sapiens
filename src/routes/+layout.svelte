@@ -17,20 +17,22 @@ onMount(async () => {
 <div class="d-flex">
   <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
     <div class="container-fluid">
-      <!-- <a class="display-2 text-dark text-decoration-none ms-2" href="#">Sapiens</a> -->
-      <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
+      <a href="/"><img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens.svg" alt="Sapiens-Title"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="d-flex me-3">
         <span class="me-5">
-          <a class="display-6 text-decoration-none text-secondary" href="#">Esplora Corsi</a>
+          <a class="display-6 text-decoration-none text-primary" href="/admin/courses">Admin</a>
         </span>
         <span class="me-5">
-          <a class="display-6 text-decoration-none text-dark hoverable" href="#">Aula Studio</a>
+          <a class="display-6 text-decoration-none text-secondary" href="/">Esplora Corsi</a>
         </span>
         <span class="me-5">
-          <a class="display-6 text-decoration-none text-dark hoverable" href="#">Area personale</a>
+          <a class="display-6 text-decoration-none text-dark hoverable" href="/courses">Aula Studio</a>
+        </span>
+        <span class="me-5">
+          <a class="display-6 text-decoration-none text-dark hoverable" href="/settings">Area personale</a>
         </span>
         <span class="display-5 text-dark">18</span>
         <img class="me-3" style="width: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
