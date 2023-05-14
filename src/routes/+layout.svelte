@@ -16,9 +16,10 @@
 
 <div class="d-flex">
   <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
-    <div class="container-fluid">
+    <div class="d-flex w-100 justify-content-between align-items-center">
       <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
-      <div class="d-flex me-3">
+      
+      <div class="d-flex me-3 align-items-center">
         <span class="me-5">
           <a class="display-6 text-decoration-none text-secondary" href="#">Esplora Corsi</a>
         </span>
@@ -29,7 +30,9 @@
           <a class="display-6 text-decoration-none text-dark hoverable" href="#">Area personale</a>
         </span>
         <span class="display-5 text-dark me-2">{$dna}</span>
-        <img class="me-3" style="width: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+        <button type="button" class="me-3 btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#dnaInfo">
+          <img style="width: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+        </button>
       </div>
     </div>
   </nav>
@@ -134,15 +137,35 @@
     <!-- <img src="/src/style/DNA.svg" alt="" class="position-absolute background-image"> -->
     <slot></slot>
   </div>
+
+  <div class="modal fade" id="dnaInfo" tabindex="-1" aria-labelledby="dnaInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content border-dark">
+        <div class="modal-header bg-primary border-dark">
+          <h1 class="modal-title fs-1" id="dnaInfoLabel">Sequenze di DNA</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-3">
+          <p>
+          Lorem ipsum dolor sit amet. Est tempora perferendis eos quia rerum a rerum laborum eum atque eligendi ut laboriosam optio 33 fugiat quae. At nihil nostrum et Quis magnam ab aliquam temporibus est ipsa reiciendis sed facilis odit aut mollitia consequatur. Aut consectetur veritatis ea adipisci ratione et iste quaerat. Ut beatae obcaecati est harum unde et galisum similique ut officia architecto sed nesciunt delectus.
+          </p>
+        </div>
+        <div class="modal-footer border-dark">
+          <button type="button" class="btn btn-primary border-dark" data-bs-dismiss="modal">Capito</button>
+        </div>
+      </div>
+    </div>
+  </div>    
 </div>
 
 <div class="d-flex footer">
   <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
     <div class="container-fluid">
-      <img class="ms-3 footer-logo" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
+      <div>        
+        <img class="ms-3 footer-logo" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
+      </div>
       
       <div class="d-flex align-items-center">
-        <h2 class="display-6 me-5 mb-0 text-dark" href="#">Contattaci</h2>
         <a href="" class="me-4"><i class="icon hoverable bi bi-whatsapp text-dark"></i></a>
         <a href="" class="me-4"><i class="icon hoverable bi bi-discord text-dark"></i></a>
         <a href="" class="me-4"><i class="icon hoverable bi bi-instagram text-dark"></i></a>
@@ -150,6 +173,7 @@
         <a href="" class="me-4"><i class="icon hoverable bi bi-twitter text-dark"></i></a>
         <a href="" class="me-4"><i class="icon hoverable bi bi-linkedin text-dark"></i></a>
       </div>
+
       <div class="d-flex">
         <span class="me-5">
           <a class="display-6 text-decoration-none text-dark hoverable" href="#">Chi siamo</a>
@@ -157,7 +181,6 @@
         <span class="me-5">
           <a class="display-6 text-decoration-none text-dark hoverable" href="#">FAQ</a>
         </span>
-        
       </div>
     </div>
   </nav>

@@ -2,7 +2,6 @@
 import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
 import CourseCard from '$lib/components/CourseCard.svelte';
-import Searchbar from '$lib/components/Searchbar.svelte';
 import { view, value, filter_tags, dna } from '$lib/stores';
 
 let courses = [
@@ -27,7 +26,11 @@ let courses = [
             {
                 title: "1. Spazio euclideo e vettori",
                 paragraphs: [
-                    "",
+                    "1.1. I vettori",
+                    "1.2. Sistemi di riferimento e coordinate",
+                    "1.3. Le coordinate cartesiane",
+                    "1.4. Prodotto vettoriale e prodotto misto",
+                    "1.5. Rette e piani nello spazio",
                 ],
             },
             {
@@ -95,49 +98,49 @@ let courses = [
         owned: true,
         chapters: [
             {
-                title: "1. Spazio euclideo e vettori",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "2. Sistemi lineari",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "3. Algebra delle matrici",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "4. Spazi vettoriali e applicazioni lineari",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "5. Determinante",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "6. Autovalori e autovettori",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             }, 
             {
-                title: "7. Spazi euclidei",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "8. Teorema spettrale e forme quadratiche",
+                title: "",
                 paragraphs: [
                     "",
                 ],
@@ -165,49 +168,49 @@ let courses = [
         owned: true,
         chapters: [
             {
-                title: "1. Spazio euclideo e vettori",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "2. Sistemi lineari",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "3. Algebra delle matrici",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "4. Spazi vettoriali e applicazioni lineari",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "5. Determinante",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "6. Autovalori e autovettori",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             }, 
             {
-                title: "7. Spazi euclidei",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "8. Teorema spettrale e forme quadratiche",
+                title: "",
                 paragraphs: [
                     "",
                 ],
@@ -235,49 +238,49 @@ let courses = [
         owned: false,
         chapters: [
             {
-                title: "1. Spazio euclideo e vettori",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "2. Sistemi lineari",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "3. Algebra delle matrici",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "4. Spazi vettoriali e applicazioni lineari",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "5. Determinante",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "6. Autovalori e autovettori",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             }, 
             {
-                title: "7. Spazi euclidei",
+                title: "",
                 paragraphs: [
                     "",
                 ],
             },
             {
-                title: "8. Teorema spettrale e forme quadratiche",
+                title: "",
                 paragraphs: [
                     "",
                 ],
@@ -495,14 +498,6 @@ function replace_cost(key1, key2) {
     // and normalize the calculated distance
     return Math.map(distance, 0, max_dist, 0, 2);
 }
-
-function buy_cart() {
-    if ($dna >= 70) {
-        $dna -= 70;
-    } else {
-
-    }
-}
 </script>
 
 <div class="d-flex flex-column content bg-light">
@@ -515,13 +510,13 @@ function buy_cart() {
         <div class="d-flex">
             <div class="btn-group" role="group">
                 <input type="radio" class="btn-check" name="view" id="btnradio1" autocomplete="off" value="list" class:active={$view == 'list'} bind:group={$view}>
-                <label class="btn btn-outline-primary" for="btnradio1"><i class="bi bi-list"></i></label>
+                <label class="btn btn-outline-primary border-dark" for="btnradio1"><i class="bi bi-list"></i></label>
         
                 <input type="radio" class="btn-check" name="view" id="btnradio2" autocomplete="off" value="grid" class:active={$view == 'grid'} bind:group={$view}>
-                <label class="btn btn-outline-primary" for="btnradio2"><i class="bi bi-border-all"></i></label>
+                <label class="btn btn-outline-primary border-dark" for="btnradio2"><i class="bi bi-border-all"></i></label>
 
                 <input type="radio" class="btn-check" name="view" id="btnradio3" autocomplete="off" value="graph" disabled class:active={$view == 'graph'} bind:group={$view}>
-                <label class="btn btn-outline-primary"  for="btnradio3"><i class="bi bi-diagram-3"></i></label>
+                <label class="btn btn-outline-primary border-dark"  for="btnradio3"><i class="bi bi-diagram-3"></i></label>
             </div>
         </div>
     </div>
@@ -542,7 +537,7 @@ function buy_cart() {
         </div>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
             <i class="icon text-dark bi bi-cart"></i>
             <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{cart_items.length}</span>
         </button>
@@ -570,11 +565,11 @@ function buy_cart() {
     {/if}
 
     <!-- Carrello -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="shoppingCart" tabindex="-1" aria-labelledby="shoppingCartLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-1" id="exampleModalLabel">Carrello</h1>
+            <div class="modal-content border-dark">
+                <div class="modal-header bg-primary border-dark">
+                    <h1 class="modal-title fs-1" id="shoppingCartLabel">Carrello</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-0">
@@ -619,9 +614,9 @@ function buy_cart() {
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                    <button type="button" class="btn btn-primary" onclick="buy_cart();">Acquista</button>
+                <div class="modal-footer border-dark">
+                    <button type="button" class="btn btn-secondary border-dark" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="button" class="btn btn-primary border-dark" onclick="buy_cart();">Acquista</button>
                 </div>
             </div>
         </div>
