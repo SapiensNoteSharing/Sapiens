@@ -18,9 +18,6 @@
   <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
     <div class="container-fluid">
       <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <div class="d-flex me-3">
         <span class="me-5">
           <a class="display-6 text-decoration-none text-secondary" href="#">Esplora Corsi</a>
@@ -137,7 +134,33 @@
     <!-- <img src="/src/style/DNA.svg" alt="" class="position-absolute background-image"> -->
     <slot></slot>
   </div>
+</div>
 
+<div class="d-flex footer">
+  <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
+    <div class="container-fluid">
+      <img class="ms-3 footer-logo" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
+      
+      <div class="d-flex align-items-center">
+        <h2 class="display-6 me-5 mb-0 text-dark" href="#">Contattaci</h2>
+        <a href="" class="me-4"><i class="icon hoverable bi bi-whatsapp text-dark"></i></a>
+        <a href="" class="me-4"><i class="icon hoverable bi bi-discord text-dark"></i></a>
+        <a href="" class="me-4"><i class="icon hoverable bi bi-instagram text-dark"></i></a>
+        <a href="" class="me-4"><i class="icon hoverable bi bi-facebook text-dark"></i></a>
+        <a href="" class="me-4"><i class="icon hoverable bi bi-twitter text-dark"></i></a>
+        <a href="" class="me-4"><i class="icon hoverable bi bi-linkedin text-dark"></i></a>
+      </div>
+      <div class="d-flex">
+        <span class="me-5">
+          <a class="display-6 text-decoration-none text-dark hoverable" href="#">Chi siamo</a>
+        </span>
+        <span class="me-5">
+          <a class="display-6 text-decoration-none text-dark hoverable" href="#">FAQ</a>
+        </span>
+        
+      </div>
+    </div>
+  </nav>
 </div>
 
 <style lang="scss">
@@ -147,6 +170,10 @@
         width: 25%;
         background-color: $primary;
         border-right: 1px solid $dark;
+    }
+    
+    .icon {
+      font-size: 20px;
     }
 
     .hoverable {
@@ -165,5 +192,14 @@
     .background-image {
       z-index: 0;
       filter: opacity(1);
+    }
+
+    .footer {
+      border-top: 1px solid $dark;
+    }
+
+    .footer-logo {
+      width: 12rem;
+      filter: brightness(0);
     }
 </style>
