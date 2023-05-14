@@ -21,13 +21,13 @@
       
       <div class="d-flex me-3 align-items-center">
         <span class="me-5">
-          <a class="display-6 text-decoration-none text-secondary" href="#">Esplora Corsi</a>
+          <a class="display-6 text-decoration-none text-secondary" href="/esplora_corsi">Esplora Corsi</a>
         </span>
         <span class="me-5">
-          <a class="display-6 text-decoration-none text-dark hoverable" href="#">Aula Studio</a>
+          <a class="display-6 text-decoration-none text-dark hoverable" href="/aula_studio">Aula Studio</a>
         </span>
         <span class="me-5">
-          <a class="display-6 text-decoration-none text-dark hoverable" href="#">Area personale</a>
+          <a class="display-6 text-decoration-none text-dark hoverable" href="/area_personale">Area personale</a>
         </span>
         <span class="display-5 text-dark me-2">{$dna}</span>
         <button type="button" class="me-3 btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#dnaInfo">
@@ -39,7 +39,7 @@
 </div>
 
 <div class="d-flex">
-  <div class="sidebar align-self-stretch px-3 position-relative">
+  <div class="sidebar align-self-stretch px-3 position-relative flex-shrink-0">
     <div class="d-flex align-items-center mt-5 mb-4">
         <h2 class="mx-auto display-6 text-dark">Filtri</h2>
     </div>
