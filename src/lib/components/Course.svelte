@@ -1,10 +1,9 @@
 <script>
     import Accordion from "./Accordion.svelte";
-    import AccordionItem from "./AccordionItem.svelte";
+    import AccordionItem from "./Accordionitem.svelte";
     import Rating from "./Rating.svelte";
     import Icon from "./Icon.svelte";
     import { filter_tags } from '$lib/stores';
-    import Accordionitem from "./AccordionItem.svelte";
 
     export let course = {};
     let classes = '';
@@ -66,7 +65,7 @@
                     <h2>Indice</h2>
                     <Accordion let:id>
                         {#each course.chapters as chapter, i}
-                            <Accordionitem parent={id}>
+                            <AccordionItem parent={id} open={i == 0}>
                                 <div slot="name">
                                     {chapter.title}
                                 </div>
@@ -75,7 +74,7 @@
                                         <li class="list-group-item">{paragraph}</li>
                                     {/each}
                                 </div>
-                            </Accordionitem>
+                            </AccordionItem>
                         {/each}
                     </Accordion>
                 </div>
