@@ -2,13 +2,12 @@
     let classes = "";
     export {classes as class};
 
-    let styles = "";
-    export {styles as style};
+    let style = "";
 
-    export let id = Math.floor(Math.random() * 1000);
+    export let id = 'acc' + Math.floor(Math.random() * 1000000) + Math.floor(Math.random() * 1000000);
 </script>
 
-<div class="accordion {classes}" style="{styles}" id="{id}">
+<div class="accordion {classes}" {style} {id}>
     <slot></slot>
 </div>
 

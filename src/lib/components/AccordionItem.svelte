@@ -4,7 +4,7 @@
   export let style = '';
   export let parent;
 
-  export let id = Math.floor(Math.random() * 1000);
+  export let id = 'acc-item' + Math.floor(Math.random() * 1000000) + Math.floor(Math.random() * 1000000);
 </script>
 
 <div class="accordion-item {classes}" {style}>
@@ -13,7 +13,7 @@
       <slot name="name"></slot>
     </div>
   </h2>
-  <div {id} class="accordion-collapse collapse show" data-bs-parent={parent ? `#${parent}` : ""}>
+  <div {id} class="accordion-collapse collapse" data-bs-parent={parent ? `${parent}` : ""}>
     <div class="accordion-body">
       <slot name="body"></slot>
     </div>

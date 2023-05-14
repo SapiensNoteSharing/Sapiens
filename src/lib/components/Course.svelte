@@ -4,6 +4,7 @@
     import Rating from "./Rating.svelte";
     import Icon from "./Icon.svelte";
     import { filter_tags } from '$lib/stores';
+    import Accordionitem from "./AccordionItem.svelte";
 
     export let course = {};
     let classes = '';
@@ -63,25 +64,20 @@
                 <!-- Chapters and paragraphs -->
                 <div class="mb-4">
                     <h2>Indice</h2>
-                    <div class="accordion" id="{course.name}-index">
+                    <Accordion let:id>
                         {#each course.chapters as chapter, i}
-                            <div class="accordion-item index-parent">
-                                <h2 class="accordion-header" id="heading">
-                                    <!-- {chapter.title.split(". ").bind("-")} -->
-                                    <button class="accordion-button index-parent" type="button" data-bs-toggle="collapse" data-bs-target="#{course.name}-{i}" aria-expanded="true" aria-controls="{course.name}-{i}">
-                                        {chapter.title}
-                                    </button>
-                                </h2>
-                                <div id="{course.name}-{i}" class="accordion-collapse collapse show" aria-labelledby="heading">
-                                    <div class="accordion-body">
-                                        {#each chapter.paragraphs as paragraph}
-                                            <li class="list-group-item">{paragraph}</li>
-                                        {/each}
-                                    </div>
+                            <Accordionitem parent={id}>
+                                <div slot="name">
+                                    {chapter.title}
                                 </div>
-                            </div>
+                                <div slot="body">
+                                    {#each chapter.paragraphs as paragraph}
+                                        <li class="list-group-item">{paragraph}</li>
+                                    {/each}
+                                </div>
+                            </Accordionitem>
                         {/each}
-                    </div>
+                    </Accordion>
                 </div>
 
                 <!-- Further courses info -->
