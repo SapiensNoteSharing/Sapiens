@@ -12,17 +12,17 @@
 </script>
 
 <div class="rounded {classes} confined" {style}>
-    <Accordion keepOpen>
+    <Accordion let:id>
         <AccordionItem>
             <div slot="name" class="d-flex align-items-center w-100">
-                <h2 class="mb-0">{course.cdl_code} - {course.name} ({course.code})</h2>
+                <h2 class="mb-0">{course.code} - {course.name}</h2>
                 {#each course.tags as tag}
                     <span class="badge bg-{ tag.color } ms-3">{ tag.name }</span>
                 {/each}
                 <div class="d-flex ms-auto me-3">
-                    <a class="" href="/corsi/{course.id}/formulario"><i class="icon mx-2 text-secondary bi bi-percent"></i></a>
+                    <!-- <a class="" href="/corsi/{course.id}/formulario"><i class="icon mx-2 text-secondary bi bi-percent"></i></a>
                     <a class="" href="/corsi/{course.id}/note"><i class="icon mx-2 text-secondary bi bi-journal-text"></i></a>
-                    <a class="" href="/corsi/{course.id}/test"><i class="icon mx-2 text-secondary bi bi-pencil"></i></a>
+                    <a class="" href="/corsi/{course.id}/test"><i class="icon mx-2 text-secondary bi bi-pencil"></i></a> -->
                     <label for="{course.name} favourite">
                         <input type="checkbox" class="hidden cursor-pointer" id="{course.name} favourite" bind:checked={course.favourite}>
                         {#if course.favourite}
@@ -34,7 +34,7 @@
                                 <i class="icon mx-2 bi bi-heart"></i>
                             </div>
                         {/if}
-                      </label>
+                    </label>
                     <label for="{course.name} in cart">
                         <input type="checkbox" class="hidden cursor-pointer" id="{course.name} in cart" bind:checked={course.in_cart}>
                         {#if course.owned}
@@ -55,21 +55,33 @@
                 <!-- Course content -->
                 <div>
                     <h2>Argomenti del corso</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet. Est tempora perferendis eos quia rerum a rerum laborum eum atque eligendi ut laboriosam optio 33 fugiat quae. At nihil nostrum et Quis magnam ab aliquam temporibus est ipsa reiciendis sed facilis odit aut mollitia consequatur. Aut consectetur veritatis ea adipisci ratione et iste quaerat. Ut beatae obcaecati est harum unde et galisum similique ut officia architecto sed nesciunt delectus.
+                    </p>
                 </div>
 
                 <!-- Chapters and paragraphs -->
-                <div>
-                    <ul class="list-group">
-                        {#each course.chapters as chapter}
-                            <li class="list-group-item">{chapter.title}
-                                <ul class="list-group">
-                                    {#each chapter.paragraphs as paragraph}
-                                        <li class="list-group-item">{paragraph}</li>
-                                    {/each}
-                                </ul>
-                            </li>
+                <div class="mb-4">
+                    <h2>Indice</h2>
+                    <div class="accordion" id="{course.name}-index">
+                        {#each course.chapters as chapter, i}
+                            <div class="accordion-item index-parent">
+                                <h2 class="accordion-header" id="heading">
+                                    <!-- {chapter.title.split(". ").bind("-")} -->
+                                    <button class="accordion-button index-parent" type="button" data-bs-toggle="collapse" data-bs-target="#{course.name}-{i}" aria-expanded="true" aria-controls="{course.name}-{i}">
+                                        {chapter.title}
+                                    </button>
+                                </h2>
+                                <div id="{course.name}-{i}" class="accordion-collapse collapse show" aria-labelledby="heading">
+                                    <div class="accordion-body">
+                                        {#each chapter.paragraphs as paragraph}
+                                            <li class="list-group-item">{paragraph}</li>
+                                        {/each}
+                                    </div>
+                                </div>
+                            </div>
                         {/each}
-                    </ul>
+                    </div>
                 </div>
 
                 <!-- Further courses info -->
@@ -79,21 +91,27 @@
                     <p>Curriculum: {course.curriculum_code} - {course.curriculum_name}</p>
                 </div>
 
-                <AccordionItem>
-                    <div slot="name" class="d-flex w-100 justify-content-between align-items-center">
-                        <div>
-                            <span>{ course.reviews_number} recensioni</span>    
+                <div class="accordion" id="{course.name}-reviews">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="{course.name}-reviews-heading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{course.name}-reviews-body" aria-expanded="false" aria-controls="{course.name}-reviews-body">
+                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                        <div>
+                                            <span>{ course.reviews_number} recensioni</span>    
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2">{ course.rating }</span>
+                                            <Rating {course} class="me-3"/>
+                                        </div>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="{course.name}-reviews-body" class="accordion-collapse collapse" aria-labelledby="{course.name}-reviews-heading">
+                                <div class="accordion-body">
+                                </div>
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <span class="me-2">{ course.rating }</span>
-                            <Rating {course} class="me-3"/>
-                        </div>
-                    </div>
-
-                    <div slot="body">
-
-                    </div>
-                </AccordionItem>
+                </div>
             </div>
         </AccordionItem>
     </Accordion>
@@ -147,4 +165,24 @@
         animation-duration: .5s;
         animation-iteration-count: 1;
     }      
+
+    .index-parent {
+        border: 0px !important;
+    }
+    
+    .accordion-button::before {
+        flex-shrink: 0;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-right: 1rem;
+        content: "";
+        background-image: var(--bs-accordion-btn-active-icon);
+        background-repeat: no-repeat;
+        background-size: 1.25rem;
+        transition: transform .2s ease-in-out;
+    }
+        
+    .accordion-button::after {
+        display: none !important;
+    }
 </style>
