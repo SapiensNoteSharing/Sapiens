@@ -65,13 +65,13 @@
                     <h2>Indice</h2>
                     <Accordion let:id>
                         {#each course.chapters as chapter, i}
-                            <AccordionItem parent={id} open={i == 0}>
+                            <AccordionItem parent={id} open="true" class="border-light">
                                 <div slot="name">
                                     {chapter.title}
                                 </div>
                                 <div slot="body">
                                     {#each chapter.paragraphs as paragraph}
-                                        <li class="list-group-item">{paragraph}</li>
+                                        <li class="fs-3 list-group-item">{paragraph}</li>
                                     {/each}
                                 </div>
                             </AccordionItem>
@@ -87,25 +87,25 @@
                 </div>
 
                 <div class="accordion" id="{course.name}-reviews">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="{course.name}-reviews-heading">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{course.name}-reviews-body" aria-expanded="false" aria-controls="{course.name}-reviews-body">
-                                    <div class="d-flex w-100 justify-content-between align-items-center">
-                                        <div>
-                                            <span>{ course.reviews_number} recensioni</span>    
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <span class="me-2">{ course.rating }</span>
-                                            <Rating {course} class="me-3"/>
-                                        </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="{course.name}-reviews-heading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{course.name}-reviews-body" aria-expanded="false" aria-controls="{course.name}-reviews-body">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <div>
+                                        <span>{ course.reviews_number } recensioni</span>    
                                     </div>
-                                </button>
-                            </h2>
-                            <div id="{course.name}-reviews-body" class="accordion-collapse collapse" aria-labelledby="{course.name}-reviews-heading">
-                                <div class="accordion-body">
+                                    <div class="d-flex align-items-center">
+                                        <span class="me-2">{ course.rating }</span>
+                                        <Rating { course } class="me-3"/>
+                                    </div>
                                 </div>
+                            </button>
+                        </h2>
+                        <div id="{course.name}-reviews-body" class="accordion-collapse collapse" aria-labelledby="{course.name}-reviews-heading">
+                            <div class="accordion-body">
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </AccordionItem>
@@ -163,21 +163,5 @@
 
     .index-parent {
         border: 0px !important;
-    }
-    
-    .accordion-button::before {
-        flex-shrink: 0;
-        width: 1.25rem;
-        height: 1.25rem;
-        margin-right: 1rem;
-        content: "";
-        background-image: var(--bs-accordion-btn-active-icon);
-        background-repeat: no-repeat;
-        background-size: 1.25rem;
-        transition: transform .2s ease-in-out;
-    }
-        
-    .accordion-button::after {
-        display: none !important;
     }
 </style>

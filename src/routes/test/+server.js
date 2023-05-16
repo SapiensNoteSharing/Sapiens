@@ -5,11 +5,8 @@ const headers = {
     "Accept": "application/vnd.github+json"
 }
 
-
-
 export async function GET({url, fetch}){
-
-/*
+    /*
     const obj = await getgit(config.git.owner, config.git.repo, config.git.path)
     console.log(obj)
     */
@@ -47,7 +44,6 @@ export async function GET({url, fetch}){
     let buff = Buffer.from(data, 'base64');
     let text = buff.toString('ascii');
     console.log(text)
-
 
     return new Response(JSON.stringify(body))
 }

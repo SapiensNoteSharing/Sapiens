@@ -3,6 +3,7 @@ import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
 import CourseCard from '$lib/components/CourseCard.svelte';
 import { view, value, filter_tags, dna } from '$lib/stores';
+import { space } from 'svelte/internal';
 
 let courses = [
     {
@@ -296,8 +297,13 @@ let filtered = [...courses];
 
 $: $value != undefined && search()
 $: $filter_tags && search()
+$: sort_courses && search()
 
 let cart_items = [...courses];
+
+let favourites_filter;
+
+let sort_courses;
 
 function search() {
     // if search bar value is empty string show all courses that follow the 
@@ -311,6 +317,44 @@ function search() {
 
             if (!filtered_out)
                 filtered.push(course);
+        }
+
+        if (sort_courses == "name_ascending") {
+            filtered.sort((a, b) => {
+                if (a.name < b.name)
+                    return -1;
+                else if (a.name == b.name) 
+                    return 0;
+                else
+                    return 1;
+            });
+        } else if (sort_courses == "name_descending") {
+            filtered.sort((a, b) => {
+                if (a.name > b.name)
+                    return -1;
+                else if (a.name == b.name) 
+                    return 0;
+                else
+                    return 1;
+            });
+        } else if (sort_courses == "code_ascending") {
+            filtered.sort((a, b) => {
+                if (a.code < b.code)
+                    return -1;
+                else if (a.code == b.code) 
+                    return 0;
+                else
+                    return 1;
+            });
+        } else if (sort_courses == "code_descending") {
+            filtered.sort((a, b) => {
+                if (a.code > b.code)
+                    return -1;
+                else if (a.code == b.code) 
+                    return 0;
+                else
+                    return 1;
+            });
         }
     }
     // else
@@ -510,37 +554,66 @@ function replace_cost(key1, key2) {
         <div class="d-flex">
             <div class="btn-group" role="group">
                 <input type="radio" class="btn-check" name="view" id="btnradio1" autocomplete="off" value="list" class:active={$view == 'list'} bind:group={$view}>
-                <label class="btn btn-outline-primary border-dark" for="btnradio1"><i class="bi bi-list"></i></label>
+                <label class="btn btn-outline-primary border-dark align-self-center px-3 py-2" for="btnradio1"><i class="text-dark fs-2 bi bi-list"></i></label>
         
                 <input type="radio" class="btn-check" name="view" id="btnradio2" autocomplete="off" value="grid" class:active={$view == 'grid'} bind:group={$view}>
-                <label class="btn btn-outline-primary border-dark" for="btnradio2"><i class="bi bi-border-all"></i></label>
+                <label class="btn btn-outline-primary border-dark align-self-center px-3 py-2" for="btnradio2"><i class="text-dark fs-2 bi bi-border-all"></i></label>
 
-                <input type="radio" class="btn-check" name="view" id="btnradio3" autocomplete="off" value="graph" disabled class:active={$view == 'graph'} bind:group={$view}>
-                <label class="btn btn-outline-primary border-dark"  for="btnradio3"><i class="bi bi-diagram-3"></i></label>
+                <input type="radio" class="btn-check" name="view" id="btnradio3" autocomplete="off" value="graph" class:active={$view == 'graph'} bind:group={$view} disabled>
+                <label class="btn btn-outline-primary border-dark align-self-center px-3 py-2 cursor-not-allowed" for="btnradio3"><i class="text-dark fs-2 bi bi-diagram-3"></i></label>
             </div>
         </div>
     </div>
 
     <!-- filters and cart -->
     <div class="d-flex my-4 justify-content-between">
-        <div class="d-flex">
-            {#if $filter_tags.length == 0}
+        <div class="d-flex align-items-center">
+            {#if $filter_tags.length == 2}
                 <span class="py-2"><i class="icon bi bi-funnel"></i></span>
+                <h4 class="fs-1 ms-3 my-0">Nessun filtro selezionato</h4>
             {:else}
                 <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
             {/if}
             {#each $filter_tags as tag}
                 {#if tag.selected}
-                    <span class="badge my-auto p-2 bg-{ tag.color } ms-3 ">{ tag.name }</span>
+                    <span class="badge my-auto p-2 bg-{ tag.color } ms-3 filter_badge text-dark">{ tag.name }</span>
                 {/if}
             {/each}
         </div>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
-            <i class="icon text-dark bi bi-cart"></i>
-            <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{cart_items.length}</span>
-        </button>
+        <div class="d-flex align-items-center">
+            <!-- sort -->
+            {#if $value == undefined || $value == ""}
+                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sort_courses}>
+                    <option value="name_ascending">Nome - crescente</option>
+                    <option value="name_descending">Nome - decrescente</option>
+                    <option value="code_ascending">Codice - crescente</option>
+                    <option value="code_descending">Codice - decrescente</option>
+                </select>
+            {:else}
+                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" disabled>
+                    <option value="name_ascending">Corrispondenza</option>
+                </select>
+            {/if}
+
+            <!-- favourites filter -->
+            <div>
+                <input type="checkbox" class="btn-check" id="favourites_filter" autocomplete="off" bind:checked={favourites_filter}>
+                <label class="btn btn-outline-light text-dark border-light" for="favourites_filter">
+                    {#if favourites_filter}
+                        <i class="icon me-2 text-secondary bi bi-heart-fill"></i>
+                    {:else}
+                        <i class="icon me-2 text-dark bi bi-heart" ></i>
+                    {/if}
+                </label><br>
+              </div>
+            
+            <!-- cart button -->
+            <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+                <i class="icon text-dark bi bi-cart"></i>
+                <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{cart_items.length}</span>
+            </button>
+        </div>  
     </div>
 
     <!-- courses -->
@@ -637,6 +710,10 @@ function replace_cost(key1, key2) {
 
     .icon {
         font-size: 24px;
+    }
+
+    .filter_badge {
+        border: 1px solid $dark;
     }
 
     :root {

@@ -2,139 +2,192 @@
   import { onMount } from "svelte";
   import Accordion from '$lib/components/Accordion.svelte';
   import Searchbar from '$lib/components/Searchbar.svelte';
+  import { page } from '$app/stores';
   import '$css/global.scss';
 
-  import { value, filter_tags, dna } from '$lib/stores'
+  import { view, value, filter_tags, dna } from '$lib/stores'
 
   let bootstrap;
-
   onMount(async () => {
     bootstrap = await import('bootstrap')
   })
 
+  let faculties = [
+    "Ingegneria informatica",
+    "Ingegneria meccanica",
+    "Ingegneria gestionale",
+    "Ingegneria biomedica",
+    "Ingegneria elettronica",
+    "Chimica e tecnologie farmaceutiche", 
+    "Giurrisprudenza", 
+    "Psicologia",
+    "Scienze sociali",
+    "Scienze della comunicazione", 
+    "Scienze della formazione primaria", 
+    "Filosofia",
+    "Architettura",
+    "Medicina",
+    "Scienze farmaceutiche",
+  ]
 </script>
 
-<div class="d-flex">
-  <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
-    <div class="d-flex w-100 justify-content-between align-items-center">
-      <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
-      
-      <div class="d-flex me-3 align-items-center">
-        <span class="me-5">
-          <a class="display-6 text-decoration-none text-secondary" href="/esplora_corsi">Esplora Corsi</a>
-        </span>
-        <span class="me-5">
-          <a class="display-6 text-decoration-none text-dark hoverable" href="/aula_studio">Aula Studio</a>
-        </span>
-        <span class="me-5">
-          <a class="display-6 text-decoration-none text-dark hoverable" href="/area_personale">Area personale</a>
-        </span>
-        <span class="display-5 text-dark me-2">{$dna}</span>
-        <button type="button" class="me-3 btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#dnaInfo">
-          <img style="width: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
-        </button>
+<div class="d-flex sticky-top">
+    <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
+      <div class="d-flex w-100 justify-content-between align-items-center">
+        <!-- Sapiens Logo -->
+        <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
+        
+        <div class="d-flex me-3 align-items-center">
+          <!-- Site navigation -->
+          <span class="me-5">
+            <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/esplora_corsi"} href="/esplora_corsi">Esplora Corsi</a>
+          </span>
+          <span class="me-5">
+            <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/aula_studio"} href="/aula_studio">Aula Studio</a>
+          </span>
+          <span class="me-5">
+            <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/area_personale"} href="/area_personale">Area personale</a>
+          </span>
+
+          <!-- credit -->
+          <span class="display-5 text-dark me-2">{$dna}</span>
+          <button type="button" class="me-3 p-2 btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#dnaInfo">
+            <img style="width: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+          </button>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 </div>
 
-<div class="d-flex">
+<div class="d-flex h-100 align-self-stretch">
   <div class="sidebar align-self-stretch px-3 position-relative flex-shrink-0">
-    <div class="d-flex align-items-center mt-5 mb-4">
+    {#if $page.route.id == '/esplora_corsi'}
+      <div class="d-flex align-items-center mt-5 mb-4">
         <h2 class="mx-auto display-6 text-dark">Filtri</h2>
-    </div>
-
-    <!-- filter according to input -->
-    <Searchbar class="align-self-center ms-auto me-auto" bind:value={$value}></Searchbar>
-
-    <div class="accordion my-4 mx-3 accordion-border-color-dark" id="accordionPanelsStayOpenExample">
-      <!-- filter according to degree type -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="Tags_title">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tags_collapse" aria-expanded="true" aria-controls="tags_collapse">
-            Tipo di Laurea
-          </button>
-        </h2>
-        <div id="tags_collapse" class="accordion-collapse collapse show" aria-labelledby="Tags_title">
-          <div class="accordion-body d-flex flex-wrap">
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Triennale" autocomplete="off">
-              <label class="btn btn-outline-secondary" for="Triennale">Triennale</label><br>
-            </div>       
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Magistrale" autocomplete="off">
-              <label class="btn btn-outline-success" for="Magistrale">Magistrale</label><br>
-            </div> 
-          </div>
-        </div>
       </div>
 
-      <!-- filter according to year and semester -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="year_title">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#year_collapse" aria-expanded="true" aria-controls="year_collapse">
-            Anno di insegnamento
-          </button>
-        </h2>
-        <div id="year_collapse" class="accordion-collapse collapse show" aria-labelledby="year_title">
-          <div class="accordion-body">
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Primo anno primo semestre" autocomplete="off">
-              <label class="btn btn-outline-primary" for="Primo anno primo semestre">Primo anno - Primo semestre</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Primo anno secondo semestre" autocomplete="off">
-              <label class="btn btn-outline-primary" for="Primo anno secondo semestre">Primo anno - Secondo semestre</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Secondo anno" autocomplete="off">
-              <label class="btn btn-outline-secondary" for="Secondo anno">Secondo anno</label><br>
-            </div>
-            <div class="me-2 mb-2">
-              <input type="checkbox" class="btn-check" id="Terzo anno" autocomplete="off">
-              <label class="btn btn-outline-success" for="Terzo anno">Terzo anno</label><br>
+      <!-- filter according to input -->
+      <Searchbar class="align-self-center ms-auto me-auto" bind:value={$value}></Searchbar>
+
+      <div class="accordion my-4 mx-3">
+        <!-- filter according to degree faculty -->
+        <div class="accordion-item border-dark">
+          <h2 class="accordion-header" id="faculty_filter">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faculty_collapse" aria-expanded="true" aria-controls="faculty_collapse">
+              Corso di Laurea
+            </button>
+          </h2>
+          <div id="faculty_collapse" class="accordion-collapse collapse show" aria-labelledby="faculty_filter">
+            <div class="accordion-body d-flex flex-wrap">
+              {#each faculties as faculty}
+                <div class="me-2 mb-2">
+                  <input type="checkbox" class="btn-check filter_btn" id="{faculty.replace(" ", "_")}" autocomplete="off">
+                  <label class="btn btn-outline-primary text-dark border-primary" for="{faculty.replace(" ", "_")}">{faculty}</label><br>
+                </div>  
+              {/each}
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- filter according to tags -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="Tags_title">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tags_collapse" aria-expanded="true" aria-controls="tags_collapse">
-            Tags
-          </button>
-        </h2>
-        <div id="tags_collapse" class="accordion-collapse collapse show" aria-labelledby="Tags_title">
-          <div class="accordion-body d-flex flex-wrap">
-            {#each $filter_tags as tag}
+        <!-- filter according to degree type -->
+        <div class="accordion-item border-dark">
+          <h2 class="accordion-header" id="degree_filter">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#degree_collapse" aria-expanded="true" aria-controls="degree_collapse">
+              Tipo di Laurea
+            </button>
+          </h2>
+          <div id="degree_collapse" class="accordion-collapse collapse show" aria-labelledby="degree_filter">
+            <div class="accordion-body d-flex flex-wrap">
               <div class="me-2 mb-2">
-                <input type="checkbox" class="btn-check" id="{tag.name}" bind:checked={tag.selected} autocomplete="off">
-                <label class="btn btn-outline-{tag.color}" for="{tag.name}">{tag.name}</label><br>
+                <input type="checkbox" class="btn-check filter_btn" id="triennale" autocomplete="off">
+                <label class="btn btn-outline-primary text-dark border-primary" for="triennale">Triennale</label><br>
+              </div>       
+              <div class="me-2 mb-2">
+                <input type="checkbox" class="btn-check filter_btn" id="magistrale" autocomplete="off">
+                <label class="btn btn-outline-primary text-dark border-primary" for="magistrale">Magistrale</label><br>
               </div>
-            {/each}
+              <div class="me-2 mb-2">
+                <input type="checkbox" class="btn-check filter_btn" id="ciclo_unico" autocomplete="off">
+                <label class="btn btn-outline-primary text-dark border-primary" for="ciclo_unico">A Ciclo Unico</label><br>
+              </div>
+              <!--  -->
+              <!-- {#if } -->
+            </div>
+            <hr class="m-0">
+            <h2 class="px-4 pt-4">Triennale</h2>
+            <div class="accordion-body d-flex flex-wrap">
+              <div class="me-2 mb-2">
+                <input type="checkbox" class="btn-check" id="Primo anno primo semestre" autocomplete="off">
+                <label class="btn btn-outline-primary text-dark border-primary" for="Primo anno primo semestre">Primo anno - Primo semestre</label><br>
+              </div>
+              <div class="me-2 mb-2">
+                <input type="checkbox" class="btn-check" id="Primo anno secondo semestre" autocomplete="off">
+                <label class="btn btn-outline-primary text-dark border-primary" for="Primo anno secondo semestre">Primo anno - Secondo semestre</label><br>
+              </div>
+              <div class="me-2 mb-2">
+                <input type="checkbox" class="btn-check" id="Secondo anno" autocomplete="off">
+                <label class="btn btn-outline-primary text-dark border-primary" for="Secondo anno">Secondo anno</label><br>
+              </div>
+              <div class="me-2 mb-2">
+                <input type="checkbox" class="btn-check" id="Terzo anno" autocomplete="off">
+                <label class="btn btn-outline-primary text-dark border-primary" for="Terzo anno">Terzo anno</label><br>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- filter according to rating -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="Tags_title">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tags_collapse" aria-expanded="true" aria-controls="tags_collapse">
-            Valutazione
-          </button>
-        </h2>
-        <div id="tags_collapse" class="accordion-collapse collapse show" aria-labelledby="Tags_title">
-          <div class="accordion-body d-flex flex-wrap">
-            <!-- Rating filter -->
+        <!-- filter according to tags -->
+        <div class="accordion-item border-dark">
+          <h2 class="accordion-header" id="tags_filter">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tags_collapse" aria-expanded="true" aria-controls="tags_collapse">
+              Tags
+            </button>
+          </h2>
+          <div id="tags_collapse" class="accordion-collapse collapse show" aria-labelledby="tags_filter">
+            <div class="accordion-body d-flex flex-wrap">
+              {#each $filter_tags as tag}
+                <div class="me-2 mb-2">
+                  <input type="checkbox" class="btn-check" id="{tag.name}" bind:checked={tag.selected} autocomplete="off">
+                  <label class="btn btn-outline-{tag.color} text-dark border-dark" for="{tag.name}">{tag.name}</label><br>
+                </div>
+              {/each}
+            </div>
+          </div>
+        </div>
+
+        <!-- filter according to rating -->
+        <div class="accordion-item border-dark">
+          <h2 class="accordion-header" id="rating_filter">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#rating_collapse" aria-expanded="true" aria-controls="rating_collapse">
+              Valutazione
+            </button>
+          </h2>
+          <div id="rating_collapse" class="accordion-collapse collapse show" aria-labelledby="rating_filter">
+            <div class="accordion-body d-flex flex-wrap">
+              <!-- Rating filter -->
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    {:else if $page.route.id == '/aula_studio'}
+      <nav>
+
+      </nav>
+    {:else if $page.route.id == '/area_personale'}
+      <nav id="personal_area_scrollspy" class="mt-4 h-100 flex-column align-items-stretch pe-4 border-end">
+        <nav class="nav nav-pills flex-column">
+          <a class="fs-1 nav-link" href="#account">Account</a>
+          <nav class="nav nav-pills flex-column">
+            <a class="fs-1 nav-link ms-3 my-1" href="#dati_personali">Dati Personali</a>
+            <a class="fs-1 nav-link ms-3 my-1" href="#dati_accademici-1-2">Dati Accademici</a>
+          </nav>
+          <a class="fs-1 nav-link" href="#preferenze">Preferenze</a>
+        </nav>
+      </nav>
+    {/if}
   </div>
 
   <div class="flex-grow-1 position-relative">
-    <!-- <img src="/src/style/DNA.svg" alt="" class="position-absolute background-image"> -->
     <slot></slot>
   </div>
 
@@ -162,24 +215,24 @@
   <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
     <div class="container-fluid">
       <div>        
-        <img class="ms-3 footer-logo" src="/src/style/Sapiens.svg" alt="Sapiens-Title">
+        <img class="ms-3 footer-logo" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
       </div>
       
       <div class="d-flex align-items-center">
-        <a href="" class="me-4"><i class="icon hoverable bi bi-whatsapp text-dark"></i></a>
-        <a href="" class="me-4"><i class="icon hoverable bi bi-discord text-dark"></i></a>
-        <a href="" class="me-4"><i class="icon hoverable bi bi-instagram text-dark"></i></a>
-        <a href="" class="me-4"><i class="icon hoverable bi bi-facebook text-dark"></i></a>
-        <a href="" class="me-4"><i class="icon hoverable bi bi-twitter text-dark"></i></a>
-        <a href="" class="me-4"><i class="icon hoverable bi bi-linkedin text-dark"></i></a>
+        <a href="" class="me-4"><i class="icon footer_element bi bi-whatsapp"></i></a>
+        <a href="" class="me-4"><i class="icon footer_element bi bi-discord"></i></a>
+        <a href="" class="me-4"><i class="icon footer_element bi bi-instagram"></i></a>
+        <a href="" class="me-4"><i class="icon footer_element bi bi-facebook"></i></a>
+        <a href="" class="me-4"><i class="icon footer_element bi bi-twitter"></i></a>
+        <a href="" class="me-4"><i class="icon footer_element bi bi-linkedin"></i></a>
       </div>
 
       <div class="d-flex">
         <span class="me-5">
-          <a class="display-6 text-decoration-none text-dark hoverable" href="#">Chi siamo</a>
+          <a class="display-6 text-decoration-none footer_element" href="#">Chi siamo</a>
         </span>
         <span class="me-5">
-          <a class="display-6 text-decoration-none text-dark hoverable" href="#">FAQ</a>
+          <a class="display-6 text-decoration-none footer_element" href="#">FAQ</a>
         </span>
       </div>
     </div>
@@ -199,22 +252,18 @@
       font-size: 20px;
     }
 
-    .hoverable {
+    .navbar_page.active {
+      color: $secondary;
+    }
+
+    .navbar_page:not(.active) {
+      color: $dark;
       opacity: 0.5;
     }
     
-    .hoverable:hover {
+    .navbar_page:not(.active):hover {
       opacity: 1;
       transition: 0.3s;
-    }
-
-    .custom-scrollbar {
-      scroll-behavior: smooth;
-    }
-
-    .background-image {
-      z-index: 0;
-      filter: opacity(1);
     }
 
     .footer {
@@ -224,5 +273,16 @@
     .footer-logo {
       width: 12rem;
       filter: brightness(0);
+    }
+    
+    .footer_element {
+      color: $dark;
+      opacity: 0.5;
+    }
+    
+    .footer_element:hover {
+      color: $secondary;
+      transition: 0.1s;
+      opacity: 1;
     }
 </style>

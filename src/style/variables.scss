@@ -1,6 +1,5 @@
-/* Theme colors */
-
-$primary: #b2e3d7;
+// Theme colors
+$primary: #b2e3d0;
 $primary-shade-1: #F5FCFB;
 
 $secondary: #fa4d6a;
@@ -16,7 +15,7 @@ $dark: #131319;
 $yellow: #ED9E69;
 $blue: #3c76c6;
 
-/*  scss-docs-start gray-color-variables */
+// scss-docs-start gray-color-variables
 $gray-500: #F7F8F8 !default;
 $gray-600: #EEEEEF !default;
 $gray-700: #DBDCDE !default;
@@ -24,17 +23,15 @@ $gray-800: #9C9DA3 !default;
 $gray-900: #444650 !default;
 $black:    #0F121F !default;
 
-/* scss-docs-end gray-color-variables */
+// scss-docs-end gray-color-variables
 
-/* scss-docs-start card-variables */
-
+// scss-docs-start card-variables
 $card-border-radius: 20px !default;
 $card-box-shadow: none !default;
 $card-bg: $gray-500 !default;
 
-/* scss-docs-end card-variables */
-
-$btn-font-family: "Inter" !default;
+// scss-docs-end card-variables
+$btn-font-family: "Poppins" !default;
 $btn-font-size: 0.8rem !default; //1rem !default;
 $btn-white-space: nowrap !default; 
 $btn-border-color: $dark !default;
@@ -45,8 +42,7 @@ $btn-focus-box-shadow: none !default;
 $btn-active-box-shadow: none !default;
 $btn-border-radius: 10px !default;
 
-/* Text*/
-
+// Text
 $display-font-sizes: (
   1: 6rem, //7.5rem, //9.375rem,
   2: 3.2rem, //4rem, //5rem,
@@ -59,7 +55,6 @@ $display-font-sizes: (
 $display-font-family: Poppins;
 $display-font-style:  null;
 $display-font-weight: 700; 
-
 
 $headings-line-height: normal;
 $headings-font-family: Poppins;
@@ -123,7 +118,7 @@ $h3-font-size: 0.96rem; //1.2rem; //1.5rem
 $h4-font-size: 0.96rem; //1.2rem; //1.5rem
 $h5-font-size: 0.8rem; //1rem; //1.25rem
 
-//aggiunte
+// aggiunte
 $border-rounded-xs: 5px;
 $border-rounded-sm: 10px;
 $border-rounded: 20px;
@@ -133,17 +128,18 @@ $gray-text-header: #9D9FA0 !default;
 $gray-nav-active: #41434E !default;
 $gray-nav-text: #9C9DA3 !default;
 
-//dropdown
+// dropdown
 $dropdown-header-color: $gray-800;
 
-//nav
+// nav
 $nav-link-color: $black;
 
-//nav tabs
+// nav tabs
 $nav-tabs-link-active-color: $black;
 $nav-tabs-border-radius: $border-rounded !default;
 
-//carousel
+// carousel
 $carousel-control-width: 8%;
 
-// $accordion-border-color: $dark;
+// accordion
+$accordion-button-active-color: $dark;
