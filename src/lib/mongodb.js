@@ -40,7 +40,6 @@ const UserSchema = new Schema({
     timestamps: true
 })
 
-
 const CourseSchema = new Schema({
     name: String,
     CFU: Number,
@@ -88,14 +87,12 @@ const FileSchema = new Schema({
     
 })
 
-
 const GridSchema = new Schema({}, {strict: false});
 
 const Grid = mongoose.model('Grid', GridSchema, 'fs.files');
 const Config = mongoose.model('Config', ConfigSchema);
 const User = mongoose.model('User', UserSchema);
 const Course = mongoose.model('Courses', CourseSchema);
-
 
 export { 
     ObjectId, 

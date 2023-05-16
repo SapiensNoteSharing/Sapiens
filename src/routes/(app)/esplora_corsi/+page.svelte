@@ -606,7 +606,7 @@ function replace_cost(key1, key2) {
                         <i class="icon me-2 text-dark bi bi-heart" ></i>
                     {/if}
                 </label><br>
-              </div>
+            </div>
             
             <!-- cart button -->
             <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
@@ -639,11 +639,10 @@ function replace_cost(key1, key2) {
 
     <!-- Carrello -->
     <div class="modal fade" id="shoppingCart" tabindex="-1" aria-labelledby="shoppingCartLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content border-dark">
                 <div class="modal-header bg-primary border-dark">
-                    <h1 class="modal-title fs-1" id="shoppingCartLabel">Carrello</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h1 class="modal-title display-6 ms-2 text-dark" id="shoppingCartLabel">Carrello</h1>
                 </div>
                 <div class="modal-body p-0">
                     {#each cart_items as cart_item}
@@ -654,18 +653,20 @@ function replace_cost(key1, key2) {
                                     <span class="text-dark">{professor}{i != cart_item.professors.length - 1 ? " / " : ""}</span>
                                 {/each}
                                 <div class="d-flex mt-3">
-                                    <div class="form-check me-4">
-                                        <input class="form-check-input" type="radio" name="{cart_item.name} accesso" id="{cart_item.name} base">
-                                        <label class="form-check-label" for="{cart_item.name} base">
-                                            Base
-                                        </label>
-                                    </div>
-                                    <div class="form-check me-4">
-                                        <input class="form-check-input" type="radio" name="{cart_item.name} accesso" id="{cart_item.name} Completo" checked>
-                                        <label class="form-check-label" for="{cart_item.name} Completo">
-                                            Completo
-                                        </label>
-                                    </div>
+                                    <section class="btn-group">
+                                        <div class="me-2">
+                                            <input type="radio" class="btn-check" name="{cart_item.name} accesso" id="{cart_item.name} base" checked>
+                                            <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{cart_item.name} base">
+                                                Base
+                                            </label>
+                                        </div>
+                                        <div class="me-2">
+                                            <input type="radio" class="btn-check" name="{cart_item.name} accesso" id="{cart_item.name} completo">
+                                            <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{cart_item.name} completo">
+                                                Completo
+                                            </label>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
                             <div class="d-flex">
@@ -676,7 +677,15 @@ function replace_cost(key1, key2) {
                         </div>
                         <hr class="m-0">
                     {/each }
-                    <div class="d-flex m-4 justify-content-between">
+                    <hr class="m-0 border-2 opacity-100">
+                    <div class="d-flex w-100 px-4 pt-3 justify-content-between">
+                        <h2 class="m-0 fs-1 align-self-left">Sequenze di DNA</h2>
+                        <div class="d-flex">
+                            <h2 class="m-0 fs-1 align-self-right">{$dna}</h2>
+                            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                        </div>
+                    </div>
+                    <div class="d-flex w-100 px-4 pt-3 justify-content-between">
                         <h2 class="m-0 fs-1 align-self-center">Totale</h2>
                         <div class="d-flex">
                             <h2 class="m-0 fs-1 align-self-center">{cart_items.reduce((acc, curr) => {
@@ -686,10 +695,20 @@ function replace_cost(key1, key2) {
                             <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer border-dark">
-                    <button type="button" class="btn btn-secondary border-dark" data-bs-dismiss="modal">Chiudi</button>
-                    <button type="button" class="btn btn-primary border-dark" onclick="buy_cart();">Acquista</button>
+                    <div class="d-flex w-100 px-4 py-3 justify-content-between">
+                        <h2 class="m-0 fs-1 align-self-center">Rimanente</h2>
+                        <div class="d-flex">
+                            <h2 class="m-0 fs-1 align-self-center">{$dna - cart_items.reduce((acc, curr) => {
+                                acc += 5 + curr.CFU * 5 / 3;
+                                return acc;
+                            }, 0)}</h2>
+                            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex border-dark">
+                        <button type="button" class="btn btn-outline-secondary text-dark fs-3 px-4 py-2 border-dark rounded-pill" data-bs-dismiss="modal">Chiudi</button>
+                        <button type="button" class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" data-bs-dismiss="modal" onclick="buy_cart();">Acquista</button>
+                    </div>
                 </div>
             </div>
         </div>
