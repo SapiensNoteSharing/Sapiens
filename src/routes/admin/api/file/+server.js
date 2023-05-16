@@ -1,4 +1,4 @@
-import { Course } from '$lib/mongodb';
+import { File } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
 
 export async function GET({ url }){
@@ -10,14 +10,19 @@ export async function GET({ url }){
             query.tags = params.get('tags').split(',');
         }
 
-        const docs = await Course.find(query).populate('content')
+        const docs = await File.findById('646412c37cf277e05e7d8606')
+
+        let data = docs.content
+        console.log(data)
+        let buff = Buffer.from(data, 'base64');
+        let text = buff.toString('ascii');
 
         if(!docs){
             console.log(docs);
             throw error(404, docs)
         }
 
-        return new Response(JSON.stringify(docs))
+        return new Response(JSON.stringify(text))
     }catch(err){
         console.log(err)
         throw error(500, err)

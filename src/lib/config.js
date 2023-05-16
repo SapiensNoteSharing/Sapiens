@@ -14,7 +14,7 @@ const config = {
     git: {
         owner: 'Falesteo',
         repo: 'Alessandro-Longo',
-        path: 'Università',
+        path: 'Universit%C3%A0',
         access_token: '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', //'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'
     }
     //meraki: 'https://api.meraki.com/api/v1',
