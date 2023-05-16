@@ -40,6 +40,39 @@ const UserSchema = new Schema({
     timestamps: true
 })
 
+const ReviewSchema = new Schema({
+    written_by: String,
+    description: String,
+    rating: Number
+}, {
+    timestamps: true
+})
+
+const FileSchema = new Schema({
+    name: String,
+    content: String,
+}, {
+    timestamps: true
+})
+
+const DirectorySchema = new Schema({
+    name: String,
+    files: [
+        {
+            type: ObjectId,
+            ref: 'File'
+        }
+    ],
+    directories: [
+        {
+            type: ObjectId,
+            ref: 'Directory'
+        }
+    ]
+}, {
+    timestamps: true
+})
+
 const CourseSchema = new Schema({
     name: String,
     CFU: Number,
@@ -53,51 +86,45 @@ const CourseSchema = new Schema({
     year: String,
     semester: String,
     tags: [String],
-    favourite: Boolean,
-    in_cart: Boolean,
-    owned: Boolean,
-    content: "",
-    chapters: [
+    content: [
         {
-            title: String,
-            paragraphs: [
-                {
-                    title: String,
-                    content: String
-                }
-            ]
+            type: ObjectId,
+            ref: 'Directory'
         }
     ],
-    rating: Number,
-    reviews_number: Number,
-    cheatsheet: String,
-    exercices: [
+    reviews: [
         {
-            argument: String,
-            data: String
+            type: ObjectId,
+            ref: 'Review'
         }
     ],
-    oral_questions: String
+    extra_content: {
+        type: ObjectId,
+        ref: 'Directory'
+    }
 }, {
     timestamps: true
 })
 
-const FileSchema = new Schema({
-    content: String,
-    
-})
+
 
 const GridSchema = new Schema({}, {strict: false});
 
 const Grid = mongoose.model('Grid', GridSchema, 'fs.files');
 const Config = mongoose.model('Config', ConfigSchema);
 const User = mongoose.model('User', UserSchema);
+const Review = mongoose.model('Review', ReviewSchema)
 const Course = mongoose.model('Courses', CourseSchema);
+
 
 export { 
     ObjectId, 
     GridFs, 
     Config, 
     User,
-    Course
+    Review,
+    Course,
+    Directory,
+    File,
+    mongoose
 };
