@@ -113,7 +113,9 @@ const GridSchema = new Schema({}, {strict: false});
 const Grid = mongoose.model('Grid', GridSchema, 'fs.files');
 const Config = mongoose.model('Config', ConfigSchema);
 const User = mongoose.model('User', UserSchema);
-const Review = mongoose.model('Review', ReviewSchema)
+const Review = mongoose.model('Review', ReviewSchema);
+const Directory = mongoose.model('Directory', DirectorySchema)
+const File = mongoose.model('File', FileSchema);
 const Course = mongoose.model('Courses', CourseSchema);
 
 

@@ -38,6 +38,10 @@ async function getDir(directory){
 } 
 
 export async function GET({url, fetch}){
+    if(url.searchParams.get('s')){
+        const file = await getFile()
+        return new Response(JSON.stringify({file: file}))
+    } else {
     try{
     /*
     const obj = await getgit(config.git.owner, config.git.repo, config.git.path)
@@ -112,4 +116,18 @@ export async function GET({url, fetch}){
         console.log(err)
         return new Response(err)
     }
+}
+}
+
+async function getFile(){
+    const resp = await fetch(`https://api.github.com/repos/Falesteo/Alessandro-Longo/contents/Universit%C3%A0/Secondo%20anno/Fondamenti%20di%20automatica/E.%20Esercizi.md?ref=main`, {headers})
+    let file = (resp.ok && await resp.json())
+    console.log(file)
+
+    let data = file.content
+    let buff = Buffer.from(data, 'base64');
+    let text = buff.toString('ascii');
+    console.log(text)
+
+    return text;
 }
