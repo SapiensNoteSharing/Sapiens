@@ -1,24 +1,30 @@
 <script>
     import { onMount } from "svelte";
 import Markdown from 'markdown-it';
-
+import '$css/theme.css'
 let file;
 
-onMount(async () => {
-    console.log(Markdown)
-    const md = new Markdown()
-    await reload()
-    console.log(file)
-    file = md.render(file.file)
-    console.log(file)
-})
     async function reload(){
-        const resp = await fetch('/test2?s=true');
+        const resp = await fetch('/admin/api/file');
+        console.log(resp)
         file = (resp.ok && await resp.json())
+        console.log(file)
     }
+onMount(() => reload())
 
 </script>
 
 <div>
     {@html file}
 </div>
+
+<style lang="scss">
+    .img-cont {
+        width: 800px;
+        height: 800px;
+        img {
+            width: 800px;
+            height: 800px;
+        }
+    }
+</style>
