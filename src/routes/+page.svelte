@@ -18,7 +18,7 @@
         cap: 58100,
         university_region: "Toscana",
         university_city: "Firenze",
-        faculty: "Ingegneria informatica",
+        faculty: "Ingegneria Informatica",
         degree_type: "Triennale"
     }
 </script>
@@ -45,34 +45,36 @@
         </nav>
     </div>
 
-    <div class="full_height">
-
+    <div class="full_height d-flex justify-content-evenly align-items-center">
+        <div class="d-flex flex-column">
+            <h1 class="display-1 text-dark">Lorem ipsum</h1>
+            <h2 class="display-5">Aut necessitatibus incidunt et enim voluptate vel consequatur debitis At alias animi.</h2>
+        </div>
+        <img src="/src/style/landing page.png" alt="" class="landing_page_image">
     </div>
 
-    <div class="d-flex footer">
-        <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
-            <div class="container-fluid">
-                <div>        
-                    <img class="ms-3 footer-logo" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
-                </div>
+    <div class="footer">
+        <nav class="navbar navbar-expand-lg bg-light d-flex justify-content-between w-100 border-bottom">
+            <div>        
+                <img class="ms-3 footer-logo" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
+            </div>
 
-                <div class="d-flex align-items-center">
-                    <a href="" class="me-4"><i class="icon footer_element bi bi-whatsapp"></i></a>
-                    <a href="" class="me-4"><i class="icon footer_element bi bi-discord"></i></a>
-                    <a href="" class="me-4"><i class="icon footer_element bi bi-instagram"></i></a>
-                    <a href="" class="me-4"><i class="icon footer_element bi bi-facebook"></i></a>
-                    <a href="" class="me-4"><i class="icon footer_element bi bi-twitter"></i></a>
-                    <a href="" class="me-4"><i class="icon footer_element bi bi-linkedin"></i></a>
-                </div>
+            <div class="d-flex">
+                <a href="" class="me-4"><i class="icon footer_element bi bi-whatsapp"></i></a>
+                <a href="" class="me-4"><i class="icon footer_element bi bi-discord"></i></a>
+                <a href="" class="me-4"><i class="icon footer_element bi bi-instagram"></i></a>
+                <a href="" class="me-4"><i class="icon footer_element bi bi-facebook"></i></a>
+                <a href="" class="me-4"><i class="icon footer_element bi bi-twitter"></i></a>
+                <a href="" class="me-4"><i class="icon footer_element bi bi-linkedin"></i></a>
+            </div>
 
-                <div class="d-flex">
-                    <span class="me-5">
-                        <a class="display-6 text-decoration-none footer_element" href="#">Chi siamo</a>
-                      </span>
-                    <span class="me-5">
-                        <a class="display-6 text-decoration-none footer_element" href="#">FAQ</a>
+            <div class="d-flex">
+                <span class="me-5">
+                    <a class="display-6 text-decoration-none footer_element" href="#">Chi siamo</a>
                     </span>
-                </div>
+                <span class="me-5">
+                    <a class="display-6 text-decoration-none footer_element" href="#">FAQ</a>
+                </span>
             </div>
         </nav>
     </div>
@@ -221,11 +223,16 @@
     @import '$css/variables.scss';
 
     .full_height {
-        height: 82vh;
+        height: 73vh;
+        margin: 0rem 5rem;
     }
 
     .icon {
       font-size: 20px;
+    }
+
+    .landing_page_image {
+        width: 50%;
     }
 
     .footer {
