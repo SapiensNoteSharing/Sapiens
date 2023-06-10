@@ -1,25 +1,32 @@
 import MarkdownIt from "markdown-it";
 import texMath from 'markdown-it-texmath'
 import katex from "katex";
-import fs from 'fs'
-import { File } from './mongodb'
+import hl from 'highlight.js'
 
-const md = new MarkdownIt({html: true}).use(texMath, {
+const md = new MarkdownIt({
+    html: true,
+    breaks: true,
+    highlight: (str, lang) => {
+        if(lang && hl.getLanguage(lang)){
+            try {
+                return hl.highlight(str, {language: lang}).value
+            }catch(err) {}
+        }
+    }
+})
+.use(texMath, {
     engine: katex,
     delimiters: 'dollars',
     katexOptions: {
-        output: 'mathml',
-        displayMode: false
+        output: 'mathml'
     }
 })
 
-function convert(file){
-    return Buffer.from(file.content, 'base64').toString('utf-8');
-}
-
 export async function render(file){
-    let data = convert(file)
-    data.replace('0x0a', '<br/>')
+    let data = Buffer.from(file.content, 'base64').toString('utf-8');
+    /*
+    data.replace('0x0a', '<br/>')           obsidian Newlines
+    */
     /*
     let splitted = data.split('$') //katex inline expressions
     for(let i = 0; i < splitted.length; i++){
