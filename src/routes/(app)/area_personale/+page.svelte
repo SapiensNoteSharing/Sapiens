@@ -2,6 +2,7 @@
     let account = {
         name: "Alessandro",
         surname: "Longo",
+        email: "alessandro.longo@stud.unifi.it",
         student_ID: 7073783,
         country: "Italia",
         region: "Toscana",
@@ -9,7 +10,7 @@
         cap: 58100,
         university_region: "Toscana",
         university_city: "Firenze",
-        faculty: "Ingegneria informatica",
+        faculty: "Ingegneria Informatica",
         degree_type: "Triennale"
     }
 </script>
@@ -23,7 +24,7 @@
             <h4 class="fs-1" id="dati_personali">Dati personali</h4>
 
             <!-- Name -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="validationServer01" class="form-label">Nome</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text border-dark" id="inputGroupPrepend1"><i class="bi bi-type"></i></span>
@@ -35,7 +36,7 @@
             </div>
 
             <!-- Surname -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="validationServer02" class="form-label">Cognome</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text border-dark" id="inputGroupPrepend2"><i class="bi bi-type"></i></span>
@@ -46,17 +47,18 @@
                 </div>
             </div>
 
-            <!-- University Code -->
-            <div class="col-md-4">
-                <label for="validationServerUsername" class="form-label">Matricola</label>
+            <!-- email -->
+            <div class="col-md-6">
+                <label for="validationServer02" class="form-label">e-mail</label>
                 <div class="input-group has-validation">
-                    <span class="input-group-text border-dark" id="inputGroupPrepend3">#</span>
-                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3" value={account.student_ID} required>
+                    <span class="input-group-text border-dark" id="inputGroupPrepend2"><i class="bi bi-at"></i></span>
+                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" value={account.email} required>
                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                        Inserisci un numero di matricola valido
+                        Inserisci un cognome valido
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <label for="validationServer03" class="form-label">Stato</label>
                 <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer04Feedback" value={account.country} required>
@@ -68,7 +70,7 @@
                 <label for="validationServer04" class="form-label">Regione</label>
                 <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer03Feedback" value={account.region} required>
                 <div id="validationServer03Feedback" class="invalid-feedback">
-                    Inserisci una città valida
+                    Inserisci una regione valida
                 </div>
             </div>
             <div class="col-md-4">
@@ -81,21 +83,21 @@
            
             <h4 class="fs-1" id="dati_accademici">Dati accademici</h4>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="validationServer06" class="form-label">Città universitaria</label>
                 <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer06Feedback" value={account.university_city} required>
                 <div id="validationServer06Feedback" class="invalid-feedback">
                     Inserisci una città valida
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="validationServer07" class="form-label">Facoltà</label>
                 <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer07Feedback" value={account.faculty} required>
                 <div id="validationServer07Feedback" class="invalid-feedback">
                     Scegli un'opzione
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="validationServer08" class="form-label">Tipologia di Laurea</label>
                 <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer08Feedback" value={account.degree_type} required>
                 <div id="validationServer08Feedback" class="invalid-feedback">
@@ -103,9 +105,21 @@
                 </div>
             </div>
 
+            <!-- University Code -->
+            <div class="col-md-6">
+                <label for="validationServerUsername" class="form-label">Matricola</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text border-dark" id="inputGroupPrepend3">#</span>
+                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3" value={account.student_ID} required>
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                        Inserisci un numero di matricola valido
+                    </div>
+                </div>
+            </div>
+
             <!-- Save button -->
             <div class="col-12 mr-auto mt-5">
-                <button class="btn btn-primary border-dark" type="submit">Salva modifiche</button>
+                <button class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" type="submit">Salva modifiche</button>
             </div>
         </form>
 
