@@ -14,15 +14,15 @@
 <div class="rounded {classes} confined" {style}>
     <Accordion let:id>
         <AccordionItem>
-            <div slot="name" class="d-flex align-items-center w-100">
-                <h2 class="mb-0">{course.code} - {course.name}</h2>
-                {#each course.tags as tag}
-                    <span class="badge bg-{ tag.color } ms-3">{ tag.name }</span>
-                {/each}
-                <div class="d-flex ms-auto me-3">
-                    <!-- <a class="" href="/corsi/{course.id}/formulario"><i class="icon mx-2 text-secondary bi bi-percent"></i></a>
-                    <a class="" href="/corsi/{course.id}/note"><i class="icon mx-2 text-secondary bi bi-journal-text"></i></a>
-                    <a class="" href="/corsi/{course.id}/test"><i class="icon mx-2 text-secondary bi bi-pencil"></i></a> -->
+            <div slot="name" class="d-flex justify-content-between align-items-center w-100">
+                <div class="d-flex">
+                    <h2 class="mb-0">{course.code} - {course.name}</h2>
+                    {#each course.tags as tag}
+                        <span class="badge bg-{ tag.color } ms-3">{ tag.name }</span>
+                    {/each}
+                </div>
+
+                <div class="d-flex">
                     <label for="{course.name} favourite">
                         <input type="checkbox" class="hidden cursor-pointer" id="{course.name} favourite" bind:checked={course.favourite}>
                         {#if course.favourite}
@@ -40,11 +40,11 @@
                         {#if course.owned}
                             <a class="" href="/corsi/{course.id}/scheda"><i class="icon mx-2 text-secondary bi bi-box-arrow-up-right"></i></a>
                         {:else if course.in_cart}
-                            <div class="text-secondary">
+                            <div>
                                 <i class="icon mx-2 text-secondary bi bi-cart-fill"></i>
                             </div>
                         {:else}
-                            <div class="text-secondary">
+                            <div>
                                 <i class="icon mx-2 text-secondary bi bi-cart"></i>
                             </div>
                         {/if}
@@ -86,41 +86,43 @@
                     <p>Curriculum: {course.curriculum_code} - {course.curriculum_name}</p>
                 </div>
 
-                <div class="accordion" id="{course.name}-reviews">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="{course.name}-reviews-heading">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{course.name}-reviews-body" aria-expanded="false" aria-controls="{course.name}-reviews-body">
-                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <div>
-                                        <span>{ course.reviews_number } recensioni</span>    
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="me-2">{ course.rating }</span>
-                                        <Rating { course } class="me-3"/>
-                                    </div>
+                <Accordion let:id>
+                    <AccordionItem parent={id} open="false" class="border-dark">
+                        <div slot="name" class="d-flex justify-content-between w-100">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <div>
+                                    <span>{ course.reviews_number } recensioni</span>    
                                 </div>
-                            </button>
-                        </h2>
-                        <div id="{course.name}-reviews-body" class="accordion-collapse collapse" aria-labelledby="{course.name}-reviews-heading">
-                            <div class="accordion-body">
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">{ course.rating }</span>
+                                    <Rating { course } class="me-3"/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <div slot="body">
+                            <div id="{course.name}-reviews-body" class="accordion-collapse collapse" aria-labelledby="{course.name}-reviews-heading">
+                                <div class="accordion-body">
+                                </div>
+                            </div>
+                        </div>
+                    </AccordionItem>
+                </Accordion>
             </div>
         </AccordionItem>
     </Accordion>
     <div class="course-bottom d-flex dark px-3 py-2 justify-content-between">
         <div>
             {#each course.professors as professor, i}
-                <a class="text-dark" href="/professors/{professor}">{professor}</a>{i != course.professors.length-1 ? " / " : ""}
+                <a class="professor" href="/professors/{professor}">{professor}</a>{i != course.professors.length-1 ? " / " : ""}
             {/each}
         </div>
         <p class="text-dark" style="margin: 0px;">{course.CFU} CFU</p>
     </div>
 </div>
 
-<style>
+<style lang="scss">
+    @import "$css/variables.scss";
+
     .icon {
         font-size: 20px;
     }
@@ -163,5 +165,14 @@
 
     .index-parent {
         border: 0px !important;
+    }
+
+    .professor {
+        transition: .3s;
+        color: $dark;
+    }
+
+    .professor:hover {
+        color: $secondary;
     }
 </style>

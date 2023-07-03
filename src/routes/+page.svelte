@@ -47,8 +47,24 @@
 
     <div class="full_height d-flex justify-content-evenly align-items-center">
         <div class="d-flex flex-column">
-            <h1 class="display-1 text-dark">Lorem ipsum</h1>
-            <h2 class="display-5">Aut necessitatibus incidunt et enim voluptate vel consequatur debitis At alias animi.</h2>
+            <h1 class="title text-dark">Studia</h1>
+            <h1 class="subtitle text-dark">Sfoglia tra decine di corsi universitari messi a disposizione dai tuoi colleghi</h1>
+        </div>
+        <img src="/src/style/landing page.png" alt="" class="landing_page_image">
+    </div>
+
+    <div class="full_height d-flex justify-content-evenly align-items-center">
+        <img src="/src/style/landing page.png" alt="" class="landing_page_image">
+        <div class="d-flex flex-column">
+            <h1 class="title text-dark">Contribuisci</h1>
+            <h1 class="subtitle text-dark">Aiutaci a migliorare Sapiens condividendo i tuoi appunti e ricevendo in cambio grandi ricompense!</h1>
+        </div>
+    </div>
+
+    <div class="full_height d-flex justify-content-evenly align-items-center">
+        <div class="d-flex flex-column">
+            <h1 class="title text-dark">Valuta</h1>
+            <h1 class="subtitle text-dark">Recensisci i contenuti proposti: vogliamo sapereno cosa ne pensi!</h1>
         </div>
         <img src="/src/style/landing page.png" alt="" class="landing_page_image">
     </div>
@@ -225,6 +241,14 @@
     .full_height {
         height: 73vh;
         margin: 0rem 5rem;
+    }
+
+    .title {
+        font-size: 6rem;
+    }
+
+    .subtitle {
+        font-size: 2rem;
     }
 
     .icon {

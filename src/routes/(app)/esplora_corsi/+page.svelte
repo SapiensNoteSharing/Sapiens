@@ -2,304 +2,14 @@
 import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
 import CourseCard from '$lib/components/CourseCard.svelte';
-import { view, value, filter_tags, dna } from '$lib/stores';
+import { view, value, filter_tags, dna, courses } from '$lib/stores';
 import { space } from 'svelte/internal';
 
-let courses = [
-    {
-        name: 'Geometria e algebra Lineare',
-        CFU: '6',
-        code: 'B003273',
-        cdl_code: 'B047',
-        cdl_name: 'Ingegneria Informatica',
-        curriculum_code: 'E69',
-        curriculum_name: 'Tecnico Scientifico',
-        professors: ['Caterina Stoppato', 'Giorgio Ottaviani'],
-        degree: "Triennale",
-        year: "Primo anno",
-        semester: "Primo semestre",
-        tags: [],
-        favourite: true,
-        in_cart: false,
-        owned: false,
-        content: "",
-        chapters: [
-            {
-                title: "1. Spazio euclideo e vettori",
-                paragraphs: [
-                    "1.1. I vettori",
-                    "1.2. Sistemi di riferimento e coordinate",
-                    "1.3. Le coordinate cartesiane",
-                    "1.4. Prodotto vettoriale e prodotto misto",
-                    "1.5. Rette e piani nello spazio",
-                ],
-            },
-            {
-                title: "2. Sistemi lineari",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "3. Algebra delle matrici",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "4. Spazi vettoriali e applicazioni lineari",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "5. Determinante",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "6. Autovalori e autovettori",
-                paragraphs: [
-                    "",
-                ],
-            }, 
-            {
-                title: "7. Spazi euclidei",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "8. Teorema spettrale e forme quadratiche",
-                paragraphs: [
-                    "",
-                ],
-            },
-        ],
-        rating: 5,
-        reviews_number: 13,
-        match: 0,
-    },
-    {
-        name: 'Analisi Matematica I',
-        CFU: '9',
-        code: 'B019481',
-        cdl_code: 'B047',
-        cdl_name: 'Ingegneria Informatica',
-        curriculum_code: 'E69',
-        curriculum_name: 'Tecnico Scientifico',
-        professors: ['Serena Matucci'],
-        degree: "Triennale",
-        year: "Primo anno",
-        semester: "Primo semestre",
-        tags: ["New!"],
-        favourite: false,
-        in_cart: false,
-        owned: true,
-        chapters: [
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            }, 
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-        ],
-        rating: 3.5,
-        reviews_number: 2,
-        match: 0,
-    },
-    {
-        name: 'Fisica I',
-        CFU: '6',
-        code: 'B006853',
-        cdl_code: 'B047',
-        cdl_name: 'Ingegneria Informatica',
-        curriculum_code: 'E69',
-        curriculum_name: 'Tecnico Scientifico',
-        professors: ['Fabio Cinti'],
-        degree: "Triennale",
-        year: "Primo anno",
-        semester: "Primo semestre",
-        tags: ["New!", "Best Seller"],
-        favourite: true,
-        in_cart: false,
-        owned: true,
-        chapters: [
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            }, 
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-        ],
-        rating: 2,
-        reviews_number: 9,
-        match: 0,
-    },
-    {
-        name: 'Fondamenti di Informatica',
-        CFU: '9',
-        code: 'B024280',
-        cdl_code: 'B047',
-        cdl_name: 'Ingegneria Informatica',
-        curriculum_code: 'E69',
-        curriculum_name: 'Tecnico Scientifico',
-        professors: ['Stefano Berretti'],
-        degree: "Triennale",
-        year: "Primo anno",
-        semester: "Primo semestre",
-        tags: ["Best Seller"],
-        favourite: false,
-        in_cart: false,
-        owned: false,
-        chapters: [
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            }, 
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-            {
-                title: "",
-                paragraphs: [
-                    "",
-                ],
-            },
-        ],
-        rating: 4,
-        reviews_number: 5,
-        match: 0,
-    }
-];
-
-let filtered = [...courses];
+let filtered = [...$courses];
 
 $: $value != undefined && search()
 $: $filter_tags && search()
 $: sort_courses && search()
-
-let cart_items = [...courses];
 
 let favourites_filter;
 
@@ -309,7 +19,7 @@ function search() {
     // if search bar value is empty string show all courses that follow the 
     if ($value == "" || $value == undefined) {
         filtered = [];
-        for (let course of courses) {
+        for (let course of $courses) {
             let filtered_out = false;
             for (let filter_tag of $filter_tags)
                 if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
@@ -367,7 +77,7 @@ function search() {
         // split the search bar input in its single words
         let values = $value.split(" ");
         // search in every course a correspondence, comparing it with:
-        for (let course of courses) {
+        for (let course of $courses) {
             let filtered_out = false;
             for (let filter_tag of $filter_tags)
                 if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
@@ -611,7 +321,7 @@ function replace_cost(key1, key2) {
             <!-- cart button -->
             <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
                 <i class="icon text-dark bi bi-cart"></i>
-                <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{cart_items.length}</span>
+                <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{$courses.reduce((acc, course) => acc + (course.in_cart ? 1 : 0), 0)}</span>
             </button>
         </div>  
     </div>
@@ -627,7 +337,7 @@ function replace_cost(key1, key2) {
             <!-- grid view -->
             <div class="d-flex flex-wrap justify-content-between align-content-between">
                 {#each filtered as course}
-                    <CourseCard {course} class="g-col-6 g-col-md-4 mb-3 me-3 bg-primary border-dark"/>
+                    <CourseCard {course} class="g-col-6 g-col-md-4 mb-3 me-3"/>
                 {/each}
             </div>
         {:else}
@@ -645,38 +355,39 @@ function replace_cost(key1, key2) {
                     <h1 class="modal-title display-6 ms-2 text-dark" id="shoppingCartLabel">Carrello</h1>
                 </div>
                 <div class="modal-body p-0">
-                    {#each cart_items as cart_item}
-                        <div class="d-flex m-4 justify-content-between">
-                            <div>
-                                <h2>{cart_item.code} - {cart_item.name}</h2>
-                                {#each cart_item.professors as professor, i}
-                                    <span class="text-dark">{professor}{i != cart_item.professors.length - 1 ? " / " : ""}</span>
-                                {/each}
-                                <div class="d-flex mt-3">
-                                    <section class="btn-group">
-                                        <div class="me-2">
-                                            <input type="radio" class="btn-check" name="{cart_item.name} accesso" id="{cart_item.name} base" checked>
-                                            <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{cart_item.name} base">
-                                                Base
-                                            </label>
-                                        </div>
-                                        <div class="me-2">
-                                            <input type="radio" class="btn-check" name="{cart_item.name} accesso" id="{cart_item.name} completo">
-                                            <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{cart_item.name} completo">
-                                                Completo
-                                            </label>
-                                        </div>
-                                    </section>
+                    {#each $courses as course}
+                        {#if course.in_cart}
+                            <div class="d-flex m-4 justify-content-between">
+                                <div>
+                                    <h2>{course.code} - {course.name}</h2>
+                                    {#each course.professors as professor, i}
+                                        <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
+                                    {/each}
+                                    <div class="d-flex mt-3">
+                                        <section class="btn-group">
+                                            <div class="me-2">
+                                                <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} base">
+                                                <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} base">
+                                                    Base
+                                                </label>
+                                            </div>
+                                            <div class="me-2">
+                                                <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} completo" checked>
+                                                <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} completo">
+                                                    Completo
+                                                </label>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h2 class="align-self-center fs-1 my-0">{5 + course.CFU * 5 / 3}</h2>
+                                    <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
                                 </div>
                             </div>
-                            <div class="d-flex">
-                                <!-- * (document.getElementById(`${curr.name} base`).checked ? 0.8 : 1) -->
-                                <h2 class="align-self-center fs-1 my-0">{5 + cart_item.CFU * 5 / 3}</h2>
-                                <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
-                            </div>
-                        </div>
-                        <hr class="m-0">
-                    {/each }
+                            <hr class="m-0">
+                        {/if}
+                    {/each}
                     <hr class="m-0 border-2 opacity-100">
                     <div class="d-flex w-100 px-4 pt-3 justify-content-between">
                         <h2 class="m-0 fs-1 align-self-left">Sequenze di DNA</h2>
@@ -688,8 +399,9 @@ function replace_cost(key1, key2) {
                     <div class="d-flex w-100 px-4 pt-3 justify-content-between">
                         <h2 class="m-0 fs-1 align-self-center">Totale</h2>
                         <div class="d-flex">
-                            <h2 class="m-0 fs-1 align-self-center">{cart_items.reduce((acc, curr) => {
-                                acc += 5 + curr.CFU * 5 / 3;
+                            <h2 class="m-0 fs-1 align-self-center">{$courses.reduce((acc, curr) => {
+                                if (curr.in_cart)
+                                    acc += 5 + curr.CFU * 5 / 3;
                                 return acc;
                             }, 0)}</h2>
                             <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
@@ -698,8 +410,9 @@ function replace_cost(key1, key2) {
                     <div class="d-flex w-100 px-4 py-3 justify-content-between">
                         <h2 class="m-0 fs-1 align-self-center">Rimanente</h2>
                         <div class="d-flex">
-                            <h2 class="m-0 fs-1 align-self-center">{$dna - cart_items.reduce((acc, curr) => {
-                                acc += 5 + curr.CFU * 5 / 3;
+                            <h2 class="m-0 fs-1 align-self-center">{$dna - $courses.reduce((acc, curr) => {
+                                if (curr.in_cart)
+                                    acc += 5 + curr.CFU * 5 / 3;
                                 return acc;
                             }, 0)}</h2>
                             <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
