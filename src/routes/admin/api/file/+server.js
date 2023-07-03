@@ -11,7 +11,7 @@ export async function GET({ url }){
             query.tags = params.get('tags').split(',');
         }
 
-        const docs = await File.findById('6464129b7cf277e05e7d844a')
+        const docs = await File.findById('64689d9904e4254c0bbdde6f')
 
         if(!docs){
             throw error(404, docs)

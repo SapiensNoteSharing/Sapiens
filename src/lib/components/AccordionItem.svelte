@@ -24,18 +24,18 @@
 
 <style>
   .accordion-button::before {
-        flex-shrink: 0;
-        width: 1.25rem;
-        height: 1.25rem;
-        margin-right: 1rem;
-        content: "";
-        background-image: var(--bs-accordion-btn-active-icon);
-        background-repeat: no-repeat;
-        background-size: 1.25rem;
-        transition: transform .2s ease-in-out;
-    }
-        
-    .accordion-button::after {
-        display: none !important;
-    }
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 1rem;
+    content: "";
+    background-image: var(--bs-accordion-btn-active-icon);
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    transition: transform .2s ease-in-out;
+  }
+      
+  .accordion-button::after {
+    display: none !important;
+  }
 </style>

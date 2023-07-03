@@ -33,8 +33,6 @@ async function getDir(directory){
         $set: {directories: childDirectories}
     })
     return dir._id
-
-
 } 
 
 export async function GET({url, fetch}){
