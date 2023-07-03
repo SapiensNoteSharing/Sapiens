@@ -22,7 +22,7 @@
     }
 
     function createUser(){
-        register.show().then(async res => {
+        registerModal.show().then(async res => {
             if(res){
                 const resp = await fetch('/register', {
                     method: 'POST',
@@ -36,7 +36,7 @@
     }
 
     function loginUser(){
-        login.show().then(async res => {
+        loginModal.show().then(async res => {
             if(res){
                 const resp = await fetch(`/login`, {
                     method: 'POST',
