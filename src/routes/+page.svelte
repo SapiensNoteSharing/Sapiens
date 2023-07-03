@@ -1,11 +1,9 @@
 <script>
     import { onMount } from "svelte";
     import '$css/global.scss';
+    
 
-    let bootstrap;
-    onMount(async () => {
-        bootstrap = await import('bootstrap')
-    })
+    let user = {};
 
     let account = {
         name: "Alessandro",
@@ -21,6 +19,37 @@
         faculty: "Ingegneria Informatica",
         degree_type: "Triennale"
     }
+
+    function createUser(){
+        register.show().then(async res => {
+            if(res){
+                const resp = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(account)
+                });
+            }
+        })
+    }
+
+    function loginUser(){
+        login.show().then(async res => {
+            if(res){
+                const resp = await fetch(`/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(account)
+                })
+            }
+        })
+    }
+    
+
+
 </script>
 
 <div>
@@ -89,12 +118,12 @@
                 <div class="modal-body p-4">
                     <form>
                         <div class="mb-3">
-                            <label for="login_name" class="form-label">Username o email</label>
-                            <input type="username" class="form-control" id="login_name">
+                            <label for="login_name" class="form-label">Email</label>
+                            <input type="username" class="form-control" id="login_name" bind:value={user.email}>
                         </div>
                         <div class="mb-3">
                             <label for="login_password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="login_password">
+                            <input type="password" class="form-control" id="login_password" bind:value={user.password}>
                         </div>
                     </form>
                 </div>
@@ -121,7 +150,7 @@
                             <label for="validationServer01" class="form-label">Nome</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text border-dark" id="inputGroupPrepend1"><i class="bi bi-type"></i></span>
-                                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend1" value={account.name} required>
+                                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend1" bind:value={account.name} required>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                     Inserisci un nome valido
                                 </div>
@@ -133,7 +162,7 @@
                             <label for="validationServer02" class="form-label">Cognome</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text border-dark" id="inputGroupPrepend2"><i class="bi bi-type"></i></span>
-                                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" value={account.surname} required>
+                                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" bind:value={account.surname} required>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                     Inserisci un cognome valido
                                 </div>
@@ -145,7 +174,7 @@
                             <label for="validationServer02" class="form-label">e-mail</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text border-dark" id="inputGroupPrepend2"><i class="bi bi-at"></i></span>
-                                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" value={account.email} required>
+                                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" bind:value={account.email} required>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                     Inserisci un cognome valido
                                 </div>
@@ -154,21 +183,21 @@
 
                         <div class="col-md-4">
                             <label for="validationServer03" class="form-label">Stato</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer04Feedback" value={account.country} required>
+                            <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer04Feedback" bind:value={account.country} required>
                             <div id="validationServer04Feedback" class="invalid-feedback">
                                 Inserisci uno stato valido
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label for="validationServer04" class="form-label">Regione</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer03Feedback" value={account.region} required>
+                            <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer03Feedback" bind:value={account.region} required>
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 Inserisci una città valida
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label for="validationServer05" class="form-label">Città</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer03Feedback" value={account.city} required>
+                            <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer03Feedback" bind:value={account.city} required>
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 Inserisci una città valida
                             </div>
@@ -178,21 +207,21 @@
             
                         <div class="col-md-6">
                             <label for="validationServer06" class="form-label">Città universitaria</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer06Feedback" value={account.university_city} required>
+                            <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer06Feedback" bind:value={account.university_city} required>
                             <div id="validationServer06Feedback" class="invalid-feedback">
                                 Inserisci una città valida
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="validationServer07" class="form-label">Facoltà</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer07Feedback" value={account.faculty} required>
+                            <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer07Feedback" bind:value={account.faculty} required>
                             <div id="validationServer07Feedback" class="invalid-feedback">
                                 Scegli un'opzione
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="validationServer08" class="form-label">Tipologia di Laurea</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer08Feedback" value={account.degree_type} required>
+                            <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer08Feedback" bind:value={account.degree_type} required>
                             <div id="validationServer08Feedback" class="invalid-feedback">
                                 Scegli un'opzione
                             </div>
@@ -203,7 +232,7 @@
                             <label for="validationServerUsername" class="form-label">Matricola</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text border-dark" id="inputGroupPrepend3">#</span>
-                                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3" value={account.student_ID} required>
+                                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3" bind:value={account.student_ID} required>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                     Inserisci un numero di matricola valido
                                 </div>

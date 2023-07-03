@@ -36,6 +36,7 @@ const UserSchema = new Schema({
     name: String,
     surname: String,
     email: String,
+    hash: String,
 }, {
     timestamps: true
 })
