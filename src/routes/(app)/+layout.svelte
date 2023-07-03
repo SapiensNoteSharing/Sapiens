@@ -1,16 +1,11 @@
 <script>
   import { onMount } from "svelte";
   import Accordion from '$lib/components/Accordion.svelte';
+  import Accordionitem from "$lib/components/Accordionitem.svelte";
   import Searchbar from '$lib/components/Searchbar.svelte';
   import { page } from '$app/stores';
-  import '$css/global.scss';
 
   import { view, value, filter_tags, dna } from '$lib/stores'
-
-  let bootstrap;
-  onMount(async () => {
-    bootstrap = await import('bootstrap')
-  })
 
   let faculties = [
     "Ingegneria informatica",
@@ -170,9 +165,13 @@
           </div>
         </div>
       {:else if $page.route.id == '/(app)/aula_studio'}
-        <nav>
-
-        </nav>
+      <!--
+        <Accordion>
+          {#each $page.data.courses as course}
+            <Accordionitem title={course.name}></Accordionitem>
+          {/each}
+        </Accordion>
+      -->
       {:else if $page.route.id == '/(app)/area_personale'}
         <nav id="personal_area_scrollspy" class="mt-4 h-100 flex-column align-items-stretch pe-4 border-end">
           <nav class="nav nav-pills flex-column">
