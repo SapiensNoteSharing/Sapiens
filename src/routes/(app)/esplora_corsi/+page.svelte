@@ -2,6 +2,7 @@
 import Icon from '$lib/components/Icon.svelte';
 import Course from '$lib/components/Course.svelte';
 import CourseCard from '$lib/components/CourseCard.svelte';
+import Modal from '$lib/components/Modal.svelte';
 import { view, value, filter_tags, dna, courses } from '$lib/stores';
 import { space } from 'svelte/internal';
 
@@ -14,6 +15,8 @@ $: sort_courses && search()
 let favourites_filter;
 
 let sort_courses;
+
+let cartModal;
 
 function search() {
     // if search bar value is empty string show all courses that follow the 
@@ -252,6 +255,14 @@ function replace_cost(key1, key2) {
     // and normalize the calculated distance
     return Math.map(distance, 0, max_dist, 0, 2);
 }
+
+function openCart() {
+	cartModal.show().then(async res => {
+		if (res) {
+            
+        }
+    })
+}
 </script>
 
 <div class="d-flex flex-column content bg-light">
@@ -319,7 +330,7 @@ function replace_cost(key1, key2) {
             </div>
             
             <!-- cart button -->
-            <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+            <button type="button" class="btn btn-light position-relative" on:click={openCart}>
                 <i class="icon text-dark bi bi-cart"></i>
                 <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{$courses.reduce((acc, course) => acc + (course.in_cart ? 1 : 0), 0)}</span>
             </button>
@@ -346,87 +357,76 @@ function replace_cost(key1, key2) {
     {:else}
         <h2>Nessun risultato trovato</h2>
     {/if}
+</div>
 
-    <!-- Carrello -->
-    <div class="modal fade" id="shoppingCart" tabindex="-1" aria-labelledby="shoppingCartLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content border-dark">
-                <div class="modal-header bg-primary border-dark">
-                    <h1 class="modal-title display-6 ms-2 text-dark" id="shoppingCartLabel">Carrello</h1>
-                </div>
-                <div class="modal-body p-0">
-                    {#each $courses as course}
-                        {#if course.in_cart}
-                            <div class="d-flex m-4 justify-content-between">
-                                <div>
-                                    <h2>{course.code} - {course.name}</h2>
-                                    {#each course.professors as professor, i}
-                                        <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
-                                    {/each}
-                                    <div class="d-flex mt-3">
-                                        <section class="btn-group">
-                                            <div class="me-2">
-                                                <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} base">
-                                                <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} base">
-                                                    Base
-                                                </label>
-                                            </div>
-                                            <div class="me-2">
-                                                <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} completo" checked>
-                                                <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} completo">
-                                                    Completo
-                                                </label>
-                                            </div>
-                                        </section>
-                                    </div>
+<!-- Carrello -->
+<Modal title="Carrello" yes="Acquista" no="Chiudi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={cartModal}>
+    <div slot="body">
+        {#each $courses as course}
+            {#if course.in_cart}
+                <div class="d-flex m-4 justify-content-between">
+                    <div>
+                        <h2>{course.code} - {course.name}</h2>
+                        {#each course.professors as professor, i}
+                            <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
+                        {/each}
+                        <div class="d-flex mt-3">
+                            <section class="btn-group">
+                                <div class="me-2">
+                                    <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} base">
+                                    <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} base">
+                                        Base
+                                    </label>
                                 </div>
-                                <div class="d-flex">
-                                    <h2 class="align-self-center fs-1 my-0">{5 + course.CFU * 5 / 3}</h2>
-                                    <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                                <div class="me-2">
+                                    <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} completo" checked>
+                                    <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} completo">
+                                        Completo
+                                    </label>
                                 </div>
-                            </div>
-                            <hr class="m-0">
-                        {/if}
-                    {/each}
-                    <hr class="m-0 border-2 opacity-100">
-                    <div class="d-flex w-100 px-4 pt-3 justify-content-between">
-                        <h2 class="m-0 fs-1 align-self-left">Sequenze di DNA</h2>
-                        <div class="d-flex">
-                            <h2 class="m-0 fs-1 align-self-right">{$dna}</h2>
-                            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                            </section>
                         </div>
                     </div>
-                    <div class="d-flex w-100 px-4 pt-3 justify-content-between">
-                        <h2 class="m-0 fs-1 align-self-center">Totale</h2>
-                        <div class="d-flex">
-                            <h2 class="m-0 fs-1 align-self-center">{$courses.reduce((acc, curr) => {
-                                if (curr.in_cart)
-                                    acc += 5 + curr.CFU * 5 / 3;
-                                return acc;
-                            }, 0)}</h2>
-                            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
-                        </div>
-                    </div>
-                    <div class="d-flex w-100 px-4 py-3 justify-content-between">
-                        <h2 class="m-0 fs-1 align-self-center">Rimanente</h2>
-                        <div class="d-flex">
-                            <h2 class="m-0 fs-1 align-self-center">{$dna - $courses.reduce((acc, curr) => {
-                                if (curr.in_cart)
-                                    acc += 5 + curr.CFU * 5 / 3;
-                                return acc;
-                            }, 0)}</h2>
-                            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex border-dark">
-                        <button type="button" class="btn btn-outline-secondary text-dark fs-3 px-4 py-2 border-dark rounded-pill" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" data-bs-dismiss="modal" onclick="buy_cart();">Acquista</button>
+                    <div class="d-flex">
+                        <h2 class="align-self-center fs-1 my-0">{5 + course.CFU * 5 / 3}</h2>
+                        <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
                     </div>
                 </div>
+                <hr class="m-0">
+            {/if}
+        {/each}
+        <hr class="m-0 border-2 opacity-100">
+        <div class="d-flex w-100 px-4 pt-3 justify-content-between">
+            <h2 class="m-0 fs-1 align-self-left">Sequenze di DNA</h2>
+            <div class="d-flex">
+                <h2 class="m-0 fs-1 align-self-right">{$dna}</h2>
+                <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+            </div>
+        </div>
+        <div class="d-flex w-100 px-4 pt-3 justify-content-between">
+            <h2 class="m-0 fs-1 align-self-center">Totale</h2>
+            <div class="d-flex">
+                <h2 class="m-0 fs-1 align-self-center">{$courses.reduce((acc, curr) => {
+                    if (curr.in_cart)
+                        acc += 5 + curr.CFU * 5 / 3;
+                    return acc;
+                }, 0)}</h2>
+                <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+            </div>
+        </div>
+        <div class="d-flex w-100 px-4 py-3 justify-content-between">
+            <h2 class="m-0 fs-1 align-self-center">Rimanente</h2>
+            <div class="d-flex">
+                <h2 class="m-0 fs-1 align-self-center">{$dna - $courses.reduce((acc, curr) => {
+                    if (curr.in_cart)
+                        acc += 5 + curr.CFU * 5 / 3;
+                    return acc;
+                }, 0)}</h2>
+                <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
             </div>
         </div>
     </div>
-</div>
+</Modal>
 
 <style lang="scss">
     @import '$css/variables.scss';

@@ -1,30 +1,19 @@
 <script>
-    import { onMount } from "svelte";
-import Markdown from 'markdown-it';
-import '$css/theme.css'
-let file;
+    import Modal from '$lib/components/Modal.svelte';
+    let modal; 
 
-    async function reload(){
-        const resp = await fetch('/admin/api/file');
-        console.log(resp)
-        file = (resp.ok && await resp.json())
-        console.log(file)
-    }
-onMount(() => reload())
-
+    function open() {
+	modal.show().then(async res => {
+		if (res) {
+			
+	    }
+    })
+}
 </script>
 
-<div>
-    {@html file}
-</div>
+<button class="btn btn-primary" on:click={open}></button>
 
-<style lang="scss">
-    .img-cont {
-        width: 800px;
-        height: 800px;
-        img {
-            width: 800px;
-            height: 800px;
-        }
-    }
-</style>
+<Modal title="title" yes="yes" no="no" bind:this={modal}>
+    <div>Eilà</div>
+</Modal>
+
