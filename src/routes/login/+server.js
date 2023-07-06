@@ -1,20 +1,33 @@
 import { compare } from '$lib/crypt'
-import { error } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import { User } from '$lib/mongodb';
 import { setSession } from '$lib/redis';
 
-export async function POST({url, locals, request }){
-    try{
-        const body = request.json()
+export async function POST({url, locals, request, cookies }){
 
-        const user = User.find({email: body.email})
-        const authenticated = compare(user)
-        if(authenticated){
-            setSession()
-        }
+    const body = await request.json()
+    const authenticated = await compare(body)
 
-    }catch(err){
-        console.log(err);
-        throw error(500, err)
+    if(authenticated){
+        const user = await User.findOne({email: body.email})
+        const sid = crypto.randomUUID();
+
+        locals.sid = sid;
+        locals.user = user;
+
+        await setSession(sid, user);
+
+        cookies.set('sid', sid, {
+            path: '/',
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: false,
+            // maxAge: 3600
+        })
+
+        return new Response('OK')
+    } else {
+        throw redirect(303, '/')
     }
+
 }

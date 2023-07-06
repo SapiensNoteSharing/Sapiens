@@ -14,12 +14,15 @@ export async function POST({ url, locals, request }){
     if(alreadyRegistered){
         throw error(409, 'This email is already used by another user')
     } else {
-        const sid = crypto.randomUUID()
         const user = await User.create({...body, hash: hash})
+        const sid = crypto.randomUUID()
+
         locals.sid = sid
         locals.user = user
-        setSession(sid, user)
-        throw redirect(302, '/esplora_corsi')
+
+        await setSession(sid, user)
+
+        return new Response('OK')
     }
 }
 

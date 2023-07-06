@@ -44,6 +44,7 @@ const UserSchema = new Schema({
     courses: [ObjectId],
     balance: Number,
     hash: String,
+    role: String,
 }, {
     timestamps: true
 })

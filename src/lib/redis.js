@@ -16,7 +16,9 @@ export const setSession = async (sid, val, ttl) => {
     
 };
 
+
 export const getSession = async (sid) => {
+    console.log('redis getVal')
     const val = await redis.get(sid);
     return JSON.parse(val);
 }

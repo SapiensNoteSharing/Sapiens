@@ -11,9 +11,9 @@ async function createHash(psw){
 
 async function compare(user){
     const dbUser = await User.findOne({email: user.email})
-    bcrypt.compare(user.password, dbUser.hash, (err, result) => {
-        return result;
-    });
+    console.log(dbUser)
+    const res = await bcrypt.compare(user.password, dbUser.hash);
+    return res;
 }
 
 export {
