@@ -1,49 +1,49 @@
 <script>
-    import { onMount } from "svelte";
     import Modal from '$lib/components/Modal.svelte';
-    import {
-        page
-    } from '$app/stores';
-
+    import { goto } from '$app/navigation';
     import '$css/global.scss';
-
-    let bootstrap;
-    onMount(async () => {
-        bootstrap = await import('bootstrap')
-    })
 
     let loginModal, registerModal;
 
-    let account = {
-        name: "Alessandro",
-        surname: "Longo",
-        email: "alessandro.longo@stud.unifi.it",
-        student_ID: 7073783,
-        country: "Italia",
-        region: "Toscana",
-        city: "Grosseto",
-        cap: 58100,
-        university_region: "Toscana",
-        university_city: "Firenze",
-        faculty: "Ingegneria Informatica",
-        degree_type: "Triennale"
-    }
+    let userLogin = {}
+    let userRegister = {}
 
-    function openLoginModal() {
-        loginModal.show().then(async res => {
-            if (res) {
-                
-            }
-        })
-    }
-
-    function openRegisterModal() {
+    function registerUser(){
         registerModal.show().then(async res => {
-            if (res) {
-                
+            if(res){
+                const resp = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userRegister)
+                });
+                if(resp.ok){
+                    goto('/esplora_corsi')
+                }
             }
         })
     }
+
+    function loginUser(){
+        loginModal.show().then(async res => {
+            if(res){
+                const resp = await fetch(`/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userLogin)
+                })
+                if(resp.ok){
+                    goto('/esplora_corsi')
+                }
+            }
+        })
+    }
+    
+
+
 </script>
 
 <div>
@@ -56,11 +56,11 @@
                 <!-- login and register -->
                 <div class="d-flex me-5">
                     <!-- login -->
-                    <button type="button" class="btn btn-outline-primary border-dark text-dark px-4 py-2 ms-4 fs-1 rounded-pill" on:click={openLoginModal}>
+                    <button type="button" class="btn btn-outline-primary border-dark text-dark px-4 py-2 ms-4 fs-1 rounded-pill" on:click={loginUser}>
                         <span style="right: 2px; top: 8px;">Accedi</span>
                     </button>
                     <!-- register -->
-                    <button type="button" class="btn btn-outline-success border-dark text-dark px-4 py-2 ms-4 fs-1 rounded-pill" on:click={openRegisterModal}>
+                    <button type="button" class="btn btn-outline-secondary border-dark text-dark px-4 py-2 ms-4 fs-1 rounded-pill" on:click={openRegisterModal}>
                         <span style="right: 2px; top: 8px;">Registrati</span>
                     </button>
                 </div>
@@ -123,16 +123,28 @@
 <Modal title="Accedi" yes="Accedi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={loginModal}>
     <div slot="body">
         <div class="modal-body p-4">
-            <form>
-                <div class="mb-3">
-                    <label for="login_name" class="form-label">email</label>
-                    <input type="username" class="form-control" id="login_name">
+
+            <div class="col-md-12">
+                <label for="validationServer01" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text border-dark" id="inputGroupPrepend1"><i class="bi bi-type"></i></span>
+                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend1" bind:value={userLogin.email} required>
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                        Inserisci un'email valida
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="login_password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="login_password">
+            </div>
+            <div class="col-md-12">
+                <label for="login_password" class="form-label">Password</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text border-dark" id="inputGroupPrepend3">#</span>
+                    <input type="password" class="form-control" id="login_password" bind:value={userLogin.password}>
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                        Inserisci una password valida
+                    </div>
                 </div>
-            </form>
+            </div>
+
         </div>
     </div>
 </Modal>
@@ -148,7 +160,7 @@
                 <label for="validationServer01" class="form-label">Nome</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text border-dark" id="inputGroupPrepend1"><i class="bi bi-type"></i></span>
-                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend1" value={account.name} required>
+                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend1" bind:value={userRegister.name} required>
                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                         Inserisci un nome valido
                     </div>
@@ -160,7 +172,7 @@
                 <label for="validationServer02" class="form-label">Cognome</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text border-dark" id="inputGroupPrepend2"><i class="bi bi-type"></i></span>
-                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" value={account.surname} required>
+                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" bind:value={userRegister.surname} required>
                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                         Inserisci un cognome valido
                     </div>
@@ -172,7 +184,7 @@
                 <label for="validationServer02" class="form-label">e-mail</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text border-dark" id="inputGroupPrepend2"><i class="bi bi-at"></i></span>
-                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" value={account.email} required>
+                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" bind:value={userRegister.email} required>
                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                         Inserisci un cognome valido
                     </div>
@@ -181,21 +193,21 @@
 
             <div class="col-md-4">
                 <label for="validationServer03" class="form-label">Stato</label>
-                <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer04Feedback" value={account.country} required>
+                <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer04Feedback" bind:value={userRegister.country} required>
                 <div id="validationServer04Feedback" class="invalid-feedback">
                     Inserisci uno stato valido
                 </div>
             </div>
             <div class="col-md-4">
                 <label for="validationServer04" class="form-label">Regione</label>
-                <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer03Feedback" value={account.region} required>
+                <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer03Feedback" bind:value={userRegister.region} required>
                 <div id="validationServer03Feedback" class="invalid-feedback">
                     Inserisci una città valida
                 </div>
             </div>
             <div class="col-md-4">
                 <label for="validationServer05" class="form-label">Città</label>
-                <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer03Feedback" value={account.city} required>
+                <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer03Feedback" bind:value={userRegister.city} required>
                 <div id="validationServer03Feedback" class="invalid-feedback">
                     Inserisci una città valida
                 </div>
@@ -205,34 +217,34 @@
 
             <div class="col-md-6">
                 <label for="validationServer06" class="form-label">Città universitaria</label>
-                <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer06Feedback" value={account.university_city} required>
+                <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer06Feedback" bind:value={userRegister.university_city} required>
                 <div id="validationServer06Feedback" class="invalid-feedback">
                     Inserisci una città valida
                 </div>
             </div>
             <div class="col-md-6">
                 <label for="validationServer07" class="form-label">Facoltà</label>
-                <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer07Feedback" value={account.faculty} required>
+                <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer07Feedback" bind:value={userRegister.faculty} required>
                 <div id="validationServer07Feedback" class="invalid-feedback">
                     Scegli un'opzione
                 </div>
             </div>
             <div class="col-md-6">
                 <label for="validationServer08" class="form-label">Tipologia di Laurea</label>
-                <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer08Feedback" value={account.degree_type} required>
+                <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer08Feedback" bind:value={userRegister.degree_type} required>
                 <div id="validationServer08Feedback" class="invalid-feedback">
                     Scegli un'opzione
                 </div>
             </div>
 
-            <!-- University Code -->
+            <!-- Password -->
             <div class="col-md-6">
-                <label for="validationServerUsername" class="form-label">Matricola</label>
+                <label for="login_password" class="form-label">Password</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text border-dark" id="inputGroupPrepend3">#</span>
-                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3" value={account.student_ID} required>
+                    <input type="password" class="form-control" id="login_password" bind:value={userRegister.password}>
                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                        Inserisci un numero di matricola valido
+                        Inserisci una password valida
                     </div>
                 </div>
             </div>

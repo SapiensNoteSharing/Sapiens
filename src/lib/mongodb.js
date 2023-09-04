@@ -31,11 +31,20 @@ const ConfigSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-    courses: [ObjectId],
-    balance: Number,
     name: String,
     surname: String,
     email: String,
+    country: String,
+    region: String,
+    city: String,
+    university_region: String,
+    university_city: String,
+    faculty: String,
+    degree_type: String,
+    courses: [ObjectId],
+    balance: Number,
+    hash: String,
+    role: String,
 }, {
     timestamps: true
 })

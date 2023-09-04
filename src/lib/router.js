@@ -41,10 +41,11 @@ const router = new Router()
     .unrestrict('.*:/login')
     .unrestrict('.*:/callback')
     .unrestrict('.*:/logout')
-    .unrestrict('.*:/.*', ['admin', 'manager', 'viewer'])
+    .restrict('.*:/.*', ['admin', 'user'])
     .build();
 
 const guard = (path, user, opts) => {
+    console.log('path user opts', path, user, opts)
     const match = router.match(path);
 
     if(match) {
@@ -54,8 +55,8 @@ const guard = (path, user, opts) => {
             }
         }
         if(user) {
-            const intersection = match.scope.filter(value => user.scope?.includes(value));
-            
+            const intersection = match.scope.filter(value => value == user.role);
+            console.log(intersection)
             if(intersection.length) {
                 return {
                     status: 200
