@@ -26,6 +26,7 @@
 		"katex": "^0.16.7",
 		"markdown-it": "^13.0.1",
 		"markdown-it-katex": "^2.0.3",
+		"markdown-it-multimd-table": "^4.2.2",
 		"markdown-it-texmath": "^1.0.0",
 		"mongoose": "^7.1.1",
 		"node-sass": "^8.0.0",

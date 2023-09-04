@@ -1,6 +1,9 @@
 <script>
     import { onMount } from "svelte";
     import Modal from '$lib/components/Modal.svelte';
+    import {
+        page
+    } from '$app/stores';
 
     import '$css/global.scss';
 
@@ -57,7 +60,7 @@
                         <span style="right: 2px; top: 8px;">Accedi</span>
                     </button>
                     <!-- register -->
-                    <button type="button" class="btn btn-outline-secondary border-dark text-dark px-4 py-2 ms-4 fs-1 rounded-pill" on:click={openRegisterModal}>
+                    <button type="button" class="btn btn-outline-success border-dark text-dark px-4 py-2 ms-4 fs-1 rounded-pill" on:click={openRegisterModal}>
                         <span style="right: 2px; top: 8px;">Registrati</span>
                     </button>
                 </div>
@@ -135,7 +138,7 @@
 </Modal>
 
 <!-- Register Modal-->
-<Modal title="Registrati" yes="Registrati" classes="bg-secondary border-dark" theme="btn-outline-secondary" xlarge bind:this={registerModal}>
+<Modal title="Registrati" yes="Registrati" classes="bg-success border-dark" theme="btn-outline-success" xlarge bind:this={registerModal}>
     <div slot="body">
         <form class="row g-3 was-validated">
             <h4 class="fs-1" id="dati_personali">Dati personali</h4>

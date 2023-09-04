@@ -342,7 +342,7 @@ function openCart() {
         {#if $view == "list"}
             <!-- list view -->
             {#each filtered as course}
-                <Course {course} class="mb-3 bg-primary"/>
+                <Course {course} class="mb-3"/>
             {/each}
         {:else if $view == "grid"}
             <!-- grid view -->

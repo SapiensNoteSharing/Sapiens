@@ -1,6 +1,6 @@
 <script>
     import Accordion from "./Accordion.svelte";
-    import AccordionItem from "./Accordionitem.svelte";
+    import AccordionItem from "./AccordionItem.svelte";
     import Rating from "./Rating.svelte";
     import Icon from "./Icon.svelte";
     import { filter_tags } from '$lib/stores';

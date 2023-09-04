@@ -4,11 +4,7 @@ import Course from '$lib/components/Course.svelte'
 export let data;
 
 let courses = data.courses || [];
-
-
-
 </script>
-
 
 <div class="d-flex w-100 justify-content-between align-items-center">
     <h3>Corsi</h3>
@@ -16,6 +12,5 @@ let courses = data.courses || [];
 </div>
 
 {#each courses as course}
-    <Course {course}></Course>
+<Course {course}></Course>
 {/each}
-
