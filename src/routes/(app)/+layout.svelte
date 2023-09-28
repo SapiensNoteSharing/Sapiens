@@ -31,6 +31,9 @@ function openDnaModal() {
 
             <div class="d-flex me-3 align-items-center">
                 <!-- Site navigation -->
+                <span class="me-5">
+                    <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/test"} href="/test">Test</a>
+                </span>
                 {#if data.user.role == 'admin'}
                 <span class="me-5">
                     <a class="display-6 text-decoration-none navbar_page" class:active={$page.route?.id?.startsWith("/admin")} href="/admin/courses">Admin</a>
