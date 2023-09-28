@@ -7,8 +7,8 @@
     
     let userLogin = {}
     let userRegister = {}
-    
-    function registerUser(){
+
+    function registerUser() {
         registerModal.show().then(async res => {
             if(res){
                 const resp = await fetch('/register', {
@@ -18,7 +18,7 @@
                     },
                     body: JSON.stringify(userRegister)
                 });
-                if(resp.ok){
+                if(resp.ok) {
                     goto('/esplora_corsi')
                 }
             }
@@ -42,8 +42,8 @@
         })
     }
     
-    
-    
+
+
 </script>
 
 <div>

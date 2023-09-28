@@ -34,7 +34,11 @@
 		background-size: 1.25rem;
 		transition: transform .2s ease-in-out;
 	}
-		
+
+	.collapsed::before {
+		transform: rotate(-180deg);
+	}
+
 	.accordion-button::after {
 		display: none !important;
 	}
