@@ -8,7 +8,7 @@
     let userLogin = {}
     let userRegister = {}
 
-    function registerUser(){
+    function registerUser() {
         registerModal.show().then(async res => {
             if(res){
                 const resp = await fetch('/register', {
@@ -18,7 +18,7 @@
                     },
                     body: JSON.stringify(userRegister)
                 });
-                if(resp.ok){
+                if(resp.ok) {
                     goto('/esplora_corsi')
                 }
             }
@@ -41,9 +41,6 @@
             }
         })
     }
-    
-
-
 </script>
 
 <div>
@@ -60,7 +57,7 @@
                         <span style="right: 2px; top: 8px;">Accedi</span>
                     </button>
                     <!-- register -->
-                    <button type="button" class="btn btn-outline-secondary border-dark text-dark px-4 py-2 ms-4 fs-1 rounded-pill" on:click={openRegisterModal}>
+                    <button type="button" class="btn btn-outline-secondary border-dark text-dark px-4 py-2 ms-4 fs-1 rounded-pill" on:click={registerUser}>
                         <span style="right: 2px; top: 8px;">Registrati</span>
                     </button>
                 </div>
