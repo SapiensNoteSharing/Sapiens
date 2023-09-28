@@ -1,6 +1,11 @@
 export async function load({ parent, fetch }) {
-    const resp = await fetch('/admin/api/file');
-    let file = (resp.ok && await resp.json())
+    const user = await parent()
 
-    return {file};
+    const resp = await fetch(`/api/courses`);
+    const courses = (resp.ok && await resp.json()) || []
+
+    return {
+        user,
+        courses
+    };
 }

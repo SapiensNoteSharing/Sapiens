@@ -97,7 +97,7 @@ export async function GET({url, fetch}){
 
         await Course.create({
             name: course.name,
-            content: chaptersIds,
+            chapters: chaptersIds,
             extra_content: extra._id
         })
 

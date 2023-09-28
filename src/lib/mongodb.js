@@ -16,6 +16,10 @@ conn.once('open', () => {
     GridFs = new mongoose.mongo.GridFSBucket(conn.db);
 });
 
+const courseAutoPopulate = (next) => {
+    this.populate('content')
+}
+
 const ConfigSchema = new Schema({
     tenant: {
         type: String,
@@ -82,6 +86,12 @@ const DirectorySchema = new Schema({
     timestamps: true
 })
 
+DirectorySchema.pre('find', function (next) {
+    this.populate('directories');
+    this.populate('files')
+    next()
+})
+
 const CourseSchema = new Schema({
     name: String,
     CFU: Number,
@@ -114,8 +124,12 @@ const CourseSchema = new Schema({
 }, {
     timestamps: true
 })
-
-
+CourseSchema.pre('find', function (next) {
+    this.populate('content')
+    this.populate('reviews')
+    this.populate('extra_content')
+    next()
+})
 
 const GridSchema = new Schema({}, {strict: false});
 

@@ -45,9 +45,7 @@ const router = new Router()
     .build();
 
 const guard = (path, user, opts) => {
-    console.log('path user opts', path, user, opts)
     const match = router.match(path);
-
     if(match) {
         if(match.auth === false) {
             return {
@@ -56,7 +54,6 @@ const guard = (path, user, opts) => {
         }
         if(user) {
             const intersection = match.scope.filter(value => value == user.role);
-            console.log(intersection)
             if(intersection.length) {
                 return {
                     status: 200

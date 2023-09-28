@@ -17,7 +17,7 @@
 	</h2>
 	<div {id} class="accordion-collapse collapse {open ? 'show bg-light' : ''}" data-bs-parent={parent ? `${parent}` : ""}>
 		<div class="accordion-body">
-			<slot name="body"></slot>
+			<slot></slot>
 		</div>
 	</div>  
 </div>

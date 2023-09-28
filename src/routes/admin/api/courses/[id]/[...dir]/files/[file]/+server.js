@@ -1,24 +1,18 @@
 import { File } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
-import { render } from '$lib/markdown';
 
-export async function GET({ url }) {
-    try {
-        const params = url.searchParams
-        const query = {}
+export async function GET({ url, params }){
+    try{
+        const urlParams = url.searchParams
 
-        if(params.get('tags')) {
-            query.tags = params.get('tags').split(',');
+        if(urlParams.get('tags')){
+            query = params.get('tags').split(',');
         }
 
-        const docs = await File.find();
+        const doc = await File.findById(params.file)
 
-        if (!docs) {
-            throw error(404, docs)
-        }
-
-        return new Response(JSON.stringify(renderedFile))
-    } catch(err) {
+        return new Response(JSON.stringify(doc))
+    }catch(err){
         console.log(err)
         throw error(500, err)
     }
@@ -28,36 +22,36 @@ export async function POST({ request }){
     try{
         let body = await request.json()
 
-        const course = await Course.create(body)
+        const course = await Directory.create(body)
 
         return new Response('OK')
-    } catch(err) {
+    }catch(err){
         console.log(err)
         throw error(500, err)
     }
 }
 
 export async function PUT({ request }){
-    try {
+    try{
         const body = await request.json();
 
-        const course = await Course.findByIdAndUpdate(body._id, body)
+        const course = await Directory.findByIdAndUpdate(body._id, body)
 
         return new Response('OK')
-    } catch(err) {
+    }catch(err){
         console.log(err);
         throw error(500, err)
     }
 }
 
 export async function DELETE({ request }){
-    try {
+    try{
         const body = await request.json()
 
-        const course = await Course.findByIdAndDelete()
+        const course = await Directory.findByIdAndDelete(body._id)
 
         return new Response('OK')
-    } catch(err) {
+    }catch(err){
         console.log(err)
         throw error(500, err)
     }

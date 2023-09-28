@@ -13,10 +13,6 @@ export async function GET({ url, setHeaders }){
         const docs = await File.findById('646412b27cf277e05e7d853c')
 
         let data = `data:image/png;base64,${docs.content}`
-        if(!docs){
-            console.log(docs);
-            throw error(404, docs)
-        }
 
         setHeaders({
             'Content-Type': 'image/png',

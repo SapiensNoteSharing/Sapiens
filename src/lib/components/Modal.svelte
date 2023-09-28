@@ -52,7 +52,7 @@ onMount(async () => {
 				<!-- <button type="button" class="btn-primary btn-close" data-bs-dismiss="modal" aria-label="Close" on:click={() => close(false)}></button> -->
 			</div>
 			<div class="modal-body">
-				<slot name="body"/>
+				<slot/>
 			</div>
 			<div class="modal-footer">
 				{#if no}
