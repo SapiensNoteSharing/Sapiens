@@ -9,7 +9,7 @@
     $: current = data.directory || {}
     $: params = data.params
 
-    const professors = ['Ottaviani', 'Stoppato']
+    const professors = ['Giorgio Ottaviani', 'Caterina Stoppato']
     
         async function save(){
             if(current.name){

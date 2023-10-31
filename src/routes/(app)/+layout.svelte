@@ -1,33 +1,30 @@
 <script>
-import { onMount } from "svelte";
+    import { onMount } from "svelte";
 
-import Modal from '$lib/components/Modal.svelte';
-import { page } from '$app/stores';
-import { dna } from '$lib/stores'
-import Sidebar from "$lib/components/Sidebar.svelte";
+    import Modal from '$lib/components/Modal.svelte';
+    import { page } from '$app/stores';
+    import { dna } from '$lib/stores'
+    import Sidebar from "$lib/components/Sidebar.svelte";
 
+    export let data;
+    let user = data.user
 
-export let data;
-let user = data.user
+    let dnaModal;
 
+    function openDnaModal() {
+        dnaModal.show().then(async res => {
+            if (res) {
 
-
-let dnaModal;
-
-function openDnaModal() {
-    dnaModal.show().then(async res => {
-        if (res) {
-
-        }
-    })
-}
+            }
+        })
+    }
 </script>
 
 <div class="d-flex sticky-top">
     <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
         <div class="d-flex w-100 justify-content-between align-items-center">
             <!-- Sapiens Logo -->
-            <img class="ms-3" style="width: 18rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
+            <img class="ms-3" style="width: 12rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
 
             <div class="d-flex me-3 align-items-center">
                 <!-- Site navigation -->
@@ -35,10 +32,11 @@ function openDnaModal() {
                     <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/test"} href="/test">Test</a>
                 </span>
                 {#if data.user.role == 'admin'}
-                <span class="me-5">
-                    <a class="display-6 text-decoration-none navbar_page" class:active={$page.route?.id?.startsWith("/admin")} href="/admin/courses">Admin</a>
-                </span>
+                    <span class="me-5">
+                        <a class="display-6 text-decoration-none navbar_page" class:active={$page.route?.id?.startsWith("/admin")} href="/admin/courses">Admin</a>
+                    </span>
                 {/if}
+
                 <span class="me-5">
                     <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/(app)/esplora_corsi"} href="/esplora_corsi">Esplora Corsi</a>
                 </span>
@@ -50,7 +48,7 @@ function openDnaModal() {
                 </span>
 
                 <!-- credit -->
-                <span class="display-5 text-dark me-2">{user.balance || 0}</span>
+                <span class="display-6 text-dark me-2">{user.balance || 0}</span>
                 <button type="button" class="me-3 p-2 btn btn-light position-relative" on:click={openDnaModal}>
                     <img style="width: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
                 </button>
@@ -103,9 +101,12 @@ function openDnaModal() {
 <style lang="scss">
 @import '$css/variables.scss';
 
-
 .icon {
     font-size: 20px;
+}
+
+.display-6 {
+   font-size: 1.4rem;
 }
 
 .navbar_page.active {

@@ -1,14 +1,14 @@
 <script>
-import Svelecte from "svelecte";
-import { goto } from '$app/navigation'
-import { Table } from '@bizmate-oss/sveltekit-components'
+    import Svelecte from "svelecte";
+    import { goto } from '$app/navigation'
+    import { Table } from '@bizmate-oss/sveltekit-components'
 
-export let data;
-const fetch = data.fetch
+    export let data;
+    const fetch = data.fetch;
 
 $: current = data.course || {}
 
-const professors = ['Ottaviani', 'Stoppato']
+    const professors = ['Giorgio Ottaviani', 'Caterina Stoppato']
 
     async function save(){
         if(current.name){
@@ -19,49 +19,49 @@ const professors = ['Ottaviani', 'Stoppato']
                 },
                 body: JSON.stringify(current)
             });
-            goto(`/admin/courses/${current._id}`)
+            goto(`/admin/courses/${current._id}`);
         }
     }
 
-async function cancel(){
-    goto(`/admin/courses`)
-}
+    async function cancel() {
+        goto(`/admin/courses`)
+    }
 
-let contentCols = [
-    {
-        id: 'name',
-        label: 'Name',
-        searchable: true
-    },
-    {
-        id: 'directories',
-        label: '# of directories',
-        format: (val, row) => `<span class="me-2">${val?.length}</span>` + val.map(el => `<a class="null" href="./${current._id}/${row._id}/${el._id}">${el.name}</a>`).join(' ')
-    },
-    {
-        id: 'files',
-        label: 'Files',
-        format: (val, row) => `<span class="me-5">${val?.length}</span>` + val.map(el => `<a class="null" href="./${current._id}/${row._id}/files/${el._id}">${el.name}</a>`).join(' ')
-        
-    },
-    {
-        id: 'updatedAt',
-        label: 'Last Modified',
-        format: val => new Date(val).toLocaleDateString()
+    let contentCols = [
+        {
+            id: 'name',
+            label: 'Name',
+            searchable: true
+        },
+        {
+            id: 'directories',
+            label: '# of directories',
+            format: (val, row) => `<span class="me-2">${val?.length}</span>` + val.map(el => `<a class="null" href="./${current._id}/${row._id}/${el._id}">${el.name}</a>`).join(' ')
+        },
+        {
+            id: 'files',
+            label: 'Files',
+            format: (val, row) => `<span class="me-5">${val?.length}</span>` + val.map(el => `<a class="null" href="./${current._id}/${row._id}/files/${el._id}">${el.name}</a>`).join(' ')
+            
+        },
+        {
+            id: 'updatedAt',
+            label: 'Last Modified',
+            format: val => new Date(val).toLocaleDateString()
 
-    },
-]
+        },
+    ]
 
-function edit(row){
-    goto(`/admin/courses/${current._id}/${row._id}`)
-}
+    function edit(row) {
+        goto(`/admin/courses/${current._id}/${row._id}`)
+    }
 
-async function reload(){
-    const resp = await fetch(`/admin/api/courses/${current._id}`)
-    current = (resp.ok && await resp.json()) || {}
-}
-
+    async function reload() {
+        const resp = await fetch(`/admin/api/courses/${current._id}`)
+        current = (resp.ok && await resp.json()) || {}
+    }
 </script>
+
 <div class="d-flex align-items-center mb-2">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
@@ -105,10 +105,10 @@ async function reload(){
         </div>  
     </div>
 
-    <style>
-        :global(.null) {
-            text-decoration: none;
-            color: inherit;
-            margin: 0 .5rem
-        }
-    </style>
+<style>
+    :global(.null) {
+        text-decoration: none;
+        color: inherit;
+        margin: 0.5rem
+    }
+</style>
