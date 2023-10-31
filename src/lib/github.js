@@ -1,5 +1,14 @@
 import { config } from '$lib/config';
 import { Course, Directory, File, dropContents } from '$lib/mongodb';
+import { error } from '@sveltejs/kit';
+import { Octokit } from 'octokit';
+
+const octokit = new Octokit({
+    auth: config.git.access_token,
+    baseUrl: 'https://api.github.com'
+})
+
+await octokit.auth()
 
 
 const htmlMapping = {
@@ -21,7 +30,6 @@ const htmlMapping = {
     ",": "%2C",
     "-": "%2D",
     ".": "%2E",
-    "/": "%2F",
     ":": "%3A",
     ";": "%3B",
     "=": "%3D",
@@ -70,8 +78,19 @@ function substitute(href){
     }).join('')
 }
 
-export async function gitFile(course){
+export async function gitFile(path){
 
-    const resp = await fetch(`${base}/Primo%20anno${urlSuffix}`, options)
+    const resp = await fetch(`${base}${path}`, options)
+    const file = (resp.ok && await resp.json()) || {};
+}
+
+
+export async function get(file){
+    if(!file.gitUrl) throw error(500, 'File provided has not a gitUrl property')
+    const resp = await fetch(`${base}${file.gitUrl}`, options)
+    const body = (resp.ok && await resp.json()) || {}
+    return body
 
 }
+
+export default octokit;

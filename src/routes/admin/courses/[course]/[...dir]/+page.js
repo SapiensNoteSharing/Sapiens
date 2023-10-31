@@ -1,10 +1,16 @@
 
 export async function load({parent, params, fetch}){
-    const resp = await fetch(`/admin/api/courses/${params.course}/${params.dir}`)
-    const directory = (resp.ok && await resp.json())
+
+    let directory = {}
+    
+    if(!params.dir.endsWith('new')){
+        const resp = await fetch(`/admin/api/courses/${params.course}/${params.dir}`)
+        directory = (resp.ok && await resp.json())
+    }
 
     return {
         directory,
-        params
+        params,
+        fetch: fetch
     }
 }

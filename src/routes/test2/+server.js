@@ -58,12 +58,12 @@ export async function GET({url, fetch}){
     let courses = [...primoAnno, ...secondoAnno]
     console.log(courses)
 
-    await Directory.deleteMany({})
-    await File.deleteMany({})
-    
+//    await Directory.deleteMany({})
+//    await File.deleteMany({})
+  /*  
     for(let course of courses){
 
-        /* Estrazione capitoli */
+        // Estrazione capitoli 
         const resp = await fetch(course.url, {headers})
         const courseContent = (resp.ok && await resp.json())
 
@@ -106,7 +106,7 @@ export async function GET({url, fetch}){
    /*
     let data = body1.content
     let buff = Buffer.from(data, 'base64');
-    let text = buff.toString('ascii');
+    let text = buff.toString('utf-8');
     console.log(text)
 */
     return new Response(JSON.stringify(body))
@@ -124,7 +124,7 @@ async function getFile(){
 
     let data = file.content
     let buff = Buffer.from(data, 'base64');
-    let text = buff.toString('ascii');
+    let text = buff.toString('utf-8');
     console.log(text)
 
     return text;

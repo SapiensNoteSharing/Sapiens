@@ -11,7 +11,7 @@ export async function GET({ url, params }){
         const arr = params.dir.split('/');
         const id = arr[arr.length - 1]
         const docs = await Directory.findById(id).populate('directories').populate('files')
-        console.log(docs)
+
         return new Response(JSON.stringify(docs))
     }catch(err){
         console.log(err)

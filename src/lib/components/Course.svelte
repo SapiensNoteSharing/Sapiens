@@ -61,7 +61,7 @@
                             {chapter.name}
                         </div>
                         {#each (chapter.files || chapter.directories) as paragraph}
-                        <li class="fs-3 list-group-item">{paragraph.name}</li>
+                        <li class="fs-3 list-group-item">{paragraph.name?.replace(/\..*(?=[a-z])/, '')}</li>
                         {/each}
                     </AccordionItem>
                     {/each}

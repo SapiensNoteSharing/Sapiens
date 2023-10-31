@@ -57,8 +57,8 @@
         const resp = await fetch(`/admin/api/courses/${params.course}/${params.dir}`)
         current = (resp.ok && await resp.json()) || {}
     }
-    
-    </script>
+
+</script>
         <div class="d-flex align-items-center mb-2">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
@@ -72,28 +72,31 @@
                     <input class="form-control" placeholder="Network Name" bind:value={current.name}>
                 </div>
             </div>
-        </div>
-    
-        <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="timeZone" class="form-label">TimeZone</label>
-                    <Svelecte options={Intl.supportedValuesOf('timeZone')} labelAsValue bind:value={current.timeZone} placeholder="Choose Timezone"/>
+                    <label for="gitUrl" class="form-label">Git Url (from Università)</label>
+                    <input class="form-control" placeholder="Git Url" bind:value={current.gitUrl}>
                 </div>
             </div>
         </div>
     
         <div class="row">
             <div class="col">
-                {#if current.directories.length}
+                {#if current.directories?.length}
                 <div class="mb-3">
-                    <label for="content" class="form-label">Directories</label>
+                    <div class="d-flex justify-content-between">
+                        <label for="content" class="form-label">Directories</label>
+                        {#if current?._id}<button class="btn btn-primary" on:click={() => goto(`/admin/courses/${params.course}/${params.dir}/new`)}>New</button>{/if}
+                    </div>
                     <Table rows={current.directories} cols={dirCols} border alternateRows on:click={(ev) => editDir(ev.detail)}/>
                 </div>
                 {/if}
-                {#if current.files.length}
+                {#if current.files?.length}
                 <div class="mb-3">
-                    <label for="content" class="form-label">Files</label>
+                    <div class="d-flex justify-content-between">
+                        <label for="content" class="form-label">Files</label>
+                        {#if current?._id}<button class="btn btn-primary" on:click={() => goto(`/admin/courses/${params.course}/${params.dir}/files/new`)}>New</button>{/if}
+                    </div>
                     <Table rows={current.files} cols={dirCols} border alternateRows on:click={(ev) => editFile(ev.detail)}/>
                 </div>
                 {/if}

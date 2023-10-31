@@ -17,12 +17,12 @@
     
         async function save(){
             if(current.name){
-                await fetch(`/admin/api/courses/${params.course}/${params.dir}/files/${params.file}`, {
+                await fetch(`/admin/api/courses/${params.course}/${params.dir}/files`, {
                     method: current?._id ? 'PUT' : 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(current)
+                    body: JSON.stringify({...current, content: fileData})
                 });
                 goto(`/admin/courses/${params.course}/${params.dir}`)
             }
@@ -41,7 +41,6 @@
             body: JSON.stringify({fileData})
         });
         renderedData = (resp.ok && await resp.json()).renderedData || ''
-
     }
 $: fileData && reRender()
     </script>
@@ -61,30 +60,28 @@ $: fileData && reRender()
             <div class="col">
                 <div class="mb-3">
                     <label for="name" class="form-label">Last Updated</label>
-                    <input class="form-control" placeholder="Network Name" value={new Date(current.updatedAt).toLocaleDateString()} disabled>
+                    <input class="form-control" placeholder="Last Updated" value={(new Date(current.updatedAt || new Date().getTime()).toLocaleDateString())} disabled>
                 </div>
             </div>
-        </div>
-    
-        <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="timeZone" class="form-label">TimeZone</label>
-                    <Svelecte options={Intl.supportedValuesOf('timeZone')} labelAsValue bind:value={current.timeZone} placeholder="Choose Timezone"/>
+                    <label for="gitUrl" class="form-label">Git Url (from Università)</label>
+                    <input class="form-control" placeholder="Git Url" bind:value={current.gitUrl}>
                 </div>
-
             </div>
         </div>
 
         <div class="row">
             <div class="col">
+                <span class="text">Unformatted text</span>
                 <div bind:this={input} class="textarea" bind:innerText={fileData} contenteditable="true" spellcheck="false"></div>
             </div>
             <div class="col">
-                <div class="border rounded h-100">{@html renderedData}</div>
+                <span class="text">Formatted text</span>
+                <div class="border rounded mb-2">{@html renderedData}</div>
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-secondary me-2" on:click={cancel} data-sveltekit-preload-data="hover">Cancel</button>
-                    <button class="btn btn-primary me-1" on:click={save} data-sveltekit-preload-data="hover">Save</button>
+                    <button class="btn btn-secondary me-2" on:click={cancel}>Cancel</button>
+                    <button class="btn btn-primary me-1" on:click={save}>Save</button>
                 </div>
             </div>
         </div>
@@ -95,8 +92,12 @@ $: fileData && reRender()
                 color: inherit;
                 margin: 0 .5rem
             }
+            .col{
+                max-width: 48%
+            }
             .textarea {
                 width: 100%;
+                max-width: 100%;
                 height: auto;
                 min-height: 800px;
                 margin-bottom: 1rem;

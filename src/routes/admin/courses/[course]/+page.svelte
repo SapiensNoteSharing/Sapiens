@@ -6,13 +6,13 @@ import { Table } from '@bizmate-oss/sveltekit-components'
 export let data;
 const fetch = data.fetch
 
-let current = data.course || {}
+$: current = data.course || {}
 
 const professors = ['Ottaviani', 'Stoppato']
 
     async function save(){
         if(current.name){
-            await fetch(`/admin/api/courses/${current._id}`, {
+            await fetch(`/admin/api/courses`, {
                 method: current?._id ? 'PUT' : 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -80,17 +80,11 @@ async function reload(){
                 <label for="professors" class="form-label">Professors</label>
                 <Svelecte options={professors} multiple labelAsValue bind:value={current.professors} placeholder="Select Professors"/>
             </div>
-
         </div>
-    </div>
-
-    <div class="row">
-
-
         <div class="col">
             <div class="mb-3">
-                <label for="timeZone" class="form-label">TimeZone</label>
-                <Svelecte options={Intl.supportedValuesOf('timeZone')} labelAsValue bind:value={current.timeZone} placeholder="Choose Timezone"/>
+                <label for="gitUrl" class="form-label">Git Url (from Università)</label>
+                <input class="form-control" placeholder="Git Url" bind:value={current.gitUrl}>
             </div>
         </div>
     </div>
@@ -98,7 +92,10 @@ async function reload(){
     <div class="row">
         <div class="col">
             <div class="mb-3">
-                <label for="content" class="form-label">Chapters</label>
+                <div class="d-flex justify-content-between">
+                    <label for="content" class="form-label">Chapters</label>
+                    {#if current?._id}<button class="btn btn-primary" on:click={() => goto(`/admin/courses/${current._id}/new`)}>New</button>{/if}
+                </div>
                 <Table rows={current.content} cols={contentCols} border alternateRows on:click={(ev) => edit(ev.detail)}/>
             </div>
             <div class="d-flex justify-content-end">

@@ -67,9 +67,8 @@ export async function GET({url, params, locals, fetch}){
         if(htmlMapping[char] != undefined) return htmlMapping[char];
         return char
     }).join('')
-    console.log(href)
+
     const resp = await fetch(`${base}${href}`, options)
     const body = (resp.ok && await resp.json()) || {};
-    console.log(href, resp, body)
     return new Response(JSON.stringify(body))
 }

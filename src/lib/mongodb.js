@@ -64,6 +64,7 @@ const ReviewSchema = new Schema({
 const FileSchema = new Schema({
     name: String,
     content: String,
+    gitUrl: String
 }, {
     timestamps: true
 })
@@ -81,7 +82,8 @@ const DirectorySchema = new Schema({
             type: ObjectId,
             ref: 'Directory'
         }
-    ]
+    ],
+    gitUrl: String
 }, {
     timestamps: true
 })
@@ -105,6 +107,7 @@ const CourseSchema = new Schema({
     year: String,
     semester: String,
     tags: [String],
+    gitUrl: String,
     content: [
         {
             type: ObjectId,
@@ -143,7 +146,8 @@ const Course = mongoose.model('Courses', CourseSchema);
 
 
 export { 
-    ObjectId, 
+    ObjectId,
+    Grid,
     GridFs, 
     Config, 
     User,

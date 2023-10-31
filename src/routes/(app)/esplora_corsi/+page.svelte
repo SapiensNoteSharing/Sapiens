@@ -9,8 +9,6 @@
     export let data;
     let courses = data.courses || []
     
-    console.log('courses', data, courses)
-    
     let filtered = [...courses];
     
     $: $value != undefined && search()

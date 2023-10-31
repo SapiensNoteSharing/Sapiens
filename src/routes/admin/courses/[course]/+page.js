@@ -5,6 +5,7 @@ export async function load({parent, params, fetch}){
     const course = (resp.ok && await resp.json()) || []
 
     return {
-        course
+        course,
+        fetch: fetch
     }
 }

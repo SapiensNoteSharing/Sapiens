@@ -28,7 +28,7 @@
     
 </script>
 
-<div class="sidebar align-self-stretch px-3 position-relative flex-shrink-0">
+<div class="sidebar px-3 position-relative">
     {#if $page.route.id == '/(app)/esplora_corsi'}
     <div class="d-flex align-items-center mt-5 mb-4">
         <h2 class="mx-auto display-6 text-dark">Filtri</h2>
@@ -178,7 +178,7 @@
     @import '$css/variables.scss';
     
     .sidebar {
-        width: 25%;
+        width: 300px;
         min-height: 82vh;
         background-color: $primary;
         border-right: 1px solid $dark;

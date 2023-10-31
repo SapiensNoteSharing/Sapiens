@@ -13,6 +13,9 @@
             const resp = await fetch(`/test3?href=${href}`)
             body = (resp.ok && await resp.json()) || []
             body = JSON.stringify(body, null, 2);
+            const r1 = await fetch(`admin/api/octokit`);
+            const b = (r1.ok && await r1.json())
+            console.log(b)
         }, 200)
     }
     
@@ -26,6 +29,8 @@
     <div class="row h-100">
         <div class="col">
             <input bind:value={href} class="form-control">
+            <span class="text">Usage: /{'<path of dir/file from Università>'}</span>
+            <br>
             <span class="text">Response:<br>
             </span>
             <textarea class="w-100 h-100">
