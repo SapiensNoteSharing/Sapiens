@@ -1,19 +1,42 @@
 <script>
-    import Modal from '$lib/components/Modal.svelte';
-    let modal; 
+    
+    
+    export let data;
+    const fetch = data.fetch
+    
+    let href = ''
+    let body = {}, timer;
+    
+    function debounce(){
+        clearTimeout(timer)
+        timer = setTimeout(async () => {
+            const resp = await fetch(`/test3?href=${href}`)
+            body = (resp.ok && await resp.json()) || []
+            body = JSON.stringify(body, null, 2);
+        }, 200)
+    }
+    
+    
+    $: href != undefined && debounce()
 
-    function open() {
-	modal.show().then(async res => {
-		if (res) {
-			
-	    }
-    })
-}
+
 </script>
 
-<button class="btn btn-primary" on:click={open}></button>
+<div class="m-5">
+    <div class="row h-100">
+        <div class="col">
+            <input bind:value={href} class="form-control">
+            <span class="text">Response:<br>
+            </span>
+            <textarea class="w-100 h-100">
+                {body}
+            </textarea>
+        </div>
+    </div>
+</div>
 
-<Modal title="title" yes="yes" no="no" bind:this={modal}>
-    <div>Eilà</div>
-</Modal>
-
+<style>
+    .m-5{
+        height: 100vh;
+    }
+</style>

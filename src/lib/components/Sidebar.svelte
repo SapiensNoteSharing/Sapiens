@@ -35,7 +35,7 @@
     </div>
     
     <!-- filter according to input -->
-    <Searchbar class="align-self-center ms-auto me-auto" bind:value={$value}></Searchbar>
+    <Searchbar class="align-self-center ms-auto me-auto"></Searchbar>
     
     <div class="accordion my-4 mx-3">
         <!-- filter according to degree faculty -->

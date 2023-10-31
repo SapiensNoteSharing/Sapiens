@@ -22,7 +22,7 @@ export async function POST({ request }){
     try{
         let body = await request.json()
 
-        const course = await Directory.create(body)
+        const course = await File.create(body)
 
         return new Response('OK')
     }catch(err){
