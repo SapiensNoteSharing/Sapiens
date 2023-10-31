@@ -22,6 +22,7 @@ async function getDir(directory){
             console.log('FILE content', obj)
             const resp = await fetch(obj.url, {headers})
             const fileObj = (resp.ok && await resp.json())
+            /* LEVARE LE ESTENSIONI DAI NOMI DEI FILE, CAMBIARE STRUTTURA DA PADRE CON PUNTATORI A FIGLI CON PUNTATORE A PADRE*/
             const file = await File.create({name: fileObj.name, content: fileObj.content})
             console.log('created file', file)
             await Directory.findByIdAndUpdate(dir._id, {

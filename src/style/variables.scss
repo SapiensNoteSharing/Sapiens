@@ -57,12 +57,12 @@ $btn-border-radius: 10px !default;
 
 // Text
 $display-font-sizes: (
-  1: 6rem, //7.5rem, //9.375rem,
-  2: 3.2rem, //4rem, //5rem,
-  3: 3rem, //3.75rem, //4.688rem,
-  4: 2.24rem, //2.8rem, //3.5rem,
-  5: 1.92rem, //2.4rem, //3rem,
-  6: 1.6rem, //2rem, //2.5rem
+  1: 2.5rem, //7.5rem, //9.375rem,
+  2: 2rem, //4rem, //5rem,
+  3: 1.5rem, //3.75rem, //4.688rem,
+  4: 1.2rem, //2.8rem, //3.5rem,
+  5: 1.1rem, //2.4rem, //3rem,
+  6: 1rem, //2rem, //2.5rem
 );
 
 $display-font-family: Poppins;
@@ -73,59 +73,11 @@ $headings-line-height: normal;
 $headings-font-family: Poppins;
 $display-line-height: $headings-line-height;
 
-h1 {
-  font-weight: 400;
-  letter-spacing: normal;
-  &.light {
-    color: $light;
-  }
-}
-
-h2 {
-  font-weight: 700;
-  letter-spacing: normal;
-  &.light {
-    color: $light;
-  }
-}
-
-h3 {
-  font-weight: 700;
-  letter-spacing: normal;
-  &.light {
-    color: $light;
-  }
-}
-
-h4 {
-  font-weight: 400 !important;
-  letter-spacing: normal;
-  &.light {
-    color: $light;
-  }
-}
-
-h5 {
-  font-weight: 400;
-  letter-spacing: normal;
-  &.light {
-    color: $light;
-  }
-}
-
-h6 {
-  font-weight: 400;
-  letter-spacing: normal;
-  &.light {
-    color: $light;
-  }
-}
-
 html {
   scrollbar-width: none;
 }
 
-$h1-font-size: 1.2rem; //1.5rem; //1.875rem
+$h1-font-size: 2rem; //1.5rem; //1.875rem
 $h2-font-size: 1.04rem; //1.3rem; //1.625rem
 $h3-font-size: 0.96rem; //1.2rem; //1.5rem
 $h4-font-size: 0.96rem; //1.2rem; //1.5rem

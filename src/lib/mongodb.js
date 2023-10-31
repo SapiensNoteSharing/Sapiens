@@ -90,7 +90,7 @@ const DirectorySchema = new Schema({
 
 DirectorySchema.pre('find', function (next) {
     this.populate('directories');
-    this.populate('files')
+    this.populate('files', '-content')
     next()
 })
 
@@ -120,6 +120,7 @@ const CourseSchema = new Schema({
             ref: 'Review'
         }
     ],
+    rating: Number,
     extra_content: {
         type: ObjectId,
         ref: 'Directory'

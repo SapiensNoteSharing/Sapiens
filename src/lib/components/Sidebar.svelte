@@ -2,10 +2,13 @@
     import Accordion from '$lib/components/Accordion.svelte';
     import AccordionItem from "$lib/components/AccordionItem.svelte";
     import Searchbar from '$lib/components/Searchbar.svelte';
-    import { view, value, filter_tags } from '$lib/stores';
+    import { view, value, filter_tags, viewing } from '$lib/stores';
     import { page } from '$app/stores';
     import Navigation from './Navigation.svelte';
     import Item from './Item.svelte'
+    import { goto } from '$app/navigation'
+
+
     export let courses;
     
     let faculties = [
@@ -25,131 +28,103 @@
     "Medicina",
     "Scienze farmaceutiche",
     ]
+
+    let degree_types = ['Triennale', 'Magistrale', 'A Ciclo Unico']
+    //tags andranno presi dal database ( va fatto il crud )
+    let tags = [
+        {
+            name: "Best Seller",
+            color: "secondary",
+            selected: false
+        },
+        {
+            name: "New!",
+            color: "success",
+            selected: false
+        }
+    ]
+
+    let filters = {
+        faculty: [],
+        degree_type: [],
+        tags: [],
+        reviews: []
+    }
+
+function toggleFilter(key, val) {
+    if(filters[key].includes(val)) {
+        filters[key] = filters[key].filter(i => i != val);
+    } else {
+        filters[key] = [...filters[key], val]
+    }
+}
     
 </script>
 
 <div class="sidebar px-3 position-relative">
     {#if $page.route.id == '/(app)/esplora_corsi'}
     <div class="d-flex align-items-center mt-5 mb-4">
-        <h2 class="mx-auto display-6 text-dark">Filtri</h2>
+        <h1 class="mx-auto display-6 text-dark">Filtri</h1>
     </div>
     
     <!-- filter according to input -->
     <Searchbar class="align-self-center ms-auto me-auto"></Searchbar>
     
-    <div class="accordion my-4 mx-3">
-        <!-- filter according to degree faculty -->
-        <div class="accordion-item border-dark">
-            <h2 class="accordion-header" id="faculty_filter">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faculty_collapse" aria-expanded="true" aria-controls="faculty_collapse">
-                    Corso di Laurea
-                </button>
-            </h2>
-            <div id="faculty_collapse" class="accordion-collapse collapse show" aria-labelledby="faculty_filter">
-                <div class="accordion-body d-flex flex-wrap">
-                    {#each faculties as faculty}
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check filter_btn" id="{faculty.replace(" ", "_")}" autocomplete="off">
-                        <label class="btn btn-outline-primary text-dark border-primary" for="{faculty.replace(" ", "_")}">{faculty}</label><br>
-                    </div>
-                    {/each}
-                </div>
+    <Accordion let:id class="my-3 mx-2">
+        <AccordionItem class="border-dark">
+            <div slot="name">
+                Corso Di Laurea
             </div>
-        </div>
-        
-        <!-- filter according to degree type -->
-        <div class="accordion-item border-dark">
-            <h2 class="accordion-header" id="degree_filter">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#degree_collapse" aria-expanded="true" aria-controls="degree_collapse">
-                    Tipo di Laurea
-                </button>
-            </h2>
-            <div id="degree_collapse" class="accordion-collapse collapse show" aria-labelledby="degree_filter">
-                <div class="accordion-body d-flex flex-wrap">
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check filter_btn" id="triennale" autocomplete="off">
-                        <label class="btn btn-outline-primary text-dark border-primary" for="triennale">Triennale</label><br>
-                    </div>
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check filter_btn" id="magistrale" autocomplete="off">
-                        <label class="btn btn-outline-primary text-dark border-primary" for="magistrale">Magistrale</label><br>
-                    </div>
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check filter_btn" id="ciclo_unico" autocomplete="off">
-                        <label class="btn btn-outline-primary text-dark border-primary" for="ciclo_unico">A Ciclo Unico</label><br>
-                    </div>
-                    <!--  -->
-                    <!-- {#if } -->
+            <div class="d-flex flex-wrap">
+                {#each faculties as faculty}
+                <div class="me-2 mb-2">
+                    <button class="btn border-1 border-primary filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
                 </div>
-                <hr class="m-0">
-                <h2 class="px-4 pt-4">Triennale</h2>
-                <div class="accordion-body d-flex flex-wrap">
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check" id="Primo anno primo semestre" autocomplete="off">
-                        <label class="btn btn-outline-primary text-dark border-primary" for="Primo anno primo semestre">Primo anno - Primo semestre</label><br>
-                    </div>
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check" id="Primo anno secondo semestre" autocomplete="off">
-                        <label class="btn btn-outline-primary text-dark border-primary" for="Primo anno secondo semestre">Primo anno - Secondo semestre</label><br>
-                    </div>
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check" id="Secondo anno" autocomplete="off">
-                        <label class="btn btn-outline-primary text-dark border-primary" for="Secondo anno">Secondo anno</label><br>
-                    </div>
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check" id="Terzo anno" autocomplete="off">
-                        <label class="btn btn-outline-primary text-dark border-primary" for="Terzo anno">Terzo anno</label><br>
-                    </div>
-                </div>
+                {/each}
             </div>
-        </div>
-        
-        <!-- filter according to tags -->
-        <div class="accordion-item border-dark">
-            <h2 class="accordion-header" id="tags_filter">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tags_collapse" aria-expanded="true" aria-controls="tags_collapse">
-                    Tags
-                </button>
-            </h2>
-            <div id="tags_collapse" class="accordion-collapse collapse show" aria-labelledby="tags_filter">
-                <div class="accordion-body d-flex flex-wrap">
-                    {#each $filter_tags as tag}
-                    <div class="me-2 mb-2">
-                        <input type="checkbox" class="btn-check" id="{tag.name}" bind:checked={tag.selected} autocomplete="off">
-                        <label class="btn btn-outline-{tag.color} text-dark border-dark" for="{tag.name}">{tag.name}</label><br>
-                    </div>
-                    {/each}
-                </div>
+        </AccordionItem>
+        <AccordionItem class="border-dark">
+            <div slot="name">
+                Tipo di Laurea
             </div>
-        </div>
-        
-        <!-- filter according to rating -->
-        <div class="accordion-item border-dark">
-            <h2 class="accordion-header" id="rating_filter">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#rating_collapse" aria-expanded="true" aria-controls="rating_collapse">
-                    Valutazione
-                </button>
-            </h2>
-            <div id="rating_collapse" class="accordion-collapse collapse show" aria-labelledby="rating_filter">
-                <div class="accordion-body d-flex flex-wrap">
-                    <!-- Rating filter -->
-                </div>
+            {#each degree_types as type}
+            <div class="me-2 mb-2">
+                <button class="btn border-1 border-primary filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
             </div>
-        </div>
-    </div>
+            {/each}
+            <!--  -->
+            <!-- {#if } -->
+        </AccordionItem>
+        <AccordionItem class="border-dark">
+            <div slot="name">
+                Tags
+            </div>
+            {#each tags as tag}
+            <div class="me-2 mb-2">
+                <button class="btn text-dark border-1 border-dark filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
+            </div>
+            {/each}
+        </AccordionItem>
+        <AccordionItem class="border-dark">
+            <div slot="name">
+                Rating
+            </div>
+        </AccordionItem>
+    </Accordion>
     {:else if $page.route.id == '/(app)/aula_studio'}
     <div class="mt-3">
         <div class="d-flex w-100 justify-content-center">
             <h1>I Tuoi Corsi</h1>
         </div>
-        {#each courses as course}
-            <Item collapsible obj={course} icon="chevron">
+        {#each courses || [] as course}
+        <div class="navigation">
+            <Item collapsible obj={course} icon="chevron" class="course">
                 <div slot="menu">
-                    {#each course.content as chapter}
-                        <Item collapsible obj={chapter} icon="chevron">
+                    {#each course.content || [] as chapter}
+                        <Item collapsible obj={chapter} icon="chevron" class="chapter">
                             <div slot="menu">
-                                {#each chapter.files as file}
-                                    <Item obj={file} href="."></Item>
+                                {#each chapter.files || [] as file}
+                                    <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail}></Item>
                                 {/each}
                             </div>
                         </Item>
@@ -157,6 +132,7 @@
                 </div>
             </Item>
             <div class="my-1"></div>
+        </div>
         {/each}
     </div>
     {:else if $page.route.id == '/(app)/area_personale'}
@@ -180,7 +156,25 @@
     .sidebar {
         width: 300px;
         min-height: 82vh;
+        flex-shrink: 0;
         background-color: $primary;
         border-right: 1px solid $dark;
+    }
+    .navigation{
+        :global(.course){
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        :global(.chapter){
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        :global(.file){
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+    }
+    .filter {
+        white-space: initial;
     }
 </style>

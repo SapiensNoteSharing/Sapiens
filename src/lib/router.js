@@ -41,6 +41,8 @@ const router = new Router()
     .unrestrict('.*:/login')
     .unrestrict('.*:/callback')
     .unrestrict('.*:/logout')
+    .restrict('.*:/test.*', ['admin'])
+    .restrict('.*:/admin.*', ['admin'])
     .restrict('.*:/.*', ['admin', 'user'])
     .build();
 
