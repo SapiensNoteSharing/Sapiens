@@ -273,10 +273,11 @@
 <div class="d-flex flex-column content bg-light">
     <div class="d-flex justify-content-between mt-5">
         {#if $value == undefined || $value == ""}
-        <span class="display-6 text-dark">Tutti i corsi</span>
+            <span class="display-6 text-dark">Tutti i corsi</span>
         {:else}
-        <span class="display-6 text-dark">Risultati per: {$value}</span>
+            <span class="display-6 text-dark">Risultati per: {$value}</span>
         {/if}
+
         <div class="d-flex">
             <div class="btn-group" role="group">
                 <input type="radio" class="btn-check" name="view" id="btnradio1" autocomplete="off" value="list" class:active={$view == 'list'} bind:group={$view}>
@@ -295,31 +296,31 @@
     <div class="d-flex my-4 justify-content-between">
         <div class="d-flex align-items-center">
             {#if $filter_tags.length == 2}
-            <span class="py-2"><i class="icon bi bi-funnel"></i></span>
-            <h4 class="fs-1 ms-3 my-0">Nessun filtro selezionato</h4>
+                <span class="py-2"><i class="icon bi bi-funnel"></i></span>
+                <h4 class="fs-1 ms-3 my-0">Nessun filtro selezionato</h4>
             {:else}
-            <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
+                <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
             {/if}
             {#each $filter_tags as tag}
-            {#if tag.selected}
-            <span class="badge my-auto p-2 bg-{ tag.color } ms-3 filter_badge text-dark">{ tag.name }</span>
-            {/if}
+                {#if tag.selected}
+                    <span class="badge my-auto p-2 bg-{ tag.color } ms-3 filter_badge text-dark">{ tag.name }</span>
+                {/if}
             {/each}
         </div>
         
         <div class="d-flex align-items-center">
             <!-- sort -->
             {#if $value == undefined || $value == ""}
-            <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sort_courses}>
-                <option class="opt" value="name_ascending">Nome - crescente</option>
-                <option class="opt" value="name_descending">Nome - decrescente</option>
-                <option class="opt" value="code_ascending">Codice - crescente</option>
-                <option class="opt" value="code_descending">Codice - decrescente</option>
-            </select>
+                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sort_courses}>
+                    <option class="opt" value="name_ascending">Nome - crescente</option>
+                    <option class="opt" value="name_descending">Nome - decrescente</option>
+                    <option class="opt" value="code_ascending">Codice - crescente</option>
+                    <option class="opt" value="code_descending">Codice - decrescente</option>
+                </select>
             {:else}
-            <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" disabled>
-                <option value="name_ascending">Corrispondenza</option>
-            </select>
+                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" disabled>
+                    <option value="name_ascending">Corrispondenza</option>
+                </select>
             {/if}
             
             <!-- favourites filter -->
@@ -344,62 +345,64 @@
     
     <!-- courses -->
     {#if filtered.length != 0}
-    {#if $view == "list"}
-    <!-- list view -->
-    {#each filtered as course}
-    <Course {course} class="mb-3"/>
-    {/each}
-    {:else if $view == "grid"}
-    <!-- grid view -->
-    <div class="d-flex flex-wrap justify-content-between align-content-between">
-        {#each filtered as course}
-        <CourseCard {course} class="g-col-6 g-col-md-4 mb-3 me-3"/>
-        {/each}
-    </div>
+        {#if $view == "list"}
+            <!-- list view -->
+            {#each filtered as course}
+                <Course {course} class="mb-3"/>
+            {/each}
+        {:else if $view == "grid"}
+            <!-- grid view -->
+            <div class="d-flex flex-wrap justify-content-between align-content-between">
+                {#each filtered as course}
+                    <CourseCard {course} class="g-col-6 g-col-md-4 mb-3 me-3"/>
+                {/each}
+            </div>
+        {:else}
+            <!-- graph view -->
+        {/if}
     {:else}
-    <!-- graph view -->
-    {/if}
-    {:else}
-    <h2>Nessun risultato trovato</h2>
+        <h2>Nessun risultato trovato</h2>
     {/if}
 </div>
 
 <!-- Carrello -->
 <Modal title="Carrello" yes="Acquista" no="Chiudi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={cartModal}>
     {#each courses as course}
-    {#if course.in_cart}
-    <div class="d-flex m-4 justify-content-between">
-        <div>
-            <h2>{course.code} - {course.name}</h2>
-            {#each course.professors as professor, i}
-            <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
-            {/each}
-            <div class="d-flex mt-3">
-                <section class="btn-group">
-                    <div class="me-2">
-                        <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} base">
-                        <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} base">
-                            Base
-                        </label>
+        {#if course.in_cart}
+            <div class="d-flex m-4 justify-content-between">
+                <div>
+                    <h2>{course.code} - {course.name}</h2>
+                    {#each course.professors as professor, i}
+                        <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
+                    {/each}
+                    <div class="d-flex mt-3">
+                        <section class="btn-group">
+                            <div class="me-2">
+                                <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} base">
+                                <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} base">
+                                    Base
+                                </label>
+                            </div>
+                            <div class="me-2">
+                                <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} completo" checked>
+                                <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} completo">
+                                    Completo
+                                </label>
+                            </div>
+                        </section>
                     </div>
-                    <div class="me-2">
-                        <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} completo" checked>
-                        <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} completo">
-                            Completo
-                        </label>
-                    </div>
-                </section>
+                </div>
+                <div class="d-flex">
+                    <h2 class="align-self-center fs-1 my-0">{5 + course.CFU * 5 / 3}</h2>
+                    <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                </div>
             </div>
-        </div>
-        <div class="d-flex">
-            <h2 class="align-self-center fs-1 my-0">{5 + course.CFU * 5 / 3}</h2>
-            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
-        </div>
-    </div>
-    <hr class="m-0">
-    {/if}
+            <hr class="m-0">
+        {/if}
     {/each}
-    <hr class="m-0 border-2 opacity-100">
+    {#if courses.reduce((acc, course) => acc + (course.in_cart ? 1 : 0), 0) > 0}
+        <hr class="m-0 border-2 opacity-100">
+    {/if}
     <div class="d-flex w-100 px-4 pt-3 justify-content-between">
         <h2 class="m-0 fs-1 align-self-left">Sequenze di DNA</h2>
         <div class="d-flex">

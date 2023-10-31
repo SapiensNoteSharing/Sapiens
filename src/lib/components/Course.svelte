@@ -18,11 +18,9 @@
             <div slot="name" class="d-flex justify-content-between align-items-center w-100">
                 <div class="d-flex">
                     <h2 class="mb-0">{course.name} - {course.code}</h2>
-                    <!--
-                        {#each course.tags as tag}
+                    <!-- {#each course.tags as tag}
                         <span class="badge bg-{ tag.color } ms-3">{ tag.name }</span>
-                        {/each}
-                    -->
+                    {/each} -->
                 </div>
                 
                 <div class="d-flex">
@@ -32,16 +30,16 @@
                             <i class="icon mx-2 bi bi-heart{course.favourite ? '-fill' : ''}"on:click|stopPropagation></i>
                         </div>
                     </label>
-                    <label for="{course.name} in cart">
-                        <input type="checkbox" class="hidden cursor-pointer" id="{course.name} in cart" bind:checked={course.in_cart}>
-                        {#if course.owned}
+                    {#if course.owned}
                         <a class="" href="/corsi/{course.id}/scheda"><i class="icon mx-2 text-secondary bi bi-box-arrow-up-right"></i></a>
-                        {:else}
-                        <div>
-                            <i class="icon mx-2 text-secondary bi bi-cart{course.in_cart ? '-fill' : ''}"></i>
-                        </div>
-                        {/if}
-                    </label>
+                    {:else}
+                        <label for="{course.name} in cart">
+                            <input type="checkbox" class="hidden cursor-pointer" id="{course.name} in cart" bind:checked={course.in_cart}>
+                            <div>
+                                <i class="icon mx-2 text-secondary bi bi-cart{course.in_cart ? '-fill' : ''}"></i>
+                            </div>
+                        </label>
+                    {/if}
                 </div>
             </div>
             <div>
@@ -54,16 +52,15 @@
             <div class="mb-4">
                 <h2>Indice</h2>
                 <Accordion let:id>
-                    
                     {#each course.content as chapter, i}
-                    <AccordionItem parent={id} class="border-light">
-                        <div slot="name">
-                            {chapter.name}
-                        </div>
-                        {#each (chapter.files || chapter.directories) as paragraph}
-                        <li class="fs-3 list-group-item">{paragraph.name}</li>
-                        {/each}
-                    </AccordionItem>
+                        <AccordionItem parent={id} class="border-light">
+                            <div slot="name">
+                                {chapter.name}
+                            </div>
+                            {#each (chapter.files || chapter.directories) as paragraph}
+                                <li class="fs-3 list-group-item">{paragraph.name}</li>
+                            {/each}
+                        </AccordionItem>
                     {/each}
                 </Accordion>
             </div>
@@ -97,15 +94,12 @@
     </Accordion>
     <div class="course-bottom d-flex dark px-3 py-2 justify-content-between">
         <div>
-            <!--
-                {#each course.professors as professor, i}
+            <!-- {#each course.professors as professor, i}
                 <a class="professor" href="/professors/{professor}">{professor}</a>{i != course.professors.length-1 ? " / " : ""}
-                {/each}
-            -->
+            {/each} -->
         </div>
         <p class="text-dark" style="margin: 0px;">{course.CFU || 0} CFU</p>
     </div>
-    
 </div>
 
 <style lang="scss">

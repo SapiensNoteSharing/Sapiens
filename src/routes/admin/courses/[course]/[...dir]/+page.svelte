@@ -9,7 +9,7 @@
     $: current = data.directory || {}
     $: params = data.params
 
-    const professors = ['Ottaviani', 'Stoppato']
+    const professors = ['Giorgio Ottaviani', 'Caterina Stoppato']
     
         async function save(){
             if(current.name){
@@ -58,56 +58,48 @@
         current = (resp.ok && await resp.json()) || {}
     }
     
-    </script>
-        <div class="d-flex align-items-center mb-2">
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
-            <h1 class="mx-auto mb-0">{current?._id ? 'Edit' : 'Create New'} Directory</h1>
+</script>
+
+<div class="d-flex align-items-center mb-2">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
+    <h1 class="mx-auto mb-0">{current?._id ? 'Edit' : 'Create New'} Directory</h1>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input class="form-control" placeholder="Network Name" bind:value={current.name}>
         </div>
-        
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input class="form-control" placeholder="Network Name" bind:value={current.name}>
-                </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        {#if current.directories.length}
+            <div class="mb-3">
+                <label for="content" class="form-label">Directories</label>
+                <Table rows={current.directories} cols={dirCols} border alternateRows on:click={(ev) => editDir(ev.detail)}/>
             </div>
-        </div>
-    
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="timeZone" class="form-label">TimeZone</label>
-                    <Svelecte options={Intl.supportedValuesOf('timeZone')} labelAsValue bind:value={current.timeZone} placeholder="Choose Timezone"/>
-                </div>
+        {/if}
+        {#if current.files.length}
+            <div class="mb-3">
+                <label for="content" class="form-label">Files</label>
+                <Table rows={current.files} cols={dirCols} border alternateRows on:click={(ev) => editFile(ev.detail)}/>
             </div>
+        {/if}
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary border-dark me-2" on:click={cancel} data-sveltekit-preload-data="hover">Cancel</button>
+            <button class="btn btn-primary border-dark me-1" on:click={save} data-sveltekit-preload-data="hover">Save</button>
         </div>
-    
-        <div class="row">
-            <div class="col">
-                {#if current.directories.length}
-                <div class="mb-3">
-                    <label for="content" class="form-label">Directories</label>
-                    <Table rows={current.directories} cols={dirCols} border alternateRows on:click={(ev) => editDir(ev.detail)}/>
-                </div>
-                {/if}
-                {#if current.files.length}
-                <div class="mb-3">
-                    <label for="content" class="form-label">Files</label>
-                    <Table rows={current.files} cols={dirCols} border alternateRows on:click={(ev) => editFile(ev.detail)}/>
-                </div>
-                {/if}
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-secondary me-2" on:click={cancel} data-sveltekit-preload-data="hover">Cancel</button>
-                    <button class="btn btn-primary me-1" on:click={save} data-sveltekit-preload-data="hover">Save</button>
-                </div>
-            </div>  
-        </div>
-    
-        <style>
-            :global(.null) {
-                text-decoration: none;
-                color: inherit;
-                margin: 0 .5rem
-            }
-        </style>
+    </div>  
+</div>
+
+<style>
+    :global(.null) {
+        text-decoration: none;
+        color: inherit;
+        margin: 0 .5rem
+    }
+</style>
