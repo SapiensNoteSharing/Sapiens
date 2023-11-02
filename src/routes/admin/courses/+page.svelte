@@ -91,4 +91,15 @@
     <h2 class="mb-0">Courses</h2>
     <button class="ms-auto me-3 btn btn-primary btn-sm border-dark" on:click={() => goto('/admin/courses/new')} data-sveltekit-preload-data="hover">New</button>
 </div>
-<Table rows={courses} {cols} border on:click={(ev) => edit(ev.detail)} alternateRows isExportable/>
+
+<div class="table_container">
+    <Table rows={courses} {cols} border on:click={(ev) => edit(ev.detail)} alternateRows isExportable/>
+</div>
+
+<style lang="scss">
+    .table_container {
+        :global(.table-responsive-md > table.table > tbodt > tr > td) {
+            background-color: red !important;
+        }
+    }
+</style>
