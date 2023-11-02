@@ -1,27 +1,25 @@
-import { error } from '@sveltejs/kit'
-import { Course } from '$lib/mongodb'
+import { Course } from '$lib/mongodb';
+import { error } from '@sveltejs/kit';
+import { User } from '../../../lib/mongodb';
 
-export async function GET({url, params, locals}){
-    const user = locals.user;
-
-    if(!user) throw error(404, 'Unathenticated');
-
+export async function GET({ url, locals }){
+    const user = locals.user
     try{
-        const urlParams = url.searchParams;
+        const params = url.searchParams
+        const query = {}
 
-        let query = {}
-        if(user.role == 'user'){
+        if(params.get('tags')){
+            query.tags = params.get('tags').split(',');
+        }
+        if(user.role != 'admin'){
             query._id = {$in: user.courses}
         }
 
-        const courses = await Course.find(query)
+        const docs = await Course.find(query).populate('content')
 
-        return new Response(JSON.stringify(courses))
+        return new Response(JSON.stringify(docs))
     }catch(err){
-        console.log(err);
+        console.log(err)
         throw error(500, err)
     }
-
-
-
 }
