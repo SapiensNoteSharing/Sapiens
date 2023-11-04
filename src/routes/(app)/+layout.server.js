@@ -1,4 +1,3 @@
-
 export async function load({ url, locals, cookies, fetch }) {
     const user = locals.user
 

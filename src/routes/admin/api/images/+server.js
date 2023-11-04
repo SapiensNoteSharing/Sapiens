@@ -1,12 +1,12 @@
 import { File } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
 
-export async function GET({ url, setHeaders }){
-    try{
+export async function GET({ url, setHeaders }) {
+    try {
         const params = url.searchParams
         const query = {}
 
-        if(params.get('tags')){
+        if (params.get('tags')) {
             query.tags = params.get('tags').split(',');
         }
 
@@ -18,8 +18,8 @@ export async function GET({ url, setHeaders }){
             'Content-Type': 'image/png',
         });
 
-        return new Response(JSON.stringify({data}))
-    }catch(err){
+        return new Response(JSON.stringify({ data }))
+    } catch (err) {
         console.log(err)
         throw error(500, err)
     }

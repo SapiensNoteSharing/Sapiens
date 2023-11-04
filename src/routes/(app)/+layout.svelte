@@ -1,10 +1,8 @@
 <script>
-import Sidebar from "$lib/components/Sidebar.svelte";
+    import Sidebar from "$lib/components/Sidebar.svelte";
 
-export let data;
+    export let data;
 </script>
-
-
 
 <div class="d-flex h-100 align-self-stretch">
     <Sidebar courses={data.courses} />

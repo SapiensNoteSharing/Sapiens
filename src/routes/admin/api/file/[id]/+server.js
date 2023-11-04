@@ -11,13 +11,13 @@ export async function GET({ url, params }) {
         if (!doc) {
             throw error(404, 'Not Found')
         }
-        
+
         return new Response(JSON.stringify(doc), {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-    } catch(err) {
+    } catch (err) {
         console.log(err)
         throw error(500, err)
     }

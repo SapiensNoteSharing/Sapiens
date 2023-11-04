@@ -8,25 +8,24 @@
     import Item from './Item.svelte'
     import { goto } from '$app/navigation'
 
-
     export let courses;
     
     let faculties = [
-    "Ingegneria informatica",
-    "Ingegneria meccanica",
-    "Ingegneria gestionale",
-    "Ingegneria biomedica",
-    "Ingegneria elettronica",
-    "Chimica e tecnologie farmaceutiche",
-    "Giurrisprudenza",
-    "Psicologia",
-    "Scienze sociali",
-    "Scienze della comunicazione",
-    "Scienze della formazione primaria",
-    "Filosofia",
-    "Architettura",
-    "Medicina",
-    "Scienze farmaceutiche",
+        "Ingegneria informatica",
+        "Ingegneria meccanica",
+        "Ingegneria gestionale",
+        "Ingegneria biomedica",
+        "Ingegneria elettronica",
+        "Chimica e tecnologie farmaceutiche",
+        "Giurrisprudenza",
+        "Psicologia",
+        "Scienze sociali",
+        "Scienze della comunicazione",
+        "Scienze della formazione primaria",
+        "Filosofia",
+        "Architettura",
+        "Medicina",
+        "Scienze farmaceutiche",
     ]
 
     let degree_types = ['Triennale', 'Magistrale', 'A Ciclo Unico']
@@ -51,13 +50,13 @@
         reviews: []
     }
 
-function toggleFilter(key, val) {
-    if(filters[key].includes(val)) {
-        filters[key] = filters[key].filter(i => i != val);
-    } else {
-        filters[key] = [...filters[key], val]
+    function toggleFilter(key, val) {
+        if(filters[key].includes(val)) {
+            filters[key] = filters[key].filter(i => i != val);
+        } else {
+            filters[key] = [...filters[key], val]
+        }
     }
-}
     
 </script>
 
@@ -117,63 +116,103 @@ function toggleFilter(key, val) {
             <h1>I Tuoi Corsi</h1>
         </div>
         {#each courses || [] as course}
-        <div class="navigation">
-            <Item collapsible obj={course} icon="chevron" class="course">
-                <div slot="menu">
-                    {#each course.content || [] as chapter}
-                        <Item collapsible obj={chapter} icon="chevron" class="chapter">
-                            <div slot="menu">
-                                {#each chapter.files || [] as file}
-                                    <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail}></Item>
-                                {/each}
-                            </div>
-                        </Item>
-                    {/each}
-                </div>
-            </Item>
-            <div class="my-1"></div>
-        </div>
+            <div class="navigation">
+                <Item collapsible obj={course} icon="chevron" class="course">
+                    <div slot="menu">
+                        {#each course.content || [] as chapter}
+                            <Item collapsible obj={chapter} icon="chevron" class="chapter">
+                                <div slot="menu">
+                                    {#each chapter.files || [] as file}
+                                        <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail}></Item>
+                                    {/each}
+                                </div>
+                            </Item>
+                        {/each}
+                    </div>
+                </Item>
+                <div class="my-1"></div>
+            </div>
         {/each}
     </div>
     {:else if $page.route.id == '/(app)/area_personale'}
-    <nav id="personal_area_scrollspy" class="mt-4 h-100 flex-column align-items-stretch pe-4 border-end">
-        <nav class="nav nav-pills flex-column">
-            <a class="fs-1 nav-link" href="#account">Account</a>
+        <nav id="personal_area_scrollspy" class="mt-4 h-100 flex-column align-items-stretch pe-4 border-end">
             <nav class="nav nav-pills flex-column">
-                <a class="fs-1 nav-link ms-3 my-1" href="#dati_personali">Dati Personali</a>
-                <a class="fs-1 nav-link ms-3 my-1" href="#dati_accademici-1-2">Dati Accademici</a>
+                <a class="fs-1 nav-link" href="#account">Account</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="fs-1 nav-link ms-3 my-1" href="#dati_personali">Dati Personali</a>
+                    <a class="fs-1 nav-link ms-3 my-1" href="#dati_accademici-1-2">Dati Accademici</a>
+                </nav>
+                <a class="fs-1 nav-link" href="#preferenze">Preferenze</a>
             </nav>
-            <a class="fs-1 nav-link" href="#preferenze">Preferenze</a>
         </nav>
-    </nav>
     {/if}
 </div>
-
 
 <style lang="scss">
     @import '$css/variables.scss';
     
     .sidebar {
-        width: 300px;
+        width: 400px;
         min-height: 82vh;
         flex-shrink: 0;
         background-color: $primary;
         border-right: 1px solid $dark;
     }
-    .navigation{
-        :global(.course){
-            font-size: 1rem;
+
+    .navigation {
+        :global(.course) {
+            background-color: $primary !important;
+            font-size: 1.05rem;
             font-weight: 500;
+            border: none;
         }
-        :global(.chapter){
+
+        :global(.chapter) {
+            background-color: $primary !important;
             font-size: 1rem;
             font-weight: 400;
+            padding-left: .5rem;
         }
-        :global(.file){
-            font-size: 0.9rem;
+
+        :global(.file) {
+            background-color: $primary !important;
+            font-size: .95rem;
             font-weight: 300;
+            padding-left: 1rem;
+        }
+
+        :global(.file:hover) {
+            color: $secondary !important;
+        }
+
+        :global(.item) {
+            padding-top: .2rem;
+            padding-bottom: .2rem;
+        }
+
+        :global(.header.open) {
+            background-color: $primary !important;
+        }
+
+        :global(.item.chapter) {
+            margin-left: 0.5rem;
+            border-left: 1px solid rgba($dark, 0.5);
+        }
+
+        :global(.item.file) {
+            margin-left: 0.5rem;
+            border-left: 1px solid rgba($dark, 0.5);
+        }
+
+        :global(.href) {
+            padding-left: .5rem;
+        }
+
+        :global(.bi-chevron-right.rotate) {
+            color: $secondary !important;
         }
     }
+
     .filter {
         white-space: initial;
     }

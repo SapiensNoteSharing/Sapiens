@@ -1,5 +1,4 @@
 @import './variables.scss';
-
 .support {
     background-color: $gray-500;
     border-radius: $border-rounded;
@@ -17,6 +16,7 @@
         background-color: $secondary-shade-1;
     }
 }
+
 .number {
     font-family: Poppins;
     &.primary {
@@ -51,13 +51,16 @@
         line-height: map-get($display-font-sizes, 6);
     }
 }
+
 .row {
     margin-bottom: 1rem;
 }
+
 .btn-primary.active {
     background-color: $secondary !important;
     color: $light
 }
+
 .percentage-sm {
     font-weight: bold;
     font-size: 0.7rem; //0.875rem;
@@ -65,6 +68,7 @@
     font-family: Poppins;
     color: $light !important;
 }
+
 .percentage-1 {
     font-weight: bold;
     font-size: map-get($display-font-sizes, 2);
@@ -73,20 +77,22 @@
     font-family: Poppins;
 }
 
-span.header{
+span.header {
     font-family: Poppins;
     font-weight: bold;
     font-size: 0.9rem;
-    &.light{
+    &.light {
         color: $light;
     }
 }
-span.text{
+
+span.text {
     font-family: Inter;
     &.light {
         color: $light;
     }
 }
+
 a.text {
     text-decoration: none;
     font-family: Inter;
@@ -94,26 +100,33 @@ a.text {
         color: $light;
     }
 }
+
 span.description {
     color: $gray-800;
     font-family: Inter;
     font-size: 0.8rem
 }
+
 .border-round-xs {
     border-radius: $border-rounded-xs;
 }
+
 .border-round-sm {
     border-radius: $border-rounded-sm;
 }
+
 .border-round {
     border-radius: $border-rounded;
 }
+
 .border-round-xl {
     border-radius: $border-rounded-xl;
 }
+
 i.bi.primary {
     color: $primary
 }
+
 .percentage-2 {
     font-weight: bold;
     font-size: map-get($display-font-sizes, 6);
@@ -123,9 +136,11 @@ i.bi.primary {
     color: $primary;
     font-family: Poppins;
 }
+
 .w-33 {
     width: 33.3333% !important;
 }
+
 .hidden {
     display: none;
 }
@@ -135,10 +150,12 @@ i.bi.primary {
     width: var(--scroll-size, 10px);
     height: var(--scroll-size, 10px);
 }
+
 ::-webkit-scrollbar-track {
     background-color: var(--scroll-track, $gray-800);
     border-radius: var(--scroll-track-radius, var(--scroll-radius));
 }
+
 ::-webkit-scrollbar-thumb {
     background-color: var(--scroll-thumb-color, $primary);
     background-image: var(--scroll-thumb, none);
