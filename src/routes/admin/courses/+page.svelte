@@ -52,16 +52,16 @@
         }
     ]
 
-    async function reload(){
+    async function reload() {
         const resp = await fetch('/admin/api/courses')
         courses = (resp.ok && await resp.json()) || []
     }
     
-    async function edit(row){
+    async function edit(row) {
         goto(`/admin/courses/${row._id}`)
     }
     
-    function del(row){
+    function del(row) {
         current = {
             name: row.name,
             _id: row._id,

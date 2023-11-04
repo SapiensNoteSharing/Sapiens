@@ -6,7 +6,7 @@
     export let data;
     const fetch = data.fetch;
 
-$: current = data.course || {}
+    $: current = data.course || {}
 
     const professors = ['Giorgio Ottaviani', 'Caterina Stoppato']
 
@@ -67,43 +67,43 @@ $: current = data.course || {}
     <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
     <h1 class="mx-auto mb-0">{current?._id ? 'Edit' : 'Create New'} Course</h1>
 </div>
-    <div class="row">
-        <div class="col">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input class="form-control" placeholder="Network Name" bind:value={current.name}>
-            </div>
 
-        </div>
-        <div class="col">
-            <div class="mb-3">
-                <label for="professors" class="form-label">Professors</label>
-                <Svelecte options={professors} multiple labelAsValue bind:value={current.professors} placeholder="Select Professors"/>
-            </div>
-        </div>
-        <div class="col">
-            <div class="mb-3">
-                <label for="gitUrl" class="form-label">Git Url (from Università)</label>
-                <input class="form-control" placeholder="Git Url" bind:value={current.gitUrl}>
-            </div>
+<div class="row">
+    <div class="col">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input class="form-control" placeholder="Network Name" bind:value={current.name}>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col">
-            <div class="mb-3">
-                <div class="d-flex justify-content-between">
-                    <label for="content" class="form-label">Chapters</label>
-                    {#if current?._id}<button class="btn btn-primary" on:click={() => goto(`/admin/courses/${current._id}/new`)}>New</button>{/if}
-                </div>
-                <Table rows={current.content} cols={contentCols} border alternateRows on:click={(ev) => edit(ev.detail)}/>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-secondary me-2" on:click={cancel} data-sveltekit-preload-data="hover">Cancel</button>
-                <button class="btn btn-primary me-1" on:click={save} data-sveltekit-preload-data="hover">Save</button>
-            </div>
-        </div>  
+    <div class="col">
+        <div class="mb-3">
+            <label for="professors" class="form-label">Professors</label>
+            <Svelecte options={professors} multiple labelAsValue bind:value={current.professors} placeholder="Select Professors"/>
+        </div>
     </div>
+    <div class="col">
+        <div class="mb-3">
+            <label for="gitUrl" class="form-label">Git Url (from Università)</label>
+            <input class="form-control" placeholder="Git Url" bind:value={current.gitUrl}>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="mb-3">
+            <div class="d-flex justify-content-between">
+                <label for="content" class="form-label">Chapters</label>
+                {#if current?._id}<button class="btn btn-primary" on:click={() => goto(`/admin/courses/${current._id}/new`)}>New</button>{/if}
+            </div>
+            <Table rows={current.content} cols={contentCols} border alternateRows on:click={(ev) => edit(ev.detail)}/>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary me-2" on:click={cancel} data-sveltekit-preload-data="hover">Cancel</button>
+            <button class="btn btn-primary me-1" on:click={save} data-sveltekit-preload-data="hover">Save</button>
+        </div>
+    </div>  
+</div>
 
 <style>
     :global(.null) {

@@ -1,9 +1,9 @@
+export async function load({ parent, params, fetch }) {
+    let file = {},
+        fileData = '',
+        renderedData = '';
 
-export async function load({parent, params, fetch}){
-
-    let file = {}, fileData = '', renderedData = '';
-
-    if(params.file != 'new'){
+    if (params.file != 'new') {
         const resp = await fetch(`/admin/api/courses/${params.course}/${params.dir}/files/${params.file}`)
         file = (resp.ok && await resp.json()) || {}
 
