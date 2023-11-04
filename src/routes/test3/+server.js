@@ -49,7 +49,7 @@ const htmlMapping = {
     "ó": "%C3%B3",
     "ù": "%C3%B9",
     "ú": "%C3%BA",
-} 
+}
 
 const options = {
     headers: {
@@ -60,11 +60,11 @@ const options = {
 const base = `https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}`
 const urlSuffix = '?ref=main';
 
-export async function GET({url, params, locals, fetch}){
-    
+export async function GET({ url, params, locals, fetch }) {
+
     let href = url.searchParams.get('href')
     href = href.split('').map(char => {
-        if(htmlMapping[char] != undefined) return htmlMapping[char];
+        if (htmlMapping[char] != undefined) return htmlMapping[char];
         return char
     }).join('')
 

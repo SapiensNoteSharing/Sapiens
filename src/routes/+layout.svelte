@@ -1,32 +1,30 @@
 <script>
-import { onMount } from "svelte";
-import Modal from '$lib/components/Modal.svelte';
-import { page } from '$app/stores';
-import { goto } from '$app/navigation';
-import { dna } from '$lib/stores'
-import '$css/global.scss';
+    import { onMount } from "svelte";
+    import Modal from '$lib/components/Modal.svelte';
+    import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
+    import { dna } from '$lib/stores'
+    import '$css/global.scss';
 
-export let data;
-let user = data.user || {}
-let loginModal, registerModal;
-    
-let userLogin = {}
-let userRegister = {}
-let dnaModal;
+    export let data;
+    let user = data.user || {}
+    let loginModal, registerModal;
+        
+    let userLogin = {}
+    let userRegister = {}
+    let dnaModal;
 
-onMount(async () => {
-    const bootstrap = await import('bootstrap')
-})
-function openDnaModal() {
+    onMount(async () => {
+        const bootstrap = await import('bootstrap')
+    })
+
+    function openDnaModal() {   
         dnaModal.show().then(async res => {
             if (res) {
 
             }
         })
     }
-
-    
-
 
     function registerUser() {
         registerModal.show().then(async res => {
@@ -61,7 +59,6 @@ function openDnaModal() {
             }
         })
     }
-
 </script>
 
 <!-- Login Modal-->
@@ -345,5 +342,5 @@ function openDnaModal() {
         transition: 0.1s;
         opacity: 1;
     }
-    </style>
+</style>
     

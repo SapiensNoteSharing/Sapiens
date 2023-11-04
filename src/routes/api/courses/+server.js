@@ -2,23 +2,23 @@ import { Course } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
 import { User } from '../../../lib/mongodb';
 
-export async function GET({ url, locals }){
+export async function GET({ url, locals }) {
     const user = locals.user
-    try{
+    try {
         const params = url.searchParams
         const query = {}
 
-        if(params.get('tags')){
+        if (params.get('tags')) {
             query.tags = params.get('tags').split(',');
         }
-        if(user.role != 'admin'){
-            query._id = {$in: user.courses}
+        if (user.role != 'admin') {
+            query._id = { $in: user.courses }
         }
 
         const docs = await Course.find(query).populate('content')
 
         return new Response(JSON.stringify(docs))
-    }catch(err){
+    } catch (err) {
         console.log(err)
         throw error(500, err)
     }

@@ -3,13 +3,12 @@ import { redirect } from '@sveltejs/kit';
 import { User } from '$lib/mongodb';
 import { setSession } from '$lib/redis';
 
-export async function POST({url, locals, request, cookies }){
-
+export async function POST({ url, locals, request, cookies }) {
     const body = await request.json()
     const authenticated = await compare(body)
 
-    if(authenticated){
-        const user = await User.findOne({email: body.email})
+    if (authenticated) {
+        const user = await User.findOne({ email: body.email })
         const sid = crypto.randomUUID();
 
         locals.sid = sid;
@@ -29,5 +28,4 @@ export async function POST({url, locals, request, cookies }){
     } else {
         throw redirect(303, '/')
     }
-
 }

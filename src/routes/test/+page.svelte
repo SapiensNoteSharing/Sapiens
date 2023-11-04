@@ -1,6 +1,4 @@
 <script>
-    
-    
     export let data;
     const fetch = data.fetch
     
@@ -19,10 +17,7 @@
         }, 200)
     }
     
-    
     $: href != undefined && debounce()
-
-
 </script>
 
 <div class="m-5">

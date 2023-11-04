@@ -1,18 +1,18 @@
 import { Course } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
 
-export async function GET({ url, params }){
-    try{
+export async function GET({ url, params }) {
+    try {
         const urlParams = url.searchParams
 
-        if(urlParams.get('tags')){
+        if (urlParams.get('tags')) {
             query = params.get('tags').split(',');
         }
-        
+
         const docs = await Course.findById(params.id).populate('content')
 
         return new Response(JSON.stringify(docs))
-    }catch(err){
+    } catch (err) {
         console.log(err)
         throw error(500, err)
     }

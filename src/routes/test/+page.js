@@ -1,3 +1,3 @@
-export async function load({fetch}){
-    return {fetch: fetch}
+export async function load({ fetch }) {
+    return { fetch: fetch }
 }

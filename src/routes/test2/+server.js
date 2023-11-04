@@ -8,60 +8,60 @@ const headers = {
 
 const urlSuffix = '?ref=main';
 
-async function getDir(directory){
+async function getDir(directory) {
     let id, childDirectories = [];
-    const resp = await fetch(directory.url, {headers})
+    const resp = await fetch(directory.url, { headers })
     const contents = (resp.ok && await resp.json());
     console.log('dir', directory.name, contents)
-    const dir = await Directory.create({name: directory.name})
-    for(let obj of contents){
-        if(obj.type == 'dir'){
+    const dir = await Directory.create({ name: directory.name })
+    for (let obj of contents) {
+        if (obj.type == 'dir') {
             id = await getDir(obj)
             childDirectories.push(id)
         } else {
             console.log('FILE content', obj)
-            const resp = await fetch(obj.url, {headers})
+            const resp = await fetch(obj.url, { headers })
             const fileObj = (resp.ok && await resp.json())
-            /* LEVARE LE ESTENSIONI DAI NOMI DEI FILE, CAMBIARE STRUTTURA DA PADRE CON PUNTATORI A FIGLI CON PUNTATORE A PADRE*/
-            const file = await File.create({name: fileObj.name, content: fileObj.content})
+                /* LEVARE LE ESTENSIONI DAI NOMI DEI FILE, CAMBIARE STRUTTURA DA PADRE CON PUNTATORI A FIGLI CON PUNTATORE A PADRE*/
+            const file = await File.create({ name: fileObj.name, content: fileObj.content })
             console.log('created file', file)
             await Directory.findByIdAndUpdate(dir._id, {
-                $addToSet: {files: file._id}
+                $addToSet: { files: file._id }
             })
         }
     }
     await Directory.findByIdAndUpdate(dir._id, {
-        $set: {directories: childDirectories}
+        $set: { directories: childDirectories }
     })
     return dir._id
-} 
+}
 
-export async function GET({url, fetch}){
-    if(url.searchParams.get('s')){
+export async function GET({ url, fetch }) {
+    if (url.searchParams.get('s')) {
         const file = await getFile()
-        return new Response(JSON.stringify({file: file}))
+        return new Response(JSON.stringify({ file: file }))
     } else {
-    try{
-    /*
-    const obj = await getgit(config.git.owner, config.git.repo, config.git.path)
-    console.log(obj)
-    */
-    
-    let resp, body;
-    resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Primo%20anno${urlSuffix}`, {headers})
-    const primoAnno = (resp.ok && await resp.json())
-    resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Secondo%20anno${urlSuffix}`, {headers})
-    const secondoAnno = (resp.ok && await resp.json())
-    /*
-    resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Terzo%20Anno${urlSuffix}`, {headers})
-    const terzoAnno = (resp.ok && await resp.json())
-    */
-    let courses = [...primoAnno, ...secondoAnno]
-    console.log(courses)
+        try {
+            /*
+            const obj = await getgit(config.git.owner, config.git.repo, config.git.path)
+            console.log(obj)
+            */
 
-//    await Directory.deleteMany({})
-//    await File.deleteMany({})
-  /*  
+            let resp, body;
+            resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Primo%20anno${urlSuffix}`, { headers })
+            const primoAnno = (resp.ok && await resp.json())
+            resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Secondo%20anno${urlSuffix}`, { headers })
+            const secondoAnno = (resp.ok && await resp.json())
+                /*
+                resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Terzo%20Anno${urlSuffix}`, {headers})
+                const terzoAnno = (resp.ok && await resp.json())
+                */
+            let courses = [...primoAnno, ...secondoAnno]
+            console.log(courses)
+
+            //    await Directory.deleteMany({})
+            //    await File.deleteMany({})
+            /*  
     for(let course of courses){
 
         // Estrazione capitoli 
@@ -110,16 +110,16 @@ export async function GET({url, fetch}){
     let text = buff.toString('utf-8');
     console.log(text)
 */
-    return new Response(JSON.stringify(body))
-    }catch(err){
-        console.log(err)
-        return new Response(err)
+            return new Response(JSON.stringify(body))
+        } catch (err) {
+            console.log(err)
+            return new Response(err)
+        }
     }
 }
-}
 
-async function getFile(){
-    const resp = await fetch(`https://api.github.com/repos/Falesteo/Alessandro-Longo/contents/Universit%C3%A0/Secondo%20anno/Fondamenti%20di%20automatica/E.%20Esercizi.md?ref=main`, {headers})
+async function getFile() {
+    const resp = await fetch(`https://api.github.com/repos/Falesteo/Alessandro-Longo/contents/Universit%C3%A0/Secondo%20anno/Fondamenti%20di%20automatica/E.%20Esercizi.md?ref=main`, { headers })
     let file = (resp.ok && await resp.json())
     console.log(file)
 

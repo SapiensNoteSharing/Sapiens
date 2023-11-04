@@ -1,10 +1,8 @@
 <script>
 
-
 </script>
 
 <div>
-    
     <div class="full_height d-flex justify-content-evenly align-items-center">
         <div class="d-flex flex-column">
             <h1 class="title text-dark">Studia</h1>
@@ -55,7 +53,6 @@
         </nav>
     </div>
 </div>
-
 
 
 <style lang="scss">

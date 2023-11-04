@@ -1,20 +1,19 @@
-
 import { createHash } from "$lib/crypt";
 import { User } from "$lib/mongodb";
 import { error } from '@sveltejs/kit'
 import { setSession } from "$lib/redis";
 import { redirect } from "@sveltejs/kit";
 
-export async function POST({ url, locals, request }){
+export async function POST({ url, locals, request }) {
     const body = await request.json();
 
     const hash = await createHash(body.password)
-    const alreadyRegistered = await User.findOne({email: body.email})
+    const alreadyRegistered = await User.findOne({ email: body.email })
 
-    if(alreadyRegistered){
+    if (alreadyRegistered) {
         throw error(409, 'This email is already used by another user')
     } else {
-        const user = await User.create({...body, hash: hash, role: 'user'})
+        const user = await User.create({...body, hash: hash, role: 'user' })
         const sid = crypto.randomUUID()
 
         locals.sid = sid
@@ -25,5 +24,3 @@ export async function POST({ url, locals, request }){
         return new Response('OK')
     }
 }
-
-
