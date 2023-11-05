@@ -61,7 +61,7 @@ export async function GET({ url, fetch }) {
 
             //    await Directory.deleteMany({})
             //    await File.deleteMany({})
-            /*  
+            
     for(let course of courses){
 
         // Estrazione capitoli 

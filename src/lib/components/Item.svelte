@@ -82,8 +82,6 @@ on:mouseleave={() => hovering = false}
         }
         .submenu {
             padding-left: .5rem;
-            border-left: 1px solid $gray-700;
-            border-bottom: 1px solid $gray-700;
             & > div > a.href {
                 font-weight: 400;
             }

@@ -64,7 +64,8 @@ const ReviewSchema = new Schema({
 const FileSchema = new Schema({
     name: String,
     content: String,
-    gitUrl: String
+    path: String,
+    sha: String
 }, {
     timestamps: true
 })
@@ -83,7 +84,8 @@ const DirectorySchema = new Schema({
             ref: 'Directory'
         }
     ],
-    gitUrl: String
+    path: String,
+    sha: String
 }, {
     timestamps: true
 })
@@ -107,8 +109,7 @@ const CourseSchema = new Schema({
     year: String,
     semester: String,
     tags: [String],
-    gitUrl: String,
-    content: [
+    chapters: [
         {
             type: ObjectId,
             ref: 'Directory'
@@ -129,7 +130,7 @@ const CourseSchema = new Schema({
     timestamps: true
 })
 CourseSchema.pre('find', function (next) {
-    this.populate('content')
+    this.populate('chapters')
     this.populate('reviews')
     this.populate('extra_content')
     next()

@@ -10,7 +10,7 @@ export async function GET({ url }) {
             query.tags = params.get('tags').split(',');
         }
 
-        const docs = await Course.find(query).populate('content')
+        const docs = await Course.find(query)
 
         return new Response(JSON.stringify(docs))
     } catch (err) {

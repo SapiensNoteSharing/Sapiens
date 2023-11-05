@@ -16,6 +16,11 @@
             console.log(b)
         }, 200)
     }
+
+    async function update(){
+        const resp = await fetch(`/api/testupdate`)
+        const body = (resp.ok && await resp.json()) || {}
+    }
     
     $: href != undefined && debounce()
 </script>
@@ -23,8 +28,9 @@
 <div class="m-5">
     <div class="row h-100">
         <div class="col">
+            <button class="btn btn-primary" on:click={update}>update</button>
             <input bind:value={href} class="form-control">
-            <span class="text">Usage: /{'<path of dir/file from Università>'}</span>
+            <span class="text">Usage: /{'<path of dir/file>'}</span>
             <br>
             <span class="text">Response:<br>
             </span>

@@ -9,7 +9,7 @@ export async function GET({ url, params }) {
             query = params.get('tags').split(',');
         }
 
-        const docs = await Course.findById(params.id).populate('content')
+        const docs = await Course.findById(params.id)
 
         return new Response(JSON.stringify(docs))
     } catch (err) {

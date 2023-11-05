@@ -57,7 +57,7 @@ const options = {
         "Accept": "application/vnd.github+json"
     }
 }
-const base = `https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}`
+const base = `https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/`
 const urlSuffix = '?ref=main';
 
 export async function GET({ url, params, locals, fetch }) {

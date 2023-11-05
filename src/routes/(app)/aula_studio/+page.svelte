@@ -14,9 +14,11 @@
         renderedFile = ''
         if(resp.ok) renderedFile = await resp.text()
     }
+$: console.log($viewing)
 </script>
 
 <div class="cont">
+    {#if $viewing?._id}<center><h1>{$viewing.name || ''}</h1></center>{/if}
     {@html renderedFile}
 </div>
 

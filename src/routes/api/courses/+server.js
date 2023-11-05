@@ -15,7 +15,7 @@ export async function GET({ url, locals }) {
             query._id = { $in: user.courses }
         }
 
-        const docs = await Course.find(query).populate('content')
+        const docs = await Course.find(query)
 
         return new Response(JSON.stringify(docs))
     } catch (err) {

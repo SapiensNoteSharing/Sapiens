@@ -51,13 +51,13 @@
             <div class="mb-4">
                 <h2>Indice</h2>
                 <Accordion let:id>
-                    {#each course.content as chapter, i}
+                    {#each course.chapters as chapter, i}
                     <AccordionItem parent={id} class="border-light">
                         <div slot="name">
                             {chapter.name}
                         </div>
                         {#each (chapter.files || chapter.directories) as paragraph}
-                        <li class="fs-3 list-group-item">{paragraph.name?.replace(/\.(?=[a-z]).*/, '')}</li>
+                        <li class="fs-3 list-group-item">{paragraph.name}</li>
                         {/each}
                     </AccordionItem>
                     {/each}
