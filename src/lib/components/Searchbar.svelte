@@ -5,7 +5,7 @@
 </script>
 
 <div class="d-flex position-relative {classes}">
-    <input class="form-control confined bg-light pe-5 mx-3" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value={$value}>
+    <input class="form-control confined bg-light pe-5 mx-2" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value={$value}>
     <span class="searchbutton py-1 px-2"><i class="bi bi-search"></i></span>
 </div>
 

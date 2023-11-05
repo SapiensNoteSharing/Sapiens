@@ -64,7 +64,6 @@
 <!-- Login Modal-->
 <Modal title="Accedi" yes="Accedi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={loginModal}>
     <div class="modal-body p-4">
-        
         <div class="col-md-12">
             <label for="validationServer01" class="form-label">Email</label>
             <div class="input-group has-validation">
@@ -85,7 +84,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </Modal>
 
@@ -190,57 +188,44 @@
     </form>
 </Modal>
 
-<div class="d-flex sticky-top">
-    <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
-        <div class="d-flex w-100 justify-content-between align-items-center">
-            <!-- Sapiens Logo -->
-            <a href="/">
-                <img class="ms-3" style="width: 12rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
-            </a>
-            {#if $page.route.id == '/'}
-                <div class="d-flex me-5">
-                    <!-- login -->
-                    <button type="button" class="btn btn-outline-primary border-dark text-dark fs-2 px-4 py-2 ms-4 rounded-pill" on:click={loginUser}>
-                        Accedi
-                    </button>
-                    <!-- register -->
-                    <button type="button" class="btn btn-outline-secondary border-dark text-dark fs-2 px-4 py-2 ms-4 rounded-pill" on:click={registerUser}>
-                        Registrati
-                    </button>
-                </div>
-            {:else}
+{#if $page.route.id == '/'}
+    <div class="d-flex">
+        <nav class="navbar navbar-expand-lg bg-light w-100">
+            <div class="d-flex w-100 justify-content-center align-items-center">
+                <!-- Sapiens Logo -->
+                <img style="width: 20rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
+            </div>
+        </nav>
+    </div>
+{:else}
+    <div class="d-flex sticky-top">
+        <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
+            <div class="d-flex w-100 justify-content-between align-items-center">
+                <!-- Sapiens Logo -->
+                <a href="/">
+                    <img class="ms-3" style="width: 12rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
+                </a>
+                
                 <div class="d-flex me-3 align-items-center">
                     <!-- Site navigation -->
-                    <span class="me-5">
-                        <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/test"} href="/test">Test</a>
-                    </span>
                     {#if data.user.role == 'admin'}
-                        <span class="me-5">
-                            <a class="display-6 text-decoration-none navbar_page" class:active={$page.route?.id?.startsWith("/admin")} href="/admin/courses">Admin</a>
-                        </span>
+                        <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route.id == "/test"} href="/test">Test</a>
+                        <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route?.id?.startsWith("/admin")} href="/admin/courses">Admin</a>
                     {/if}
-
-                    <span class="me-5">
-                        <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/(app)/esplora_corsi"} href="/esplora_corsi">Esplora Corsi</a>
-                    </span>
-                    <span class="me-5">
-                        <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/(app)/aula_studio"} href="/aula_studio">Aula Studio</a>
-                    </span>
-                    <span class="me-5">
-                        <a class="display-6 text-decoration-none navbar_page" class:active={$page.route.id == "/(app)/area_personale"} href="/area_personale">Area personale</a>
-                    </span>
-
+                    <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route.id == "/(app)/esplora_corsi"} href="/esplora_corsi">Esplora Corsi</a>
+                    <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route.id == "/(app)/aula_studio"} href="/aula_studio">Aula Studio</a>
+                    <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route.id == "/(app)/area_personale"} href="/area_personale">Area personale</a>
+            
                     <!-- credit -->
-                    <span class="display-6 text-dark me-2">{user.balance || 0}</span>
-                    <button type="button" class="me-3 p-2 btn btn-light position-relative" on:click={openDnaModal}>
-                        <img style="width: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                    <button type="button" class="navbar-item dna-btn rounded-4 py-2" on:click={openDnaModal}>
+                        <span class="display-6 ps-2 align-middle text-dark">{user.balance || 0}</span>
+                        <img class="dna-icon" src="/src/style/DNA.svg" alt="DNA">
                     </button>
                 </div>
-            {/if}
-            
-        </div>
-    </nav>
-</div>
+            </div>
+        </nav>
+    </div>
+{/if}
 
 <slot></slot>
 
@@ -257,20 +242,20 @@
             </div>
 
             <div class="d-flex align-items-center">
-                <a href="" class="me-4"><i class="icon footer_element bi bi-whatsapp"></i></a>
-                <a href="" class="me-4"><i class="icon footer_element bi bi-discord"></i></a>
-                <a href="" class="me-4"><i class="icon footer_element bi bi-instagram"></i></a>
-                <a href="" class="me-4"><i class="icon footer_element bi bi-facebook"></i></a>
-                <a href="" class="me-4"><i class="icon footer_element bi bi-twitter"></i></a>
-                <a href="" class="me-4"><i class="icon footer_element bi bi-linkedin"></i></a>
+                <a href="" class="me-4"><i class="icon footer-element bi bi-whatsapp"></i></a>
+                <a href="" class="me-4"><i class="icon footer-element bi bi-discord"></i></a>
+                <a href="" class="me-4"><i class="icon footer-element bi bi-instagram"></i></a>
+                <a href="" class="me-4"><i class="icon footer-element bi bi-facebook"></i></a>
+                <a href="" class="me-4"><i class="icon footer-element bi bi-twitter"></i></a>
+                <a href="" class="me-4"><i class="icon footer-element bi bi-linkedin"></i></a>
             </div>
 
             <div class="d-flex">
                 <span class="me-5">
-                    <a class="display-6 text-decoration-none footer_element" href="#">Chi siamo</a>
+                    <a class="display-6 text-decoration-none footer-element" href="#">Chi siamo</a>
                 </span>
                 <span class="me-5">
-                    <a class="display-6 text-decoration-none footer_element" href="#">FAQ</a>
+                    <a class="display-6 text-decoration-none footer-element" href="#">FAQ</a>
                 </span>
             </div>
         </div>
@@ -287,22 +272,67 @@
     .display-6 {
        font-size: 1.4rem;
     }
-    
-    .navbar_page.active {
-        color: $secondary;
-    }
-    
-    .navbar_page:not(.active) {
-        color: $dark;
-        opacity: 0.5;
-    }
-    
-    .navbar_page:not(.active):hover {
-        opacity: 1;
-        transition: 0.3s;
+
+    .navbar-item {
+        position: relative;
+        margin: .5rem .5rem .9rem .5rem !important;
+        border: 1px solid $dark;
+        overflow: hidden;
     }
 
-    .full_height {
+    .navbar-item.active {
+        color: $secondary;
+        margin-bottom: .1rem !important;
+    }
+    
+    .navbar-item:not(.active) {
+        color: $dark;
+        box-shadow: 0rem .4rem rgba($dark, 0.6);
+    }
+    
+    .navbar-item:not(.active):hover {
+        opacity: 1;
+        transition: .15s;
+        background: rgba($secondary, 0.25);
+        margin-bottom: .5rem !important;
+        box-shadow: 0rem .2rem rgba($dark, 0.6);
+    }
+
+    // .navbar-item:before {
+    //     content: '';
+    //     position: absolute;
+    //     width: 200%;
+    //     height: 200%;
+    //     // background: rgba($light, 0.25);
+    //     background: rgba($light, 0.55);
+    //     transform: translate(-100%) rotate(-60deg);
+    //     filter: blur(0px);
+    // }
+
+    // .navbar-item:hover:before {
+    //     content: '';
+    //     width: 200%;
+    //     height: 200%;
+    //     background: rgba($light, 0.55);
+    //     transform: translate(100%) rotate(-60deg);
+    //     filter: blur(0px);
+    //     position: absolute;
+    //     transition: 3s;
+    // }
+
+    .dna-btn {
+        background: $light;
+    }
+
+    .dna-btn::hover {
+        background: $secondary !important;
+    }
+
+    .dna-icon {
+        height: 2rem;
+    }
+
+    .full-height {
         height: 73vh;
         margin: 0rem 5rem;
     }
@@ -319,7 +349,7 @@
         font-size: 20px;
     }
     
-    .landing_page_image {
+    .landing-page-image {
         width: 50%;
     }
     
@@ -332,12 +362,12 @@
         filter: brightness(0);
     }
     
-    .footer_element {
+    .footer-element {
         color: $dark;
         opacity: 0.5;
     }
     
-    .footer_element:hover {
+    .footer-element:hover {
         color: $secondary;
         transition: 0.1s;
         opacity: 1;

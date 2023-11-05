@@ -1,80 +1,64 @@
 $primary: #cfeae2;
 $primary-shade-1: #f5fcfb;
-
-$secondary: #e91738;
+$secondary: #ff3666;
 $secondary-shade-1: #eeedf7;
-
 $success: #ff8d9d;
 $info: #f3f3f3;
 $warning: #c38054;
 $danger: #dd6b6b;
 $light: #fcfffc;
 $dark: #131319;
-
 // dark mode
 // $primary: #9fcbe4;
 // $primary-shade-1: #F5FCFB;
-
 // $secondary: #faa94d;
 // $secondary-shade-1: #EEEDF7;
-
 // $success: #ebe463;
 // $info: #80C1E8;
 // $warning: #c38054;
 // $danger: #DD6B6B;
 // $light: #1e1e21;
 // $dark: #fafffe;
-
 $yellow: #ED9E69;
 $blue: #3c76c6;
-
 // scss-docs-start gray-color-variables
 $gray-500: #F7F8F8 !default;
 $gray-600: #EEEEEF !default;
 $gray-700: #DBDCDE !default;
 $gray-800: #9C9DA3 !default;
 $gray-900: #444650 !default;
-$black:    #0F121F !default;
-
+$black: #0F121F !default;
 // scss-docs-end gray-color-variables
-
 // scss-docs-start card-variables
 $card-border-radius: 20px !default;
 $card-box-shadow: none !default;
 $card-bg: $gray-500 !default;
-
 // scss-docs-end card-variables
 $btn-font-family: "Poppins" !default;
 $btn-font-size: 0.8rem !default; //1rem !default;
-$btn-white-space: nowrap !default; 
+$btn-white-space: nowrap !default;
 $btn-border-color: $dark !default;
-
 $btn-font-weight: 700 !default;
 $btn-focus-width: 0px !default;
 $btn-focus-box-shadow: none !default;
 $btn-active-box-shadow: none !default;
 $btn-border-radius: 10px !default;
-
 // Text
-$display-font-sizes: (
-  1: 2.5rem, //7.5rem, //9.375rem,
-  2: 2rem, //4rem, //5rem,
-  3: 1.5rem, //3.75rem, //4.688rem,
-  4: 1.2rem, //2.8rem, //3.5rem,
-  5: 1.1rem, //2.4rem, //3rem,
-  6: 1rem, //2rem, //2.5rem
+$display-font-sizes: ( 1: 2.5rem, //7.5rem, //9.375rem,
+2: 2rem, //4rem, //5rem,
+3: 1.5rem, //3.75rem, //4.688rem,
+4: 1.2rem, //2.8rem, //3.5rem,
+5: 1.1rem, //2.4rem, //3rem,
+6: 1rem, //2rem, //2.5rem
 );
-
 $display-font-family: Poppins;
-$display-font-style:  null;
-$display-font-weight: 700; 
-
+$display-font-style: null;
+$display-font-weight: 700;
 $headings-line-height: normal;
 $headings-font-family: Poppins;
 $display-line-height: $headings-line-height;
-
 html {
-  scrollbar-width: none;
+    scrollbar-width: none;
 }
 
 $h1-font-size: 2rem; //1.5rem; //1.875rem
@@ -82,29 +66,22 @@ $h2-font-size: 1.04rem; //1.3rem; //1.625rem
 $h3-font-size: 0.96rem; //1.2rem; //1.5rem
 $h4-font-size: 0.96rem; //1.2rem; //1.5rem
 $h5-font-size: 0.8rem; //1rem; //1.25rem
-
 // aggiunte
 $border-rounded-xs: 5px;
 $border-rounded-sm: 10px;
 $border-rounded: 20px;
 $border-rounded-xl: 50px;
-
 $gray-text-header: #9D9FA0 !default;
 $gray-nav-active: #41434E !default;
 $gray-nav-text: #9C9DA3 !default;
-
 // dropdown
 $dropdown-header-color: $gray-800;
-
 // nav
 $nav-link-color: $black;
-
 // nav tabs
 $nav-tabs-link-active-color: $black;
 $nav-tabs-border-radius: $border-rounded !default;
-
 // carousel
 $carousel-control-width: 8%;
-
 // accordion
 $accordion-button-active-color: $dark;
