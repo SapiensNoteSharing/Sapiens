@@ -271,7 +271,7 @@
 <div class="d-flex flex-column content bg-light">
     <div class="d-flex justify-content-between mt-5">
         {#if $value == undefined || $value == ""}
-            <span class="display-6 text-dark">Tutti i corsi</span>
+            <span class="display-3 text-dark">Tutti i corsi</span>
         {:else}
             <span class="display-6 text-dark">Risultati per: {$value}</span>
         {/if}
@@ -295,7 +295,7 @@
         <div class="d-flex align-items-center">
             {#if $filter_tags.length == 2}
                 <span class="py-2"><i class="icon bi bi-funnel"></i></span>
-                <h4 class="fs-1 ms-3 my-0">Nessun filtro selezionato</h4>
+                <h4 class="fs-6 ms-3 my-0">Nessun filtro selezionato</h4>
             {:else}
                 <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
             {/if}
