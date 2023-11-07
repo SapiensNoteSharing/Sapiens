@@ -4,6 +4,28 @@ import katex from "katex";
 import { markdownItTable } from "markdown-it-table"
 import hl from 'highlight.js'
 import { File } from '$lib/mongodb'
+import Rating from '$lib/components/Rating.svelte'
+
+const md2 = new MarkdownIt({
+    breaks: true,
+    typographer: true,
+    highlight: (str, lang) => {
+        if (lang && hl.getLanguage(lang)) {
+            try {
+                return hl.highlight(str, { language: lang }).value
+            } catch (err) {}
+        }
+        return ''
+    }
+})
+.use(texMath, {
+    engine: katex,
+    delimiters: 'dollars',
+    katexOptions: {
+        output: 'mathml'
+    }
+})
+.use(markdownItTable)
 
 const md = new MarkdownIt({
         breaks: true,
@@ -13,7 +35,15 @@ const md = new MarkdownIt({
                 try {
                     return hl.highlight(str, { language: lang }).value
                 } catch (err) {}
+            } else {
+                try {
+                    let rendered = md2.render(str)
+                    return `<pre class="no-language"><code>` + rendered + '</code></pre>'
+                }catch(err){
+                    console.log(err)
+                }
             }
+            return ''
         }
     })
     .use(texMath, {
@@ -33,6 +63,7 @@ export async function render(data) {
         data = data.replace(error, `!${error}`)
     }
     // images
+
     let images = data.match(/!\[\[(.*)\]\]/gi) || [];
 
     data = md.render(data) 
@@ -49,6 +80,8 @@ export async function render(data) {
             data = data.replace(image, `<img src="data:image/png;base64,${imgtag.content}" alt=${imgtag.name} width=${size}>`);
         }
     }
+
+    //place components
 
     return data;
 }

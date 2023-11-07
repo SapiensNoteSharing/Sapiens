@@ -93,7 +93,7 @@
 </div>
 
 <div class="table_container">
-    <Table rows={courses} {cols} border on:click={(ev) => edit(ev.detail)} alternateRows isExportable/>
+    <Table rows={courses} {cols} border on:click={(ev) => edit(ev.detail)} alternateRows isExportable pageRows={20}/>
 </div>
 
 <style lang="scss">

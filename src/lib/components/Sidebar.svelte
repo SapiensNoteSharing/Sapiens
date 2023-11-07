@@ -131,7 +131,7 @@
                 <div class="navigation">
                     <Item collapsible obj={course} icon="chevron" class="course">
                         <div slot="menu">
-                            {#each course.content || [] as chapter}
+                            {#each course.chapters || [] as chapter}
                                 <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
                                     <div slot="menu">
                                         {#each chapter.files || [] as file}
