@@ -70,14 +70,14 @@ export async function render(data) {
 
     for (let image of images) {
         let img = image.substring(3, image.length - 2).split("|");
-        let src = img[0];
+        let src = img[0]?.replace(/\.(?=[a-z]).*/, '');
         let size = "1000";
         if (img.length == 2)
             size = img[1];
 
         const imgtag = await File.findOne({ name: src });
         if(imgtag){
-            data = data.replace(image, `<img src="data:image/png;base64,${imgtag.content}" alt=${imgtag.name} width=${size}>`);
+            data = data.replace(image, `<center><img src="data:image/png;base64,${imgtag.content}" alt=${imgtag.name} width=${size}></center>`);
         }
     }
 

@@ -69,7 +69,7 @@
             $viewing = {}
         }
     }
-    $: console.log(course)
+
 </script>
 
 <div class="sidebar px-3 position-relative">
