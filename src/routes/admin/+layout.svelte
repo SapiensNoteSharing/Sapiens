@@ -1,5 +1,7 @@
 <script>
     import Sidebar from '$lib/components/Sidebar.svelte';
+    import 'highlight.js/styles/github.css';
+
     export let data;
 </script>
 

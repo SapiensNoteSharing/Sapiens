@@ -76,11 +76,11 @@
 <div class="row">
     <div class="col">
         <span class="text">Unformatted text</span>
-        <div bind:this={input} class="textarea" bind:innerText={fileData} contenteditable="true" spellcheck="false"></div>
+        <div bind:this={input} class="textarea p-2" bind:innerText={fileData} contenteditable="true" spellcheck="false"></div>
     </div>
     <div class="col">
         <span class="text">Formatted text</span>
-        <div class="border rounded mb-2">{@html renderedData}</div>
+        <div class="border rounded mb-2 p-2">{@html renderedData}</div>
         <div class="d-flex justify-content-end">
             <button class="btn btn-secondary me-2" on:click={cancel}>Cancel</button>
             <button class="btn btn-primary me-1" on:click={save}>Save</button>

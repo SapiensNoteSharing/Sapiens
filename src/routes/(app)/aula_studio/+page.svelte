@@ -1,6 +1,7 @@
 <script>
     import { viewing } from '$lib/stores';
     import { onMount } from 'svelte';
+    import 'highlight.js/styles/github.css';
 
     export let data;
     const fetch = data.fetch;

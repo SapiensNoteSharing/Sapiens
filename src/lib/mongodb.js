@@ -135,6 +135,12 @@ CourseSchema.pre('find', function (next) {
     this.populate('extra_content')
     next()
 })
+CourseSchema.pre('findOne', function (next) {
+    this.populate('chapters')
+    this.populate('reviews')
+    this.populate('extra_content')
+    next()
+})
 
 const GridSchema = new Schema({}, {strict: false});
 

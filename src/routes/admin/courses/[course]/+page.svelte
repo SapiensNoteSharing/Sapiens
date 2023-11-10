@@ -35,7 +35,7 @@
         },
         {
             id: 'directories',
-            label: '# of directories',
+            label: '# of subdirectories',
             format: (val, row) => `<span class="me-2">${val?.length}</span>` + val.map(el => `<a class="null" href="./${current._id}/${row._id}/${el._id}">${el.name}</a>`).join(' ')
         },
         {
@@ -60,6 +60,7 @@
         const resp = await fetch(`/admin/api/courses/${current._id}`)
         current = (resp.ok && await resp.json()) || {}
     }
+    $: console.log(current.chapters)
 </script>
 
 <div class="d-flex align-items-center mb-2">
@@ -96,7 +97,7 @@
                 <label for="content" class="form-label">Chapters</label>
                 {#if current?._id}<button class="btn btn-primary" on:click={() => goto(`/admin/courses/${current._id}/new`)}>New</button>{/if}
             </div>
-            <Table rows={current.content} cols={contentCols} border alternateRows on:click={(ev) => edit(ev.detail)}/>
+            <Table rows={current.chapters} cols={contentCols} border alternateRows on:click={(ev) => edit(ev.detail)}/>
         </div>
         <div class="d-flex justify-content-end">
             <button class="btn btn-secondary me-2" on:click={cancel} data-sveltekit-preload-data="hover">Cancel</button>

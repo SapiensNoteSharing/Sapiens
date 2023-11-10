@@ -6,7 +6,7 @@
     import { goto } from '$app/navigation';
     import { dna } from '$lib/stores';
     import '$css/global.scss';
-
+    
     export let data;
     let user = data.user || {};
     let loginModal, registerModal;

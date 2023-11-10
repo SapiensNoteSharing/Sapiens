@@ -162,3 +162,7 @@ i.bi.primary {
     border-radius: var(--scroll-thumb-radius, var(--scroll-radius));
     border: 1px solid $dark;
 }
+
+.no-language > code {
+    font-family: sans-serif;
+}
