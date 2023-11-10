@@ -2,6 +2,7 @@
     import Icon from '$lib/components/Icon.svelte';
     import Course from '$lib/components/Course.svelte';
     import CourseCard from '$lib/components/CourseCard.svelte';
+    import FloatingButton from '$lib/components/FloatingButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import { view, value, filter_tags, dna } from '$lib/stores';
     import { space } from 'svelte/internal';
@@ -278,14 +279,26 @@
 
         <div class="d-flex">
             <div class="btn-group" role="group">
-                <input type="radio" class="btn-check" name="view" id="btnradio1" autocomplete="off" value="list" class:active={$view == 'list'} bind:group={$view}>
-                <label class="btn btn-outline-primary border-dark align-self-center px-3 py-2" for="btnradio1"><i class="text-dark fs-2 bi bi-list"></i></label>
-                
-                <input type="radio" class="btn-check" name="view" id="btnradio2" autocomplete="off" value="grid" class:active={$view == 'grid'} bind:group={$view}>
-                <label class="btn btn-outline-primary border-dark align-self-center px-3 py-2" for="btnradio2"><i class="text-dark fs-2 bi bi-border-all"></i></label>
-                
-                <input type="radio" class="btn-check" name="view" id="btnradio3" autocomplete="off" value="graph" class:active={$view == 'graph'} bind:group={$view} disabled>
-                <label class="btn btn-outline-primary border-dark align-self-center px-3 py-2 cursor-not-allowed" for="btnradio3"><i class="text-dark fs-2 bi bi-diagram-3"></i></label>
+                <FloatingButton active={$view == 'list' ? 'active' : 'not-active'} style="border-radius: .4rem 0rem 0rem .4rem">
+                    <div slot="name">
+                        <input type="radio" class="btn-check" name="view" id="list-view-btn" autocomplete="off" value="list" bind:group={$view}>
+                        <label class="btn btn-outline-primary align-self-center px-3 py-2 floating" for="list-view-btn"><i class="text-dark fs-2 bi bi-list"></i></label>
+                    </div>
+                </FloatingButton>
+
+                <FloatingButton active={$view == 'grid' ? 'active' : 'not-active'} style="border-radius: .4rem 0rem 0rem .4rem">
+                    <div slot="name">
+                        <input type="radio" class="btn-check" name="view" id="card-view-btn" autocomplete="off" value="grid" bind:group={$view}>
+                        <label class="btn btn-outline-primary align-self-center px-3 py-2 floating" style="border-radius: 0rem" for="card-view-btn"><i class="text-dark fs-2 bi bi-border-all"></i></label>
+                    </div>
+                </FloatingButton>
+
+                <FloatingButton active={$view == 'graph' ? 'active' : 'not-active'} style="border-radius: .4rem 0rem 0rem .4rem">
+                    <div slot="name">
+                        <input type="radio" class="btn-check" name="view" id="graph-view-btn" autocomplete="off" value="graph" bind:group={$view} disabled>
+                        <label class="btn btn-outline-primary align-self-center px-3 py-2 floating" style="border-radius: 0rem .4rem .4rem 0rem" for="graph-view-btn"><i class="text-dark fs-2 bi bi-diagram-3"></i></label>
+                    </div>
+                </FloatingButton>
             </div>
         </div>
     </div>
@@ -326,9 +339,9 @@
                 <input type="checkbox" class="btn-check" id="favourites_filter" autocomplete="off" bind:checked={favourites_filter}>
                 <label class="btn btn-outline-light text-dark border-light" for="favourites_filter">
                     {#if favourites_filter}
-                    <i class="icon me-2 text-secondary bi bi-heart-fill"></i>
+                        <i class="icon me-2 text-secondary bi bi-heart-fill"></i>
                     {:else}
-                    <i class="icon me-2 text-dark bi bi-heart" ></i>
+                        <i class="icon me-2 text-dark bi bi-heart" ></i>
                     {/if}
                 </label><br>
             </div>
@@ -445,6 +458,25 @@
     
     .icon {
         font-size: 24px;
+    }
+
+    // .floating {
+    //     box-shadow: .0rem .4rem rgba($dark, 0.5); 
+    //     transition: .1s;
+    // }
+
+    // .floating:hover  {
+    //     box-shadow: .0rem .2rem rgba($dark, 0.5);
+    //     transform: translate(0rem, .2rem);
+    // }
+
+    // .floating.active:hover  {
+    //     box-shadow: 0rem;
+    //     transform: translate(0rem, .4rem);
+    // }
+
+    #graph-view-btn {
+        cursor: not-allowed !important;
     }
     
     .filter_badge {

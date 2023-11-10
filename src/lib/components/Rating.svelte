@@ -3,7 +3,7 @@
     export {classes as class};
 
     export let course = {};
-    if(!course.rating) course.rating = 0
+    if (!course.rating) course.rating = 0;
     let filled_stars = Math.floor(course.rating);
     let half_star = (course.rating % 1) ? 1 : 0; 
     let empty_stars = Math.floor(5 - course.rating);

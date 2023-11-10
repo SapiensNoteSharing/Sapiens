@@ -1,6 +1,22 @@
 <script>
+    import { goto } from '$app/navigation';
+
     let userLogin = {}
     let userRegister = {}
+
+    async function loginUser() {
+        const resp = await fetch(`/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userLogin)
+        })
+
+        if (resp.ok){
+            goto('/esplora_corsi');
+        }
+    }
 </script>
 
 <div>
@@ -24,7 +40,7 @@
                 <label for="login_password" class="form-label"></label>
                 <div class="input-group has-validation floating">
                     <span class="bi-icon input-group-text border-dark bg-primary" id="inputGroupPrepend3"><i class="bi bi-shield-lock-fill"></i></span>
-                    <input type="password" placeholder="Password" class="fs-2 form-control border-dark" id="login_password" bind:value={userLogin.password}>
+                    <input type="password" placeholder="Password" class="fs-2 form-control border-dark" id="login_password" bind:value={userLogin.password} required>
                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                         Inserisci una password valida
                     </div>

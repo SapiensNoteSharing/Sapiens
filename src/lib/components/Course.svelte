@@ -26,7 +26,7 @@
                     <label for="{course.name} favourite">
                         <input type="checkbox" class="hidden cursor-pointer" id="{course.name} favourite" bind:checked={course.favourite} on:click|stopPropagation>
                         <div class="text-secondary" class:pulse={course.favourite} on:click|stopPropagation>
-                            <i class="icon mx-2 bi bi-heart{course.favourite ? '-fill' : ''}"on:click|stopPropagation></i>
+                            <i class="icon mx-2 bi bi-heart{course.favourite ? '-fill' : ''}" on:click|stopPropagation></i>
                         </div>
                     </label>
                     {#if course.owned}

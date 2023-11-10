@@ -9,6 +9,8 @@
     import { goto } from '$app/navigation'
 
     export let courses;
+
+    let sidebar_page = "chapters";
     
     let faculties = [
         "Ingegneria informatica",
@@ -86,9 +88,9 @@
                     Tipo di Laurea
                 </div>
                 {#each degree_types as type}
-                <div class="me-2 mb-2">
-                    <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
-                </div>
+                    <div class="me-2 mb-2">
+                        <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
+                    </div>
                 {/each}
                 <!--  -->
                 <!-- {#if } -->
@@ -98,9 +100,9 @@
                     Tags
                 </div>
                 {#each tags as tag}
-                <div class="me-2 mb-2">
-                    <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
-                </div>
+                    <div class="me-2 mb-2">
+                        <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
+                    </div>
                 {/each}
             </AccordionItem>
             <AccordionItem class="border-dark">
@@ -112,39 +114,79 @@
     {:else if $page.route.id == '/(app)/aula_studio'}
         <div class="mt-3">
             <div class="d-flex w-100 justify-content-center">
-                <button class="display-3 w-100 bg-primary py-2 mb-3 floating">Fisica I</button>
+                <label for="course-selection">Fisica I</label>
+                <select id="course-selection" class="display-3 w-100 bg-primary py-2 mb-3 floating">
+                    {#each courses || [] as course}
+                        <option value="{course.name}"></option>
+                    {/each}
+                </select>
             </div>
 
             <div class="d-flex flex-column">
                 <div class="d-flex flex-row justify-content-between">
-                    <button class="display-4 bg-primary py-2 mb-3 me-2 floating"><img class="w-25" src="/src/style/google.png" alt=""></button>
-                    <button class="display-4 bg-light py-2 mb-3 mx-1 floating"><img class="w-25" src="/src/style/google.png" alt=""></button>
-                    <button class="display-4 bg-success py-2 mb-3 mx-1 floating"><img class="w-25" src="/src/style/google.png" alt=""></button>
-                    <button class="display-4 bg-warning py-2 mb-3 ms-1 floating"><img class="w-25" src="/src/style/google.png" alt=""></button>
-                </div>
-                <div class="d-flex flex-column bg-primary">
-                    
+                    <button class="display-4 bg-light py-2 mb-0 me-2 tab" on:click={() => sidebar_page = "chapters"}><img class="w-50" src="/src/style/chapters.png" alt=""></button>
+                    <button class="display-4 bg-success py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "exercises"}><img class="w-50" src="/src/style/exercises.png" alt=""></button>
+                    <button class="display-4 bg-primary py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "questions"}><img class="w-50" src="/src/style/questions.png" alt=""></button>
+                    <button class="display-4 bg-info py-2 mb-0 ms-1 tab" on:click={() => sidebar_page = "formulary"}><img class="w-50" src="/src/style/formulary.png" alt=""></button>
                 </div>
             </div>
 
-            {#each courses || [] as course}
-                <div class="navigation">
-                    <Item collapsible obj={course} icon="chevron" class="course">
-                        <div slot="menu">
-                            {#each course.content || [] as chapter}
-                                <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
-                                    <div slot="menu">
-                                        {#each chapter.files || [] as file}
-                                            <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
-                                        {/each}
-                                    </div>
-                                </Item>
-                            {/each}
+            {#if sidebar_page == "chapters"}
+                <div class="sidebar-page">
+                    {#each courses || [] as course}
+                        <div class="navigation">
+                            <Item collapsible obj={course} icon="chevron" class="course">
+                                <div slot="menu">
+                                    {#each course.chapters || [] as chapter}
+                                        <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
+                                            <div slot="menu">
+                                                {#each chapter.files || [] as file}
+                                                    <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
+                                                {/each}
+                                            </div>
+                                        </Item>
+                                    {/each}
+                                </div>
+                            </Item>
+                            <div class="my-1"></div>
                         </div>
-                    </Item>
-                    <div class="my-1"></div>
+                    {/each}
                 </div>
-            {/each}
+            {:else if sidebar_page == "exercises"}
+                <div class="sidebar-page d-flex flex-column bg-secondary">
+                    <div class="exercise-category d-flex flex-column floating">
+                        <div class="d-flex flex-row justify-content-between">
+                            <p class="display-6 text-dark">Capitolo 1</p>
+                            <p class="display-6 text-dark">5/8</p>
+                        </div>
+
+                    </div>
+
+                    <div class="exercise-category d-flex flex-column floating">
+                        <div class="d-flex flex-row justify-content-between">
+                            <p class="display-6 text-dark">Capitolo 2</p>
+                            <p class="display-6 text-dark">17/23</p>
+                        </div>
+
+                    </div>
+
+                    <div class="exercise-category d-flex flex-column floating">
+                        <div class="d-flex flex-row justify-content-between">
+                            <p class="display-6 text-dark">Capitolo 3</p>
+                            <p class="display-6 text-dark">4/21</p>
+                        </div>
+
+                    </div>
+                </div>
+            {:else if sidebar_page == "exercises"}
+                <div class="sidebar-page">
+
+                </div>
+            {:else if sidebar_page == "formulary"}
+                <div class="sidebar-page">
+
+                </div>
+            {/if}
         </div>
     {:else if $page.route.id == '/(app)/area_personale'}
         <nav id="personal_area_scrollspy" class="mt-4 h-100 flex-column align-items-stretch pe-4 border-end">
@@ -175,6 +217,21 @@
         width: 100%;
     }
 
+    .tab {
+        border: 1px solid $dark;
+        border-bottom: 0px;
+        border-radius: .4rem .4rem 0rem 0rem;
+    }
+
+    .exercise-category {
+        background: $light;
+        padding: 1rem;
+        border: 1px solid $dark;
+        border-radius: .4rem;
+        margin: 1.5rem;
+        margin-bottom: 0rem;
+    }
+
     .floating {
         border: 1px solid $dark;
         border-radius: .4rem;
@@ -187,7 +244,13 @@
         transform: translate(0rem, .2rem);
     }
 
-    .navigation {
+    .sidebar-page {
+        border: 1px solid $dark;
+        border-radius: .4rem;
+        padding-bottom: 1.5rem; 
+    }
+
+    .navigation {    
         :global(.course) {
             background-color: $light !important;
             font-size: 1.05rem;

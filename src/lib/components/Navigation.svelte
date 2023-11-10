@@ -1,11 +1,8 @@
 <script>
-    
-    
     export let course = {};
     export let open = false;
     export let parent = '';
     export let id = 'acc-item' + Math.floor(Math.random() * 1000000) + Math.floor(Math.random() * 1000000);
-    
 </script>
 
 <div class="accordion mt-3">

@@ -14,7 +14,7 @@
         renderedFile = ''
         if(resp.ok) renderedFile = await resp.text()
     }
-$: console.log($viewing)
+    $: console.log($viewing)
 </script>
 
 <div class="cont">

@@ -1,21 +1,22 @@
 <script>
     import { onMount } from "svelte";
     import Modal from '$lib/components/Modal.svelte';
+    import FloatingButton from '$lib/components/FloatingButton.svelte';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
-    import { dna } from '$lib/stores'
+    import { dna } from '$lib/stores';
     import '$css/global.scss';
 
     export let data;
-    let user = data.user || {}
+    let user = data.user || {};
     let loginModal, registerModal;
         
-    let userLogin = {}
-    let userRegister = {}
+    let userLogin = {};
+    let userRegister = {};
     let dnaModal;
 
     onMount(async () => {
-        const bootstrap = await import('bootstrap')
+        const bootstrap = await import('bootstrap');
     })
 
     function openDnaModal() {   
@@ -28,7 +29,7 @@
 
     function registerUser() {
         registerModal.show().then(async res => {
-            if(res){
+            if (res) {
                 const resp = await fetch('/register', {
                     method: 'POST',
                     headers: {
@@ -36,16 +37,16 @@
                     },
                     body: JSON.stringify(userRegister)
                 });
-                if(resp.ok) {
-                    goto('/esplora_corsi')
+                if (resp.ok) {
+                    goto('/esplora_corsi');
                 }
             }
         })
     }
     
-    function loginUser(){
+    function loginUser() {
         loginModal.show().then(async res => {
-            if(res){
+            if (res) {
                 const resp = await fetch(`/login`, {
                     method: 'POST',
                     headers: {
@@ -53,8 +54,9 @@
                     },
                     body: JSON.stringify(userLogin)
                 })
-                if(resp.ok){
-                    goto('/esplora_corsi')
+
+                if (resp.ok){
+                    goto('/esplora_corsi');
                 }
             }
         })
@@ -209,15 +211,40 @@
                 <div class="d-flex me-3 align-items-center">
                     <!-- Site navigation -->
                     {#if data.user.role == 'admin'}
-                        <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route.id == "/test"} href="/test">Test</a>
-                        <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route?.id?.startsWith("/admin")} href="/admin/courses">Admin</a>
+                        <FloatingButton active={$page.route.id == "/test" ? 'active' : 'not-active'} classes={'m-2'}>
+                            <div slot="name" class="navbar-item display-6 rounded-4">
+                                <a class="d-block px-4 py-2 text-decoration-none" href="/test">Test</a>
+                            </div>
+                        </FloatingButton>
+
+                        <FloatingButton active={$page.route?.id?.startsWith("/admin") ? 'active' : 'not-active'} classes={"m-2"}>
+                            <div slot="name" class="navbar-item display-6 rounded-4">
+                                <a class="d-block px-4 py-2 text-decoration-none" href="/admin/courses">Admin</a>
+                            </div>
+                        </FloatingButton>
                     {/if}
-                    <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route.id == "/(app)/esplora_corsi"} href="/esplora_corsi">Esplora Corsi</a>
-                    <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route.id == "/(app)/aula_studio"} href="/aula_studio">Aula Studio</a>
-                    <a class="navbar-item display-6 rounded-4 py-2 px-4 text-decoration-none" class:active={$page.route.id == "/(app)/area_personale"} href="/area_personale">Area personale</a>
+
+                    <FloatingButton active={$page.route.id == "/(app)/esplora_corsi" ? 'active' : 'not-active'} classes={"m-2"}>
+                        <div slot="name" class="navbar-item display-6 rounded-4">
+                            <a class="d-block px-4 py-2 text-decoration-none" href="/esplora_corsi">Esplora Corsi</a>
+                        </div>
+                    </FloatingButton>
+
+                    <FloatingButton active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} classes={"m-2"}>
+                        <div slot="name" class="navbar-item display-6 rounded-4">
+                            <a class="d-block px-4 py-2 text-decoration-none" href="/aula_studio">Aula Studio</a>
+                        </div>
+                    </FloatingButton>
+
+                    <FloatingButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
+                        <div slot="name" class="navbar-item display-6 rounded-4">
+                            <a class="d-block py-2 px-4 text-decoration-none" href="/area_personale">Area personale</a>
+                        </div>
+                    </FloatingButton>
+
             
                     <!-- credit -->
-                    <button type="button" class="navbar-item dna-btn rounded-4 py-2" on:click={openDnaModal}>
+                    <button type="button" class="dna-btn rounded-4 py-2" on:click={openDnaModal}>
                         <span class="display-6 ps-2 align-middle text-dark">{user.balance || 0}</span>
                         <img class="dna-icon" src="/src/style/DNA.svg" alt="DNA">
                     </button>
@@ -273,29 +300,25 @@
        font-size: 1.4rem;
     }
 
-    .navbar-item {
-        position: relative;
-        margin: .5rem .5rem .9rem .5rem !important;
-        border: 1px solid $dark;
-        overflow: hidden;
+    :global(.navbar-item a) {
+        color: $dark;
     }
 
-    .navbar-item.active {
+    :global(.active .navbar-item a) {
         color: $secondary;
-        margin-bottom: .1rem !important;
     }
     
-    .navbar-item:not(.active) {
-        color: $dark;
-        box-shadow: 0rem .4rem rgba($dark, 0.6);
-    }
-    
-    .navbar-item:not(.active):hover {
-        opacity: 1;
+    :global(:not(.active) .navbar-item:hover) {
         transition: .15s;
         background: rgba($secondary, 0.25);
-        margin-bottom: .5rem !important;
-        box-shadow: 0rem .2rem rgba($dark, 0.6);
+    }
+
+    :global(.active .navbar-item) {
+        background: $light;
+    }
+
+    :global(.active .navbar-item:hover) {
+        background: $light;
     }
 
     // .navbar-item:before {
