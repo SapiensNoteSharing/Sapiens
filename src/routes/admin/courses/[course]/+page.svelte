@@ -60,7 +60,7 @@
         const resp = await fetch(`/admin/api/courses/${current._id}`)
         current = (resp.ok && await resp.json()) || {}
     }
-    $: console.log(current.chapters)
+
 </script>
 
 <div class="d-flex align-items-center mb-2">
@@ -80,12 +80,6 @@
         <div class="mb-3">
             <label for="professors" class="form-label">Professors</label>
             <Svelecte options={professors} multiple labelAsValue bind:value={current.professors} placeholder="Select Professors"/>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label for="gitUrl" class="form-label">Git Url (from Università)</label>
-            <input class="form-control" placeholder="Git Url" bind:value={current.gitUrl}>
         </div>
     </div>
 </div>

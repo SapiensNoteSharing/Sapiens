@@ -81,7 +81,7 @@
             </button> -->
         </div>
 
-        <img src="/src/style/sapiens logo cartoon.png" alt="" class="landing-page-image">
+        <img src="/src/style/Sapiens Logo Cartoon.png" alt="" class="landing-page-image">
     </div>
 
     <div class="presentation-item d-flex justify-content-evenly align-items-center bg-primary">

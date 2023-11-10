@@ -75,7 +75,7 @@
     <div class="col">
         <div class="mb-3">
             <label for="gitUrl" class="form-label">Git Url (from Università)</label>
-            <input class="form-control" placeholder="Git Url" bind:value={current.gitUrl}>
+            <input class="form-control" placeholder="Git Url" bind:value={current.path}>
         </div>
     </div>
 </div>

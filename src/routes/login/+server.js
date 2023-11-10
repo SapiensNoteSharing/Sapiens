@@ -26,6 +26,6 @@ export async function POST({ url, locals, request, cookies }) {
 
         return new Response('OK')
     } else {
-        throw redirect(303, '/')
+        throw redirect(300, '/')
     }
 }

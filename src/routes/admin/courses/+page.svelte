@@ -83,7 +83,7 @@
     }
 </script>
     
-<Modal title="Delete Camera" yes="Delete" no="Cancel" bind:this={deleteModal} let:args>
+<Modal title="Delete Course" yes="Delete" no="Cancel" bind:this={deleteModal} let:args>
     Are you sure you want to delete {args?.name}?<br>This action cannot be undone
 </Modal>
         

@@ -286,14 +286,14 @@
                     </div>
                 </FloatingButton>
 
-                <FloatingButton active={$view == 'grid' ? 'active' : 'not-active'} style="border-radius: .4rem 0rem 0rem .4rem">
+                <FloatingButton active={$view == 'grid' ? 'active' : 'not-active'} style="border-radius: 0rem 0rem 0rem 0rem">
                     <div slot="name">
                         <input type="radio" class="btn-check" name="view" id="card-view-btn" autocomplete="off" value="grid" bind:group={$view}>
                         <label class="btn btn-outline-primary align-self-center px-3 py-2 floating" style="border-radius: 0rem" for="card-view-btn"><i class="text-dark fs-2 bi bi-border-all"></i></label>
                     </div>
                 </FloatingButton>
 
-                <FloatingButton active={$view == 'graph' ? 'active' : 'not-active'} style="border-radius: .4rem 0rem 0rem .4rem">
+                <FloatingButton active={$view == 'graph' ? 'active' : 'not-active'} style="border-radius: 0rem .4rem .4rem 0rem">
                     <div slot="name">
                         <input type="radio" class="btn-check" name="view" id="graph-view-btn" autocomplete="off" value="graph" bind:group={$view} disabled>
                         <label class="btn btn-outline-primary align-self-center px-3 py-2 floating" style="border-radius: 0rem .4rem .4rem 0rem" for="graph-view-btn"><i class="text-dark fs-2 bi bi-diagram-3"></i></label>

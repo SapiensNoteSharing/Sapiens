@@ -184,7 +184,7 @@ export async function update(){
             chapters: chapterIds,
             extra_content: extra._id
         }, {upsert: true})
-        console.log('finisched course', course.name)
+        console.log('finished course', course.name)
     })
 
     const gitCoursesNames = new Set(courses.map(course => course.name))

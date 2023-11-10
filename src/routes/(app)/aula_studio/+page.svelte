@@ -8,12 +8,14 @@
 
     let renderedFile = '';
 
-    $: $viewing?._id && render();
+    $: $viewing && render();
 
     async function render(){
-        const resp = await fetch(`/api/file/${$viewing._id}/content`);
         renderedFile = ''
-        if(resp.ok) renderedFile = await resp.text()
+        if($viewing?._id){
+            const resp = await fetch(`/api/file/${$viewing._id}/content`);
+            if(resp.ok) renderedFile = await resp.text()
+        }
     }
     $: console.log($viewing)
 </script>
