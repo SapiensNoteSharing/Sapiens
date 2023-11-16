@@ -1,6 +1,7 @@
 <script>
     import { goto } from '$app/navigation';
 
+    let accessMode = "login";
     let userLogin = {}
     let userRegister = {}
 
@@ -17,69 +18,85 @@
             goto('/esplora_corsi');
         }
     }
+
+    async function registerUser() {
+        const resp = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userRegister)
+        });
+
+        if (resp.ok) {
+            goto('/esplora_corsi');
+        }
+    }
 </script>
 
 <div>
     <div class="full-height d-flex justify-content-evenly align-items-center">
-        <div class="login-box d-flex flex-column px-5 py-4 floating">
-            <p class="display-2 text-dark">Accedi</p>
-            <span class="display-6 text-dark">Non hai un account? <a href="" class="text-dark">Registrati</a></span>
+        {#if accessMode == "login"}
+            <div class="login-box d-flex flex-column px-5 py-4 floating">
+                <p class="display-2 text-dark">Accedi</p>
+                <span class="display-6 text-dark">Non hai un account? <span class="text-decoration-underline text-dark cursor-pointer" on:click={accessMode = "registration"}>Registrati</span></span>
 
-            <div class="col-md-12">
-                <label for="validationServer01" class="form-label"></label>
-                <div class="input-group has-validation floating">
-                    <span class="bi-icon input-group-text border-dark bg-primary" id="inputGroupPrepend1"><i class="bi bi-at"></i></span>
-                    <input type="text" placeholder="E-mail" class="fs-2 form-control border-dark" id="validationServerUsername" aria-describedby="inputGroupPrepend1" bind:value={userLogin.email} required>
-                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                        Inserisci un'email valida
+                <div class="col-md-12">
+                    <label for="validationServer01" class="form-label"></label>
+                    <div class="input-group has-validation floating">
+                        <span class="bi-icon input-group-text border-dark bg-primary" id="inputGroupPrepend1"><i class="bi bi-at"></i></span>
+                        <input type="text" placeholder="E-mail" class="fs-2 form-control border-dark" id="validationServerUsername" aria-describedby="inputGroupPrepend1" bind:value={userLogin.email} required>
+                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                            Inserisci un'email valida
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-12 mb-3">
-                <label for="login_password" class="form-label"></label>
-                <div class="input-group has-validation floating">
-                    <span class="bi-icon input-group-text border-dark bg-primary" id="inputGroupPrepend3"><i class="bi bi-shield-lock-fill"></i></span>
-                    <input type="password" placeholder="Password" class="fs-2 form-control border-dark" id="login_password" bind:value={userLogin.password} required>
-                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                        Inserisci una password valida
+                <div class="col-md-12 mb-3">
+                    <label for="login_password" class="form-label"></label>
+                    <div class="input-group has-validation floating">
+                        <span class="bi-icon input-group-text border-dark bg-primary" id="inputGroupPrepend3"><i class="bi bi-shield-lock-fill"></i></span>
+                        <input type="password" placeholder="Password" class="fs-2 form-control border-dark" id="login_password" bind:value={userLogin.password} required>
+                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                            Inserisci una password valida
+                        </div>
                     </div>
                 </div>
-            </div>
-            <p class="display-6 text-dark">Hai dimenticato la password? <a href="" class="text-dark">Recuperala</a></p>
+                <p class="display-6 text-dark">Hai dimenticato la password? <a href="" class="text-dark">Recuperala</a></p>
 
-            <!-- login -->
-            <button type="button" style="width: 100%;" class="btn btn-outline-primary border-dark text-dark fs-2 py-2 my-4 rounded-2 floating" on:click={loginUser}>
-                Accedi
-            </button>
-
-            <div class="hr-box">
-                <span class="hr-text px-2 bg-light display-6 text-dark">
-                    oppure accedi con
-                </span>
-            </div>
-
-            <div class="d-flex flex-row justify-content-evenly align-items-center my-2">
-                <!-- google -->
-                <button type="button" id="google-btn" class="btn border-dark text-dark fs-2 m-4 rounded-2 floating" on:click={loginUser}>
-                    <img style="height: 1.25rem;" class="ms-1 me-2" src="/src/style/google.png" alt="">
-                    <span class="align-middle">Google</span>
+                <!-- login -->
+                <button type="button" style="width: 100%;" class="btn btn-outline-primary border-dark text-dark fs-2 py-2 my-4 rounded-2 floating" on:click={loginUser}>
+                    Accedi
                 </button>
-                
-                <!-- facebook -->
-                <button type="button" id="facebook-btn" class="btn border-dark text-dark fs-2 py-2 m-4 rounded-2 floating" on:click={loginUser}>
-                    <img style="height: 1.4rem;" class="ms-1 me-2" src="/src/style/facebook.png" alt="">
-                    <span class="align-middle">Facebook</span>
-                </button>   
+
+                <div class="hr-box">
+                    <span class="hr-text px-2 bg-light display-6 text-dark">
+                        oppure accedi con
+                    </span>
+                </div>
+
+                <div class="d-flex flex-row justify-content-evenly align-items-center my-2">
+                    <!-- google -->
+                    <button type="button" id="google-btn" class="btn border-dark text-dark fs-2 m-4 rounded-2 floating" on:click={loginUser}>
+                        <img style="height: 1.25rem;" class="ms-1 me-2" src="/src/style/google.png" alt="">
+                        <span class="align-middle">Google</span>
+                    </button>
+                    
+                    <!-- facebook -->
+                    <button type="button" id="facebook-btn" class="btn border-dark text-dark fs-2 py-2 m-4 rounded-2 floating" on:click={loginUser}>
+                        <img style="height: 1.4rem;" class="ms-1 me-2" src="/src/style/facebook.png" alt="">
+                        <span class="align-middle">Facebook</span>
+                    </button>   
+                </div>
             </div>
-        </div>
-        
-        <div class="d-flex justify-content-evenly align-items-center flex-column">
-            <!-- register -->
-            <!-- <button type="button" class="btn btn-outline-secondary border-dark text-dark fs-1 px-5 py-3 ms-4 rounded-pill" on:click={registerUser}>
-                Registrati
-            </button> -->
-        </div>
+        {:else}
+            <div class="d-flex justify-content-evenly align-items-center flex-column">
+                <!-- register -->
+                <!-- <button type="button" class="btn btn-outline-secondary border-dark text-dark fs-1 px-5 py-3 ms-4 rounded-pill" on:click={registerUser}>
+                    Registrati
+                </button> -->
+            </div>
+        {/if}
 
         <img src="/src/style/Sapiens Logo Cartoon.png" alt="" class="landing-page-image">
     </div>

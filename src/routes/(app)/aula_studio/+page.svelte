@@ -43,19 +43,17 @@
             padding: 5px 10px 2px 10px;
             border: 1px solid $dark;
             border-radius: .4rem;
-            box-shadow: .0rem .4rem rgba($dark, 0.5); 
-            transition: .1s;
+            box-shadow: .0rem .2rem rgba($dark, 0.5);
             margin-bottom: 1rem;
         }
 
-        :global(h2:hover) {
-            box-shadow: .0rem .2rem rgba($dark, 0.5);
-            transform: translate(0rem, .2rem);
-        }
-        
         :global(h3) {
             font-size: 1.25rem;
-            text-decoration: $secondary underline;
+            text-decoration: $primary underline;
+        }
+
+        :global(::selection) {
+            background: $primary;
         }
 
     //     // bullet list

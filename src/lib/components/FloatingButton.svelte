@@ -21,6 +21,7 @@
         border: 1px solid $dark;
         border-radius: 1rem;
         box-shadow: 0rem .4rem rgba($dark, 0.6);
+        margin: 0rem;
         margin-bottom: 0.4rem;
         transition: .1s;
     }
