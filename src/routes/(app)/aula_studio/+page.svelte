@@ -32,24 +32,26 @@
         min-height: 50vh;
         padding: 2rem 2rem;
         width: 90%;
+        font-size: 1.25rem;
+        line-height: 2.25rem;
+        color: $dark;
 
         :global(p) {
-            font-size: 1rem;
         }
 
         :global(h2) {
-            font-size: 1.5rem;
-            background: $primary;
-            padding: 5px 10px 2px 10px;
-            border: 1px solid $dark;
-            border-radius: .4rem;
-            box-shadow: .0rem .2rem rgba($dark, 0.5);
+            font-size: 1.75rem;
+            padding: 1.75rem 0rem .75rem 0rem;
             margin-bottom: 1rem;
         }
 
         :global(h3) {
-            font-size: 1.25rem;
-            text-decoration: $primary underline;
+            font-size: 1.5rem;
+            padding: 1.5rem 0rem .5rem 0rem;
+        }
+
+        :global(h2 + h3) {
+            padding: 0rem 0rem .5rem 0rem;
         }
 
         :global(::selection) {

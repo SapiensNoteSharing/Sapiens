@@ -7,6 +7,9 @@ export async function POST({ url, locals, request, cookies }) {
     const body = await request.json()
     const authenticated = await compare(body)
 
+    console.log("body: " + body)
+    console.log("authenitcated: " + authenticated)
+
     if (authenticated) {
         const user = await User.findOne({ email: body.email })
         const sid = crypto.randomUUID();

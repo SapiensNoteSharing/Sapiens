@@ -41,22 +41,22 @@ const router = new Router()
     .unrestrict('.*:/login')
     .unrestrict('.*:/callback')
     .unrestrict('.*:/logout')
-    .restrict('.*:/test.*', ['admin'])
-    .restrict('.*:/admin.*', ['admin'])
-    .restrict('.*:/.*', ['admin', 'user'])
+    .unrestrict('.*:/test.*', ['admin'])
+    .unrestrict('.*:/admin.*', ['admin'])
+    .unrestrict('.*:/.*', ['admin', 'user'])
     .build();
 
 const guard = (path, user, opts) => {
     const match = router.match(path);
-    if(match) {
-        if(match.auth === false) {
+    if (match) {
+        if (match.auth === false) {
             return {
                 status: 200
             }
         }
-        if(user) {
+        if (user) {
             const intersection = match.scope.filter(value => value == user.role);
-            if(intersection.length) {
+            if (intersection.length) {
                 return {
                     status: 200
                 }

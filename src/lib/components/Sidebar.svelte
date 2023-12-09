@@ -72,16 +72,16 @@
     }
 </script>
 
-<div class="sidebar px-3 position-relative">
+<div class="sidebar px-5 position-relative">
     {#if $page.route.id == '/(app)/esplora_corsi'}
-        <div class="d-flex align-items-center mt-5 mb-4">
-            <h1 class="mx-auto display-6 text-dark">Filtri</h1>
+        <div class="d-flex align-items-center my-5">
+            <h1 class="mb-0 display-3 align-bottom text-dark">Filtri</h1>
         </div>
         
         <!-- filter according to input -->
-        <Searchbar class="align-self-center"></Searchbar>
+        <Searchbar class="align-self-center mb-5"></Searchbar>
         
-        <Accordion let:id class="my-3 mx-2">
+        <Accordion let:id class="mb-5">
             <AccordionItem class="border-dark">
                 <div slot="name">
                     Corso Di Laurea
@@ -248,7 +248,7 @@
         min-height: 82vh;
         flex-shrink: 0;
         background-color: $light;
-        border-right: 1px solid $dark;
+        border-right: 1px solid rgba($dark, 0.25);
     }
     
     .selected-course {

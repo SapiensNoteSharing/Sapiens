@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import Modal from '$lib/components/Modal.svelte';
     import FloatingButton from '$lib/components/FloatingButton.svelte';
+    import NormalButton from '$lib/components/NormalButton.svelte';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { dna } from '$lib/stores';
@@ -201,53 +202,53 @@
     </div>
 {:else}
     <div class="d-flex sticky-top">
-        <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom border-dark">
+        <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <!-- Sapiens Logo -->
                 <a href="/">
-                    <img class="ms-3" style="width: 12rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
+                    <img class="ms-5" style="width: 12rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
                 </a>
                 
                 <div class="d-flex me-3 align-items-center">
                     <!-- Site navigation -->
                     {#if data.user.role == 'admin'}
-                        <FloatingButton active={$page.route.id == "/test" ? 'active' : 'not-active'} classes={'m-2'}>
+                        <NormalButton active={$page.route.id == "/test" ? 'active' : 'not-active'} classes={'m-2'}>
                             <div slot="name" class="navbar-item display-6 rounded-4">
                                 <a class="d-block px-4 py-2 text-decoration-none" href="/test">Test</a>
                             </div>
-                        </FloatingButton>
+                        </NormalButton>
 
-                        <FloatingButton active={$page.route?.id?.startsWith("/admin") ? 'active' : 'not-active'} classes={"m-2"}>
+                        <NormalButton active={$page.route?.id?.startsWith("/admin") ? 'active' : 'not-active'} classes={"m-2"}>
                             <div slot="name" class="navbar-item display-6 rounded-4">
                                 <a class="d-block px-4 py-2 text-decoration-none" href="/admin/courses">Admin</a>
                             </div>
-                        </FloatingButton>
+                        </NormalButton>
                     {/if}
 
-                    <FloatingButton active={$page.route.id == "/(app)/esplora_corsi" ? 'active' : 'not-active'} classes={"m-2"}>
+                    <NormalButton active={$page.route.id == "/(app)/esplora_corsi" ? 'active' : 'not-active'} classes={"m-2"}>
                         <div slot="name" class="navbar-item display-6 rounded-4">
                             <a class="d-block px-4 py-2 text-decoration-none" href="/esplora_corsi">Esplora Corsi</a>
                         </div>
-                    </FloatingButton>
+                    </NormalButton>
 
-                    <FloatingButton active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} classes={"m-2"}>
+                    <NormalButton active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} classes={"m-2"}>
                         <div slot="name" class="navbar-item display-6 rounded-4">
                             <a class="d-block px-4 py-2 text-decoration-none" href="/aula_studio">Aula Studio</a>
                         </div>
-                    </FloatingButton>
+                    </NormalButton>
 
-                    <FloatingButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
+                    <NormalButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
                         <div slot="name" class="navbar-item display-6 rounded-4">
                             <a class="d-block py-2 px-4 text-decoration-none" href="/area_personale">Area personale</a>
                         </div>
-                    </FloatingButton>
-
+                    </NormalButton>
             
-                    <!-- credit -->
-                    <button type="button" class="dna-btn rounded-4 py-2" on:click={openDnaModal}>
-                        <span class="display-6 ps-2 align-middle text-dark">{user.balance || 0}</span>
-                        <img class="dna-icon" src="/src/style/DNA.svg" alt="DNA">
-                    </button>
+                    <NormalButton classes={"m-2"} on:click={openDnaModal}>
+                        <div slot="name" class="navbar-item display-6 rounded-4 py-2 ps-3 pe-2">
+                            <span class="display-6  align-middle text-dark">{user.balance || 0}</span>
+                            <img class="dna-icon" src="/src/style/DNA.svg" alt="DNA">
+                        </div>
+                    </NormalButton>
                 </div>
             </div>
         </nav>
@@ -257,7 +258,7 @@
 <slot></slot>
 
 <!-- DNA sequences info -->
-<Modal title="Sequenze di DNA" yes="Capito" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={dnaModal}>
+<Modal title="Sequenze di DNA" yes="Capito" classes="bg-primary" theme="btn-outline-primary" bind:this={dnaModal}>
     Lorem ipsum dolor sit amet. Est tempora perferendis eos quia rerum a rerum laborum eum atque eligendi ut laboriosam optio 33 fugiat quae. At nihil nostrum et Quis magnam ab aliquam temporibus est ipsa reiciendis sed facilis odit aut mollitia consequatur. Aut consectetur veritatis ea adipisci ratione et iste quaerat. Ut beatae obcaecati est harum unde et galisum similique ut officia architecto sed nesciunt delectus.
 </Modal>
 
@@ -300,25 +301,8 @@
        font-size: 1.4rem;
     }
 
-    :global(.navbar-item a) {
-        color: $dark;
-    }
-
-    :global(.active .navbar-item a) {
-        color: $secondary;
-    }
-    
-    :global(:not(.active) .navbar-item:hover) {
-        transition: .15s;
-        background: rgba($secondary, 0.25);
-    }
-
-    :global(.active .navbar-item) {
-        background: $light;
-    }
-
-    :global(.active .navbar-item:hover) {
-        background: $light;
+    .navbar {
+        border-bottom: 1px solid rgba($dark, 0.25) !important;
     }
 
     // .navbar-item:before {
@@ -377,7 +361,7 @@
     }
     
     .footer {
-        border-top: 1px solid $dark;
+        border-top: 1px solid rgba($dark, 0.25);
     }
     
     .footer-logo {

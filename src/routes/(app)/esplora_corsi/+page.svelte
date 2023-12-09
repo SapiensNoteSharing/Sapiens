@@ -269,7 +269,7 @@
     }
 </script>
 
-<div class="d-flex flex-column content bg-light">
+<div class="d-flex flex-column content">
     <div class="d-flex justify-content-between mt-5">
         {#if $value == undefined || $value == ""}
             <span class="display-3 text-dark">Tutti i corsi</span>
@@ -277,7 +277,7 @@
             <span class="display-6 text-dark">Risultati per: {$value}</span>
         {/if}
 
-        <div class="d-flex">
+        <!-- <div class="d-flex">
             <div class="btn-group" role="group">
                 <FloatingButton active={$view == 'list' ? 'active' : 'not-active'} style="border-radius: .4rem 0rem 0rem .4rem">
                     <div slot="name">
@@ -300,14 +300,14 @@
                     </div>
                 </FloatingButton>
             </div>
-        </div>
+        </div> -->
     </div>
     
     <!-- filters and cart -->
-    <div class="d-flex my-4 justify-content-between">
+    <div class="d-flex my-5 justify-content-between">
         <div class="d-flex align-items-center">
             {#if $filter_tags.length == 2}
-                <span class="py-2"><i class="icon bi bi-funnel"></i></span>
+                <span class=""><i class="icon bi bi-funnel"></i></span>
                 <h4 class="fs-6 ms-3 my-0">Nessun filtro selezionato</h4>
             {:else}
                 <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
@@ -337,17 +337,17 @@
             <!-- favourites filter -->
             <div>
                 <input type="checkbox" class="btn-check" id="favourites_filter" autocomplete="off" bind:checked={favourites_filter}>
-                <label class="btn btn-outline-light text-dark border-light" for="favourites_filter">
+                <label class="btn btn-outline-light p-0 text-dark border-light" for="favourites_filter">
                     {#if favourites_filter}
-                        <i class="icon me-2 text-secondary bi bi-heart-fill"></i>
+                        <i class="icon p-0 me-2 text-secondary bi bi-heart-fill"></i>
                     {:else}
-                        <i class="icon me-2 text-dark bi bi-heart" ></i>
+                        <i class="icon p-0 me-2 text-dark bi bi-heart" ></i>
                     {/if}
                 </label><br>
             </div>
             
             <!-- cart button -->
-            <button type="button" class="btn btn-light position-relative" on:click={openCart}>
+            <button type="button" class="py-0 btn btn-light position-relative" on:click={openCart}>
                 <i class="icon text-dark bi bi-cart"></i>
                 <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{courses.reduce((acc, course) => acc + (course.in_cart ? 1 : 0), 0)}</span>
             </button>
@@ -356,21 +356,18 @@
     
     <!-- courses -->
     {#if filtered.length != 0}
-        {#if $view == "list"}
-            <!-- list view -->
+        <!-- {#if $view == "list"}
             {#each filtered as course}
-                <Course {course} class="mb-3"/>
+                <Course {course} class="mb-5"/>
             {/each}
-        {:else if $view == "grid"}
-            <!-- grid view -->
+        {:else if $view == "grid"} -->
             <div class="d-flex flex-wrap justify-content-between align-content-between">
                 {#each filtered as course}
-                    <CourseCard {course} class="g-col-6 g-col-md-4 mb-3 me-3"/>
+                    <CourseCard {course} class="g-col-4 mb-5"/>
                 {/each}
             </div>
-        {:else}
-            <!-- graph view -->
-        {/if}
+        <!-- {:else}
+        {/if} -->
     {:else}
         <h2>Nessun risultato trovato</h2>
     {/if}
@@ -448,6 +445,7 @@
 <style lang="scss">
     @import '$css/variables.scss';
     .content {
+        background: $light-primary; 
         padding-left: 5rem;
         padding-right: 5rem;
     }
@@ -457,7 +455,10 @@
     }
     
     .icon {
-        font-size: 24px;
+        display: inline-block;
+        position: relative;
+        font-size: 1.5rem;
+        height: 1.5rem;
     }
 
     // .floating {

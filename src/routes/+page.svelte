@@ -14,7 +14,7 @@
             body: JSON.stringify(userLogin)
         })
 
-        if (resp.ok){
+        if (resp.ok) {
             goto('/esplora_corsi');
         }
     }
@@ -39,7 +39,7 @@
         {#if accessMode == "login"}
             <div class="login-box d-flex flex-column px-5 py-4 floating">
                 <p class="display-2 text-dark">Accedi</p>
-                <span class="display-6 text-dark">Non hai un account? <span class="text-decoration-underline text-dark cursor-pointer" on:click={accessMode = "registration"}>Registrati</span></span>
+                <span class="display-6 text-dark">Non hai un account? <span class="text-decoration-underline text-dark cursor-pointer" on:click={() => accessMode = "registration"}>Registrati</span></span>
 
                 <div class="col-md-12">
                     <label for="validationServer01" class="form-label"></label>
@@ -92,9 +92,103 @@
         {:else}
             <div class="d-flex justify-content-evenly align-items-center flex-column">
                 <!-- register -->
-                <!-- <button type="button" class="btn btn-outline-secondary border-dark text-dark fs-1 px-5 py-3 ms-4 rounded-pill" on:click={registerUser}>
-                    Registrati
-                </button> -->
+                <form class="row g-3 was-validated">
+                    <h4 class="fs-1" id="dati_personali">Dati personali</h4>
+                    
+                    <!-- Name -->
+                    <div class="col-md-3">
+                        <label for="validationServer01" class="form-label">Nome</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text border-dark" id="inputGroupPrepend1"><i class="bi bi-type"></i></span>
+                            <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend1" bind:value={userRegister.name} required>
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                Inserisci un nome valido
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Surname -->
+                    <div class="col-md-3">
+                        <label for="validationServer02" class="form-label">Cognome</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text border-dark" id="inputGroupPrepend2"><i class="bi bi-type"></i></span>
+                            <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" bind:value={userRegister.surname} required>
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                Inserisci un cognome valido
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- email -->
+                    <div class="col-md-6">
+                        <label for="validationServer02" class="form-label">e-mail</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text border-dark" id="inputGroupPrepend2"><i class="bi bi-at"></i></span>
+                            <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend2" bind:value={userRegister.email} required>
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                Inserisci un cognome valido
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label for="validationServer03" class="form-label">Stato</label>
+                        <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer04Feedback" bind:value={userRegister.country} required>
+                        <div id="validationServer04Feedback" class="invalid-feedback">
+                            Inserisci uno stato valido
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationServer04" class="form-label">Regione</label>
+                        <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer03Feedback" bind:value={userRegister.region} required>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                            Inserisci una città valida
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationServer05" class="form-label">Città</label>
+                        <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer03Feedback" bind:value={userRegister.city} required>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                            Inserisci una città valida
+                        </div>
+                    </div>
+                    
+                    <h4 class="fs-1" id="dati_accademici">Dati accademici</h4>
+                    
+                    <div class="col-md-6">
+                        <label for="validationServer06" class="form-label">Città universitaria</label>
+                        <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer06Feedback" bind:value={userRegister.university_city} required>
+                        <div id="validationServer06Feedback" class="invalid-feedback">
+                            Inserisci una città valida
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="validationServer07" class="form-label">Facoltà</label>
+                        <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer07Feedback" bind:value={userRegister.faculty} required>
+                        <div id="validationServer07Feedback" class="invalid-feedback">
+                            Scegli un'opzione
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="validationServer08" class="form-label">Tipologia di Laurea</label>
+                        <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer08Feedback" bind:value={userRegister.degree_type} required>
+                        <div id="validationServer08Feedback" class="invalid-feedback">
+                            Scegli un'opzione
+                        </div>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div class="col-md-6">
+                        <label for="login_password" class="form-label">Password</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text border-dark" id="inputGroupPrepend3">#</span>
+                            <input type="password" class="form-control" id="login_password" bind:value={userRegister.password}>
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                Inserisci una password valida
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         {/if}
 

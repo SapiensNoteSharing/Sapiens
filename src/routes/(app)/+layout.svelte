@@ -5,7 +5,7 @@
 </script>
 
 <div class="d-flex h-100 align-self-stretch">
-    <Sidebar courses={data.courses} />
+    <Sidebar courses={data.courses}/>
 
     <div class="flex-grow-1 position-relative">
         <slot></slot>
