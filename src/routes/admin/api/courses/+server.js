@@ -36,7 +36,7 @@ export async function PUT({ request }) {
     try {
         const body = await request.json();
 
-        const course = await Course.findByIdAndUpdate(body._id, body)
+        const course = await Course.findByIdAndUpdate(body._id, body, { new: true})
 
         return new Response('OK')
     } catch (err) {

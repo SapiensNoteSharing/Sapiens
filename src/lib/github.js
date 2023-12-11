@@ -69,8 +69,10 @@ const options = {
 }
 const base = `https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/`
 
-export async function get(file){
-    if(!file.path) throw error(500, 'File provided has not a gitUrl property')
+export async function get(file) {
+    if (!file.path) 
+        throw error(500, 'File provided has not a gitUrl property')
+    
     const resp = await fetch(`${base}${substitute(file.path)}`, options)
     const body = (resp.ok && await resp.json()) || {}
     return body
@@ -78,7 +80,8 @@ export async function get(file){
 
 function substitute(href){
     return href?.split('')?.map(char => {
-        if(htmlMapping[char] != undefined) return htmlMapping[char];
+        if(htmlMapping[char] != undefined) 
+            return htmlMapping[char];
         return char
     })?.join('')
 }
@@ -88,14 +91,14 @@ async function getDir(gitDir) {
 
     let dir = await Directory.findOne({name: gitDir.name}) || {}
     
-    if(!dir._id) dir = await Directory.create({name: gitDir.name, sha: gitDir.sha, path: gitDir.path})
+    if (!dir._id) 
+        dir = await Directory.create({name: gitDir.name, sha: gitDir.sha, path: gitDir.path})
 
-    //if(dir.sha != gitDir.sha){
+    // if (dir.sha != gitDir.sha) {
         const resp = await fetch(gitDir.url, options)
         const contents = (resp.ok && await resp.json()) || [];
 
-        for (let obj of contents){
-
+        for (let obj of contents) {
             if (obj.type == 'dir') {
                 id = await getDir(obj)
                 childDirectories.push(id)
@@ -105,95 +108,96 @@ async function getDir(gitDir) {
                 console.log('getting file', fileName)
                 const dbFile = await File.findOne({name: fileName}) || {}
                 console.log('dbfile', dbFile.name || 'not found')
-//                if(dbFile.sha != obj.sha){
+                // if (dbFile.sha != obj.sha) {
                     const resp = await fetch(obj.url, options)
                     const fileObj = (resp.ok && await resp.json())
 
                     const file = await File.findOneAndUpdate({ name: fileName }, {...fileObj, name: fileName}, {upsert: true, new: true})
                     console.log('saved file', fileName, file.name)
                     childFiles.push(file._id)
-//                }
+                // }
             }
         }
         const childFilesId = new Set(childFiles)
         const orphanFiles = dir?.files?.filter(file => childFilesId.has(file._id))
-        for(let file of orphanFiles){
+        for (let file of orphanFiles) {
             await File.findByIdAndDelete(file._id)
         }
         await Directory.findByIdAndUpdate(dir._id, {...gitDir, directories: childDirectories, files: childFiles})
-    //}
+    // }
 
     return dir._id
 }
 
+export async function update() {
+    try {
+        const dbCourses = await Course.find({})
 
+        const resp = await fetch(`${base}${substitute('Università')}`, options);
+        console.log(resp)
+        const body = (resp.ok && await resp.json()) || []
+        console.log(body)
 
-export async function update(){
-    try{
-    const dbCourses = await Course.find({})
+        let courses = []
 
-    const resp = await fetch(`${base}${substitute('Università')}`, options);
-    console.log(resp)
-    const body = (resp.ok && await resp.json()) || []
-    console.log(body)
-
-    let courses = []
-
-    for(let yearDir of body){
-        const res = await fetch(`${base}${substitute(yearDir.path)}`, options)
-        courses = [...courses, ...((res.ok && await res.json()) || [])]
-    }
-    
-    courses.forEach(async course => {
-        console.log('doing asyncronus')
-        let dbCourse = dbCourses.find(c => c.name == course.name ) 
-        const resp = await fetch(course.url, options)
-        const body = (resp.ok && await resp.json()) || {}
-
-        const chapters = body.filter(obj => obj.type == 'dir' && obj.name.slice(0, 2).match(/\d+/))
-        const extra_content = body.filter(obj => !obj.name.slice(0, 2).match(/\d+/) && obj.name != course.name)
+        for (let yearDir of body) {
+            const res = await fetch(`${base}${substitute(yearDir.path)}`, options)
+            courses = [...courses, ...((res.ok && await res.json()) || [])]
+        }
         
-        let chapterIds = [], chapterId
-        for(let chapter of chapters){
-            chapterId = await getDir(chapter)
-            chapterIds.push(chapterId)
-        }
+        courses.forEach(async course => {
+            console.log('doing asyncronus')
+            let dbCourse = dbCourses.find(c => c.name == course.name ) 
+            const resp = await fetch(course.url, options)
+            const body = (resp.ok && await resp.json()) || {}
 
-        let contentsIds = {
-            directories: [],
-            files: []
-        }, contentId;
-        for(let content of extra_content){
-            if(content.type == 'dir'){
-                contentId = await getDir(content)
-                contentsIds.directories.push(contentId)
-            } else {
-                const file = await File.findOneAndUpdate({name: content.name}, {...content}, {upsert: true, new: true})
-                contentsIds.files.push(file._id)
+            const chapters = body.filter(obj => obj.type == 'dir' && obj.name.slice(0, 2).match(/\d+/))
+            const extra_content = body.filter(obj => !obj.name.slice(0, 2).match(/\d+/) && obj.name != course.name)
+            
+            let chapterIds = [], chapterId
+            for (let chapter of chapters) {
+                chapterId = await getDir(chapter)
+                chapterIds.push(chapterId)
             }
-        }
 
-        const extra = await Directory.findOneAndUpdate({_id: dbCourse?.extra_content}, {
-            name: `${course.name}:extraContent`,
-            directories: contentsIds.directories,
-            files: contentsIds.files,
-        }, {upsert: true, new: true})
+            let contentsIds = {
+                directories: [],
+                files: []
+            }, contentId;
 
-        await Course.findOneAndUpdate({name: course.name}, {
-            name: course.name,
-            chapters: chapterIds,
-            extra_content: extra._id
-        }, {upsert: true})
-        console.log('finished course', course.name)
-    })
+            for (let content of extra_content) {
+                if (content.type == 'dir') {
+                    contentId = await getDir(content)
+                    contentsIds.directories.push(contentId)
+                } else {
+                    const file = await File.findOneAndUpdate({name: content.name}, {...content}, {upsert: true, new: true})
+                    contentsIds.files.push(file._id)
+                }
+            }
 
-    const gitCoursesNames = new Set(courses.map(course => course.name))
-    let orphanCourses = dbCourses.filter(course => !gitCoursesNames.has(course.name))
-    console.log('done update function')
-}catch(err){
-    console.log(err)
-}
+            const extra = await Directory.findOneAndUpdate({_id: dbCourse?.extra_content}, {
+                name: `${course.name}:extraContent`,
+                directories: contentsIds.directories,
+                files: contentsIds.files,
+            }, {upsert: true, new: true})
 
+            await Course.findOneAndUpdate({name: course.name}, {
+                name: course.name,
+                cfu: 0,
+                chapters: chapterIds,
+                extra_content: extra._id
+            }, {upsert: true})
+
+            console.log('finished course', course.name)
+        })
+
+        const gitCoursesNames = new Set(courses.map(course => course.name))
+        let orphanCourses = dbCourses.filter(course => !gitCoursesNames.has(course.name))
+
+        console.log('done update function')
+    } catch(err) {
+        console.log(err)
+    }
 }
 
 

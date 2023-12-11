@@ -15,7 +15,7 @@
         })
 
         if (resp.ok) {
-            goto('/esplora_corsi');
+            goto('/corsi');
         }
     }
 
@@ -29,7 +29,7 @@
         });
 
         if (resp.ok) {
-            goto('/esplora_corsi');
+            goto('/corsi');
         }
     }
 </script>

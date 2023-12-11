@@ -1,7 +1,8 @@
 <script>
     import Accordion from '$lib/components/Accordion.svelte';
-    import AccordionItem from "$lib/components/AccordionItem.svelte";
-    import FloatingButton from "$lib/components/FloatingButton.svelte";
+    import AccordionItem from '$lib/components/AccordionItem.svelte';
+    import FloatingButton from '$lib/components/FloatingButton.svelte';
+    import NormalButton from '$lib/components/NormalButton.svelte';
     import Searchbar from '$lib/components/Searchbar.svelte';
     import { view, value, filter_tags, viewing } from '$lib/stores';
     import { page } from '$app/stores';
@@ -57,15 +58,15 @@
     }
     
     function toggleFilter(key, val) {
-        if(filters[key].includes(val)) {
+        if (filters[key].includes(val)) {
             filters[key] = filters[key].filter(i => i != val);
         } else {
             filters[key] = [...filters[key], val]
         }
     }
 
-    function changeCourse(ev){
-        if(ev?.detail?._id){
+    function changeCourse(ev) {
+        if (ev?.detail?._id){
             course = _course
             $viewing = {}
         }
@@ -73,16 +74,16 @@
 </script>
 
 <div class="sidebar px-5 position-relative">
-    {#if $page.route.id == '/(app)/esplora_corsi'}
+    {#if $page.route.id == '/(app)/corsi'}
         <div class="d-flex align-items-center my-5">
-            <h1 class="mb-0 display-3 align-bottom text-dark">Filtri</h1>
+            <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
         </div>
         
         <!-- filter according to input -->
         <Searchbar class="align-self-center mb-5"></Searchbar>
         
         <Accordion let:id class="mb-5">
-            <AccordionItem class="border-dark">
+            <AccordionItem class="filter-category">
                 <div slot="name">
                     Corso Di Laurea
                 </div>
@@ -94,7 +95,7 @@
                     {/each}
                 </div>
             </AccordionItem>
-            <AccordionItem class="border-dark">
+            <AccordionItem class="filter-category">
                 <div slot="name">
                     Tipo di Laurea
                 </div>
@@ -106,7 +107,7 @@
                 <!--  -->
                 <!-- {#if } -->
             </AccordionItem>
-            <AccordionItem class="border-dark">
+            <AccordionItem class="filter-category">
                 <div slot="name">
                     Tags
                 </div>
@@ -116,7 +117,7 @@
                     </div>
                 {/each}
             </AccordionItem>
-            <AccordionItem class="border-dark">
+            <AccordionItem class="filter-category">
                 <div slot="name">
                     Rating
                 </div>
@@ -174,7 +175,7 @@
                 </div>
             {:else if sidebar_page == "exercises"}
                 <div class="sidebar-page d-flex flex-column bg-secondary">
-                    <FloatingButton classes="bg-light m-3 mb-0">
+                    <NormalButton classes="bg-light m-3 mb-0">
                         <div slot="name" class="d-flex flex-column justify-content-between m-3">
                             <div class="d-flex flex-row justify-content-between">
                                 <p class="display-6 text-dark">Capitolo 1</p>
@@ -186,9 +187,9 @@
                             </div>
                             <!-- <img class="target-icon position-relative" src="/src/style/target.png" alt=""> -->
                         </div>
-                    </FloatingButton>
+                    </NormalButton>
 
-                    <FloatingButton classes="bg-light m-3 mb-0">
+                    <NormalButton classes="bg-light m-3 mb-0">
                         <div slot="name" class="d-flex flex-column justify-content-between m-3">
                             <div class="d-flex flex-row justify-content-between">
                                 <p class="display-6 text-dark">Capitolo 2</p>
@@ -200,9 +201,9 @@
                             </div>
                             <!-- <img class="target-icon position-relative" src="/src/style/target.png" alt=""> -->
                         </div>
-                    </FloatingButton>
+                    </NormalButton>
 
-                    <FloatingButton classes="bg-light m-3 mb-0">
+                    <NormalButton classes="bg-light m-3 mb-0">
                         <div slot="name" class="d-flex flex-column justify-content-between m-3 position-relative">
                             <div class="d-flex flex-row justify-content-between">
                                 <p class="display-6 text-dark">Capitolo 3</p>
@@ -214,7 +215,7 @@
                             </div>
                             <!-- <img class="target-icon position-relative" src="/src/style/target.png" alt=""> -->
                         </div>
-                    </FloatingButton>
+                    </NormalButton>
                 </div>
             {:else if sidebar_page == "exercises"}
                 <div class="sidebar-page">
@@ -249,6 +250,10 @@
         flex-shrink: 0;
         background-color: $light;
         border-right: 1px solid rgba($dark, 0.25);
+    }
+
+    .filter-category {
+        border: 0px;
     }
     
     .selected-course {
@@ -373,21 +378,11 @@
     // }
     
     .filter {
-        border: 1px solid $dark;
-        box-shadow: 0rem .4rem rgba($dark, 0.6);
-        margin-bottom: 0.4rem;
-        transition: .1s;
+        border: 1px solid rgba($dark, 0.25);
+        transition: .15s;
     }
     
-    .filter:hover {
-        // margin-bottom: 0.2rem;
-        // margin-top: 0.2rem;
-        box-shadow: 0rem .2rem rgba($dark, 0.6);
-        transform: translate(0rem, .2rem);
-    }
-    
-    .filter.btn-primary, .filter.btn-secondary {
-        box-shadow: none;
-        transform: translate(0rem, .4rem);
+    .filter:hover(:not(.btn-primary)) {
+        background: rgba($dark, 0.1);
     }
 </style>

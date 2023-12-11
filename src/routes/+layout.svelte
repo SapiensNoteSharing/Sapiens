@@ -28,44 +28,44 @@
         })
     }
 
-    function registerUser() {
-        registerModal.show().then(async res => {
-            if (res) {
-                const resp = await fetch('/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(userRegister)
-                });
-                if (resp.ok) {
-                    goto('/esplora_corsi');
-                }
-            }
-        })
-    }
+    // function registerUser() {
+    //     registerModal.show().then(async res => {
+    //         if (res) {
+    //             const resp = await fetch('/register', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(userRegister)
+    //             });
+    //             if (resp.ok) {
+    //                 goto('/corsi');
+    //             }
+    //         }
+    //     })
+    // }
     
-    function loginUser() {
-        loginModal.show().then(async res => {
-            if (res) {
-                const resp = await fetch(`/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(userLogin)
-                })
+    // function loginUser() {
+    //     loginModal.show().then(async res => {
+    //         if (res) {
+    //             const resp = await fetch(`/login`, {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(userLogin)
+    //             })
 
-                if (resp.ok){
-                    goto('/esplora_corsi');
-                }
-            }
-        })
-    }
+    //             if (resp.ok){
+    //                 goto('/corsi');
+    //             }
+    //         }
+    //     })
+    // }
 </script>
 
-<!-- Login Modal-->
-<Modal title="Accedi" yes="Accedi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={loginModal}>
+<!-- Login Modal -->
+<!-- <Modal title="Accedi" yes="Accedi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={loginModal}>
     <div class="modal-body p-4">
         <div class="col-md-12">
             <label for="validationServer01" class="form-label">Email</label>
@@ -88,14 +88,13 @@
             </div>
         </div>
     </div>
-</Modal>
+</Modal> -->
 
 <!-- Register Modal-->
-<Modal title="Registrati" yes="Registrati" classes="bg-success border-dark" theme="btn-outline-success" xlarge bind:this={registerModal}>
+<!-- <Modal title="Registrati" yes="Registrati" classes="bg-success border-dark" theme="btn-outline-success" xlarge bind:this={registerModal}>
     <form class="row g-3 was-validated">
         <h4 class="fs-1" id="dati_personali">Dati personali</h4>
         
-        <!-- Name -->
         <div class="col-md-3">
             <label for="validationServer01" class="form-label">Nome</label>
             <div class="input-group has-validation">
@@ -107,7 +106,6 @@
             </div>
         </div>
         
-        <!-- Surname -->
         <div class="col-md-3">
             <label for="validationServer02" class="form-label">Cognome</label>
             <div class="input-group has-validation">
@@ -119,7 +117,6 @@
             </div>
         </div>
         
-        <!-- email -->
         <div class="col-md-6">
             <label for="validationServer02" class="form-label">e-mail</label>
             <div class="input-group has-validation">
@@ -177,7 +174,6 @@
             </div>
         </div>
         
-        <!-- Password -->
         <div class="col-md-6">
             <label for="login_password" class="form-label">Password</label>
             <div class="input-group has-validation">
@@ -189,7 +185,7 @@
             </div>
         </div>
     </form>
-</Modal>
+</Modal> -->
 
 {#if $page.route.id == '/'}
     <div class="d-flex">
@@ -203,13 +199,13 @@
 {:else}
     <div class="d-flex sticky-top">
         <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
-            <div class="d-flex w-100 justify-content-between align-items-center">
+            <div class="d-flex w-100 align-items-center">
                 <!-- Sapiens Logo -->
-                <a href="/">
-                    <img class="ms-5" style="width: 12rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
+                <a href="/home">
+                    <img class="sapiens-logo" style="height: 4rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
                 </a>
                 
-                <div class="d-flex me-3 align-items-center">
+                <div class="d-flex nav-primary flex-row justify-left align-items-center">
                     <!-- Site navigation -->
                     {#if data.user.role == 'admin'}
                         <NormalButton active={$page.route.id == "/test" ? 'active' : 'not-active'} classes={'m-2'}>
@@ -225,9 +221,9 @@
                         </NormalButton>
                     {/if}
 
-                    <NormalButton active={$page.route.id == "/(app)/esplora_corsi" ? 'active' : 'not-active'} classes={"m-2"}>
+                    <NormalButton active={$page.route.id == "/(app)/home" ? 'active' : 'not-active'} classes={"m-2"}>
                         <div slot="name" class="navbar-item display-6 rounded-4">
-                            <a class="d-block px-4 py-2 text-decoration-none" href="/esplora_corsi">Esplora Corsi</a>
+                            <a class="d-block px-4 py-2 text-decoration-none" href="/home">Home</a>
                         </div>
                     </NormalButton>
 
@@ -237,16 +233,37 @@
                         </div>
                     </NormalButton>
 
-                    <NormalButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
+                    <NormalButton active={$page.route.id == "/(app)/corsi" ? 'active' : 'not-active'} classes={"m-2"}>
                         <div slot="name" class="navbar-item display-6 rounded-4">
-                            <a class="d-block py-2 px-4 text-decoration-none" href="/area_personale">Area personale</a>
+                            <a class="d-block px-4 py-2 text-decoration-none" href="/corsi">Corsi</a>
                         </div>
                     </NormalButton>
-            
+
+                    <NormalButton active={$page.route.id == "/(app)/classifiche" ? 'active' : 'not-active'} classes={"m-2"}>
+                        <div slot="name" class="navbar-item display-6 rounded-4">
+                            <a class="d-block px-4 py-2 text-decoration-none" href="/classifiche">Classifiche</a>
+                        </div>
+                    </NormalButton>
+                </div>
+
+                <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
+                    <NormalButton classes={"m-2"} on:click={openDnaModal}>
+                        <div slot="name" class="navbar-item display-6 rounded-4 py-2 ps-3 pe-2">
+                            <span class="display-6  align-middle text-dark">{user.streak || 0}</span>
+                            <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
+                        </div>
+                    </NormalButton>
+
                     <NormalButton classes={"m-2"} on:click={openDnaModal}>
                         <div slot="name" class="navbar-item display-6 rounded-4 py-2 ps-3 pe-2">
                             <span class="display-6  align-middle text-dark">{user.balance || 0}</span>
-                            <img class="dna-icon" src="/src/style/DNA.svg" alt="DNA">
+                            <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                        </div>
+                    </NormalButton>
+
+                    <NormalButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
+                        <div slot="name" class="navbar-item display-6 rounded-4">
+                            <a href="/area_personale"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
                         </div>
                     </NormalButton>
                 </div>
@@ -274,8 +291,9 @@
                 <a href="" class="me-4"><i class="icon footer-element bi bi-discord"></i></a>
                 <a href="" class="me-4"><i class="icon footer-element bi bi-instagram"></i></a>
                 <a href="" class="me-4"><i class="icon footer-element bi bi-facebook"></i></a>
-                <a href="" class="me-4"><i class="icon footer-element bi bi-twitter"></i></a>
+                <a href="" class="me-4"><i class="icon footer-element bi bi-twitter-x"></i></a>
                 <a href="" class="me-4"><i class="icon footer-element bi bi-linkedin"></i></a>
+                <a href="" class="me-4"><i class="icon footer-element bi bi-tiktok"></i></a>
             </div>
 
             <div class="d-flex">
@@ -303,6 +321,27 @@
 
     .navbar {
         border-bottom: 1px solid rgba($dark, 0.25) !important;
+    }
+
+    .sapiens-logo {
+        position: relative;
+        left: 200px;
+        transform: translate(-50%);
+    }
+
+    .nav-primary {
+        position: absolute;
+        left: 400px;
+    }
+
+    .nav-secondary {
+        position: absolute;
+        right: 0px;
+    }
+
+    .user-icon {
+        width: 3rem; 
+        border-radius: 3rem;
     }
 
     // .navbar-item:before {
@@ -335,10 +374,6 @@
         background: $secondary !important;
     }
 
-    .dna-icon {
-        height: 2rem;
-    }
-
     .full-height {
         height: 73vh;
         margin: 0rem 5rem;
@@ -365,7 +400,7 @@
     }
     
     .footer-logo {
-        width: 12rem;
+        height: 3rem;
         filter: brightness(0);
     }
     

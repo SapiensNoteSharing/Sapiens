@@ -36,7 +36,7 @@
             {/if}
         </div>
     </div>
-    <h5 class="mt-3">{course.code}</h5>
+    <h5 class="mt-3">{course.cdl_code}</h5>
     <h1 class="display-5">{course.name}</h1>
 
     <div class="d-flex justify-content-between">
@@ -45,7 +45,7 @@
                 <a class="text-decoration-none professor" href="/professors/{professor}">{professor}</a>{i != course.professors.length-1 ? " / " : ""}
             {/each}
         </div>
-        <p class="dark" style="margin: 0px;">{course.CFU} CFU</p>
+        <p class="dark" style="margin: 0px;">{course.cfu} CFU</p>
     </div>
 </div>
 

@@ -20,7 +20,7 @@
         padding: 0px;
         margin: 0rem;
         border-radius: 1rem;
-        border: 1px solid rgba($dark, 0.15);
+        // border: 1px solid rgba($dark, 0.15);
         transition: .15s;
     }
 
@@ -29,7 +29,7 @@
         color: rgba($dark, 0.4);
         border-radius: 1rem;
         cursor: pointer;
-        background: rgba($dark, 0.05);
+        // background: rgba($dark, 0.05);
     }
 
     :global(.navbar-item a) {

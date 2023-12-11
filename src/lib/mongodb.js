@@ -98,7 +98,7 @@ DirectorySchema.pre('find', function (next) {
 
 const CourseSchema = new Schema({
     name: String,
-    CFU: Number,
+    cfu: Number,
     code: String,
     cdl_code: String,
     cdl_name: String,
@@ -129,12 +129,14 @@ const CourseSchema = new Schema({
 }, {
     timestamps: true
 })
+
 CourseSchema.pre('find', function (next) {
     this.populate('chapters')
     this.populate('reviews')
     this.populate('extra_content')
     next()
 })
+
 CourseSchema.pre('findOne', function (next) {
     this.populate('chapters')
     this.populate('reviews')

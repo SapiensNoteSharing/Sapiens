@@ -11,6 +11,11 @@
     let current = {}
     let cols = [
         {
+            id: 'cdl_code',
+            label: 'Codice Corso di Laurea',
+            format: val => val || "-",
+        },    
+        {
             id: 'name',
             label: 'Name',
             searchable: true,
@@ -20,6 +25,12 @@
             label: 'Professors',
             format: val => val.join(', '),
             searchable: 'enum'
+        },
+        {
+            id: 'cfu',
+            label: 'CFU',
+            format: val => val || 0,
+            searchable: 'number'
         },
         {
             id: 'content',

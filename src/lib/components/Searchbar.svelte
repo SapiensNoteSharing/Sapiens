@@ -16,15 +16,26 @@
         position: absolute;
         right: 1rem;
         top: 2px;
+        opacity: .5;
+        transition: .25s;
+    }
+
+    .confined:focus + .searchbutton {
+        opacity: 1;
     }
 
     .confined {
-        border: 1px solid $dark;
+        border: 1px solid rgba($dark, 0.25);
         border-radius: .5rem;
     }
 
+    .confined:focus {
+        border: 1px solid $dark;
+    }
+
     ::placeholder {
+        position: absolute;
         color: $dark;
-        opacity: 1;
+        opacity: .5;
     }
 </style>

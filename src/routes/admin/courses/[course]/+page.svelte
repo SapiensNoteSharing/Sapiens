@@ -6,12 +6,15 @@
     export let data;
     const fetch = data.fetch;
 
-    $: current = data.course || {}
+    let current = data.course || {}
 
-    const professors = ['Giorgio Ottaviani', 'Caterina Stoppato']
+    const professors = [
+        'Giorgio Ottaviani', 
+        'Caterina Stoppato'
+    ]
 
-    async function save(){
-        if(current.name){
+    async function save() {
+        if (current.name) {
             await fetch(`/admin/api/courses`, {
                 method: current?._id ? 'PUT' : 'POST',
                 headers: {
@@ -48,7 +51,6 @@
             id: 'updatedAt',
             label: 'Last Modified',
             format: val => new Date(val).toLocaleDateString()
-
         },
     ]
 
@@ -60,7 +62,6 @@
         const resp = await fetch(`/admin/api/courses/${current._id}`)
         current = (resp.ok && await resp.json()) || {}
     }
-
 </script>
 
 <div class="d-flex align-items-center mb-2">
@@ -73,7 +74,7 @@
     <div class="col">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input class="form-control" placeholder="Network Name" bind:value={current.name}>
+            <input class="form-control" bind:value={current.name} placeholder="Network Name">
         </div>
     </div>
     <div class="col">
@@ -87,9 +88,27 @@
 <div class="row">
     <div class="col">
         <div class="mb-3">
+            <label for="name" class="form-label">CFU</label>
+            <input class="form-control" bind:value={current.cfu} placeholder="CFU">
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="mb-3">
+            <label for="name" class="form-label">Codice Corso di Laurea</label>
+            <input class="form-control" bind:value={current.cdl_code} placeholder="Codice Corso di Laurea">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="mb-3">
             <div class="d-flex justify-content-between">
                 <label for="content" class="form-label">Chapters</label>
-                {#if current?._id}<button class="btn btn-primary" on:click={() => goto(`/admin/courses/${current._id}/new`)}>New</button>{/if}
+                {#if current?._id}
+                    <button class="btn btn-primary" on:click={() => goto(`/admin/courses/${current._id}/new`)}>New</button>
+                    {/if}
             </div>
             <Table rows={current.chapters} cols={contentCols} border alternateRows on:click={(ev) => edit(ev.detail)}/>
         </div>

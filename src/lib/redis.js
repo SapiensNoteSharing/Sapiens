@@ -13,7 +13,6 @@ export const setSession = async (sid, val, ttl) => {
     } else {
         await redis.del(sid);
     }
-    
 };
 
 

@@ -23,6 +23,10 @@
 </div>
 
 <style>
+	.accordion-item {
+		/* border: 0px; */
+	}
+
 	.accordion-button::before {
 		flex-shrink: 0;
 		width: 1.25rem;
