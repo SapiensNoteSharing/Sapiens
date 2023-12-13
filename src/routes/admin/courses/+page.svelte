@@ -11,18 +11,18 @@
     let current = {}
     let cols = [
         {
-            id: 'cdl_code',
+            id: 'code',
             label: 'Codice Corso di Laurea',
             format: val => val || "-",
         },    
         {
             id: 'name',
-            label: 'Name',
+            label: 'Nome del corso',
             searchable: true,
         },
         {
             id: 'professors',
-            label: 'Professors',
+            label: 'Docente/i',
             format: val => val.join(', '),
             searchable: 'enum'
         },
@@ -33,24 +33,36 @@
             searchable: 'number'
         },
         {
+            id: 'year',
+            label: 'Anno',
+            format: val => val || '-',
+            searchable: 'enum'
+        },
+        {
+            id: 'semester',
+            label: 'Semestre',
+            format: val => val || '-',
+            searchable: 'enum'
+        },
+        {
             id: 'content',
-            label: '# of directories',
+            label: '# capitoli',
             format: val => val?.length || 0
         },
         {
             id: 'reviews',
-            label: '# of Reviews',
+            label: '# recensioni',
             format: val => val.length || 0,
             searchable: 'number'
         },
         {
             id: 'extra_content',
-            label: 'Extra Content',
+            label: 'Contenuti extra',
             format: val => val ? true : false
         },
         {
             id: 'updatedAt',
-            label: 'Last Modified',
+            label: 'Ultima modifica',
             format: val => new Date(val).toLocaleDateString()
         },
         {

@@ -34,16 +34,16 @@
     }
 </script>
 
-<div>
+<div class="bg-light">
     <div class="full-height d-flex justify-content-evenly align-items-center">
         {#if accessMode == "login"}
             <div class="login-box d-flex flex-column px-5 py-4 floating">
                 <p class="display-2 text-dark">Accedi</p>
-                <span class="display-6 text-dark">Non hai un account? <span class="text-decoration-underline text-dark cursor-pointer" on:click={() => accessMode = "registration"}>Registrati</span></span>
+                <span class="display-6 text-dark">Non hai un account? <span class="text-decoration-underline text-dark registrati-btn" on:click={() => accessMode = "registration"}>Registrati</span></span>
 
                 <div class="col-md-12">
                     <label for="validationServer01" class="form-label"></label>
-                    <div class="input-group has-validation floating">
+                    <div class="input-group has-validation">
                         <span class="bi-icon input-group-text border-dark bg-primary" id="inputGroupPrepend1"><i class="bi bi-at"></i></span>
                         <input type="text" placeholder="E-mail" class="fs-2 form-control border-dark" id="validationServerUsername" aria-describedby="inputGroupPrepend1" bind:value={userLogin.email} required>
                         <div id="validationServerUsernameFeedback" class="invalid-feedback">
@@ -54,7 +54,7 @@
 
                 <div class="col-md-12 mb-3">
                     <label for="login_password" class="form-label"></label>
-                    <div class="input-group has-validation floating">
+                    <div class="input-group has-validation">
                         <span class="bi-icon input-group-text border-dark bg-primary" id="inputGroupPrepend3"><i class="bi bi-shield-lock-fill"></i></span>
                         <input type="password" placeholder="Password" class="fs-2 form-control border-dark" id="login_password" bind:value={userLogin.password} required>
                         <div id="validationServerUsernameFeedback" class="invalid-feedback">
@@ -90,10 +90,10 @@
                 </div>
             </div>
         {:else}
-            <div class="d-flex justify-content-evenly align-items-center flex-column">
+            <div class="registration-box d-flex flex-column justify-content-evenly align-items-center  px-5 py-4 floating">
                 <!-- register -->
                 <form class="row g-3 was-validated">
-                    <h4 class="fs-1" id="dati_personali">Dati personali</h4>
+                    <h4 class="display-3 my-4" id="dati_personali">Dati personali</h4>
                     
                     <!-- Name -->
                     <div class="col-md-3">
@@ -133,27 +133,27 @@
                     
                     <div class="col-md-4">
                         <label for="validationServer03" class="form-label">Stato</label>
-                        <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer04Feedback" bind:value={userRegister.country} required>
+                        <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer04Feedback" bind:value={userRegister.country}>
                         <div id="validationServer04Feedback" class="invalid-feedback">
                             Inserisci uno stato valido
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label for="validationServer04" class="form-label">Regione</label>
-                        <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer03Feedback" bind:value={userRegister.region} required>
+                        <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer03Feedback" bind:value={userRegister.region}>
                         <div id="validationServer03Feedback" class="invalid-feedback">
                             Inserisci una città valida
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label for="validationServer05" class="form-label">Città</label>
-                        <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer03Feedback" bind:value={userRegister.city} required>
+                        <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer03Feedback" bind:value={userRegister.city}>
                         <div id="validationServer03Feedback" class="invalid-feedback">
                             Inserisci una città valida
                         </div>
                     </div>
                     
-                    <h4 class="fs-1" id="dati_accademici">Dati accademici</h4>
+                    <h4 class="display-3 my-4" id="dati_accademici">Dati accademici</h4>
                     
                     <div class="col-md-6">
                         <label for="validationServer06" class="form-label">Città universitaria</label>
@@ -192,7 +192,7 @@
             </div>
         {/if}
 
-        <img src="/src/style/Sapiens Logo Cartoon.png" alt="" class="landing-page-image">
+        <img src="/src/style/Sapiens Logo Cartoon.png" alt="" class="landing-page-image m-5">
     </div>
 
     <div class="presentation-item d-flex justify-content-evenly align-items-center bg-primary">
@@ -227,12 +227,19 @@
         font-size: 1.5rem;
     }
 
-    .login-box {
+    .login-box, .registration-box {
         padding: 2rem;
-        width: 50%;
         height: 90%;
         border: 1px solid $dark;
         border-radius: 1rem;
+    }
+
+    .login-box {
+        width: 50%;
+    }
+
+    .registrati-btn {
+        cursor: pointer;
     }
 
     .input-group {
@@ -244,7 +251,7 @@
         transition: .1s;
     }
 
-    .floating:not(.login-box):hover  {
+    .floating:not(.login-box, .registration-box):hover  {
         box-shadow: .0rem .2rem rgba($dark, 0.5);
         transform: translate(0rem, .2rem);
     }

@@ -10,23 +10,19 @@
     let current = data.file || {}, params = data.params
     let fileData = data.fileData || ''
     let renderedData = data.renderedData || '';
-
     let input;
-
-    const professors = ['Ottaviani', 'Stoppato']
-    
-        async function save() {
-            if(current.name){
-                await fetch(`/admin/api/courses/${params.course}/${params.dir}/files`, {
-                    method: current?._id ? 'PUT' : 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({...current, content: fileData})
-                });
-                goto(`/admin/courses/${params.course}/${params.dir}`)
-            }
+    async function save() {
+        if(current.name){
+            await fetch(`/admin/api/courses/${params.course}/${params.dir}/files`, {
+                method: current?._id ? 'PUT' : 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({...current, content: fileData})
+            });
+            goto(`/admin/courses/${params.course}/${params.dir}`)
         }
+    }
     
     async function cancel() {
         goto(`/admin/courses/${params.course}/${params.dir}`)

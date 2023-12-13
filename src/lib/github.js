@@ -1,14 +1,6 @@
 import { config } from '$lib/config';
 import { Course, Directory, File, dropContents } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
-import { Octokit } from 'octokit';
-
-const octokit = new Octokit({
-    auth: config.git.access_token,
-    baseUrl: 'https://api.github.com'
-})
-
-await octokit.auth()
 
 
 const htmlMapping = {
@@ -72,6 +64,8 @@ const base = `https://api.github.com/repos/${config.git.owner}/${config.git.repo
 export async function get(file) {
     if (!file.path) 
         throw error(500, 'File provided has not a gitUrl property')
+
+    const metadataPath = `${file.path}/metadata.json`;
     
     const resp = await fetch(`${base}${substitute(file.path)}`, options)
     const body = (resp.ok && await resp.json()) || {}
@@ -84,6 +78,16 @@ function substitute(href){
             return htmlMapping[char];
         return char
     })?.join('')
+}
+
+async function getMetadata(coursePath) {
+    const metadataPath = `${coursePath}/metadata.json`;
+    const resp = await fetch(`${base}${substitute(metadataPath)}`, options);
+    const body = (resp.ok && await resp.json()) || {};
+
+    let data = JSON.parse(Buffer.from(body.content, 'base64').toString('utf-8'));
+    console.log(data);
+    return data;
 }
 
 async function getDir(gitDir) {
@@ -147,9 +151,11 @@ export async function update() {
         
         courses.forEach(async course => {
             console.log('doing asyncronus')
-            let dbCourse = dbCourses.find(c => c.name == course.name ) 
+            let dbCourse = dbCourses.find(c => c.name == course.name) 
             const resp = await fetch(course.url, options)
             const body = (resp.ok && await resp.json()) || {}
+
+            const metadata = await getMetadata(course.path)
 
             const chapters = body.filter(obj => obj.type == 'dir' && obj.name.slice(0, 2).match(/\d+/))
             const extra_content = body.filter(obj => !obj.name.slice(0, 2).match(/\d+/) && obj.name != course.name)
@@ -182,8 +188,7 @@ export async function update() {
             }, {upsert: true, new: true})
 
             await Course.findOneAndUpdate({name: course.name}, {
-                name: course.name,
-                cfu: 0,
+                ...metadata,
                 chapters: chapterIds,
                 extra_content: extra._id
             }, {upsert: true})
@@ -199,6 +204,3 @@ export async function update() {
         console.log(err)
     }
 }
-
-
-export default octokit;

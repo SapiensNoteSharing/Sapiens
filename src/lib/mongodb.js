@@ -98,17 +98,18 @@ DirectorySchema.pre('find', function (next) {
 
 const CourseSchema = new Schema({
     name: String,
-    cfu: Number,
     code: String,
-    cdl_code: String,
-    cdl_name: String,
-    curriculum_code: String,
-    curriculum_name: String,
+    faculty_name: String,
+    faculty_code: String,
+    sector_code: String,
+    curriculum_code: [String],
+    curriculum_name: [String],
+    cfu: Number,
     professors: [String],
-    degree: String,
     year: String,
     semester: String,
     tags: [String],
+    description: String,
     chapters: [
         {
             type: ObjectId,

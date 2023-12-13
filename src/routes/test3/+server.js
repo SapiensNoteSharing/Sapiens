@@ -61,7 +61,6 @@ const base = `https://api.github.com/repos/${config.git.owner}/${config.git.repo
 const urlSuffix = '?ref=main';
 
 export async function GET({ url, params, locals, fetch }) {
-
     let href = url.searchParams.get('href')
     href = href.split('').map(char => {
         if (htmlMapping[char] != undefined) return htmlMapping[char];

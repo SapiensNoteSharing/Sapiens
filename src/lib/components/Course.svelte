@@ -66,7 +66,7 @@
             
             <div>
                 <p>Tipo di Laurea: {course.degree}</p>
-                <p>Codice CdL: {course.cdl_code} - {course.cdl_name}</p>
+                <p>Codice CdL: {course.code} - {course.name}</p>
                 <p>Curriculum: {course.curriculum_code} - {course.curriculum_name}</p>
             </div>
             

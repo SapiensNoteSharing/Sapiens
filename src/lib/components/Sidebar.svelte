@@ -18,25 +18,23 @@
     let sidebar_page = "chapters";
     
     let faculties = [
-    "Ingegneria informatica",
-    "Ingegneria meccanica",
-    "Ingegneria gestionale",
-    "Ingegneria biomedica",
-    "Ingegneria elettronica",
-    "Chimica e tecnologie farmaceutiche",
-    "Giurrisprudenza",
-    "Psicologia",
-    "Scienze sociali",
-    "Scienze della comunicazione",
-    "Scienze della formazione primaria",
-    "Filosofia",
-    "Architettura",
-    "Medicina",
-    "Scienze farmaceutiche",
+        "Ingegneria informatica",
+        "Ingegneria meccanica",
+        "Ingegneria gestionale",
+        "Ingegneria biomedica",
+        "Ingegneria elettronica",
+        "Ingegneria aereospaziale",
+        "Ingegneria civile",
+        "Ingegneria ambientale"
     ]
     
-    let degree_types = ['Triennale', 'Magistrale', 'A Ciclo Unico']
-    //tags andranno presi dal database ( va fatto il crud )
+    let degree_types = [
+        'Triennale',
+        'Magistrale',
+        'A Ciclo Unico'
+    ]
+
+    // tags andranno presi dal database ( va fatto il crud )
     let tags = [
     {
         name: "Best Seller",

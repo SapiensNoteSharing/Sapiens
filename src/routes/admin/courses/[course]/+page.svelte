@@ -7,10 +7,11 @@
     const fetch = data.fetch;
 
     let current = data.course || {}
-
+    
     const professors = [
         'Giorgio Ottaviani', 
-        'Caterina Stoppato'
+        'Caterina Stoppato',
+        'Marco Bertini'
     ]
 
     async function save() {
@@ -66,37 +67,51 @@
 
 <div class="d-flex align-items-center mb-2">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
-    <h1 class="mx-auto mb-0">{current?._id ? 'Edit' : 'Create New'} Course</h1>
+    <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Indietro</span>
+    <h1 class="mx-auto mb-0">{current?._id ? 'Modifica' : 'Crea nuovo'} Corso</h1>
 </div>
 
 <div class="row">
     <div class="col">
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input class="form-control" bind:value={current.name} placeholder="Network Name">
+            <label for="name" class="form-label">Nome del corso</label>
+            <input class="form-control" bind:value={current.name} placeholder="Nome del corso">
         </div>
     </div>
     <div class="col">
         <div class="mb-3">
-            <label for="professors" class="form-label">Professors</label>
-            <Svelecte options={professors} multiple labelAsValue bind:value={current.professors} placeholder="Select Professors"/>
+            <label for="professors" class="form-label">Docente/i</label>
+            <Svelecte options={professors} multiple labelAsValue bind:value={current.professors} placeholder="Seleziona docenti"/>
         </div>
     </div>
 </div>
 
 <div class="row">
+    <div class="col">
+        <div class="mb-3">
+            <label for="name" class="form-label">Codice Corso di Laurea</label>
+            <input class="form-control" bind:value={current.code} placeholder="Codice Corso di Laurea">
+        </div>
+    </div>
+    
+    <div class="col">
+        <div class="mb-3">
+            <label for="name" class="form-label">Anno di insegnamento</label>
+            <input class="form-control" bind:value={current.year} placeholder="Anno">
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="mb-3">
+            <label for="name" class="form-label">Semestre</label>
+            <input class="form-control" bind:value={current.semester} placeholder="Semestre">
+        </div>
+    </div>
+
     <div class="col">
         <div class="mb-3">
             <label for="name" class="form-label">CFU</label>
             <input class="form-control" bind:value={current.cfu} placeholder="CFU">
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="mb-3">
-            <label for="name" class="form-label">Codice Corso di Laurea</label>
-            <input class="form-control" bind:value={current.cdl_code} placeholder="Codice Corso di Laurea">
         </div>
     </div>
 </div>
@@ -108,7 +123,7 @@
                 <label for="content" class="form-label">Chapters</label>
                 {#if current?._id}
                     <button class="btn btn-primary" on:click={() => goto(`/admin/courses/${current._id}/new`)}>New</button>
-                    {/if}
+                {/if}
             </div>
             <Table rows={current.chapters} cols={contentCols} border alternateRows on:click={(ev) => edit(ev.detail)}/>
         </div>

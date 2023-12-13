@@ -11,6 +11,7 @@ export async function GET({ url, locals }) {
         if (params.get('tags')) {
             query.tags = params.get('tags').split(',');
         }
+        
         if (user.role != 'admin') {
             query._id = { $in: user.courses }
         }

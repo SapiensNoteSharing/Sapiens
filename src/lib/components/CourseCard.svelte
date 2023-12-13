@@ -10,7 +10,7 @@
 
 <div class="course-card p-4 d-flex flex-column justify-content-between {classes}" style="width: 47%;">
     <div class="d-flex flex-row justify-content-between align-items-top">
-        <img style="width: 4rem;" src="/src/style/target.png" alt="Course icon">
+        <img style="width: 4rem;" src="/src/style/{course.name}.png" alt="Course icon">
         
         <div class="d-flex flex-row justify-content-between align-items-top">
             {#if course.favourite}
@@ -36,16 +36,23 @@
             {/if}
         </div>
     </div>
-    <h5 class="mt-3">{course.cdl_code}</h5>
-    <h1 class="display-5">{course.name}</h1>
+    <h5 class="mt-3 text-dark">{course.code} &bull; {course.cfu} CFU</h5>
+    <h1 class="display-4 mb-3 text-dark">{course.name}</h1>
 
-    <div class="d-flex justify-content-between">
+    <div class="d-flex flex-row justify-content-between mb-2">
         <div>
             {#each course.professors as professor, i}
-                <a class="text-decoration-none professor" href="/professors/{professor}">{professor}</a>{i != course.professors.length-1 ? " / " : ""}
+                <span class="text-decoration-none professor text-dark">{professor}</span>{i != course.professors.length-1 ? " / " : ""}
             {/each}
         </div>
-        <p class="dark" style="margin: 0px;">{course.cfu} CFU</p>
+    </div>
+
+    <div>
+        <p>Programmazione object oriented, C++, basi di ingegneria del software</p>
+    </div>
+
+    <div class="d-flex justify-content-left">
+        <p class="dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
     </div>
 </div>
 

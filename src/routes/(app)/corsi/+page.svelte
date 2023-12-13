@@ -56,18 +56,18 @@
                 });
             } else if (sort_courses == "code_ascending") {
                 filtered.sort((a, b) => {
-                    if (a.cdl_code < b.cdl_code)
+                    if (a.code < b.code)
                         return -1;
-                    else if (a.cdl_code == b.cdl_code) 
+                    else if (a.code == b.code) 
                         return 0;
                     else
                         return 1;
                 });
             } else if (sort_courses == "code_descending") {
                 filtered.sort((a, b) => {
-                    if (a.cdl_code > b.cdl_code)
+                    if (a.code > b.code)
                         return -1;
-                    else if (a.cdl_code == b.cdl_code) 
+                    else if (a.code == b.code) 
                         return 0;
                     else
                         return 1;
@@ -115,13 +115,13 @@
                             } 
                             
                             // the course's code
-                            if (course.cdl_code) {
-                                if (course.cdl_code.toLowerCase().includes(input.toLowerCase())) {
+                            if (course.code) {
+                                if (course.code.toLowerCase().includes(input.toLowerCase())) {
                                     min_dist = 0;
                                     max_match = 1;
                                 } else {
-                                    min_dist = Math.min(min_dist, edit_distance(course.cdl_code.toLowerCase(), input.toLowerCase()));                               
-                                    max_match = Math.max(max_match, 1 - edit_distance(course.cdl_code.toLowerCase(), input.toLowerCase()) / course.cdl_code.length);
+                                    min_dist = Math.min(min_dist, edit_distance(course.code.toLowerCase(), input.toLowerCase()));                               
+                                    max_match = Math.max(max_match, 1 - edit_distance(course.code.toLowerCase(), input.toLowerCase()) / course.code.length);
                                 }
                             }
                             
@@ -382,7 +382,7 @@
         {#if course.in_cart}
             <div class="d-flex m-4 justify-content-between">
                 <div>
-                    <h2>{course.cdl_code} - {course.name}</h2>
+                    <h2>{course.code} - {course.name}</h2>
                     {#each course.professors as professor, i}
                         <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
                     {/each}

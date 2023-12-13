@@ -5,15 +5,12 @@
     let href = ''
     let body = {}, timer;
     
-    function debounce(){
+    function debounce() {
         clearTimeout(timer)
         timer = setTimeout(async () => {
             const resp = await fetch(`/test3?href=${href}`)
             body = (resp.ok && await resp.json()) || []
             body = JSON.stringify(body, null, 2);
-            const r1 = await fetch(`admin/api/octokit`);
-            const b = (r1.ok && await r1.json())
-            console.log(b)
         }, 200)
     }
 
@@ -42,7 +39,7 @@
 </div>
 
 <style>
-    .m-5{
+    .m-5 {
         height: 100vh;
     }
 </style>

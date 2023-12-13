@@ -1,10 +1,10 @@
-import octokit, {get } from "$lib/github";
 import { error } from '@sveltejs/kit'
 import { config } from "$lib/config";
 
 export async function GET({ url, locals, params, fetch }) {
     const user = locals.user;
-    if (!user) throw error(404, 'Unauthenticated');
+    if (!user) 
+        throw error(404, 'Unauthenticated');
 
     try {
         const obj = await get({ gitUrl: '/Primo anno' })
