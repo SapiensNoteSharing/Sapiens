@@ -7,7 +7,7 @@
     import { goto } from '$app/navigation';
     import { dna } from '$lib/stores';
     import '$css/global.scss';
-    
+
     export let data;
     let user = data.user || {};
         
@@ -30,7 +30,6 @@
     <div class="d-flex">
         <nav class="navbar navbar-expand-lg bg-light w-100">
             <div class="d-flex w-100 justify-content-center align-items-center">
-                <!-- Sapiens Logo -->
                 <img style="width: 18rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
             </div>
         </nav>
@@ -78,6 +77,12 @@
                         </div>
                     </NormalButton>
 
+                    <NormalButton active={$page.route.id == "/(app)/calendario" ? 'active' : 'not-active'} classes={"m-2"}>
+                        <div slot="name" class="navbar-item display-6 rounded-4">
+                            <a class="d-block px-4 py-2 text-decoration-none" href="/calendario">Calendario</a>
+                        </div>
+                    </NormalButton>
+
                     <NormalButton active={$page.route.id == "/(app)/classifiche" ? 'active' : 'not-active'} classes={"m-2"}>
                         <div slot="name" class="navbar-item display-6 rounded-4">
                             <a class="d-block px-4 py-2 text-decoration-none" href="/classifiche">Classifiche</a>
@@ -86,22 +91,29 @@
                 </div>
 
                 <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
-                    <NormalButton classes={"m-2"} on:click={openDnaModal}>
-                        <div slot="name" class="navbar-item display-6 rounded-4 py-2 ps-3 pe-2">
+                    <NormalButton classes={"m-2"}>
+                        <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
+                            <span class="display-6  align-middle text-dark">{user.league_position || 'n'}°</span>
+                            <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.svg" alt="league">
+                        </div>
+                    </NormalButton>
+
+                    <NormalButton classes={"m-2"}>
+                        <div slot="name" class="display-6 rounded-4 py-2 px-3">
                             <span class="display-6  align-middle text-dark">{user.streak || 0}</span>
                             <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
                         </div>
                     </NormalButton>
 
                     <NormalButton classes={"m-2"} on:click={openDnaModal}>
-                        <div slot="name" class="navbar-item display-6 rounded-4 py-2 ps-3 pe-2">
+                        <div slot="name" class="display-6 rounded-4 py-2 px-3">
                             <span class="display-6  align-middle text-dark">{user.balance || 0}</span>
                             <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
                         </div>
                     </NormalButton>
 
                     <NormalButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
-                        <div slot="name" class="navbar-item display-6 rounded-4">
+                        <div slot="name" class="display-6 rounded-4">
                             <a href="/area_personale"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
                         </div>
                     </NormalButton>
@@ -164,13 +176,13 @@
 
     .sapiens-logo {
         position: relative;
-        left: 200px;
+        left: 150px;
         transform: translate(-50%);
     }
 
     .nav-primary {
         position: absolute;
-        left: 400px;
+        left: 300px;
     }
 
     .nav-secondary {
@@ -182,28 +194,6 @@
         width: 3rem; 
         border-radius: 3rem;
     }
-
-    // .navbar-item:before {
-    //     content: '';
-    //     position: absolute;
-    //     width: 200%;
-    //     height: 200%;
-    //     // background: rgba($light, 0.25);
-    //     background: rgba($light, 0.55);
-    //     transform: translate(-100%) rotate(-60deg);
-    //     filter: blur(0px);
-    // }
-
-    // .navbar-item:hover:before {
-    //     content: '';
-    //     width: 200%;
-    //     height: 200%;
-    //     background: rgba($light, 0.55);
-    //     transform: translate(100%) rotate(-60deg);
-    //     filter: blur(0px);
-    //     position: absolute;
-    //     transition: 3s;
-    // }
 
     .dna-btn {
         background: $light;

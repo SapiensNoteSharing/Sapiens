@@ -2,42 +2,42 @@
     import Icon from '$lib/components/Icon.svelte';
     import Course from '$lib/components/Course.svelte';
     import CourseCard from '$lib/components/CourseCard.svelte';
+    import NormalButton from '$lib/components/NormalButton.svelte';
     import FloatingButton from '$lib/components/FloatingButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import { view, value, filter_tags, dna } from '$lib/stores';
     import { space } from 'svelte/internal';
     
     export let data;
-    let courses = data.courses || []
-    
-    let filtered = [...courses];
-    
-    $: $value != undefined && search()
-    $: $filter_tags && search()
-    $: sort_courses && search()
-    
+    let courses = data.courses || [];
+
+    // elenco dei corsi posseduti dall'utente
+    let owned = [
+        courses.find(course => course.name == "Analisi Matematica I"),
+        courses.find(course => course.name == "Fisica II"),
+        courses.find(course => course.name == "Algoritmi e strutture dati"),
+    ].filter(Boolean);
+
+    // elenco dei corsi non posseduti
+    let ownedCoursesNames = owned.map(course => course.name);
+    let not_owned = courses.filter(course => !ownedCoursesNames.includes(course.name));
+
     let favourites_filter;
-    
-    let sort_courses;
-    
+    let sorting_method;
     let cartModal;
-    
-    function search() {
-        // if search bar value is empty string show all courses that follow the 
-        if ($value == "" || $value == undefined) {
-            filtered = [];
-            for (let course of courses) {
-                let filtered_out = false;
-                for (let filter_tag of $filter_tags)
-                    if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
-                        filtered_out = true;
-                
-                if (!filtered_out)
-                    filtered.push(course);
-            }
-            
-            if (sort_courses == "name_ascending") {
-                filtered.sort((a, b) => {
+
+    function sort_course_list(course_list) {
+        switch(sorting_method) {
+            case "no_order":
+                course_list.sort((a, b) => {
+                    if (Math.random() < 0.5)
+                        return -1;
+                    else
+                        return 1;
+                });
+                break;
+            case "name_ascending":
+                course_list.sort((a, b) => {
                     if (a.name < b.name)
                         return -1;
                     else if (a.name == b.name) 
@@ -45,8 +45,9 @@
                     else
                         return 1;
                 });
-            } else if (sort_courses == "name_descending") {
-                filtered.sort((a, b) => {
+                break;
+            case "name_descending":
+                course_list.sort((a, b) => {
                     if (a.name > b.name)
                         return -1;
                     else if (a.name == b.name) 
@@ -54,8 +55,9 @@
                     else
                         return 1;
                 });
-            } else if (sort_courses == "code_ascending") {
-                filtered.sort((a, b) => {
+                break;
+            case "code_ascending":
+                course_list.sort((a, b) => {
                     if (a.code < b.code)
                         return -1;
                     else if (a.code == b.code) 
@@ -63,8 +65,9 @@
                     else
                         return 1;
                 });
-            } else if (sort_courses == "code_descending") {
-                filtered.sort((a, b) => {
+                break;
+            case "code_descending":
+                course_list.sort((a, b) => {
                     if (a.code > b.code)
                         return -1;
                     else if (a.code == b.code) 
@@ -72,87 +75,131 @@
                     else
                         return 1;
                 });
-            }
+                break;
+            case "chronological_order":
+                course_list.sort((a, b) => {
+                    const yearOrder = { "Primo": 1, "Secondo": 2, "Terzo": 3 };
+                    const semesterOrder = { "Primo e secondo": 0, "Primo": 1, "Secondo": 2 };
+
+                    if (yearOrder[a.year] < yearOrder[b.year])
+                        return -1;
+                    else if (yearOrder[a.year] == yearOrder[b.year]) {
+                        if (semesterOrder[a.semester] < semesterOrder[b.semester])
+                            return -1;
+                        else if (semesterOrder[a.semester] == semesterOrder[b.semester])
+                            return 0;
+                        else
+                            return 1;
+                    } else
+                        return 1;
+                });
+                break;
+            case "chronological_reverse":
+                course_list.sort((a, b) => {
+                    const yearOrder = { "Primo": 1, "Secondo": 2, "Terzo": 3 };
+                    const semesterOrder = { "Primo e secondo": 0, "Primo": 1, "Secondo": 2 };
+
+                    if (yearOrder[a.year] < yearOrder[b.year])
+                        return 1;
+                    else if (yearOrder[a.year] == yearOrder[b.year]) {
+                        if (semesterOrder[a.semester] < semesterOrder[b.semester])
+                            return 1;
+                        else if (semesterOrder[a.semester] == semesterOrder[b.semester])
+                            return 0;
+                        else
+                            return -1;
+                    } else
+                        return -1;
+                });
+                break;
         }
-        // else
-        else {
-            filtered = [];
-            let max_match, match_value, min_dist, add_course;
-            
-            let dist_threshold = 2;
-            let n;
-            // split the search bar input in its single words
-            let values = $value.split(" ");
-            // search in every course a correspondence, comparing it with:
-            for (let course of courses) {
-                let filtered_out = false;
-                for (let filter_tag of $filter_tags)
-                    if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
-                        filtered_out = true;
-                
-                if (!filtered_out) {
-                    min_dist = Infinity;
-                    match_value = 0;
-                    add_course = false;
-                    n = 0;
-                    for (let input of values) {
-                        if (input != "" && input != "e" && input != "di" && input != "dei" && input != "I") {
-                            max_match = 0;
-                            n++;
-                            
-                            // the course's name
-                            let words = course.name.split(" ");
-                            for (let word of words) {
-                                if (word != "" && word != "e" && word != "di" && word != "dei" && word != "I") {
-                                    if (word.toLowerCase().includes(input.toLowerCase())) {
-                                        min_dist = 0;
-                                        max_match = 1;
-                                    } else {
-                                        min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
-                                        max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
-                                    }
-                                }
-                            } 
-                            
-                            // the course's code
-                            if (course.code) {
-                                if (course.code.toLowerCase().includes(input.toLowerCase())) {
+    }
+
+    function filter_course_list(course_list) {
+        let filtered_courses_list = [];
+
+        // per ogni corso
+        for (let course of course_list) {
+            // si controllano prima i filtri
+            let filtered_out = false;
+            for (let filter_tag of $filter_tags)
+                if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
+                    filtered_out = true;
+
+            // se il corso ha superato il test e se la barra di ricerca è vuota
+            if (!filtered_out && $value != "" && $value != undefined) {
+                let max_match;
+                let min_dist = Infinity;
+                let match_value = 0;
+                let add_course = false;
+                let n = 0;
+                let dist_threshold = 2;
+
+                // split the search bar input in its single words
+                let values = $value.split(" ");
+
+                for (let input of values) {
+                    if (input != "" && input != "e" && input != "di" && input != "dei" && input != "I") {
+                        max_match = 0;
+                        n++;
+                        
+                        // the course's name
+                        let words = course.name.split(" ");
+                        for (let word of words) {
+                            if (word != "" && word != "e" && word != "di" && word != "dei" && word != "I") {
+                                if (word.toLowerCase().includes(input.toLowerCase())) {
                                     min_dist = 0;
                                     max_match = 1;
                                 } else {
-                                    min_dist = Math.min(min_dist, edit_distance(course.code.toLowerCase(), input.toLowerCase()));                               
-                                    max_match = Math.max(max_match, 1 - edit_distance(course.code.toLowerCase(), input.toLowerCase()) / course.code.length);
+                                    min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
+                                    max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
                                 }
                             }
-                            
-                            // the course's professors' names
-                            for (let professor of course.professors) {
-                                let words = professor.split(" ");
-                                for (let word of words) {
-                                    if (word.toLowerCase().includes(input.toLowerCase())) {
-                                        min_dist = 0;
-                                        max_match = 1;
-                                    } else {
-                                        min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
-                                        max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
-                                    }       
-                                }
+                        } 
+                        
+                        // the course's code
+                        if (course.code) {
+                            if (course.code.toLowerCase().includes(input.toLowerCase())) {
+                                min_dist = 0;
+                                max_match = 1;
+                            } else {
+                                min_dist = Math.min(min_dist, edit_distance(course.code.toLowerCase(), input.toLowerCase()));                               
+                                max_match = Math.max(max_match, 1 - edit_distance(course.code.toLowerCase(), input.toLowerCase()) / course.code.length);
                             }
-                            match_value += max_match;
-                            
-                            if (min_dist <= dist_threshold)
-                                add_course = true;
                         }
-                    }
-                    match_value /= n;
-                    if (add_course) {
-                        course.match = match_value;
-                        filtered.push(course);
+                        
+                        // the course's professors' names
+                        for (let professor of course.professors) {
+                            let words = professor.split(" ");
+                            for (let word of words) {
+                                if (word.toLowerCase().includes(input.toLowerCase())) {
+                                    min_dist = 0;
+                                    max_match = 1;
+                                } else {
+                                    min_dist = Math.min(min_dist, edit_distance(word.toLowerCase(), input.toLowerCase()));                               
+                                    max_match = Math.max(max_match, 1 - edit_distance(word.toLowerCase(), input.toLowerCase()) / word.length);
+                                }       
+                            }
+                        }
+                        match_value += max_match;
+                        
+                        if (min_dist <= dist_threshold)
+                            add_course = true;
                     }
                 }
+
+                match_value /= n;
+                if (add_course) {
+                    course.match = match_value;
+                    filtered_courses_list.push(course);
+                }
+            } else {
+                filtered_courses_list.push(course);
             }
-            
-            filtered.sort((a, b) => {
+        }
+
+        if ($value != "" && $value != undefined) {
+            filtered_courses_list.sort((a, b) => {
                 if (a.match < b.match)
                     return 1;
                 else if (a.match == b.match) 
@@ -161,7 +208,23 @@
                     return -1;
             })
         }
+
+        return filtered_courses_list;
     }
+    
+    function filter_and_sort(course_list) {
+        let filtered_course_list = filter_course_list(course_list)
+        sort_course_list(filtered_course_list)
+
+        return filtered_course_list
+    }
+
+    let filtered_owned = filter_and_sort(owned)
+    let filtered_not_owned = filter_and_sort(not_owned)
+
+    $: sorting_method && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
+    $: $filter_tags && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
+    $: $value !== undefined && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
     
     function edit_distance(x, y) {
         let m = x.length;
@@ -269,44 +332,26 @@
             }
         })
     }
+
+    let selectedGroup = "owned";
 </script>
 
-<div class="d-flex flex-column content">
-    <div class="d-flex justify-content-between mt-5">
-        {#if $value == undefined || $value == ""}
-            <span class="display-3 text-dark">Tutti i corsi</span>
-        {:else}
-            <span class="display-6 text-dark">Risultati per: {$value}</span>
-        {/if}
-
-        <!-- <div class="d-flex">
-            <div class="btn-group" role="group">
-                <FloatingButton active={$view == 'list' ? 'active' : 'not-active'} style="border-radius: .4rem 0rem 0rem .4rem">
-                    <div slot="name">
-                        <input type="radio" class="btn-check" name="view" id="list-view-btn" autocomplete="off" value="list" bind:group={$view}>
-                        <label class="btn btn-outline-primary align-self-center px-3 py-2 floating" for="list-view-btn"><i class="text-dark fs-2 bi bi-list"></i></label>
-                    </div>
-                </FloatingButton>
-
-                <FloatingButton active={$view == 'grid' ? 'active' : 'not-active'} style="border-radius: 0rem 0rem 0rem 0rem">
-                    <div slot="name">
-                        <input type="radio" class="btn-check" name="view" id="card-view-btn" autocomplete="off" value="grid" bind:group={$view}>
-                        <label class="btn btn-outline-primary align-self-center px-3 py-2 floating" style="border-radius: 0rem" for="card-view-btn"><i class="text-dark fs-2 bi bi-border-all"></i></label>
-                    </div>
-                </FloatingButton>
-
-                <FloatingButton active={$view == 'graph' ? 'active' : 'not-active'} style="border-radius: 0rem .4rem .4rem 0rem">
-                    <div slot="name">
-                        <input type="radio" class="btn-check" name="view" id="graph-view-btn" autocomplete="off" value="graph" bind:group={$view} disabled>
-                        <label class="btn btn-outline-primary align-self-center px-3 py-2 floating" style="border-radius: 0rem .4rem .4rem 0rem" for="graph-view-btn"><i class="text-dark fs-2 bi bi-diagram-3"></i></label>
-                    </div>
-                </FloatingButton>
+<div class="d-flex flex-column">
+    <div class="d-flex justify-content-left m-0 mb-5">
+        <NormalButton active={selectedGroup == "owned" ? 'active' : 'not-active'} classes={"me-3"}>
+            <div slot="name" class="navbar-item outlined display-6 rounded-4">
+                <a class="d-block px-4 py-2 text-decoration-none" on:click={() => selectedGroup = "owned"}>I Miei Corsi</a>
             </div>
-        </div> -->
+        </NormalButton>
+        <NormalButton active={selectedGroup == "explore" ? 'active' : 'not-active'}>
+            <div slot="name" class="navbar-item outlined display-6 rounded-4">
+                <a class="d-block px-4 py-2 text-decoration-none" on:click={() => selectedGroup = "explore"}>Esplora</a>
+            </div>
+        </NormalButton>
     </div>
-    
+
     <!-- filters and cart -->
-    <div class="d-flex my-5 justify-content-between">
+    <div class="d-flex mb-5 justify-content-between">
         <div class="d-flex align-items-center">
             {#if $filter_tags.length == 2}
                 <span class=""><i class="icon bi bi-funnel"></i></span>
@@ -324,19 +369,22 @@
         
         <div class="d-flex align-items-center">
             <!-- sort -->
-            {#if $value == undefined || $value == ""}
-                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sort_courses}>
-                    <option class="opt" value="name_ascending">Nome - crescente</option>
-                    <option class="opt" value="name_descending">Nome - decrescente</option>
-                    <option class="opt" value="code_ascending">Codice - crescente</option>
-                    <option class="opt" value="code_descending">Codice - decrescente</option>
+            {#if $value != "" && $value != undefined}
+                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method} disabled>
+                    <option class="opt" value="match_ascending" selected>Corrispondenza</option>
                 </select>
             {:else}
-                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" disabled>
-                    <option value="name_ascending">Corrispondenza</option>
+                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method}>
+                    <option class="opt" value="chronological_order" selected>Periodo · cronologico</option>
+                    <option class="opt" value="chronological_reverse">Periodo · cronologico inverso</option>
+                    <option class="opt" value="name_ascending">Nome · alfabetico crescente</option>
+                    <option class="opt" value="name_descending">Nome · alfabetico decrescente</option>
+                    <option class="opt" value="code_ascending">Codice · crescente</option>
+                    <option class="opt" value="code_descending">Codice · decrescente</option>
+                    <option class="opt" value="no_order">Nessun ordinamento</option>
                 </select>
             {/if}
-            
+
             <!-- favourites filter -->
             <div>
                 <input type="checkbox" class="btn-check" id="favourites_filter" autocomplete="off" bind:checked={favourites_filter}>
@@ -354,23 +402,116 @@
                 <i class="icon text-dark bi bi-cart"></i>
                 <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{courses.reduce((acc, course) => acc + (course.in_cart ? 1 : 0), 0)}</span>
             </button>
-        </div>  
+        </div>
     </div>
-    
-    <!-- courses -->
-    {#if filtered.length != 0}
-        <!-- {#if $view == "list"}
-            {#each filtered as course}
-                <Course {course} class="mb-5"/>
-            {/each}
-        {:else if $view == "grid"} -->
+
+    {#if selectedGroup == "owned"}
+        {#if filtered_owned.length != 0}
             <div class="d-flex flex-wrap justify-content-between align-content-between">
-                {#each filtered as course}
-                    <CourseCard {course} class="g-col-4 mb-5"/>
-                {/each}
+                {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
+                    <div class="w-100 mb-3">
+                        <h3 class="display-3 m-0">{filtered_owned[0].year} anno</h3>
+                    </div>
+                    <div class="w-100 mb-4">
+                        <h3 class="display-4 m-0">{filtered_owned[0].semester} semestre</h3>
+                    </div>
+                    {#each filtered_owned as course, $index}
+                        {#if $index > 0}
+                            {#if course.year != filtered_owned[$index - 1].year}
+                                <div class="w-100 mb-3">
+                                    <h3 class="display-3 m-0">{course.year} anno</h3>
+                                </div>
+                                <div class="w-100 mb-4">
+                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
+                                </div>
+                            {:else if course.semester != filtered_owned[$index - 1].semester}
+                                <div class="w-100 mb-4">
+                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
+                                </div>
+                            {/if}
+                        {/if}
+                        <CourseCard {course} class="g-col-4 mb-5"/>
+                    {/each}
+                {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
+                    <div class="w-100 mt-3">
+                        <h3 class="display-3 m-0">{filtered_owned[0].name[0]}</h3>
+                    </div>
+                    {#each filtered_owned as course, $index}
+                        {#if $index > 0}
+                            {#if course.name[0] != filtered_owned[$index - 1].name[0]}
+                                <div class="w-100 mb-4">
+                                    <h3 class="display-4">{course.name[0]}</h3>
+                                </div>
+                            {/if}
+                        {/if}
+                        <CourseCard {course} class="g-col-4 mb-5"/>
+                    {/each}
+                {:else}
+                    {#each filtered_owned as course}
+                        <CourseCard {course} class="g-col-4 mb-5"/>
+                    {/each}
+                {/if}
             </div>
-        <!-- {:else}
+        {:else}
+            <h2>Acquista il tuo primo corso</h2>
+        {/if}
+    {:else if selectedGroup == "explore" && filtered_not_owned.length != 0}
+        <!-- {#if $value == undefined || $value == ""}
+            <h2 class="display-6 text-dark">Tutti i corsi disponibili</h2>
+        {:else}
+            <h2 class="display-6 text-dark">Risultati per: {$value}</h2>
         {/if} -->
+
+        <!-- explore courses -->
+        {#if filtered_not_owned.length != 0}
+            <div class="d-flex flex-wrap justify-content-between align-content-between">
+                {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
+                    <div class="w-100 mb-3">
+                        <h3 class="display-3 m-0">{filtered_not_owned[0].year} anno</h3>
+                    </div>
+                    <div class="w-100 mb-4">
+                        <h3 class="display-4 m-0">{filtered_not_owned[0].semester} semestre</h3>
+                    </div>
+                    {#each filtered_not_owned as course, $index}
+                        {#if $index > 0}
+                            {#if course.year != filtered_not_owned[$index - 1].year}
+                                <div class="w-100 mb-3">
+                                    <h3 class="display-3 m-0">{course.year} anno</h3>
+                                </div>
+                                <div class="w-100 mb-4">
+                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
+                                </div>
+                            {:else if course.semester != filtered_not_owned[$index - 1].semester}
+                                <div class="w-100 mb-4">
+                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
+                                </div>
+                            {/if}
+                        {/if}
+                        <CourseCard {course} class="g-col-4 mb-5"/>
+                    {/each}
+                {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
+                    <div class="w-100 mt-3">
+                        <h3 class="display-3 m-0">{filtered_not_owned[0].name[0]}</h3>
+                    </div>
+                    {#each filtered_not_owned as course, $index}
+                        {#if $index > 0}
+                            {#if course.name[0] != filtered_not_owned[$index - 1].name[0]}
+                                <div class="w-100 my-4">
+                                    <h3 class="display-4">{course.name[0]}</h3>
+                                </div>
+                            {/if}
+                        {/if}
+                        <CourseCard {course} class="g-col-4 mb-5"/>
+                    {/each}
+                {:else}
+                    {#each filtered_not_owned as course}
+                        <CourseCard {course} class="g-col-4 mb-5"/>
+                    {/each}
+                {/if}
+            </div>
+        {:else}
+            <h2>Nessun risultato trovato</h2>
+        {/if}
     {:else}
         <h2>Nessun risultato trovato</h2>
     {/if}
@@ -448,14 +589,20 @@
 
 <style lang="scss">
     @import '$css/variables.scss';
-    .content {
-        background: $light-primary; 
-        padding-left: 5rem;
-        padding-right: 5rem;
+
+    :root {
+        --scroll-size: 10px;
+        --scroll-track: $light;
+        --scroll-thumb: $primary;
+        --scroll-thumb-radius: 5px;
     }
-    
+
     .custom-scrollbar {
         scroll-behavior: smooth;
+    }
+
+    .outlined {
+        border: 1px solid rgba($dark, 0.25);
     }
     
     .icon {
@@ -465,33 +612,11 @@
         height: 1.5rem;
     }
 
-    // .floating {
-    //     box-shadow: .0rem .4rem rgba($dark, 0.5); 
-    //     transition: .1s;
-    // }
-
-    // .floating:hover  {
-    //     box-shadow: .0rem .2rem rgba($dark, 0.5);
-    //     transform: translate(0rem, .2rem);
-    // }
-
-    // .floating.active:hover  {
-    //     box-shadow: 0rem;
-    //     transform: translate(0rem, .4rem);
-    // }
-
     #graph-view-btn {
         cursor: not-allowed !important;
     }
     
     .filter_badge {
         border: 1px solid $dark;
-    }
-    
-    :root {
-        --scroll-size: 10px;
-        --scroll-track: $light;
-        --scroll-thumb: $primary;
-        --scroll-thumb-radius: 5px;
     }
 </style>

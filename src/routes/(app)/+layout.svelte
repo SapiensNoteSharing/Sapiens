@@ -7,7 +7,16 @@
 <div class="d-flex h-100 align-self-stretch">
     <Sidebar courses={data.courses}/>
 
-    <div class="flex-grow-1 position-relative">
+    <div class="flex-grow-1 position-relative content">
         <slot></slot>
     </div>
 </div>
+
+<style lang="scss">
+    @import '$css/variables.scss';
+
+    .content {
+        background: $light-primary; 
+        padding: 3rem;
+    }
+</style>

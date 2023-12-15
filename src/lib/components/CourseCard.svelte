@@ -8,9 +8,9 @@
     export let style = '';
 </script>
 
-<div class="course-card p-4 d-flex flex-column justify-content-between {classes}" style="width: 47%;">
+<div class="course-card d-flex flex-column justify-content-between {classes}" style="width: 47% {style}">
     <div class="d-flex flex-row justify-content-between align-items-top">
-        <img style="width: 4rem;" src="/src/style/{course.name}.png" alt="Course icon">
+        <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course.name}.png" alt="{course.name} icon">
         
         <div class="d-flex flex-row justify-content-between align-items-top">
             {#if course.favourite}
@@ -48,7 +48,7 @@
     </div>
 
     <div>
-        <p>Programmazione object oriented, C++, basi di ingegneria del software</p>
+        <p>{course.description}</p>
     </div>
 
     <div class="d-flex justify-content-left">
@@ -67,7 +67,8 @@
     .course-card {
         border: 1px solid rgba($dark, 0.25);
         background: $light;
-        border-radius: 2rem;
+        border-radius: 1.5rem;
+        padding: 2rem;
         cursor: pointer;
         transition: .25s ease-in-out;
     }

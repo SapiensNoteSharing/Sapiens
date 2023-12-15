@@ -12,25 +12,56 @@
     let cols = [
         {
             id: 'code',
-            label: 'Codice Corso di Laurea',
+            label: 'Codice corso',
             format: val => val || "-",
         },    
         {
             id: 'name',
-            label: 'Nome del corso',
+            label: 'Nome corso',
+            format: val => val || '-',
             searchable: true,
+        },
+        {
+            id: 'faculty_name',
+            label: 'Nome facoltà',
+            format: val => val || '-',
+            searchable: true,
+        },                 
+        {
+            id: 'faculty_code',
+            label: 'Codice facoltà',
+            format: val => val || '-',
+            searchable: true,
+        }, 
+        {
+            id: 'sector_code',
+            label: 'Codice settore',
+            format: val => val || '-',
+            searchable: true,
+        }, 
+        {
+            id: 'curriculum_code',
+            label: 'Codice curriculum',
+            format: val => val || '-',
+            searchable: true,
+        },
+        {
+            id: 'curriculum_name',
+            label: 'Nome curriculum',
+            format: val => val || '-',
+            searchable: true,
+        },
+        { 
+            id: 'cfu',
+            label: 'CFU',
+            format: val => val || 0,
+            searchable: 'number'
         },
         {
             id: 'professors',
             label: 'Docente/i',
             format: val => val.join(', '),
             searchable: 'enum'
-        },
-        {
-            id: 'cfu',
-            label: 'CFU',
-            format: val => val || 0,
-            searchable: 'number'
         },
         {
             id: 'year',
@@ -44,6 +75,16 @@
             format: val => val || '-',
             searchable: 'enum'
         },
+        {
+            id: 'tags',
+            label: 'tags',
+            format: val => val || '-'
+        },
+        // {
+        //     id: 'description',
+        //     label: 'descrizione corso',
+        //     format: val => val || 'Lorem ipsum dolor sit amet. Est tempora perferendis eos quia rerum a rerum laborum eum atque eligendi ut laboriosam optio 33 fugiat quae. At nihil nostrum et Quis magnam ab aliquam temporibus est ipsa reiciendis sed facilis odit aut mollitia consequatur. Aut consectetur veritatis ea adipisci ratione et iste quaerat. Ut beatae obcaecati est harum unde et galisum similique ut officia architecto sed nesciunt delectus.'
+        // },
         {
             id: 'content',
             label: '# capitoli',

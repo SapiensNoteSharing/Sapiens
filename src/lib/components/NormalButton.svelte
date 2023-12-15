@@ -52,8 +52,4 @@
     :global(.active .navbar-item:hover a) {
         color: $secondary;
     }
-
-    // :global(.active .navbar-item) {
-    //     background: $light;
-    // }
 </style>

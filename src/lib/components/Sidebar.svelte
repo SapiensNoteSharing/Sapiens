@@ -243,7 +243,8 @@
     @import '$css/variables.scss';
     
     .sidebar {
-        width: 400px;
+        position: fixed;
+        width: 300px;
         min-height: 82vh;
         flex-shrink: 0;
         background-color: $light;

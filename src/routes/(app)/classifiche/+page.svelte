@@ -10,7 +10,7 @@
 
 
 <div class="d-flex flex-column">
-    <div class="d-flex flex-row justify-content-center align-items-center mt-5">
+    <div class="d-flex flex-row justify-content-center align-items-center">
         <img class="league-icon" src="src/style/target.png" alt="">
         <img class="league-icon" src="src/style/target.png" alt="">
         <img class="league-icon my-league" src="src/style/target.png" alt="">
@@ -23,11 +23,6 @@
 
 <style lang="scss">
     @import '$css/variables.scss';
-    .content {
-        background: $light-primary; 
-        padding-left: 5rem;
-        padding-right: 5rem;
-    }
     
     .league-icon {
         display: inline-block;

@@ -34,7 +34,6 @@
 
     .cont {
         min-height: 50vh;
-        padding: 2rem 2rem;
         width: 90%;
         font-size: 1.25rem;
         line-height: 2.25rem;
