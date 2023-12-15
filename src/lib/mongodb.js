@@ -147,14 +147,13 @@ CourseSchema.pre('findOne', function (next) {
 
 const GridSchema = new Schema({}, {strict: false});
 
-const Grid = mongoose.model('Grid', GridSchema, 'fs.files');
-const Config = mongoose.model('Config', ConfigSchema);
-const User = mongoose.model('User', UserSchema);
-const Review = mongoose.model('Review', ReviewSchema);
-const Directory = mongoose.model('Directory', DirectorySchema)
-const File = mongoose.model('File', FileSchema);
-const Course = mongoose.model('Courses', CourseSchema);
-
+const Grid = mongoose.model.Grid || mongoose.model('Grid', GridSchema, 'fs.files');
+const Config = mongoose.model.Config || mongoose.model('Config', ConfigSchema);
+const User = mongoose.model.User || mongoose.model('User', UserSchema);
+const Review = mongoose.model.Review || mongoose.model('Review', ReviewSchema);
+const Directory = mongoose.model.Directory || mongoose.model('Directory', DirectorySchema)
+const File = mongoose.model.File || mongoose.model('File', FileSchema);
+const Course = mongoose.model.Courses || mongoose.model('Courses', CourseSchema);
 
 export { 
     ObjectId,
@@ -165,6 +164,5 @@ export {
     Review,
     Course,
     Directory,
-    File,
-    mongoose
+    File
 };

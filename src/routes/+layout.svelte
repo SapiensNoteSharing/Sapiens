@@ -24,6 +24,14 @@
             }
         })
     }
+
+    let pageTitle
+    function setTitle() {
+        pageTitle = $page.route.id.split('/').pop()
+        pageTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1)
+    }
+
+    $: $page.route.id && setTitle()
 </script>
 
 {#if $page.route.id == '/'}
@@ -43,52 +51,7 @@
                     <img class="sapiens-logo" style="height: 4rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
                 </a>
                 
-                <div class="d-flex nav-primary flex-row justify-left align-items-center">
-                    <!-- Site navigation -->
-                    {#if data.user.role == 'admin'}
-                        <NormalButton active={$page.route.id == "/test" ? 'active' : 'not-active'} classes={'m-2'}>
-                            <div slot="name" class="navbar-item display-6 rounded-4">
-                                <a class="d-block px-4 py-2 text-decoration-none" href="/test">Test</a>
-                            </div>
-                        </NormalButton>
-
-                        <NormalButton active={$page.route?.id?.startsWith("/admin") ? 'active' : 'not-active'} classes={"m-2"}>
-                            <div slot="name" class="navbar-item display-6 rounded-4">
-                                <a class="d-block px-4 py-2 text-decoration-none" href="/admin/courses">Admin</a>
-                            </div>
-                        </NormalButton>
-                    {/if}
-
-                    <NormalButton active={$page.route.id == "/(app)/home" ? 'active' : 'not-active'} classes={"m-2"}>
-                        <div slot="name" class="navbar-item display-6 rounded-4">
-                            <a class="d-block px-4 py-2 text-decoration-none" href="/home">Home</a>
-                        </div>
-                    </NormalButton>
-
-                    <NormalButton active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} classes={"m-2"}>
-                        <div slot="name" class="navbar-item display-6 rounded-4">
-                            <a class="d-block px-4 py-2 text-decoration-none" href="/aula_studio">Aula Studio</a>
-                        </div>
-                    </NormalButton>
-
-                    <NormalButton active={$page.route.id == "/(app)/corsi" ? 'active' : 'not-active'} classes={"m-2"}>
-                        <div slot="name" class="navbar-item display-6 rounded-4">
-                            <a class="d-block px-4 py-2 text-decoration-none" href="/corsi">Corsi</a>
-                        </div>
-                    </NormalButton>
-
-                    <NormalButton active={$page.route.id == "/(app)/calendario" ? 'active' : 'not-active'} classes={"m-2"}>
-                        <div slot="name" class="navbar-item display-6 rounded-4">
-                            <a class="d-block px-4 py-2 text-decoration-none" href="/calendario">Calendario</a>
-                        </div>
-                    </NormalButton>
-
-                    <NormalButton active={$page.route.id == "/(app)/classifiche" ? 'active' : 'not-active'} classes={"m-2"}>
-                        <div slot="name" class="navbar-item display-6 rounded-4">
-                            <a class="d-block px-4 py-2 text-decoration-none" href="/classifiche">Classifiche</a>
-                        </div>
-                    </NormalButton>
-                </div>
+                <h2 class="nav-primary display-3 text-decoration-none align-self-center m-0 ms-4">{pageTitle}</h2>
 
                 <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
                     <NormalButton classes={"m-2"}>

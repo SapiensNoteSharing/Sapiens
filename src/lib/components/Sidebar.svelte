@@ -11,6 +11,7 @@
     import { goto } from '$app/navigation'
     import Svelecte from 'svelecte';
 
+    export let user;
 
     export let courses;
     let course = courses[0];
@@ -71,13 +72,12 @@
     }
 </script>
 
-<div class="sidebar px-5 position-relative">
+<div class="sidebar px-3 position-relative">
     {#if $page.route.id == '/(app)/corsi'}
         <div class="d-flex align-items-center my-5">
             <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
         </div>
         
-        <!-- filter according to input -->
         <Searchbar class="align-self-center mb-5"></Searchbar>
         
         <Accordion let:id class="mb-5">
@@ -102,8 +102,6 @@
                         <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
                     </div>
                 {/each}
-                <!--  -->
-                <!-- {#if } -->
             </AccordionItem>
             <AccordionItem class="filter-category">
                 <div slot="name">
@@ -123,15 +121,6 @@
         </Accordion>
     {:else if $page.route.id == '/(app)/aula_studio'}
         <div class="mt-3">
-            <!--
-            <div class="d-flex w-100 justify-content-center">
-                <select id="course-selection" bind:value={course} class="display-3 text-center w-100 bg-primary py-2 mb-3 floating">
-                    {#each courses || [] as course}
-                    <option value={course.name}>{course.name}</option>
-                    {/each}
-                </select>
-            </div>
-        --> 
             <div class="course-selection">
                 <Svelecte
                 placeholder="Select Course..."
@@ -147,7 +136,6 @@
                 />
             </div>
 
-            
             <div class="d-flex flex-column">
                 <div class="d-flex flex-row justify-content-between">
                     <button class="display-4 bg-light py-2 mb-0 me-2 tab" on:click={() => sidebar_page = "chapters"}><img class="w-50" src="/src/style/chapters.png" alt=""></button>
@@ -183,7 +171,6 @@
                             <div id="progressBar1" class="progress-bar w-100 position-relative">
                                 <div class="progress-bar-filler bg-primary"></div>
                             </div>
-                            <!-- <img class="target-icon position-relative" src="/src/style/target.png" alt=""> -->
                         </div>
                     </NormalButton>
 
@@ -197,7 +184,6 @@
                             <div id="progressBar2" class="progress-bar w-100 position-relative">
                                 <div class="progress-bar-filler bg-primary"></div>
                             </div>
-                            <!-- <img class="target-icon position-relative" src="/src/style/target.png" alt=""> -->
                         </div>
                     </NormalButton>
 
@@ -211,7 +197,6 @@
                             <div id="progressBar3" class="progress-bar w-100">
                                 <div class="progress-bar-filler bg-primary"></div>
                             </div>
-                            <!-- <img class="target-icon position-relative" src="/src/style/target.png" alt=""> -->
                         </div>
                     </NormalButton>
                 </div>
@@ -236,6 +221,68 @@
                 <a class="fs-1 nav-link" href="#preferenze">Preferenze</a>
             </nav>
         </nav>
+    {:else}
+        <div class="mt-5">
+            <NormalButton active={$page.route.id == "/(app)/home" ? 'active' : 'not-active'} classes={"m-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block px-4 py-2 text-decoration-none" href="/home">Home</a>
+                </div>
+            </NormalButton>
+
+            <NormalButton active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} classes={"m-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block px-4 py-2 text-decoration-none" href="/aula_studio">Aula Studio</a>
+                </div>
+            </NormalButton>
+
+            <NormalButton active={$page.route.id == "/(app)/corsi" ? 'active' : 'not-active'} classes={"m-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block px-4 py-2 text-decoration-none" href="/corsi">Corsi</a>
+                </div>
+            </NormalButton>
+
+            <NormalButton active={$page.route.id == "/(app)/calendario" ? 'active' : 'not-active'} classes={"m-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block px-4 py-2 text-decoration-none" href="/calendario">Calendario</a>
+                </div>
+            </NormalButton>
+
+            <hr class="mx-3">
+
+            <NormalButton active={$page.route.id == "/(app)/classifiche" ? 'active' : 'not-active'} classes={"m-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block px-4 py-2 text-decoration-none" href="/classifiche">Classifiche</a>
+                </div>
+            </NormalButton>
+
+            <NormalButton active={$page.route.id == "/(app)/sfide" ? 'active' : 'not-active'} classes={"m-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block px-4 py-2 text-decoration-none" href="/sfide">Sfide</a>
+                </div>
+            </NormalButton>
+
+            <NormalButton active={$page.route.id == "/(app)/negozio" ? 'active' : 'not-active'} classes={"m-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block px-4 py-2 text-decoration-none" href="/negozio">Negozio</a>
+                </div>
+            </NormalButton>
+
+            {#if data.user.role == 'admin'}
+                <hr class="mx-3">
+
+                <NormalButton active={$page.route.id == "/test" ? 'active' : 'not-active'} classes={'m-2'}>
+                    <div slot="name" class="navbar-item display-6 rounded-4">
+                        <a class="d-block px-4 py-2 text-decoration-none" href="/test">Test</a>
+                    </div>
+                </NormalButton>
+
+                <NormalButton active={$page.route?.id?.startsWith("/admin") ? 'active' : 'not-active'} classes={"m-2"}>
+                    <div slot="name" class="navbar-item display-6 rounded-4">
+                        <a class="d-block px-4 py-2 text-decoration-none" href="/admin/courses">Admin</a>
+                    </div>
+                </NormalButton>
+            {/if}
+        </div>
     {/if}
 </div>
 
