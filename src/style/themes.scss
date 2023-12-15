@@ -1,4 +1,5 @@
 @import './variables.scss';
+
 .support {
     background-color: $gray-500;
     border-radius: $border-rounded;
@@ -145,7 +146,17 @@ i.bi.primary {
     display: none;
 }
 
-// scrollbar
+.no-language > code {
+    font-family: sans-serif;
+}
+
+:root {
+    --scroll-size: 10px;
+    --scroll-track: $light;
+    --scroll-thumb: $primary;
+    --scroll-thumb-radius: 5px;
+}
+
 ::-webkit-scrollbar {
     width: var(--scroll-size, 10px);
     height: var(--scroll-size, 10px);
@@ -163,6 +174,10 @@ i.bi.primary {
     border: 1px solid $dark;
 }
 
-.no-language > code {
-    font-family: sans-serif;
-}
+// html {
+//     scrollbar-width: none;
+// }
+
+// ::-webkit-scrollbar {
+//     width: none;
+// }

@@ -16,7 +16,9 @@
     @import '$css/variables.scss';
 
     .content {
-        background: $light-primary; 
+        overflow-y: auto;
+        height: 89vh;
+        background: $light-primary;
         padding: 3rem;
     }
 </style>

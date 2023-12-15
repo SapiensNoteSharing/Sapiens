@@ -38,13 +38,6 @@
     .league-title {
     }
 
-    :root {
-        --scroll-size: 10px;
-        --scroll-track: $light;
-        --scroll-thumb: $primary;
-        --scroll-thumb-radius: 5px;
-    }
-
     .custom-scrollbar {
         scroll-behavior: smooth;
     }

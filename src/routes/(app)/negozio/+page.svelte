@@ -35,11 +35,4 @@
         cursor: pointer;
         transition: .25s ease-in-out;
     }
-    
-    :root {
-        --scroll-size: 10px;
-        --scroll-track: $light;
-        --scroll-thumb: $primary;
-        --scroll-thumb-radius: 5px;
-    }
 </style>

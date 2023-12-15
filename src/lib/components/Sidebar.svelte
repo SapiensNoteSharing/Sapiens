@@ -72,55 +72,57 @@
     }
 </script>
 
-<div class="sidebar px-3 position-relative">
+<div class="sidebar px-3">
     {#if $page.route.id == '/(app)/corsi'}
-        <div class="d-flex align-items-center my-5">
-            <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
-        </div>
-        
-        <Searchbar class="align-self-center mb-5"></Searchbar>
-        
-        <Accordion let:id class="mb-5">
-            <AccordionItem class="filter-category">
-                <div slot="name">
-                    Corso Di Laurea
-                </div>
-                <div class="d-flex flex-wrap">
-                    {#each faculties as faculty}
+        <div class="sidebar-container">
+            <div class="d-flex align-items-center my-5">
+                <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
+            </div>
+            
+            <Searchbar class="align-self-center mb-5"></Searchbar>
+            
+            <Accordion let:id class="mb-5">
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Corso Di Laurea
+                    </div>
+                    <div class="d-flex flex-wrap">
+                        {#each faculties as faculty}
+                            <div class="me-2 mb-2">
+                                <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
+                            </div>
+                        {/each}
+                    </div>
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Tipo di Laurea
+                    </div>
+                    {#each degree_types as type}
                         <div class="me-2 mb-2">
-                            <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
+                            <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
                         </div>
                     {/each}
-                </div>
-            </AccordionItem>
-            <AccordionItem class="filter-category">
-                <div slot="name">
-                    Tipo di Laurea
-                </div>
-                {#each degree_types as type}
-                    <div class="me-2 mb-2">
-                        <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Tags
                     </div>
-                {/each}
-            </AccordionItem>
-            <AccordionItem class="filter-category">
-                <div slot="name">
-                    Tags
-                </div>
-                {#each tags as tag}
-                    <div class="me-2 mb-2">
-                        <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
+                    {#each tags as tag}
+                        <div class="me-2 mb-2">
+                            <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
+                        </div>
+                    {/each}
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Rating
                     </div>
-                {/each}
-            </AccordionItem>
-            <AccordionItem class="filter-category">
-                <div slot="name">
-                    Rating
-                </div>
-            </AccordionItem>
-        </Accordion>
+                </AccordionItem>
+            </Accordion>
+        </div>
     {:else if $page.route.id == '/(app)/aula_studio'}
-        <div class="mt-3">
+        <div class="mt-3 sidebar-container">
             <div class="course-selection">
                 <Svelecte
                 placeholder="Select Course..."
@@ -211,18 +213,20 @@
             {/if}
         </div>
     {:else if $page.route.id == '/(app)/area_personale'}
-        <nav id="personal_area_scrollspy" class="mt-4 h-100 flex-column align-items-stretch pe-4 border-end">
-            <nav class="nav nav-pills flex-column">
-                <a class="fs-1 nav-link" href="#account">Account</a>
+        <div class="sticky-top">
+            <nav id="personal_area_scrollspy" class="mt-4 h-100 flex-column align-items-stretch pe-4 border-end">
                 <nav class="nav nav-pills flex-column">
-                    <a class="fs-1 nav-link ms-3 my-1" href="#dati_personali">Dati Personali</a>
-                    <a class="fs-1 nav-link ms-3 my-1" href="#dati_accademici-1-2">Dati Accademici</a>
+                    <a class="fs-1 nav-link" href="#account">Account</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="fs-1 nav-link ms-3 my-1" href="#dati_personali">Dati Personali</a>
+                        <a class="fs-1 nav-link ms-3 my-1" href="#dati_accademici-1-2">Dati Accademici</a>
+                    </nav>
+                    <a class="fs-1 nav-link" href="#preferenze">Preferenze</a>
                 </nav>
-                <a class="fs-1 nav-link" href="#preferenze">Preferenze</a>
             </nav>
-        </nav>
+        </div>
     {:else}
-        <div class="mt-5">
+        <div class="mt-5 sidebar-container">
             <NormalButton active={$page.route.id == "/(app)/home" ? 'active' : 'not-active'} classes={"m-2"}>
                 <div slot="name" class="navbar-item display-6 rounded-4">
                     <a class="d-block px-4 py-2 text-decoration-none" href="/home">Home</a>
@@ -267,7 +271,7 @@
                 </div>
             </NormalButton>
 
-            {#if data.user.role == 'admin'}
+            {#if user.role == 'admin'}
                 <hr class="mx-3">
 
                 <NormalButton active={$page.route.id == "/test" ? 'active' : 'not-active'} classes={'m-2'}>
@@ -290,12 +294,17 @@
     @import '$css/variables.scss';
     
     .sidebar {
-        position: fixed;
+        position: sticky;
         width: 300px;
-        min-height: 82vh;
+        min-height: 89vh;
         flex-shrink: 0;
         background-color: $light;
         border-right: 1px solid rgba($dark, 0.25);
+    }
+
+    .sidebar-container {
+        position: sticky;
+        top: calc(8rem + 1px);
     }
 
     .filter-category {
