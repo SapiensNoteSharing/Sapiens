@@ -7,25 +7,25 @@
     import { view, value, filter_tags, dna } from '$lib/stores';
     import { space } from 'svelte/internal';
 
-    let subpage = "bundle";
+    let subpage = "submit";
 </script>
 
 <div class="d-flex flex-row">
-    <NormalButton active={subpage == "bundle" ? 'active' : 'not-active'} classes={"me-3"}>
+    <NormalButton active={subpage == "submit" ? 'active' : 'not-active'} classes={"me-3"}>
         <div slot="name" class="navbar-item outlined display-6 rounded-4">
-            <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "bundle"}><i class="me-3 display-5 bi bi-box-seam{subpage == "bundle" ? '-fill' : ''}"></i>Pacchetti</a>
+            <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "submit"}><i class="me-3 display-5 bi bi-file-earmark-plus{subpage == "submit" ? '-fill' : ''}"></i>Nuovo corso</a>
         </div>
     </NormalButton>
 
-    <NormalButton active={subpage == "single" ? 'active' : 'not-active'} classes={"me-3"}>
+    <NormalButton active={subpage == "correction" ? 'active' : 'not-active'} classes={"me-3"}>
         <div slot="name" class="navbar-item outlined display-6 rounded-4">
-            <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "single"}><i class="me-3 display-5 bi bi-1-circle{subpage == "single" ? '-fill' : ''}"></i>Corso singolo</a>
+            <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "correction"}><i class="me-3 display-5 bi bi-exclamation-triangle{subpage == "correction" ? '-fill' : ''}"></i>Correzione</a>
         </div>
     </NormalButton>
 
-    <NormalButton active={subpage == "custom" ? 'active' : 'not-active'} classes={"me-3"}>
+    <NormalButton active={subpage == "suggestion" ? 'active' : 'not-active'} classes={"me-3"}>
         <div slot="name" class="navbar-item outlined display-6 rounded-4">
-            <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "custom"}><i class="me-3 display-5 bi bi-pencil{subpage == "custom" ? '-fill' : ''}"></i>Personalizzato</a>
+            <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "suggestion"}><i class="me-3 display-5 bi bi-chat-dots{subpage == "suggestion" ? '-fill' : ''}"></i>Suggerimento</a>
         </div>
     </NormalButton>
 </div>

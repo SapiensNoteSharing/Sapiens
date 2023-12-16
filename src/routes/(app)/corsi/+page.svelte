@@ -340,12 +340,12 @@
     <div class="d-flex justify-content-left m-0 mb-5">
         <NormalButton active={selectedGroup == "owned" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block px-4 py-2 text-decoration-none" on:click={() => selectedGroup = "owned"}>I Miei Corsi</a>
+                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => selectedGroup = "owned"}><i class="me-3 display-5 bi bi-bookmark{selectedGroup == "owned" ? '-fill' : ''}"></i>I Miei Corsi</a>
             </div>
         </NormalButton>
         <NormalButton active={selectedGroup == "explore" ? 'active' : 'not-active'}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block px-4 py-2 text-decoration-none" on:click={() => selectedGroup = "explore"}>Esplora</a>
+                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => selectedGroup = "explore"}><i class="me-3 display-5 bi bi-search"></i>Esplora</a>
             </div>
         </NormalButton>
     </div>

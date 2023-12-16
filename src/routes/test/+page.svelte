@@ -1,4 +1,7 @@
 <script>
+    import LeftSidebar from "$lib/components/LeftSidebar.svelte";
+    import NormalButton from '$lib/components/NormalButton.svelte';
+
     export let data;
     const fetch = data.fetch
     
@@ -22,19 +25,23 @@
     $: href != undefined && debounce()
 </script>
 
-<div class="m-5">
-    <div class="row h-100">
-        <div class="col">
-            <button class="btn btn-primary" on:click={update}>update</button>
-            <input bind:value={href} class="form-control">
-            <span class="text">Usage: /{'<path of dir/file>'}</span>
-            <br>
-            <span class="text">Response:<br>
-            </span>
-            <textarea class="w-100 h-100">
-                {body}
-            </textarea>
-        </div>
+<div class="d-flex h-100 align-self-stretch">
+    <LeftSidebar user={data.user}/>
+
+    <div class="col m-5">
+        <NormalButton active classes={"me-3"}>
+            <div slot="name" class="navbar-item outlined display-6 rounded-4">
+                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={update}><i class="me-3 display-5 bi bi-arrow-clockwise"></i>Update</a>
+            </div>
+        </NormalButton>
+        <input bind:value={href} class="form-control">
+        <span class="text">Usage: /{'<path of dir/file>'}</span>
+        <br>
+        <span class="text">Response:<br>
+        </span>
+        <textarea class="w-100 h-100">
+            {body}
+        </textarea>
     </div>
 </div>
 

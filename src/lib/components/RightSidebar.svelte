@@ -11,8 +11,6 @@
     import { goto } from '$app/navigation'
     import Svelecte from 'svelecte';
 
-    export let user;
-
     export let courses;
     let course = courses[0];
     let _course = course;
@@ -70,59 +68,17 @@
             $viewing = {}
         }
     }
+
+    let sidebarPosition = 0;
+
+    function toggleSidebar() {
+        sidebarPosition = sidebarPosition == 0 ? -400 : 0;
+    }
 </script>
 
-<div class="sidebar px-3">
-    {#if $page.route.id == '/(app)/corsi'}
-        <div class="sidebar-container">
-            <div class="d-flex align-items-center my-5">
-                <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
-            </div>
-            
-            <Searchbar class="align-self-center mb-5"></Searchbar>
-            
-            <Accordion let:id class="mb-5">
-                <AccordionItem class="filter-category">
-                    <div slot="name">
-                        Corso Di Laurea
-                    </div>
-                    <div class="d-flex flex-wrap">
-                        {#each faculties as faculty}
-                            <div class="me-2 mb-2">
-                                <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
-                            </div>
-                        {/each}
-                    </div>
-                </AccordionItem>
-                <AccordionItem class="filter-category">
-                    <div slot="name">
-                        Tipo di Laurea
-                    </div>
-                    {#each degree_types as type}
-                        <div class="me-2 mb-2">
-                            <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
-                        </div>
-                    {/each}
-                </AccordionItem>
-                <AccordionItem class="filter-category">
-                    <div slot="name">
-                        Tags
-                    </div>
-                    {#each tags as tag}
-                        <div class="me-2 mb-2">
-                            <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
-                        </div>
-                    {/each}
-                </AccordionItem>
-                <AccordionItem class="filter-category">
-                    <div slot="name">
-                        Rating
-                    </div>
-                </AccordionItem>
-            </Accordion>
-        </div>
-    {:else if $page.route.id == '/(app)/aula_studio'}
-        <div class="mt-3 sidebar-container">
+{#if $page.route.id == '/(app)/aula_studio'}
+    <div class="right-sidebar px-4">
+        <div class="mt-3 right-sidebar-container">
             <div class="course-selection">
                 <Svelecte
                 placeholder="Select Course..."
@@ -140,15 +96,15 @@
 
             <div class="d-flex flex-column">
                 <div class="d-flex flex-row justify-content-between">
-                    <button class="display-4 bg-light py-2 mb-0 me-2 tab" on:click={() => sidebar_page = "chapters"}><img class="w-50" src="/src/style/chapters.png" alt=""></button>
-                    <button class="display-4 bg-success py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "exercises"}><img class="w-50" src="/src/style/exercises.png" alt=""></button>
-                    <button class="display-4 bg-primary py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "questions"}><img class="w-50" src="/src/style/questions.png" alt=""></button>
-                    <button class="display-4 bg-info py-2 mb-0 ms-1 tab" on:click={() => sidebar_page = "formulary"}><img class="w-50" src="/src/style/formulary.png" alt=""></button>
+                    <button class="display-4 bg-light py-2 mb-0 me-2 tab" on:click={() => sidebar_page = "chapters"}><img src="/src/style/chapters.png" alt=""></button>
+                    <button class="display-4 bg-success py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "exercises"}><img src="/src/style/exercises.png" alt=""></button>
+                    <button class="display-4 bg-primary py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "questions"}><img src="/src/style/questions.png" alt=""></button>
+                    <button class="display-4 bg-info py-2 mb-0 ms-1 tab" on:click={() => sidebar_page = "formulary"}><img src="/src/style/formulary.png" alt=""></button>
                 </div>
             </div>
             
             {#if sidebar_page == "chapters"}
-                <div class="sidebar-page">
+                <div class="right-sidebar-page">
                     <div class="navigation">
                         {#each course.chapters || [] as chapter}
                             <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
@@ -162,7 +118,7 @@
                     </div>
                 </div>
             {:else if sidebar_page == "exercises"}
-                <div class="sidebar-page d-flex flex-column bg-secondary">
+                <div class="right-sidebar-page d-flex flex-column bg-secondary">
                     <NormalButton classes="bg-light m-3 mb-0">
                         <div slot="name" class="d-flex flex-column justify-content-between m-3">
                             <div class="d-flex flex-row justify-content-between">
@@ -203,106 +159,82 @@
                     </NormalButton>
                 </div>
             {:else if sidebar_page == "exercises"}
-                <div class="sidebar-page">
+                <div class="right-sidebar-page">
                     
                 </div>
             {:else if sidebar_page == "formulary"}
-                <div class="sidebar-page">
+                <div class="right-sidebar-page">
                     
                 </div>
             {/if}
         </div>
-    {:else if $page.route.id == '/(app)/area_personale'}
-        <div class="sticky-top">
-            <nav id="personal_area_scrollspy" class="mt-4 h-100 flex-column align-items-stretch pe-4 border-end">
-                <nav class="nav nav-pills flex-column">
-                    <a class="fs-1 nav-link" href="#account">Account</a>
-                    <nav class="nav nav-pills flex-column">
-                        <a class="fs-1 nav-link ms-3 my-1" href="#dati_personali">Dati Personali</a>
-                        <a class="fs-1 nav-link ms-3 my-1" href="#dati_accademici-1-2">Dati Accademici</a>
-                    </nav>
-                    <a class="fs-1 nav-link" href="#preferenze">Preferenze</a>
-                </nav>
-            </nav>
+    </div>
+{:else if $page.route.id == '/(app)/corsi'}
+    <div style="--sidebarPosition:{sidebarPosition}" class="right-sidebar px-4">
+        <div class="d-flex align-items-center my-5">
+            <i style="position: absolute; left: 1.5rem;" class="display-3 bi bi-x-lg" on:click={toggleSidebar}></i>
+            <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
         </div>
-    {:else}
-        <div class="mt-5 sidebar-container">
-            <NormalButton active={$page.route.id == "/(app)/home" ? 'active' : 'not-active'} classes={"m-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block px-4 py-2 text-decoration-none" href="/home">Home</a>
+        
+        <Searchbar class="align-self-center mb-5"></Searchbar>
+        
+        <Accordion let:id class="mb-5">
+            <AccordionItem class="filter-category">
+                <div slot="name">
+                    Corso Di Laurea
                 </div>
-            </NormalButton>
-
-            <NormalButton active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} classes={"m-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block px-4 py-2 text-decoration-none" href="/aula_studio">Aula Studio</a>
+                <div class="d-flex flex-wrap">
+                    {#each faculties as faculty}
+                        <div class="me-2 mb-2">
+                            <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
+                        </div>
+                    {/each}
                 </div>
-            </NormalButton>
-
-            <NormalButton active={$page.route.id == "/(app)/corsi" ? 'active' : 'not-active'} classes={"m-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block px-4 py-2 text-decoration-none" href="/corsi">Corsi</a>
+            </AccordionItem>
+            <AccordionItem class="filter-category">
+                <div slot="name">
+                    Tipo di Laurea
                 </div>
-            </NormalButton>
-
-            <NormalButton active={$page.route.id == "/(app)/calendario" ? 'active' : 'not-active'} classes={"m-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block px-4 py-2 text-decoration-none" href="/calendario">Calendario</a>
-                </div>
-            </NormalButton>
-
-            <hr class="mx-3">
-
-            <NormalButton active={$page.route.id == "/(app)/classifiche" ? 'active' : 'not-active'} classes={"m-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block px-4 py-2 text-decoration-none" href="/classifiche">Classifiche</a>
-                </div>
-            </NormalButton>
-
-            <NormalButton active={$page.route.id == "/(app)/sfide" ? 'active' : 'not-active'} classes={"m-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block px-4 py-2 text-decoration-none" href="/sfide">Sfide</a>
-                </div>
-            </NormalButton>
-
-            <NormalButton active={$page.route.id == "/(app)/negozio" ? 'active' : 'not-active'} classes={"m-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block px-4 py-2 text-decoration-none" href="/negozio">Negozio</a>
-                </div>
-            </NormalButton>
-
-            {#if user.role == 'admin'}
-                <hr class="mx-3">
-
-                <NormalButton active={$page.route.id == "/test" ? 'active' : 'not-active'} classes={'m-2'}>
-                    <div slot="name" class="navbar-item display-6 rounded-4">
-                        <a class="d-block px-4 py-2 text-decoration-none" href="/test">Test</a>
+                {#each degree_types as type}
+                    <div class="me-2 mb-2">
+                        <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
                     </div>
-                </NormalButton>
-
-                <NormalButton active={$page.route?.id?.startsWith("/admin") ? 'active' : 'not-active'} classes={"m-2"}>
-                    <div slot="name" class="navbar-item display-6 rounded-4">
-                        <a class="d-block px-4 py-2 text-decoration-none" href="/admin/courses">Admin</a>
+                {/each}
+            </AccordionItem>
+            <AccordionItem class="filter-category">
+                <div slot="name">
+                    Tags
+                </div>
+                {#each tags as tag}
+                    <div class="me-2 mb-2">
+                        <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
                     </div>
-                </NormalButton>
-            {/if}
-        </div>
-    {/if}
-</div>
+                {/each}
+            </AccordionItem>
+            <AccordionItem class="filter-category">
+                <div slot="name">
+                    Rating
+                </div>
+            </AccordionItem>
+        </Accordion>
+    </div>
+{/if}
 
 <style lang="scss">
     @import '$css/variables.scss';
     
-    .sidebar {
+    .right-sidebar {
         position: sticky;
-        width: 300px;
+        width: 400px;
+        right: calc(var(--sidebarPosition) * 1px);
         min-height: 89vh;
         flex-shrink: 0;
         background-color: $light;
-        border-right: 1px solid rgba($dark, 0.25);
+        border-left: 1px solid rgba($dark, 0.25);
+        transition: width 0.3s ease;
     }
 
-    .sidebar-container {
+    .right-sidebar-container {
         position: sticky;
         top: calc(8rem + 1px);
     }
@@ -319,6 +251,7 @@
         border: 1px solid $dark;
         border-bottom: 0px;
         border-radius: .4rem .4rem 0rem 0rem;
+        width: 50px;
     }
     
     .exercise-category {
@@ -343,7 +276,7 @@
         transform: translate(0rem, .2rem);
     }
     
-    .sidebar-page {
+    .right-sidebar-page {
         border: 1px solid $dark;
         border-radius: .5rem;
         padding-bottom: 1rem; 

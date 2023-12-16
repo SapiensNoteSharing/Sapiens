@@ -26,12 +26,7 @@
     }
 
     let pageTitle
-    function setTitle() {
-        pageTitle = $page.route.id.split('/').pop()
-        pageTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1)
-    }
-
-    $: $page.route.id && setTitle()
+    $: pageTitle = $page.route.id ? $page.route.id.split('/').pop().replace(/_/g, ' ').charAt(0).toUpperCase() + $page.route.id.split('/').pop().replace(/_/g, ' ').slice(1) : '';
 </script>
 
 <div class="page">
@@ -142,13 +137,13 @@
 
     .sapiens-logo {
         position: relative;
-        left: 150px;
+        left: 125px;
         transform: translate(-50%);
     }
 
     .nav-primary {
         position: absolute;
-        left: 300px;
+        left: 250px;
     }
 
     .nav-secondary {

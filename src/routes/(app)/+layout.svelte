@@ -1,15 +1,18 @@
 <script>
-    import Sidebar from "$lib/components/Sidebar.svelte";
+    import LeftSidebar from "$lib/components/LeftSidebar.svelte";
+    import RightSidebar from "$lib/components/RightSidebar.svelte";
 
     export let data;
 </script>
 
 <div class="d-flex h-100 align-self-stretch">
-    <Sidebar courses={data.courses} user={data.user}/>
+    <LeftSidebar user={data.user}/>
 
     <div class="flex-grow-1 position-relative content">
         <slot></slot>
     </div>
+
+    <RightSidebar courses={data.courses}/>
 </div>
 
 <style lang="scss">
