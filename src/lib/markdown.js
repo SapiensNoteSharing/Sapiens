@@ -46,6 +46,7 @@ const md = new MarkdownIt({
             return ''
         }
     })
+    
     .use(texMath, {
         engine: katex,
         delimiters: 'dollars',
@@ -56,12 +57,12 @@ const md = new MarkdownIt({
     .use(markdownItTable)
 
 export async function render(data) {
-
     let errors = data.match(/(?<!!)\[\[(.*)\]\]/gi) || [];
 
-    for(let error of errors){ //image tag mistakenly written
+    for(let error of errors){ // image tag mistakenly written
         data = data.replace(error, `!${error}`)
     }
+
     // images
 
     let images = data.match(/!\[\[(.*)\]\]/gi) || [];
@@ -81,7 +82,7 @@ export async function render(data) {
         }
     }
 
-    //place components
+    // place components
 
     return data;
 }

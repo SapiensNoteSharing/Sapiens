@@ -1,12 +1,8 @@
 <script>
-    import Icon from '$lib/components/Icon.svelte';
-    import Course from '$lib/components/Course.svelte';
     import CourseCard from '$lib/components/CourseCard.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
-    import FloatingButton from '$lib/components/FloatingButton.svelte';
-    import Modal from '$lib/components/Modal.svelte';
+    // import Modal from '$lib/components/Modal.svelte';
     import { view, value, filter_tags, dna } from '$lib/stores';
-    import { space } from 'svelte/internal';
     
     export let data;
     let courses = data.courses || [];
@@ -18,13 +14,8 @@
         courses.find(course => course.name == "Algoritmi e strutture dati"),
     ].filter(Boolean);
 
-    // elenco dei corsi non posseduti
-    let ownedCoursesNames = owned.map(course => course.name);
-    let not_owned = courses.filter(course => !ownedCoursesNames.includes(course.name));
-
     let favourites_filter;
     let sorting_method;
-    let cartModal;
 
     function sort_course_list(course_list) {
         switch(sorting_method) {
@@ -220,11 +211,10 @@
     }
 
     let filtered_owned = filter_and_sort(owned)
-    let filtered_not_owned = filter_and_sort(not_owned)
 
-    $: sorting_method && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
-    $: $filter_tags && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
-    $: $value !== undefined && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
+    $: sorting_method && (filtered_owned = filter_and_sort(owned))
+    $: $filter_tags && (filtered_owned = filter_and_sort(owned))
+    $: $value !== undefined && (filtered_owned = filter_and_sort(owned))
     
     function edit_distance(x, y) {
         let m = x.length;
@@ -324,33 +314,9 @@
         // and normalize the calculated distance
         return Math.map(distance, 0, max_dist, 0, 2);
     }
-    
-    function openCart() {
-        cartModal.show().then(async res => {
-            if (res) {
-                
-            }
-        })
-    }
-
-    let selectedGroup = "owned";
 </script>
 
 <div class="d-flex flex-column">
-    <div class="d-flex justify-content-left m-0 mb-5">
-        <NormalButton active={selectedGroup == "owned" ? 'active' : 'not-active'} classes={"me-3"}>
-            <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => selectedGroup = "owned"}><i class="me-3 display-5 bi bi-bookmark{selectedGroup == "owned" ? '-fill' : ''}"></i>I Miei Corsi</a>
-            </div>
-        </NormalButton>
-        <NormalButton active={selectedGroup == "explore" ? 'active' : 'not-active'}>
-            <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => selectedGroup = "explore"}><i class="me-3 display-5 bi bi-search"></i>Esplora</a>
-            </div>
-        </NormalButton>
-    </div>
-
-    <!-- filters and cart -->
     <div class="d-flex mb-5 justify-content-between">
         <div class="d-flex align-items-center">
             {#if $filter_tags.length == 2}
@@ -368,7 +334,6 @@
         </div>
         
         <div class="d-flex align-items-center">
-            <!-- sort -->
             {#if $value != "" && $value != undefined}
                 <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method} disabled>
                     <option class="opt" value="match_ascending" selected>Corrispondenza</option>
@@ -384,141 +349,61 @@
                     <option class="opt" value="no_order">Nessun ordinamento</option>
                 </select>
             {/if}
-
-            <!-- favourites filter -->
-            <div>
-                <input type="checkbox" class="btn-check" id="favourites_filter" autocomplete="off" bind:checked={favourites_filter}>
-                <label class="btn btn-outline-light p-0 text-dark border-light" for="favourites_filter">
-                    {#if favourites_filter}
-                        <i class="icon p-0 me-2 text-secondary bi bi-heart-fill"></i>
-                    {:else}
-                        <i class="icon p-0 me-2 text-dark bi bi-heart" ></i>
-                    {/if}
-                </label><br>
-            </div>
-            
-            <!-- cart button -->
-            <button type="button" class="py-0 btn btn-light position-relative" on:click={openCart}>
-                <i class="icon text-dark bi bi-cart"></i>
-                <span class="badge bg-secondary rounded-pill position-absolute" style="right: 2px; top: 8px;">{courses.reduce((acc, course) => acc + (course.in_cart ? 1 : 0), 0)}</span>
-            </button>
         </div>
     </div>
 
-    {#if selectedGroup == "owned"}
-        {#if filtered_owned.length != 0}
-            <div class="d-flex flex-wrap justify-content-between align-content-between">
-                {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
-                    <div class="w-100 mb-3">
-                        <h3 class="display-3 m-0">{filtered_owned[0].year} anno</h3>
-                    </div>
-                    <div class="w-100 mb-4">
-                        <h3 class="display-4 m-0">{filtered_owned[0].semester} semestre</h3>
-                    </div>
-                    {#each filtered_owned as course, $index}
-                        {#if $index > 0}
-                            {#if course.year != filtered_owned[$index - 1].year}
-                                <div class="w-100 mb-3">
-                                    <h3 class="display-3 m-0">{course.year} anno</h3>
-                                </div>
-                                <div class="w-100 mb-4">
-                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
-                                </div>
-                            {:else if course.semester != filtered_owned[$index - 1].semester}
-                                <div class="w-100 mb-4">
-                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
-                                </div>
-                            {/if}
+    {#if filtered_owned.length != 0}
+        <div class="d-flex flex-wrap justify-content-between align-content-between">
+            {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
+                <div class="w-100 mb-3">
+                    <h3 class="display-3 m-0">{filtered_owned[0].year} anno</h3>
+                </div>
+                <div class="w-100 mb-4">
+                    <h3 class="display-4 m-0">{filtered_owned[0].semester} semestre</h3>
+                </div>
+                {#each filtered_owned as course, $index}
+                    {#if $index > 0}
+                        {#if course.year != filtered_owned[$index - 1].year}
+                            <div class="w-100 mb-3">
+                                <h3 class="display-3 m-0">{course.year} anno</h3>
+                            </div>
+                            <div class="w-100 mb-4">
+                                <h3 class="display-4 m-0">{course.semester} semestre</h3>
+                            </div>
+                        {:else if course.semester != filtered_owned[$index - 1].semester}
+                            <div class="w-100 mb-4">
+                                <h3 class="display-4 m-0">{course.semester} semestre</h3>
+                            </div>
                         {/if}
-                        <CourseCard {course} class="g-col-4 mb-5"/>
-                    {/each}
-                {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
-                    <div class="w-100 mt-3">
-                        <h3 class="display-3 m-0">{filtered_owned[0].name[0]}</h3>
-                    </div>
-                    {#each filtered_owned as course, $index}
-                        {#if $index > 0}
-                            {#if course.name[0] != filtered_owned[$index - 1].name[0]}
-                                <div class="w-100 mb-4">
-                                    <h3 class="display-4">{course.name[0]}</h3>
-                                </div>
-                            {/if}
+                    {/if}
+                    <CourseCard {course} class="g-col-4 mb-5"/>
+                {/each}
+            {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
+                <div class="w-100 mt-3">
+                    <h3 class="display-3 m-0">{filtered_owned[0].name[0]}</h3>
+                </div>
+                {#each filtered_owned as course, $index}
+                    {#if $index > 0}
+                        {#if course.name[0] != filtered_owned[$index - 1].name[0]}
+                            <div class="w-100 mb-4">
+                                <h3 class="display-4">{course.name[0]}</h3>
+                            </div>
                         {/if}
-                        <CourseCard {course} class="g-col-4 mb-5"/>
-                    {/each}
-                {:else}
-                    {#each filtered_owned as course}
-                        <CourseCard {course} class="g-col-4 mb-5"/>
-                    {/each}
-                {/if}
-            </div>
-        {:else}
-            <h2>Acquista il tuo primo corso</h2>
-        {/if}
-    {:else if selectedGroup == "explore" && filtered_not_owned.length != 0}
-        <!-- {#if $value == undefined || $value == ""}
-            <h2 class="display-6 text-dark">Tutti i corsi disponibili</h2>
-        {:else}
-            <h2 class="display-6 text-dark">Risultati per: {$value}</h2>
-        {/if} -->
-
-        <!-- explore courses -->
-        {#if filtered_not_owned.length != 0}
-            <div class="d-flex flex-wrap justify-content-between align-content-between">
-                {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
-                    <div class="w-100 mb-3">
-                        <h3 class="display-3 m-0">{filtered_not_owned[0].year} anno</h3>
-                    </div>
-                    <div class="w-100 mb-4">
-                        <h3 class="display-4 m-0">{filtered_not_owned[0].semester} semestre</h3>
-                    </div>
-                    {#each filtered_not_owned as course, $index}
-                        {#if $index > 0}
-                            {#if course.year != filtered_not_owned[$index - 1].year}
-                                <div class="w-100 mb-3">
-                                    <h3 class="display-3 m-0">{course.year} anno</h3>
-                                </div>
-                                <div class="w-100 mb-4">
-                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
-                                </div>
-                            {:else if course.semester != filtered_not_owned[$index - 1].semester}
-                                <div class="w-100 mb-4">
-                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
-                                </div>
-                            {/if}
-                        {/if}
-                        <CourseCard {course} class="g-col-4 mb-5"/>
-                    {/each}
-                {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
-                    <div class="w-100 mt-3">
-                        <h3 class="display-3 m-0">{filtered_not_owned[0].name[0]}</h3>
-                    </div>
-                    {#each filtered_not_owned as course, $index}
-                        {#if $index > 0}
-                            {#if course.name[0] != filtered_not_owned[$index - 1].name[0]}
-                                <div class="w-100 my-4">
-                                    <h3 class="display-4">{course.name[0]}</h3>
-                                </div>
-                            {/if}
-                        {/if}
-                        <CourseCard {course} class="g-col-4 mb-5"/>
-                    {/each}
-                {:else}
-                    {#each filtered_not_owned as course}
-                        <CourseCard {course} class="g-col-4 mb-5"/>
-                    {/each}
-                {/if}
-            </div>
-        {:else}
-            <h2>Nessun risultato trovato</h2>
-        {/if}
+                    {/if}
+                    <CourseCard {course} class="g-col-4 mb-5"/>
+                {/each}
+            {:else}
+                {#each filtered_owned as course}
+                    <CourseCard {course} class="g-col-4 mb-5"/>
+                {/each}
+            {/if}
+        </div>
     {:else}
-        <h2>Nessun risultato trovato</h2>
+        <h2>Acquista il tuo primo corso</h2>
     {/if}
 </div>
 
-<!-- Carrello -->
-<Modal title="Carrello" yes="Acquista" no="Chiudi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={cartModal}>
+<!-- <Modal title="Carrello" yes="Acquista" no="Chiudi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={cartModal}>
     {#each courses as course}
         {#if course.in_cart}
             <div class="d-flex m-4 justify-content-between">
@@ -585,7 +470,7 @@
             <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
         </div>
     </div>
-</Modal>
+</Modal> -->
 
 <style lang="scss">
     @import '$css/variables.scss';

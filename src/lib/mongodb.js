@@ -43,10 +43,17 @@ const UserSchema = new Schema({
     city: String,
     university_region: String,
     university_city: String,
-    faculty: String,
-    degree_type: String,
+    university_name: String,
+    faculty_name: String,
+    faculty_type: String,
+    faculty_code: String,
+    sector_code: String,
+    curriculum_code: [String],
+    curriculum_name: [String],
+    year: String,
+    semester: String,
     courses: [ObjectId],
-    balance: Number,
+    dna_points: Number,
     hash: String,
     role: String,
 }, {
@@ -97,9 +104,11 @@ DirectorySchema.pre('find', function (next) {
 })
 
 const CourseSchema = new Schema({
+    university_name: String,
     name: String,
     code: String,
     faculty_name: String,
+    faculty_type: String,
     faculty_code: String,
     sector_code: String,
     curriculum_code: [String],

@@ -1,12 +1,4 @@
 <script>
-    import Icon from '$lib/components/Icon.svelte';
-    import Course from '$lib/components/Course.svelte';
-    import CourseCard from '$lib/components/CourseCard.svelte';
-    import FloatingButton from '$lib/components/FloatingButton.svelte';
-    import Modal from '$lib/components/Modal.svelte';
-    import { view, value, filter_tags, dna } from '$lib/stores';
-    import { space } from 'svelte/internal';
-
     export let data;
     let courses = data.courses || []
     
@@ -20,7 +12,7 @@
         <!-- back to study content -->
         <h1 class="display-4 mb-4">Continua da dove hai interrotto</h1>
 
-        <div class="box d-flex flex-column justify-content-between mb-4">
+        <a class="href-box d-flex flex-column justify-content-between mb-4" href="/aula_studio">
             <div class="d-flex flex-row justify-content-between align-items-top">
                 <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course.name}.png" alt="{course.name} icon">
             </div>
@@ -42,37 +34,53 @@
             <div class="d-flex justify-content-left">
                 <p class="dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
             </div>
-        </div>
+        </a>
 
         <!-- calendar -->
         <h1 class="display-4 my-4">Organizza il tuo studio</h1>
 
-        <div class="box d-flex flex-row">
+        <a class="href-box d-flex flex-row" href="/calendario">
             <img style="width: 20rem;" src="/src/style/spaced repetition.png" alt="">
-        </div>
+        </a>
     </div>
 
     <!-- side content -->
     <div class="side-content d-flex flex-column">
         <!-- streak box -->
-        <div class="box d-flex flex-row mb-4">
-            <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
-        </div>
-
-        <!-- league box -->
-        <div class="box d-flex flex-row mb-4">
-            <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.svg" alt="league">
+        <div class="href-box d-flex flex-column mb-4">
+            <div class="d-flex align-items-center flex-row mb-3">
+                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
+                <span class="display-4 ms-3">Streak</span>
+            </div>
+            <span class="display-6">La tua streak è lunga 8 giorni!</span>
         </div>
 
         <!-- xp box -->
-        <div class="box d-flex flex-row mb-4">
-            <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="xp">
+        <div class="href-box d-flex flex-column mb-4">
+            <div class="d-flex align-items-center flex-row mb-3">
+                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
+                <span class="display-4 ms-3">Punti XP</span>
+            </div>
+            <span class="display-6">Hai guadagnato un totale di 560 XP!</span>
         </div>
+
+        <!-- league box -->
+        <a class="href-box d-flex flex-column mb-4" href="/classifiche">
+            <div class="d-flex align-items-center flex-row mb-3">
+                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.png" alt="league">
+                <span class="display-4 ms-3">Lega</span>
+            </div>
+            <span class="display-6">Fai parte della Lega Oro!</span>
+        </a>
         
         <!-- dna box -->
-        <div class="box d-flex flex-row mb-4">
-            <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
-        </div>
+        <a class="href-box d-flex flex-column mb-4" href="negozio">
+            <div class="d-flex align-items-center flex-row mb-3">
+                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                <span class="display-4 ms-3">Punti DNA</span>
+            </div>
+            <span class="display-6">Il tuo bilancio è di 12 punti DNA</span>
+        </a>
     </div>
 </div>
 
@@ -91,7 +99,9 @@
         box-sizing: border-box;
     }
 
-    .box {
+    .href-box {
+        text-decoration: none;
+        color: $dark;
         padding: 2rem;
         border: 1px solid rgba($dark, 0.25);
         background: $light;

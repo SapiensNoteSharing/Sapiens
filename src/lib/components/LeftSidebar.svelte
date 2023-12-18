@@ -33,9 +33,9 @@
                 </div>
             </NormalButton>
 
-            <NormalButton active={$page.route.id == "/(app)/corsi" ? 'active' : 'not-active'} classes={"my-2"}>
+            <NormalButton active={$page.route.id == "/(app)/i_miei_corsi" ? 'active' : 'not-active'} classes={"my-2"}>
                 <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/corsi"><i class="me-3 display-5 bi bi-archive{$page.route.id == "/(app)/corsi" ? '-fill' : ''}"></i>Corsi</a>
+                    <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/i_miei_corsi"><i class="me-3 display-5 bi bi-backpack2{$page.route.id == "/(app)/i_miei_corsi" ? '-fill' : ''}"></i>I miei corsi</a>
                 </div>
             </NormalButton>
 
@@ -46,6 +46,12 @@
             </NormalButton>
 
             <hr class="mx-3">
+
+            <NormalButton active={$page.route.id == "/(app)/negozio" ? 'active' : 'not-active'} classes={"my-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/negozio"><i class="me-3 display-5 bi bi-bag{$page.route.id == "/(app)/negozio" ? '-fill' : ''}"></i>Negozio</a>
+                </div>
+            </NormalButton>
 
             <NormalButton active={$page.route.id == "/(app)/classifiche" ? 'active' : 'not-active'} classes={"my-2"}>
                 <div slot="name" class="navbar-item display-6 rounded-4">
@@ -62,12 +68,6 @@
             <NormalButton active={$page.route.id == "/(app)/contribuisci" ? 'active' : 'not-active'} classes={"my-2"}>
                 <div slot="name" class="navbar-item display-6 rounded-4">
                     <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/contribuisci"><i class="me-3 display-5 bi bi-puzzle{$page.route.id == "/(app)/contribuisci" ? '-fill' : ''}"></i>Contribuisci</a>
-                </div>
-            </NormalButton>
-
-            <NormalButton active={$page.route.id == "/(app)/negozio" ? 'active' : 'not-active'} classes={"my-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/negozio"><i class="me-3 display-5 bi bi-bag{$page.route.id == "/(app)/negozio" ? '-fill' : ''}"></i>Negozio</a>
                 </div>
             </NormalButton>
 

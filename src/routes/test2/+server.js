@@ -119,7 +119,7 @@ export async function GET({ url, fetch }) {
 }
 
 async function getFile() {
-    const resp = await fetch(`https://api.github.com/repos/Falesteo/Alessandro-Longo/contents/Universit%C3%A0/Secondo%20anno/Fondamenti%20di%20automatica/E.%20Esercizi.md?ref=main`, { headers })
+    const resp = await fetch(`https://api.github.com/repos/Falesteo/Obsidian-Unifi-Vault/contents/Universit%C3%A0/Secondo%20anno/Fondamenti%20di%20automatica/E.%20Esercizi.md?ref=main`, { headers })
     let file = (resp.ok && await resp.json())
     console.log(file)
 

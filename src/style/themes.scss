@@ -155,6 +155,11 @@ i.bi.primary {
     --scroll-track: $light;
     --scroll-thumb: $primary;
     --scroll-thumb-radius: 5px;
+
+    --bs-form-valid-color: red;
+    --bs-form-valid-border-color: red;
+    --bs-form-invalid-color: green;
+    --bs-form-invalid-border-color: green;
 }
 
 ::-webkit-scrollbar {
@@ -171,7 +176,7 @@ i.bi.primary {
     background-color: var(--scroll-thumb-color, $primary);
     background-image: var(--scroll-thumb, none);
     border-radius: var(--scroll-thumb-radius, var(--scroll-radius));
-    border: 1px solid $dark;
+    border: 1px solid rgba($dark, .25);
 }
 
 // html {

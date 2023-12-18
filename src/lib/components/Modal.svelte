@@ -8,7 +8,7 @@
 	/** @type {string} **/
 	export let yes = "Yes";
 	/** @type {string} **/
-	export let no = "";
+	export let no = "No";
 	/** @type {boolean} **/
 	export let enabled = true;
 	/** @type {boolean} **/
@@ -58,7 +58,7 @@
 				{#if no}
 					<button type="button" class="btn btn-outline-secondary text-dark fs-3 px-4 py-2 border-dark rounded-pill" on:click={() => close(false)}>{no}</button>
 				{/if}
-				<button type="button" class="btn {theme} text-dark fs-3 px-4 py-2 border-dark rounded-pill" on:click={() => close(true)} disabled={!enabled}>{yes}</button>
+				<button type="button" class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" on:click={() => close(true)} disabled={!enabled}>{yes}</button>
 			</div>
 		</div>
 	</div>

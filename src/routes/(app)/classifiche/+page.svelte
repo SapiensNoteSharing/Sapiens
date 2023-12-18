@@ -1,11 +1,4 @@
 <script>
-    import Icon from '$lib/components/Icon.svelte';
-    import Course from '$lib/components/Course.svelte';
-    import CourseCard from '$lib/components/CourseCard.svelte';
-    import FloatingButton from '$lib/components/FloatingButton.svelte';
-    import Modal from '$lib/components/Modal.svelte';
-    import { view, value, filter_tags, dna } from '$lib/stores';
-    import { space } from 'svelte/internal';
 </script>
 
 

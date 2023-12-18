@@ -1,6 +1,5 @@
 <script>
     import { viewing } from '$lib/stores';
-    import { onMount } from 'svelte';
     import 'highlight.js/styles/github.css';
 
     export let data;
@@ -10,18 +9,21 @@
 
     $: $viewing && render();
 
-    async function render(){
+    async function render() {
         renderedFile = ''
-        if($viewing?._id){
+        if ($viewing?._id) {
             const resp = await fetch(`/api/file/${$viewing._id}/content`);
-            if(resp.ok) renderedFile = await resp.text()
+            if (resp.ok) 
+                renderedFile = await resp.text()
         }
     }
-
 </script>
 
 <div class="cont">
-    {#if $viewing?._id}<center><h1>{$viewing.name || ''}</h1></center>{/if}
+    {#if $viewing?._id}
+        <center><h1>{$viewing.name || ''}</h1></center>
+    {/if}
+
     {@html renderedFile}
 
     <button type="button" class="focus-btn">

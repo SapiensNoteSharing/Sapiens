@@ -3,6 +3,7 @@
     import RightSidebar from "$lib/components/RightSidebar.svelte";
 
     export let data;
+    export let subpage;
 </script>
 
 <div class="d-flex h-100 align-self-stretch">
@@ -12,7 +13,7 @@
         <slot></slot>
     </div>
 
-    <RightSidebar courses={data.courses}/>
+    <RightSidebar courses={data.courses} subpage={subpage}/>
 </div>
 
 <style lang="scss">

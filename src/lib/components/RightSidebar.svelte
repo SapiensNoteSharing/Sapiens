@@ -1,20 +1,20 @@
 <script>
     import Accordion from '$lib/components/Accordion.svelte';
     import AccordionItem from '$lib/components/AccordionItem.svelte';
-    import FloatingButton from '$lib/components/FloatingButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Searchbar from '$lib/components/Searchbar.svelte';
     import { view, value, filter_tags, viewing } from '$lib/stores';
     import { page } from '$app/stores';
-    import Navigation from './Navigation.svelte';
     import Item from './Item.svelte'
-    import { goto } from '$app/navigation'
     import Svelecte from 'svelecte';
+    
 
     export let courses;
     let course = courses[0];
     let _course = course;
     let sidebar_page = "chapters";
+
+    export let subpage;
     
     let faculties = [
         "Ingegneria informatica",
@@ -72,7 +72,7 @@
     let sidebarPosition = 0;
 
     function toggleSidebar() {
-        sidebarPosition = sidebarPosition == 0 ? -400 : 0;
+        sidebarPosition = sidebarPosition == 0 ? -300 : 0;
     }
 </script>
 
@@ -96,10 +96,10 @@
 
             <div class="d-flex flex-column">
                 <div class="d-flex flex-row justify-content-between">
-                    <button class="display-4 bg-light py-2 mb-0 me-2 tab" on:click={() => sidebar_page = "chapters"}><img src="/src/style/chapters.png" alt=""></button>
-                    <button class="display-4 bg-success py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "exercises"}><img src="/src/style/exercises.png" alt=""></button>
-                    <button class="display-4 bg-primary py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "questions"}><img src="/src/style/questions.png" alt=""></button>
-                    <button class="display-4 bg-info py-2 mb-0 ms-1 tab" on:click={() => sidebar_page = "formulary"}><img src="/src/style/formulary.png" alt=""></button>
+                    <button class="display-4 bg-light py-2 mb-0 me-2 tab" on:click={() => sidebar_page = "chapters"}><img style="width: 10px;" src="/src/style/chapters.png" alt=""></button>
+                    <button class="display-4 bg-success py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "exercises"}><img style="width: 10px;" src="/src/style/exercises.png" alt=""></button>
+                    <button class="display-4 bg-primary py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "questions"}><img style="width: 10px;" src="/src/style/questions.png" alt=""></button>
+                    <button class="display-4 bg-info py-2 mb-0 ms-1 tab" on:click={() => sidebar_page = "formulary"}><img style="width: 10px;" src="/src/style/formulary.png" alt=""></button>
                 </div>
             </div>
             
@@ -169,10 +169,10 @@
             {/if}
         </div>
     </div>
-{:else if $page.route.id == '/(app)/corsi'}
+{:else if $page.route.id == '/(app)/negozio'}
     <div style="--sidebarPosition:{sidebarPosition}" class="right-sidebar px-4">
         <div class="d-flex align-items-center my-5">
-            <i style="position: absolute; left: 1.5rem;" class="display-3 bi bi-x-lg" on:click={toggleSidebar}></i>
+            <i style="position: absolute; left: 1.5rem;" class="close-sidebar-btn display-3 bi bi-x-lg" on:click={toggleSidebar}></i>
             <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
         </div>
         
@@ -225,7 +225,7 @@
     
     .right-sidebar {
         position: sticky;
-        width: 400px;
+        width: 300px;
         right: calc(var(--sidebarPosition) * 1px);
         min-height: 89vh;
         flex-shrink: 0;
@@ -372,5 +372,15 @@
     
     .filter:hover(:not(.btn-primary)) {
         background: rgba($dark, 0.1);
+    }
+
+    .close-sidebar-btn {
+        cursor: pointer;
+        transition: .15s;
+
+        &:hover {
+            color: $secondary;
+            transition: .15s;
+        }
     }
 </style>

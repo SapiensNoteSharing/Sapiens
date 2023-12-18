@@ -3,12 +3,12 @@ import { config } from '$lib/config';
 
 const redis = new Redis(config.redis.url);
 
-redis.on('error', function(err){ 
+redis.on('error', function(err) { 
 	console.error('Redis error:', err); 
 });
 
 export const setSession = async (sid, val, ttl) => {
-    if(val) {
+    if (val) {
         await redis.setex(sid, ttl || config.redis.ttl, JSON.stringify(val))
     } else {
         await redis.del(sid);

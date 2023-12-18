@@ -1,11 +1,8 @@
 <script>
     import { onMount } from "svelte";
     import Modal from '$lib/components/Modal.svelte';
-    import FloatingButton from '$lib/components/FloatingButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
     import { page } from '$app/stores';
-    import { goto } from '$app/navigation';
-    import { dna } from '$lib/stores';
     import '$css/global.scss';
 
     export let data;
@@ -34,7 +31,7 @@
         <div class="d-flex">
             <nav class="navbar navbar-expand-lg bg-light w-100">
                 <div class="d-flex w-100 justify-content-center align-items-center">
-                    <img style="width: 18rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
+                    <img style="width: 14rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
                 </div>
             </nav>
         </div>
@@ -51,22 +48,29 @@
 
                     <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
                         <NormalButton classes={"m-2"}>
-                            <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
-                                <span class="display-6  align-middle text-dark">{user.league_position || 'n'}°</span>
-                                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.svg" alt="league">
-                            </div>
-                        </NormalButton>
-
-                        <NormalButton classes={"m-2"}>
                             <div slot="name" class="display-6 rounded-4 py-2 px-3">
                                 <span class="display-6  align-middle text-dark">{user.streak || 0}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
                             </div>
                         </NormalButton>
 
+                        <NormalButton classes={"m-2"}>
+                            <div slot="name" class="display-6 rounded-4 py-2 px-3">
+                                <span class="display-6  align-middle text-dark">{user.xp || 0}</span>
+                                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
+                            </div>
+                        </NormalButton>
+
+                        <NormalButton classes={"m-2"}>
+                            <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
+                                <span class="display-6  align-middle text-dark">{user.league_position || 'n'}°</span>
+                                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.png" alt="league">
+                            </div>
+                        </NormalButton>
+
                         <NormalButton classes={"m-2"} on:click={openDnaModal}>
                             <div slot="name" class="display-6 rounded-4 py-2 px-3">
-                                <span class="display-6  align-middle text-dark">{user.balance || 0}</span>
+                                <span class="display-6  align-middle text-dark">{user.dna_points || 0}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
                             </div>
                         </NormalButton>
@@ -84,12 +88,7 @@
 
     <slot></slot>
 
-    <!-- DNA sequences info -->
-    <Modal title="Sequenze di DNA" yes="Capito" classes="bg-primary" theme="btn-outline-primary" bind:this={dnaModal}>
-        Lorem ipsum dolor sit amet. Est tempora perferendis eos quia rerum a rerum laborum eum atque eligendi ut laboriosam optio 33 fugiat quae. At nihil nostrum et Quis magnam ab aliquam temporibus est ipsa reiciendis sed facilis odit aut mollitia consequatur. Aut consectetur veritatis ea adipisci ratione et iste quaerat. Ut beatae obcaecati est harum unde et galisum similique ut officia architecto sed nesciunt delectus.
-    </Modal>
-
-    <div class="d-flex justify-content-between footer">
+    <div class="d-flex footer">
         <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
             <div class="container-fluid">
                 <div>
@@ -122,6 +121,10 @@
 <style lang="scss">
     @import '$css/variables.scss';
 
+    .page {
+        background: $light;
+    }
+
     .icon {
         font-size: 20px;
     }
@@ -132,7 +135,10 @@
 
     .navbar {
         overflow-y: scroll;
-        border-bottom: 1px solid rgba($dark, 0.25) !important;
+
+        &.border-bottom {
+            border-bottom: 1px solid rgba($dark, 0.25) !important;
+        }
     }
 
     .sapiens-logo {
@@ -151,17 +157,23 @@
         right: 0px;
     }
 
+    .dna-btn {
+        background: $light;
+
+        &:hover {
+            background: $secondary !important;
+        }
+    }
+
     .user-icon {
         width: 3rem; 
         border-radius: 3rem;
-    }
-
-    .dna-btn {
-        background: $light;
-    }
-
-    .dna-btn::hover {
-        background: $secondary !important;
+        transition: .15s;
+        
+        // &:hover {
+        //     width: 2rem;
+        //     margin-right: .5rem;
+        // }
     }
 
     .full-height {
@@ -197,12 +209,12 @@
     .footer-element {
         color: $dark;
         opacity: 0.5;
-    }
-    
-    .footer-element:hover {
-        color: $secondary;
-        transition: 0.1s;
-        opacity: 1;
+
+        &:hover {
+            color: $secondary;
+            transition: 0.1s;
+            opacity: 1;
+        }
     }
 </style>
     

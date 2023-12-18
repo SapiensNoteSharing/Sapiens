@@ -11,6 +11,12 @@
     let current = {}
     let cols = [
         {
+            id: 'university',
+            label: 'Università',
+            format: val => val || '-',
+            searchable: true,
+        },
+        {
             id: 'code',
             label: 'Codice corso',
             format: val => val || "-",
@@ -26,7 +32,13 @@
             label: 'Nome facoltà',
             format: val => val || '-',
             searchable: true,
-        },                 
+        },   
+        {
+            id: 'faculty_type',
+            label: 'Tipo facoltà',
+            format: val => val || '-',
+            searchable: true,
+        },              
         {
             id: 'faculty_code',
             label: 'Codice facoltà',
