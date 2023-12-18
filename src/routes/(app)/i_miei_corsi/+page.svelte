@@ -5,14 +5,12 @@
     export let data;
     let courses = data.courses || [];
 
-    // elenco dei corsi posseduti dall'utente
     let owned = [
         courses.find(course => course.name == "Analisi Matematica I"),
         courses.find(course => course.name == "Fisica II"),
         courses.find(course => course.name == "Algoritmi e strutture dati"),
     ].filter(Boolean);
 
-    let favourites_filter;
     let sorting_method;
 
     function sort_course_list(course_list) {

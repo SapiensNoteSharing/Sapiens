@@ -7,11 +7,11 @@
 
     export let data;
     let courses = data.courses || [];
+    let user = data.user || {};
 
-    // elenco dei corsi posseduti dall'utente
     let owned = [
         courses.find(course => course.name == "Analisi Matematica I"),
-        courses.find(course => course.name == "Fisica II"),
+        courses.find(course => course.name == "Fisica I"),
         courses.find(course => course.name == "Algoritmi e strutture dati"),
     ].filter(Boolean);
 
@@ -19,11 +19,10 @@
     let ownedCoursesNames = owned.map(course => course.name);
     let not_owned = courses.filter(course => !ownedCoursesNames.includes(course.name));
 
-    let favourites_filter;
-    let sorting_method;
+    let sorting_method = "chronological_order";
 
-    function sort_course_list(course_list) {
-        switch(sorting_method) {
+    function sort_course_list(course_list, sort_method = sorting_method) {
+        switch(sort_method) {
             case "no_order":
                 course_list.sort((a, b) => {
                     if (Math.random() < 0.5)
@@ -215,12 +214,11 @@
         return filtered_course_list
     }
 
-    let filtered_owned = filter_and_sort(owned)
     let filtered_not_owned = filter_and_sort(not_owned)
 
-    $: sorting_method && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
-    $: $filter_tags && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
-    $: $value !== undefined && (filtered_owned = filter_and_sort(owned), filtered_not_owned = filter_and_sort(not_owned))
+    $: sorting_method && (filtered_not_owned = filter_and_sort(not_owned))
+    $: $filter_tags && (filtered_not_owned = filter_and_sort(not_owned))
+    $: $value !== undefined && (filtered_not_owned = filter_and_sort(not_owned))
     
     function edit_distance(x, y) {
         let m = x.length;
@@ -320,6 +318,60 @@
         // and normalize the calculated distance
         return Math.map(distance, 0, max_dist, 0, 2);
     }
+    
+    function get_semester_bundle_courses() {
+        let semester_bundle_courses = [];
+        for (let course of courses) {
+            if (
+                course.university_name == data.user.university_name &&
+                course.faculty_code == data.user.faculty_code &&
+                course.year == data.user.year &&
+                course.semester == data.user.semester
+            ) {
+                semester_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
+            }
+        }
+        // console.log(semester_bundle_courses);
+        return semester_bundle_courses
+    }
+
+    function get_year_bundle_courses() {
+        let year_bundle_courses = [];
+        for (let course of courses) {
+            if (
+                course.university_name == data.user.university_name &&
+                course.faculty_code == data.user.faculty_code &&
+                course.year == data.user.year
+            ) {
+                year_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
+            }
+        }
+
+        // console.log(year_bundle_courses);
+        return year_bundle_courses
+    }
+
+    function get_degree_bundle_courses() {
+        let degree_bundle_courses = [];
+        for (let course of courses) {
+            if (
+                course.university_name == data.user.university_name &&
+                course.faculty_code == data.user.faculty_code
+            ) {
+                degree_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
+            }
+        }
+
+        return degree_bundle_courses
+    }
+
+    let semester_bundle_courses = get_semester_bundle_courses()
+    sort_course_list(semester_bundle_courses, "chronological_order");
+    let year_bundle_courses = get_year_bundle_courses()
+    sort_course_list(year_bundle_courses, "chronological_order");
+    let degree_bundle_courses = get_degree_bundle_courses()
+    sort_course_list(degree_bundle_courses, "chronological_order");
+
 </script>
 
 <div class="d-flex flex-column">
@@ -344,20 +396,50 @@
     </div>
 
     {#if subpage == "bundle"}
-        <div class="row g-3">
-            <div class="col-md-4">
+        <div class="row g-3 mb-4">
+            <div class="col-md-4" style="--bs-gutter-x: 1.5rem">
                 <div class="bundle">
-                    <h2 class="display-4">Pacchetto semestre</h2>
+                    <h2 class="display-4 mb-4">Pacchetto semestre</h2>
+
+                    <div class="d-flex flex-row justify-content-around flex-wrap">
+                        {#each semester_bundle_courses as course}
+                            {#if course.owned}
+                                <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name}.png" alt="">
+                            {:else}
+                                <img class="bundle-course-icon" src="/src/style/course_icons/{course.name}.png" alt="">
+                            {/if}
+                        {/each}
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="bundle">
-                    <h2 class="display-4">Pacchetto annualità</h2>
+                    <h2 class="display-4 mb-4">Pacchetto annuale</h2>
+
+                    <div class="d-flex flex-row justify-content-around flex-wrap">
+                        {#each year_bundle_courses as course}
+                            {#if course.owned}
+                                <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name}.png" alt="">
+                            {:else}
+                                <img class="bundle-course-icon" src="/src/style/course_icons/{course.name}.png" alt="">
+                            {/if}
+                        {/each}
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="bundle col-md-12 mt-4">
-            <h2 class="display-4">Pacchetto laurea</h2>
+        <div class="bundle col-md-12">
+            <h2 class="display-4 mb-4">Pacchetto laurea</h2>
+
+            <div class="d-flex flex-row justify-content-around flex-wrap">
+                {#each degree_bundle_courses as course}
+                    {#if course.owned}
+                        <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name}.png" alt="">
+                    {:else}
+                        <img class="bundle-course-icon" src="/src/style/course_icons/{course.name}.png" alt="">
+                    {/if}
+                {/each}
+            </div>
         </div>
     {:else if subpage == "single_course"}
         <div class="d-flex mb-5 justify-content-between">
@@ -472,5 +554,10 @@
         border-radius: 2rem;
         cursor: pointer;
         transition: .25s ease-in-out;
+    }
+
+    .bundle-course-icon {
+        width: 3.5rem;
+        margin: .5rem 1rem;
     }
 </style>

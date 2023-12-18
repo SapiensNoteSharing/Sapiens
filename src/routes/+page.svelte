@@ -312,7 +312,7 @@
     }
 
     .input-icon-label {
-        font-size: 1rem;
+        font-size: 1.25rem;
         background: rgba($dark, .15);
         border: 1px solid $dark;
     }

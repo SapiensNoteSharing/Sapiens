@@ -53,6 +53,12 @@
                 </div>
             </ActiveButton>
 
+            <ActiveButton active={$page.route.id == "/(app)/contribuisci" ? 'active' : 'not-active'} classes={"my-2"}>
+                <div slot="name" class="navbar-item display-6 rounded-4">
+                    <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/contribuisci"><i class="me-3 display-5 bi bi-puzzle{$page.route.id == "/(app)/contribuisci" ? '-fill' : ''}"></i>Contribuisci</a>
+                </div>
+            </ActiveButton>
+
             <ActiveButton active={$page.route.id == "/(app)/classifiche" ? 'active' : 'not-active'} classes={"my-2"}>
                 <div slot="name" class="navbar-item display-6 rounded-4">
                     <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/classifiche"><i class="me-3 display-5 bi bi-trophy{$page.route.id == "/(app)/classifiche" ? '-fill' : ''}"></i>Classifiche</a>
@@ -62,12 +68,6 @@
             <ActiveButton active={$page.route.id == "/(app)/sfide" ? 'active' : 'not-active'} classes={"my-2"}>
                 <div slot="name" class="navbar-item display-6 rounded-4">
                     <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/sfide"><i class="me-3 display-5 bi bi-award{$page.route.id == "/(app)/sfide" ? '-fill' : ''}"></i>Sfide</a>
-                </div>
-            </ActiveButton>
-
-            <ActiveButton active={$page.route.id == "/(app)/contribuisci" ? 'active' : 'not-active'} classes={"my-2"}>
-                <div slot="name" class="navbar-item display-6 rounded-4">
-                    <a class="d-block display-5 px-3 py-2 text-decoration-none" href="/contribuisci"><i class="me-3 display-5 bi bi-puzzle{$page.route.id == "/(app)/contribuisci" ? '-fill' : ''}"></i>Contribuisci</a>
                 </div>
             </ActiveButton>
 

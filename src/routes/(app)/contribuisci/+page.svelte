@@ -99,7 +99,7 @@
     <div class="d-flex flex-row mb-5">
         <ActiveButton active={subpage == "submit" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "submit"}><i class="me-3 display-5 bi bi-file-earmark-plus{subpage == "submit" ? '-fill' : ''}"></i>Aggiungi nuovo corso</a>
+                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "submit"}><i class="me-3 display-5 bi bi-file-earmark-plus{subpage == "submit" ? '-fill' : ''}"></i>Condividi i tuoi appunti</a>
             </div>
         </ActiveButton>
 
@@ -111,7 +111,7 @@
 
         <ActiveButton active={subpage == "suggestion" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "suggestion"}><i class="me-3 display-5 bi bi-chat-dots{subpage == "suggestion" ? '-fill' : ''}"></i>Commenti</a>
+                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "suggestion"}><i class="me-3 display-5 bi bi-chat-dots{subpage == "suggestion" ? '-fill' : ''}"></i>Consigli e commenti</a>
             </div>
         </ActiveButton>
     </div>
@@ -228,7 +228,7 @@
                         </label>
                     </div>
                     
-                    <button class="submit-btn display-4 text-dark fs-3 px-4 py-2" type="submit">Invia</button>
+                    <button class="submit-btn display-4 text-dark fs-3 px-4 py-2" type="submit">Invia i tuoi appunti</button>
                 </div>
             </form>
         </div>

@@ -10,6 +10,7 @@
         cap: 58100,
         university_region: "Toscana",
         university_city: "Firenze",
+        university_name: "Università degli Studi di Firenze",
         faculty: "Ingegneria Informatica",
         degree_type: "Triennale"
     }
@@ -112,7 +113,6 @@
                 </div>
             </div>
 
-            <!-- University Code -->
             <div class="col-md-6">
                 <label for="validationServerUsername" class="form-label">Matricola</label>
                 <div class="input-group has-validation">

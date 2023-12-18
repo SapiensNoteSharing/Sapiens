@@ -53,7 +53,10 @@ const UserSchema = new Schema({
     year: String,
     semester: String,
     courses: [ObjectId],
-    dna_points: Number,
+    dna: Number,
+    rna: Number,
+    streak: Number,
+    xp: Number,
     hash: String,
     role: String,
 }, {

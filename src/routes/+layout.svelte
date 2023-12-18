@@ -1,8 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import Modal from '$lib/components/Modal.svelte';
-    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import { page } from '$app/stores';
+    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import '$css/global.scss';
 
     export let data;
@@ -68,10 +67,17 @@
                             </div>
                         </ActiveButton>
 
-                        <ActiveButton classes={"m-2"} on:click={openDnaModal}>
-                            <div slot="name" class="display-6 rounded-4 py-2 px-3">
-                                <span class="display-6  align-middle text-dark">{user.dna_points || 0}</span>
-                                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                        <ActiveButton classes={"m-2"}>
+                            <div slot="name" class="d-flex flex-row display-6 rounded-4">
+                                <div class="py-2 px-3">
+                                    <span class="display-6 align-middle text-dark">{user.dna || 0}</span>
+                                    <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                                </div>
+
+                                <div class="py-2 px-3">
+                                    <span class="display-6 ù align-middle text-dark">{user.rna || 0}</span>
+                                    <img class="dna-icon" style="height: 2.5rem;" src="/src/style/RNA.png" alt="RNA">
+                                </div>
                             </div>
                         </ActiveButton>
 

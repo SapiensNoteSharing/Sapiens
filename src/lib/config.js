@@ -10,7 +10,7 @@ const config = {
         callback: env.AUTH_CALLBACK || 'http://localhost:5173/callback'
     },
     */
-    mongoUrl: env.MONGODB_URL || 'mongodb://127.0.0.1:27017/UniNote',
+    mongoUrl: env.MONGODB_URL || 'mongodb://127.0.0.1:27017/Sapiens',
     git: {
         owner: 'Falesteo',
         repo: 'Obsidian-Unifi-Vault',

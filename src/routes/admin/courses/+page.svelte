@@ -11,7 +11,7 @@
     let current = {}
     let cols = [
         {
-            id: 'university',
+            id: 'university_name',
             label: 'Università',
             format: val => val || '-',
             searchable: true,
