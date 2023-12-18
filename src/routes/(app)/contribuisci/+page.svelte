@@ -1,5 +1,5 @@
 <script>
-    import NormalButton from '$lib/components/NormalButton.svelte';
+    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -97,23 +97,23 @@
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-5">
-        <NormalButton active={subpage == "submit" ? 'active' : 'not-active'} classes={"me-3"}>
+        <ActiveButton active={subpage == "submit" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "submit"}><i class="me-3 display-5 bi bi-file-earmark-plus{subpage == "submit" ? '-fill' : ''}"></i>Aggiungi nuovo corso</a>
             </div>
-        </NormalButton>
+        </ActiveButton>
 
-        <NormalButton active={subpage == "correction" ? 'active' : 'not-active'} classes={"me-3"}>
+        <ActiveButton active={subpage == "correction" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "correction"}><i class="me-3 display-5 bi bi-exclamation-triangle{subpage == "correction" ? '-fill' : ''}"></i>Suggerisci correzione</a>
             </div>
-        </NormalButton>
+        </ActiveButton>
 
-        <NormalButton active={subpage == "suggestion" ? 'active' : 'not-active'} classes={"me-3"}>
+        <ActiveButton active={subpage == "suggestion" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "suggestion"}><i class="me-3 display-5 bi bi-chat-dots{subpage == "suggestion" ? '-fill' : ''}"></i>Commenti</a>
             </div>
-        </NormalButton>
+        </ActiveButton>
     </div>
 
     {#if subpage == "submit"}

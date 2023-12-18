@@ -20,6 +20,7 @@
     @import '$css/variables.scss';
 
     .content {
+        min-width: auto;
         overflow-y: auto;
         height: 89vh;
         background: $light-primary;

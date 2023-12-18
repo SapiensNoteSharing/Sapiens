@@ -1,6 +1,6 @@
 <script>
     import LeftSidebar from "$lib/components/LeftSidebar.svelte";
-    import NormalButton from '$lib/components/NormalButton.svelte';
+    import ActiveButton from '$lib/components/ActiveButton.svelte';
 
     export let data;
     const fetch = data.fetch
@@ -29,11 +29,11 @@
     <LeftSidebar user={data.user}/>
 
     <div class="col m-5">
-        <NormalButton active classes={"me-3"}>
+        <ActiveButton active classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={update}><i class="me-3 display-5 bi bi-arrow-clockwise"></i>Update</a>
             </div>
-        </NormalButton>
+        </ActiveButton>
         <input bind:value={href} class="form-control">
         <span class="text">Usage: /{'<path of dir/file>'}</span>
         <br>

@@ -150,6 +150,18 @@ i.bi.primary {
     font-family: sans-serif;
 }
 
+.btn-primary {
+    &:hover {
+        background: darken($primary, 10%);
+    }
+}
+
+.btn-secondary {
+    &:hover {
+        background: darken($secondary, 10%);
+    }
+}
+
 :root {
     --scroll-size: 10px;
     --scroll-track: $light;

@@ -6,22 +6,9 @@
 </script>
 
 <div class="course-card d-flex flex-row justify-content-between {classes}" style="width: 47% {style}">
-    <div class="d-flex flex-column justify-content-between">
+    <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
             <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name}.png" alt="{course.name}">
-            
-            {#if course.owned}
-                {#if course.pinned}
-                    <div class="icon-container">
-                        <i class="text-secondary display-3 mx-2 bi bi-pin-angle-fill"></i>
-                        <i class="text-dark display-3 mx-2 bi bi-pin-angle"></i>
-                    </div>
-                {:else}
-                    <i class="text-dark display-3 mx-2 bi bi-pin-angle"></i>
-                {/if}
-            {:else}
-                
-            {/if}
         </div>
 
         <h5 class="mt-3 text-dark">{course.code} &bull; {course.cfu} CFU</h5>
@@ -39,9 +26,31 @@
             <p>{course.description}</p>
         </div>
 
-        <div class="d-flex justify-content-left">
+        <div class="d-flex justify-content-between align-items-end">
             <p class="dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
+
+            <div class="d-flex flex-rpw justify-content-between">
+                <!-- <i class="text-dark display-3 ms-4 bi bi-file-earmark-fill"></i> -->
+                <i class="text-dark display-3 ms-4 bi bi-pencil-fill"></i>
+                <i class="text-dark display-3 ms-4 bi bi-bookmark-fill"></i>
+                <i class="text-dark display-3 ms-4 me-2 bi bi-question-circle-fill"></i>
+            </div>
         </div>
+    </div>
+
+    <div class="d-flex flex-column justify-content-between">
+        <!-- {#if course.owned} -->
+            <!-- {#if course.pinned} -->
+                <!-- <div class="icon-container">
+                    <i class="text-secondary display-3 mx-2 bi bi-pin-angle-fill"></i>
+                    <i class="text-dark display-3 mx-2 bi bi-pin-angle"></i>
+                </div> -->
+            <!-- {:else} -->
+            <!-- <i class="text-dark display-3 mx-2 bi bi-pin-angle"></i> -->
+            <!-- {/if} -->
+        <!-- {:else} -->
+            
+        <!-- {/if} -->
     </div>
 
     <!-- circular progress bar -->
@@ -167,6 +176,11 @@
         &:hover {
             color: $secondary;
         }
+    }
+
+    .bi {
+        opacity: .4;
+        transition: .15s;
     }
 
     .icon-container {

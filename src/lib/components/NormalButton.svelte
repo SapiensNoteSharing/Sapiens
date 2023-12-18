@@ -2,54 +2,52 @@
     let classes = "";
     export {classes as classes};
 
-    let active;
-    export {active as active};
-    
     let style;
     export {style as style};
 </script>
 
-<div class="normal {classes} {active}" style="{style}">
+<div class="normal-btn {classes}" style="{style}">
     <slot name="name"></slot>
 </div>
 
 <style lang="scss">
     @import '$css/variables.scss';
 
-    .normal {
+    .normal-btn {
         padding: 0px;
         margin: 0rem;
         border-radius: 1rem;
+        background: $primary;
         // border: 1px solid rgba($dark, 0.15);
         transition: .15s;
+        
+        &:hover {
+            transition: .15s;
+            color: rgba($dark, 0.4);
+            background: filter($primary, 10%);
+            cursor: pointer;
+            // background: rgba($dark, 0.05);
+        }
     }
 
-    .normal:hover {
-        transition: .15s;
-        color: rgba($dark, 0.4);
-        border-radius: 1rem;
-        cursor: pointer;
-        // background: rgba($dark, 0.05);
-    }
+    // :global(.navbar-item a) {
+    //     transition: .15s;
+    //     color: rgba($dark, 0.4);
+    //     border-radius: 1rem;
+    // }
 
-    :global(.navbar-item a) {
-        transition: .15s;
-        color: rgba($dark, 0.4);
-        border-radius: 1rem;
-    }
-
-    :global(.active .navbar-item a) {
-        background: rgba($dark, 0.05);
-        color: $secondary;
-    }
+    // :global(.active .navbar-item a) {
+    //     background: rgba($dark, 0.05);
+    //     color: $secondary;
+    // }
     
-    :global(:not(.active) .navbar-item:hover a) {
-        background: rgba($dark, 0.05);
-        color: rgba($dark, 0.4);
-        transition: .15s;
-    }
+    // :global(:not(.active) .navbar-item:hover a) {
+    //     background: rgba($dark, 0.05);
+    //     color: rgba($dark, 0.4);
+    //     transition: .15s;
+    // }
 
-    :global(.active .navbar-item:hover a) {
-        color: $secondary;
-    }
+    // :global(.active .navbar-item:hover a) {
+    //     color: $secondary;
+    // }
 </style>

@@ -1,6 +1,7 @@
 <script>
     import Accordion from '$lib/components/Accordion.svelte';
     import AccordionItem from '$lib/components/AccordionItem.svelte';
+    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Searchbar from '$lib/components/Searchbar.svelte';
     import { view, value, filter_tags, viewing } from '$lib/stores';
@@ -8,14 +9,12 @@
     import Item from './Item.svelte'
     import Svelecte from 'svelecte';
     
-
     export let courses;
     let course = courses[0];
     let _course = course;
     let sidebar_page = "chapters";
+    let exercises_category = 1;
 
-    export let subpage;
-    
     let faculties = [
         "Ingegneria informatica",
         "Ingegneria meccanica",
@@ -63,7 +62,7 @@
     }
 
     function changeCourse(ev) {
-        if (ev?.detail?._id){
+        if (ev?.detail?._id) {
             course = _course
             $viewing = {}
         }
@@ -86,8 +85,7 @@
                 valueAsObject
                 valueField="_id"
                 labelField="name"
-                class="svelecte-control text-center floating mb-3 py-2 display-4"
-                style="--sv-border: 0; --sv-active-border: 0;"
+                class="svelecte-control text-center course-selection-content mb-4 display-5 bg-light"
                 bind:value={_course}
                 on:change={(ev) => changeCourse(ev)}
                 on:blur={() => _course = course}
@@ -95,11 +93,27 @@
             </div>
 
             <div class="d-flex flex-column">
-                <div class="d-flex flex-row justify-content-between">
-                    <button class="display-4 bg-light py-2 mb-0 me-2 tab" on:click={() => sidebar_page = "chapters"}><img style="width: 10px;" src="/src/style/chapters.png" alt=""></button>
-                    <button class="display-4 bg-success py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "exercises"}><img style="width: 10px;" src="/src/style/exercises.png" alt=""></button>
-                    <button class="display-4 bg-primary py-2 mb-0 mx-1 tab" on:click={() => sidebar_page = "questions"}><img style="width: 10px;" src="/src/style/questions.png" alt=""></button>
-                    <button class="display-4 bg-info py-2 mb-0 ms-1 tab" on:click={() => sidebar_page = "formulary"}><img style="width: 10px;" src="/src/style/formulary.png" alt=""></button>
+                <div class="d-flex flex-rpw justify-content-between">
+                    <ActiveButton active={sidebar_page == "chapters" ? 'active' : 'not-active'} classes={""}>
+                        <div slot="name" class="navbar-item rounded-3">
+                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "chapters"}><i class="display-3 bi bi-file-earmark{sidebar_page == "chapters" ? '-fill' : ''}"></i></a>
+                        </div>
+                    </ActiveButton>
+                    <ActiveButton active={sidebar_page == "exercises" ? 'active' : 'not-active'} classes={""}>
+                        <div slot="name" class="navbar-item rounded-3">
+                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "exercises"}><i class="display-3 bi bi-pencil{sidebar_page == "exercises" ? '-fill' : ''}"></i></a>
+                        </div>
+                    </ActiveButton>
+                    <ActiveButton active={sidebar_page == "questions" ? 'active' : 'not-active'} classes={""}>
+                        <div slot="name" class="navbar-item rounded-3">
+                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "questions"}><i class="display-3 bi bi-bookmark{sidebar_page == "questions" ? '-fill' : ''}"></i></a>
+                        </div>
+                    </ActiveButton>
+                    <ActiveButton active={sidebar_page == "formulary" ? 'active' : 'not-active'} classes={""}>
+                        <div slot="name" class="navbar-item rounded-3">
+                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "formulary"}><i class="display-3 bi bi-question-circle{sidebar_page == "formulary" ? '-fill' : ''}"></i></a>
+                        </div>
+                    </ActiveButton>
                 </div>
             </div>
             
@@ -118,9 +132,9 @@
                     </div>
                 </div>
             {:else if sidebar_page == "exercises"}
-                <div class="right-sidebar-page d-flex flex-column bg-secondary">
-                    <NormalButton classes="bg-light m-3 mb-0">
-                        <div slot="name" class="d-flex flex-column justify-content-between m-3">
+                <div class="right-sidebar-page d-flex flex-column">
+                    <NormalButton classes="bg-light">
+                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 1}>
                             <div class="d-flex flex-row justify-content-between">
                                 <p class="display-6 text-dark">Capitolo 1</p>
                                 <p class="display-6 text-dark">5/8</p>
@@ -132,8 +146,8 @@
                         </div>
                     </NormalButton>
 
-                    <NormalButton classes="bg-light m-3 mb-0">
-                        <div slot="name" class="d-flex flex-column justify-content-between m-3">
+                    <NormalButton classes="bg-light">
+                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 2}>
                             <div class="d-flex flex-row justify-content-between">
                                 <p class="display-6 text-dark">Capitolo 2</p>
                                 <p class="display-6 text-dark">17/23</p>
@@ -145,8 +159,8 @@
                         </div>
                     </NormalButton>
 
-                    <NormalButton classes="bg-light m-3 mb-0">
-                        <div slot="name" class="d-flex flex-column justify-content-between m-3 position-relative">
+                    <NormalButton classes="bg-light">
+                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 3}>
                             <div class="d-flex flex-row justify-content-between">
                                 <p class="display-6 text-dark">Capitolo 3</p>
                                 <p class="display-6 text-dark">4/21</p>
@@ -224,14 +238,14 @@
     @import '$css/variables.scss';
     
     .right-sidebar {
-        position: sticky;
+        position: relative;
         width: 300px;
         right: calc(var(--sidebarPosition) * 1px);
         min-height: 89vh;
         flex-shrink: 0;
         background-color: $light;
         border-left: 1px solid rgba($dark, 0.25);
-        transition: width 0.3s ease;
+        transition: 0.35s;
     }
 
     .right-sidebar-container {
@@ -254,21 +268,19 @@
         width: 50px;
     }
     
-    .exercise-category {
-        margin: 1.5rem;
-        margin-bottom: 0rem;
+    .exercise-category-btn {
+        border: 1px solid rgba($dark, .25);
+        border-radius: 1rem;
     }
 
-    .course-selection{
-        :global(.floating) {
-            border: 1px solid $dark;
-            border-radius: .4rem;
-            box-shadow: .0rem .4rem rgba($dark, 0.5); 
-            transition: .1s;
-        }
-        :global(.svelecte-control .sv-content){
-            justify-content: center;
-        }
+    .course-selection {
+        transition: .1s;
+        justify-content: center;
+    }
+
+    .course-selection-content {
+        border-radius: 1rem;
+        border: 1px solid $dark;
     }
     
     .floating:hover {
@@ -277,9 +289,8 @@
     }
     
     .right-sidebar-page {
-        border: 1px solid $dark;
-        border-radius: .5rem;
-        padding-bottom: 1rem; 
+        margin-top: 1.5rem;
+        padding-bottom: 1rem;
     }
     
     .navigation {    
@@ -304,8 +315,8 @@
         }
         
         :global(.item) {
-            padding-top: .2rem;
-            padding-bottom: .2rem;
+            padding-top: .5rem;
+            padding-bottom: .5rem;
         }
         
         :global(.submenu) {
@@ -318,7 +329,7 @@
         
         :global(.item.file) {
             margin-left: 0.5rem;
-            border-left: 1px solid rgba($dark, 0.5);
+            border-left: 1px solid rgba($dark, .25);
         }
         
         :global(.href) {

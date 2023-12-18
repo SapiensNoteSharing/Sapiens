@@ -1,6 +1,6 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
-    import NormalButton from '$lib/components/NormalButton.svelte';
+    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import { view, value, filter_tags, dna } from '$lib/stores';
 
     let subpage = "bundle";
@@ -324,23 +324,23 @@
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-5">
-        <NormalButton active={subpage == "bundle" ? 'active' : 'not-active'} classes={"me-3"}>
+        <ActiveButton active={subpage == "bundle" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "bundle"}><i class="me-3 display-5 bi bi-box-seam{subpage == "bundle" ? '-fill' : ''}"></i>Pacchetti</a>
             </div>
-        </NormalButton>
+        </ActiveButton>
 
-        <NormalButton active={subpage == "single_course" ? 'active' : 'not-active'} classes={"me-3"}>
+        <ActiveButton active={subpage == "single_course" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "single_course"}><i class="me-3 display-5 bi bi-1-circle{subpage == "single_course" ? '-fill' : ''}"></i>Corso singolo</a>
             </div>
-        </NormalButton>
+        </ActiveButton>
 
-        <NormalButton active={subpage == "buy_dna" ? 'active' : 'not-active'} classes={"me-3"}>
+        <ActiveButton active={subpage == "buy_dna" ? 'active' : 'not-active'} classes={"me-3"}>
             <div slot="name" class="navbar-item outlined display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "buy_dna"}><i class="me-3 display-5 bi bi-cart{subpage == "buy_dna" ? '-fill' : ''}"></i>Compra DNA</a>
             </div>
-        </NormalButton>
+        </ActiveButton>
     </div>
 
     {#if subpage == "bundle"}
@@ -463,18 +463,6 @@
             position: relative;
             box-shadow: 0px 5px 10px 0px rgba($dark, 0.1);
         }
-    }
-
-    .main-content {
-        width: 70%;
-        height: 100%;
-        box-sizing: border-box;
-    }
-
-    .side-content {
-        width: 30%;
-        height: 100%;
-        box-sizing: border-box;
     }
 
     .box {

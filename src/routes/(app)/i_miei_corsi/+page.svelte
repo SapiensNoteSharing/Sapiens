@@ -1,7 +1,5 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
-    import NormalButton from '$lib/components/NormalButton.svelte';
-    // import Modal from '$lib/components/Modal.svelte';
     import { view, value, filter_tags, dna } from '$lib/stores';
     
     export let data;

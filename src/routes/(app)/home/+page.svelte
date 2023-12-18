@@ -1,4 +1,5 @@
 <script>
+    import NormalButton from '$lib/components/NormalButton.svelte';
     export let data;
     let courses = data.courses || []
     
@@ -13,8 +14,24 @@
         <h1 class="display-4 mb-4">Continua da dove hai interrotto</h1>
 
         <a class="href-box d-flex flex-column justify-content-between mb-4" href="/aula_studio">
-            <div class="d-flex flex-row justify-content-between align-items-top">
+            <div class="d-flex flex-row justify-content-between align-items-center">
                 <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course.name}.png" alt="{course.name} icon">
+                <div class="d-flex flex-column justify-content-between">
+                    <NormalButton classes={"mt-3 mx-3"}>
+                        <div slot="name">
+                            <a type="button" class="px-4 btn btn-primary text-center w-100 text-dark fs-2" href="/aula_studio">
+                                Sfoglia gli appunti
+                            </a>
+                        </div>
+                    </NormalButton>
+                    <NormalButton classes={"mt-3 mx-3"}>
+                        <div slot="name">
+                            <a type="button" class="px-4 btn btn-secondary text-center w-100 text-dark fs-2" href="/aula_studio">
+                                Vai agli esercizi
+                            </a>
+                        </div>
+                    </NormalButton>
+                </div>
             </div>
             <h5 class="mt-3 text-dark">{course.code} &bull; {course.cfu} CFU</h5>
             <h1 class="display-4 mb-3 text-dark">{course.name}</h1>

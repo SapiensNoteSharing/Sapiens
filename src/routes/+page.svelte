@@ -1,4 +1,5 @@
 <script>
+    import NormalButton from '$lib/components/NormalButton.svelte';
 	import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
 
@@ -95,9 +96,13 @@
                 </div>
                 <p class="display-6 text-dark">Hai dimenticato la password? <a href="" class="text-dark">Recuperala</a></p>
 
-                <button type="button" class="fs-2 login-btn btn text-dark px-4 py-2 my-4" on:click={loginUser}>
-                    Accedi
-                </button>
+                <NormalButton classes={"my-4 text-center w-100"}>
+                    <div slot="name">
+                        <button type="button" class="btn btn-primary w-100 text-dark fs-2" on:click={loginUser}>
+                            Accedi
+                        </button>
+                    </div>
+                </NormalButton>
 
                 <div class="hr-box">
                     <span class="hr-text px-2 bg-light display-6 text-dark">
@@ -432,20 +437,6 @@
 
         &:hover {
             color: $primary;
-        }
-    }
-
-    .btn {
-        border-radius: 1rem;
-    }
-
-    .login-btn {
-        width: 100%;
-        background: $primary;
-        transition: .15s;
-        
-        &:hover {
-            background: darken($primary, 10%);
         }
     }
 

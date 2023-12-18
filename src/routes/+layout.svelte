@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import Modal from '$lib/components/Modal.svelte';
-    import NormalButton from '$lib/components/NormalButton.svelte';
+    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import { page } from '$app/stores';
     import '$css/global.scss';
 
@@ -47,39 +47,39 @@
                     <h2 class="nav-primary display-3 text-decoration-none align-self-center m-0 ms-4">{pageTitle}</h2>
 
                     <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
-                        <NormalButton classes={"m-2"}>
+                        <ActiveButton classes={"m-2"}>
                             <div slot="name" class="display-6 rounded-4 py-2 px-3">
                                 <span class="display-6  align-middle text-dark">{user.streak || 0}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
                             </div>
-                        </NormalButton>
+                        </ActiveButton>
 
-                        <NormalButton classes={"m-2"}>
+                        <ActiveButton classes={"m-2"}>
                             <div slot="name" class="display-6 rounded-4 py-2 px-3">
                                 <span class="display-6  align-middle text-dark">{user.xp || 0}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
                             </div>
-                        </NormalButton>
+                        </ActiveButton>
 
-                        <NormalButton classes={"m-2"}>
+                        <ActiveButton classes={"m-2"}>
                             <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
                                 <span class="display-6  align-middle text-dark">{user.league_position || 'n'}°</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.png" alt="league">
                             </div>
-                        </NormalButton>
+                        </ActiveButton>
 
-                        <NormalButton classes={"m-2"} on:click={openDnaModal}>
+                        <ActiveButton classes={"m-2"} on:click={openDnaModal}>
                             <div slot="name" class="display-6 rounded-4 py-2 px-3">
                                 <span class="display-6  align-middle text-dark">{user.dna_points || 0}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
                             </div>
-                        </NormalButton>
+                        </ActiveButton>
 
-                        <NormalButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
+                        <ActiveButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
                             <div slot="name" class="display-6 rounded-4">
                                 <a href="/area_personale"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
                             </div>
-                        </NormalButton>
+                        </ActiveButton>
                     </div>
                 </div>
             </nav>
@@ -123,6 +123,7 @@
 
     .page {
         background: $light;
+        overflow-x: hidden;
     }
 
     .icon {
