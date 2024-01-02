@@ -2,9 +2,9 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     export let data;
     let courses = data.courses || []
-    
+    let user = data.user || {}
+
     let course = courses.find(course => course.name == "Algoritmi e strutture dati");
-    console.log(course);
 </script>
 
 <div class="d-flex flex-row">
@@ -19,14 +19,14 @@
                 <div class="d-flex flex-column justify-content-between">
                     <NormalButton classes={"mt-3 mx-3"}>
                         <div slot="name">
-                            <a type="button" class="px-4 btn btn-primary text-center w-100 text-dark fs-2" href="/aula_studio">
+                            <a type="button" class="btn border-0 px-4 bg-primary text-center w-100 text-dark fs-2" href="/aula_studio">
                                 Sfoglia gli appunti
                             </a>
                         </div>
                     </NormalButton>
                     <NormalButton classes={"mt-3 mx-3"}>
                         <div slot="name">
-                            <a type="button" class="px-4 btn btn-secondary text-center w-100 text-dark fs-2" href="/aula_studio">
+                            <a type="button" class="btn border-0 px-4 bg-secondary text-center w-100 text-dark fs-2" href="/aula_studio">
                                 Vai agli esercizi
                             </a>
                         </div>
@@ -69,7 +69,7 @@
                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
                 <span class="display-4 ms-3">Streak</span>
             </div>
-            <span class="display-6">La tua streak è lunga 8 giorni!</span>
+            <span class="display-6">La tua streak è lunga {user.streak} giorni!</span>
         </div>
 
         <!-- xp box -->
@@ -78,7 +78,7 @@
                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
                 <span class="display-4 ms-3">Punti XP</span>
             </div>
-            <span class="display-6">Hai guadagnato un totale di 560 XP!</span>
+            <span class="display-6">Hai guadagnato un totale di {user.xp} XP!</span>
         </div>
 
         <!-- league box -->
@@ -94,9 +94,10 @@
         <a class="href-box d-flex flex-column mb-4" href="negozio">
             <div class="d-flex align-items-center flex-row mb-3">
                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
-                <span class="display-4 ms-3">Punti DNA</span>
+                <span class="display-4 ms-3">Punti DNA e RNA</span>
+                <img class="dna-icon ms-3" style="height: 2.5rem;" src="/src/style/RNA.png" alt="RNA">
             </div>
-            <span class="display-6">Il tuo bilancio è di 12 punti DNA</span>
+            <span class="display-6">Il tuo bilancio è di {user.dna} punti DNA e {user.rna} punti RNA</span>
         </a>
     </div>
 </div>

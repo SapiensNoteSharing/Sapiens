@@ -4,11 +4,11 @@
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-row justify-content-center align-items-center">
-        <img class="league-icon" src="src/style/target.png" alt="">
-        <img class="league-icon" src="src/style/target.png" alt="">
-        <img class="league-icon my-league" src="src/style/target.png" alt="">
-        <img class="league-icon" src="src/style/target.png" alt="">
-        <img class="league-icon" src="src/style/target.png" alt="">
+        <img class="league-icon" src="src/style/league.png" alt="">
+        <img class="league-icon" src="src/style/league.png" alt="">
+        <img class="league-icon my-league" src="src/style/league.png" alt="">
+        <img class="league-icon" src="src/style/league.png" alt="">
+        <img class="league-icon" src="src/style/league.png" alt="">
     </div>
     <h2 class="league-title display-4 mx-auto">My League</h2>
 </div>

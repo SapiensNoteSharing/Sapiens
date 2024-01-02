@@ -1,5 +1,4 @@
 <script>
-    import Course from '$lib/components/Course.svelte'
     import { Table } from '@bizmate-oss/sveltekit-components'
     import Modal from '$lib/components/Modal.svelte';
     import { goto } from '$app/navigation';

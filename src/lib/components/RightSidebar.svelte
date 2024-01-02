@@ -73,120 +73,132 @@
     function toggleSidebar() {
         sidebarPosition = sidebarPosition == 0 ? -300 : 0;
     }
+
+    let focus_mode = false;
 </script>
 
 {#if $page.route.id == '/(app)/aula_studio'}
-    <div class="right-sidebar px-4">
-        <div class="mt-3 right-sidebar-container">
-            <div class="course-selection">
-                <Svelecte
-                placeholder="Select Course..."
-                options={courses}
-                valueAsObject
-                valueField="_id"
-                labelField="name"
-                class="svelecte-control text-center course-selection-content mb-4 display-5 bg-light"
-                bind:value={_course}
-                on:change={(ev) => changeCourse(ev)}
-                on:blur={() => _course = course}
-                />
+    <i style="position: absolute; right: 0px; z-index: 0;" class="m-4 close-sidebar-btn display-3 bi bi-arrow-bar-left" on:click={toggleSidebar}></i>
+    <i style="--sidebarPosition:{sidebarPosition}" class="m-4 close-sidebar-btn display-3 bi bi-x-lg" on:click={toggleSidebar}></i>
+    <div class="focus-mode-btn" style="--sidebarPosition:{sidebarPosition}">
+        <ActiveButton active={focus_mode == true ? 'active' : 'not-active'}>
+            <div slot="name" class="navbar-item rounded-3">
+                <a class="d-block px-3 py-2 text-decoration-none" on:click={() => focus_mode = !focus_mode}><i class="display-3 bi bi-crosshair{focus_mode == true ? '2' : ''}"></i></a>
             </div>
+        </ActiveButton>
+    </div>
 
-            <div class="d-flex flex-column">
-                <div class="d-flex flex-rpw justify-content-between">
-                    <ActiveButton active={sidebar_page == "chapters" ? 'active' : 'not-active'} classes={""}>
-                        <div slot="name" class="navbar-item rounded-3">
-                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "chapters"}><i class="display-3 bi bi-file-earmark{sidebar_page == "chapters" ? '-fill' : ''}"></i></a>
-                        </div>
-                    </ActiveButton>
-                    <ActiveButton active={sidebar_page == "exercises" ? 'active' : 'not-active'} classes={""}>
-                        <div slot="name" class="navbar-item rounded-3">
-                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "exercises"}><i class="display-3 bi bi-pencil{sidebar_page == "exercises" ? '-fill' : ''}"></i></a>
-                        </div>
-                    </ActiveButton>
-                    <ActiveButton active={sidebar_page == "questions" ? 'active' : 'not-active'} classes={""}>
-                        <div slot="name" class="navbar-item rounded-3">
-                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "questions"}><i class="display-3 bi bi-bookmark{sidebar_page == "questions" ? '-fill' : ''}"></i></a>
-                        </div>
-                    </ActiveButton>
-                    <ActiveButton active={sidebar_page == "formulary" ? 'active' : 'not-active'} classes={""}>
-                        <div slot="name" class="navbar-item rounded-3">
-                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "formulary"}><i class="display-3 bi bi-question-circle{sidebar_page == "formulary" ? '-fill' : ''}"></i></a>
-                        </div>
-                    </ActiveButton>
-                </div>
-            </div>
-            
-            {#if sidebar_page == "chapters"}
-                <div class="right-sidebar-page">
-                    <div class="navigation">
-                        {#each course.chapters || [] as chapter}
-                            <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
-                                <div slot="menu">
-                                    {#each chapter.files || [] as file}
-                                        <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
-                                    {/each}
-                                </div>
-                            </Item>
-                        {/each}
-                    </div>
-                </div>
-            {:else if sidebar_page == "exercises"}
-                <div class="right-sidebar-page d-flex flex-column">
-                    <NormalButton classes="bg-light">
-                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 1}>
-                            <div class="d-flex flex-row justify-content-between">
-                                <p class="display-6 text-dark">Capitolo 1</p>
-                                <p class="display-6 text-dark">5/8</p>
-                            </div>
-
-                            <div id="progressBar1" class="progress-bar w-100 position-relative">
-                                <div class="progress-bar-filler bg-primary"></div>
-                            </div>
-                        </div>
-                    </NormalButton>
-
-                    <NormalButton classes="bg-light">
-                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 2}>
-                            <div class="d-flex flex-row justify-content-between">
-                                <p class="display-6 text-dark">Capitolo 2</p>
-                                <p class="display-6 text-dark">17/23</p>
-                            </div>
-
-                            <div id="progressBar2" class="progress-bar w-100 position-relative">
-                                <div class="progress-bar-filler bg-primary"></div>
-                            </div>
-                        </div>
-                    </NormalButton>
-
-                    <NormalButton classes="bg-light">
-                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 3}>
-                            <div class="d-flex flex-row justify-content-between">
-                                <p class="display-6 text-dark">Capitolo 3</p>
-                                <p class="display-6 text-dark">4/21</p>
-                            </div>
-                    
-                            <div id="progressBar3" class="progress-bar w-100">
-                                <div class="progress-bar-filler bg-primary"></div>
-                            </div>
-                        </div>
-                    </NormalButton>
-                </div>
-            {:else if sidebar_page == "exercises"}
-                <div class="right-sidebar-page">
-                    
-                </div>
-            {:else if sidebar_page == "formulary"}
-                <div class="right-sidebar-page">
-                    
-                </div>
-            {/if}
+    <div style="--sidebarPosition:{sidebarPosition}" class="right-sidebar px-4">
+        <div class=" mt-5 course-selection">
+            <Svelecte
+            placeholder="Select Course..."
+            options={courses}
+            valueAsObject
+            valueField="_id"
+            labelField="name"
+            class="svelecte-control text-center course-selection-content mb-4 display-5 bg-light"
+            bind:value={_course}
+            on:change={(ev) => changeCourse(ev)}
+            on:blur={() => _course = course}
+            />
         </div>
+
+        <div class="d-flex flex-column">
+            <div class="d-flex flex-rpw justify-content-between">
+                <ActiveButton active={sidebar_page == "chapters" ? 'active' : 'not-active'} classes={""}>
+                    <div slot="name" class="navbar-item rounded-3">
+                        <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "chapters"}><i class="display-3 bi bi-file-earmark{sidebar_page == "chapters" ? '-fill' : ''}"></i></a>
+                    </div>
+                </ActiveButton>
+                <ActiveButton active={sidebar_page == "exercises" ? 'active' : 'not-active'} classes={""}>
+                    <div slot="name" class="navbar-item rounded-3">
+                        <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "exercises"}><i class="display-3 bi bi-pencil{sidebar_page == "exercises" ? '-fill' : ''}"></i></a>
+                    </div>
+                </ActiveButton>
+                <ActiveButton active={sidebar_page == "questions" ? 'active' : 'not-active'} classes={""}>
+                    <div slot="name" class="navbar-item rounded-3">
+                        <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "questions"}><i class="display-3 bi bi-bookmark{sidebar_page == "questions" ? '-fill' : ''}"></i></a>
+                    </div>
+                </ActiveButton>
+                <ActiveButton active={sidebar_page == "formulary" ? 'active' : 'not-active'} classes={""}>
+                    <div slot="name" class="navbar-item rounded-3">
+                        <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "formulary"}><i class="display-3 bi bi-question-circle{sidebar_page == "formulary" ? '-fill' : ''}"></i></a>
+                    </div>
+                </ActiveButton>
+            </div>
+        </div>
+        
+        {#if sidebar_page == "chapters"}
+            <div class="right-sidebar-page">
+                <div class="navigation">
+                    {#each course.chapters || [] as chapter}
+                        <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
+                            <div slot="menu">
+                                {#each chapter.files || [] as file}
+                                    <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
+                                {/each}
+                            </div>
+                        </Item>
+                    {/each}
+                </div>
+            </div>
+        {:else if sidebar_page == "exercises"}
+            <div class="right-sidebar-page d-flex flex-column">
+                <NormalButton classes="bg-light">
+                    <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 1}>
+                        <div class="d-flex flex-row justify-content-between">
+                            <p class="display-6 text-dark">Capitolo 1</p>
+                            <p class="display-6 text-dark">5/8</p>
+                        </div>
+
+                        <div id="progressBar1" class="progress-bar w-100 position-relative">
+                            <div class="progress-bar-filler bg-primary"></div>
+                        </div>
+                    </div>
+                </NormalButton>
+
+                <NormalButton classes="bg-light">
+                    <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 2}>
+                        <div class="d-flex flex-row justify-content-between">
+                            <p class="display-6 text-dark">Capitolo 2</p>
+                            <p class="display-6 text-dark">17/23</p>
+                        </div>
+
+                        <div id="progressBar2" class="progress-bar w-100 position-relative">
+                            <div class="progress-bar-filler bg-primary"></div>
+                        </div>
+                    </div>
+                </NormalButton>
+
+                <NormalButton classes="bg-light">
+                    <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 3}>
+                        <div class="d-flex flex-row justify-content-between">
+                            <p class="display-6 text-dark">Capitolo 3</p>
+                            <p class="display-6 text-dark">4/21</p>
+                        </div>
+                
+                        <div id="progressBar3" class="progress-bar w-100">
+                            <div class="progress-bar-filler bg-primary"></div>
+                        </div>
+                    </div>
+                </NormalButton>
+            </div>
+        {:else if sidebar_page == "exercises"}
+            <div class="right-sidebar-page">
+                
+            </div>
+        {:else if sidebar_page == "formulary"}
+            <div class="right-sidebar-page">
+                
+            </div>
+        {/if}
     </div>
 {:else if $page.route.id == '/(app)/negozio'}
+    <i style="right: 0px; z-index: 0;" class="m-4 close-sidebar-btn display-3 bi bi-funnel" on:click={toggleSidebar}></i>
+    <i style="--sidebarPosition:{sidebarPosition}" class="m-4 close-sidebar-btn display-3 bi bi-x-lg" on:click={toggleSidebar}></i>
+
     <div style="--sidebarPosition:{sidebarPosition}" class="right-sidebar px-4">
         <div class="d-flex align-items-center my-5">
-            <i style="position: absolute; left: 1.5rem;" class="close-sidebar-btn display-3 bi bi-x-lg" on:click={toggleSidebar}></i>
             <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
         </div>
         
@@ -234,11 +246,13 @@
     </div>
 {/if}
 
+
 <style lang="scss">
     @import '$css/variables.scss';
     
     .right-sidebar {
         position: relative;
+        z-index: 1;
         width: 300px;
         right: calc(var(--sidebarPosition) * 1px);
         min-height: 89vh;
@@ -249,8 +263,35 @@
     }
 
     .right-sidebar-container {
-        position: sticky;
-        top: calc(8rem + 1px);
+        position: relative;
+    }
+
+    .close-sidebar-btn {
+        position: absolute;
+        z-index: 2;
+        cursor: pointer;
+        right: calc(var(--sidebarPosition) * 1px);
+        transition: .35s;
+
+        &:hover {
+            color: $secondary;
+            transition: .35s;
+        }
+    }
+
+    .focus-mode-btn {
+        position: absolute;
+        margin: 1rem;
+        bottom: 0px;
+        z-index: 2;
+        cursor: pointer;
+        right: calc(var(--sidebarPosition) * 1px + 300px);
+        transition: .35s;
+
+        &:hover {
+            color: $secondary;
+            transition: .35s;
+        }
     }
 
     .filter-category {
@@ -383,15 +424,5 @@
     
     .filter:hover(:not(.btn-primary)) {
         background: rgba($dark, 0.1);
-    }
-
-    .close-sidebar-btn {
-        cursor: pointer;
-        transition: .15s;
-
-        &:hover {
-            color: $secondary;
-            transition: .15s;
-        }
     }
 </style>

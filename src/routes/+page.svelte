@@ -98,7 +98,7 @@
 
                 <NormalButton classes={"my-4 text-center w-100"}>
                     <div slot="name">
-                        <button type="button" class="btn btn-primary w-100 text-dark fs-2" on:click={loginUser}>
+                        <button type="button" class="btn bg-primary w-100 text-dark fs-2 rounded-3" on:click={loginUser}>
                             Accedi
                         </button>
                     </div>
@@ -240,14 +240,14 @@
 
                         <div class="field col-md-5 ps-0">
                             <label for="validationServer09" class="form-label">Nome facoltà</label>
-                            <input type="text" class="form-control" id="validationServer09" aria-describedby="validationServer09Feedback" bind:value={userRegister.faculty} required>
+                            <input type="text" class="form-control" id="validationServer09" aria-describedby="validationServer09Feedback" bind:value={userRegister.faculty_name} required>
                             <div id="validationServer09Feedback" class="invalid-feedback">
                                 Scegli un'opzione
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="validationServer10" class="form-label">Tipologia di Laurea</label>
-                            <input type="text" class="form-control" id="validationServer10" aria-describedby="validationServer10Feedback" bind:value={userRegister.degree_type} required>
+                            <input type="text" class="form-control" id="validationServer10" aria-describedby="validationServer10Feedback" bind:value={userRegister.faculty_type} required>
                             <div id="validationServer10Feedback" class="invalid-feedback">
                                 Scegli un'opzione
                             </div>

@@ -7,9 +7,12 @@
     
     let style;
     export {style as style};
+
+    let disabled;
+    export {disabled as disabled}
 </script>
 
-<div class="active-btn {classes} {active}" style="{style}">
+<div class="active-btn {classes} {active}" style="{style}" {disabled}>
     <slot name="name"></slot>
 </div>
 
@@ -23,7 +26,7 @@
         // border: 1px solid rgba($dark, 0.15);
         transition: .15s;
         
-        &:hover {
+        &:hover:not([disabled]) {
             transition: .15s;
             color: rgba($dark, 0.4);
             cursor: pointer;
@@ -31,10 +34,14 @@
         }
     }
 
-    :global(.navbar-item a) {
+    :global(:not([disabled]) .navbar-item a) {
         transition: .15s;
         color: rgba($dark, 0.4);
         border-radius: 1rem;
+    }
+
+    :global([disabled] .navbar-item a) {
+        color: rgba($dark, 0.2);
     }
 
     :global(.active .navbar-item a) {
@@ -42,9 +49,8 @@
         color: $secondary;
     }
     
-    :global(:not(.active) .navbar-item:hover a) {
+    :not([disabled]):global(:not(.active) .navbar-item:hover) {
         background: rgba($dark, 0.05);
-        color: rgba($dark, 0.4);
         transition: .15s;
     }
 
