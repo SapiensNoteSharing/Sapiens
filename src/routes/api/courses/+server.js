@@ -1,6 +1,6 @@
 import { Course } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
-import { User } from '../../../lib/mongodb';
+import { User } from '$lib/mongodb';
 
 export async function GET({ url, locals }) {
     const user = locals.user
@@ -12,7 +12,7 @@ export async function GET({ url, locals }) {
             query.tags = params.get('tags').split(',');
         }
         
-        if (user.role != 'admin') {
+        if (user?.role != 'admin') {
             query._id = { $in: user.courses }
         }
 

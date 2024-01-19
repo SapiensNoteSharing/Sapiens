@@ -1,9 +1,14 @@
 <script>
 
+import Calendar from "$lib/components/Calendar.svelte";
+
+let calendarContainer, extraOptions = {
+
+}
 </script>
 
-<div class="d-flex flex-row">
-	
+<div class="h-100">
+	<Calendar bind:this={calendarContainer} {extraOptions}/>
 </div>
 
 <style lang="scss">

@@ -8,7 +8,7 @@
 <div class="course-card d-flex flex-row justify-content-between {classes}" style="width: 47% {style}">
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
-            <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name}.png" alt="{course.name}">
+            <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name.toLowerCase()}.png" alt="{course.name}">
         </div>
 
         <h5 class="mt-3 text-dark">{course.code} &bull; {course.cfu} CFU</h5>

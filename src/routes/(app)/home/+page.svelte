@@ -3,8 +3,9 @@
     export let data;
     let courses = data.courses || []
     
-    let course = courses.find(course => course.name == "Algoritmi e strutture dati");
+    let course = courses.find(course => course.name == "Algoritmi e strutture dati") || {};
     console.log(course);
+    $: console.log(data.user)
 </script>
 
 <div class="d-flex flex-row">
@@ -15,7 +16,7 @@
 
         <a class="href-box d-flex flex-column justify-content-between mb-4" href="/aula_studio">
             <div class="d-flex flex-row justify-content-between align-items-center">
-                <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course.name}.png" alt="{course.name} icon">
+                <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course.name.toLowerCase()}.png" alt="{course.name} icon">
                 <div class="d-flex flex-column justify-content-between">
                     <NormalButton classes={"mt-3 mx-3"}>
                         <div slot="name">
@@ -38,7 +39,7 @@
         
             <div class="d-flex flex-row justify-content-between mb-2">
                 <div>
-                    {#each course.professors as professor, i}
+                    {#each (course.professors || []) as professor, i}
                         <span class="text-decoration-none professor text-dark">{professor}</span>{i != course.professors.length-1 ? " / " : ""}
                     {/each}
                 </div>

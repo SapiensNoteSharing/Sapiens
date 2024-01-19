@@ -8,7 +8,9 @@ export async function POST({ url, locals, request, cookies }) {
     const authenticated = await compare(body)
 
     if (authenticated) {
-        const user = await User.findOne({ email: body.email })
+        const u = await User.findOne({ email: body.email });
+        const user = u.toObject()
+        delete user.hash
         const sid = crypto.randomUUID();
 
         locals.sid = sid;

@@ -31,10 +31,10 @@
             },
             body: JSON.stringify(userLogin)
         })
-
-        if (resp.ok) {
-            goto('/home');
+        if(resp.ok){
+            goto('/home')
         }
+
     }
 
     async function registerUser() {
@@ -45,9 +45,8 @@
             },
             body: JSON.stringify(userRegister)
         });
-
-        if (resp.ok) {
-            goto('/home');
+        if(resp.ok){
+            goto('/home')
         }
     }
 
@@ -263,7 +262,7 @@
                             <i style="font-size: 2.3rem; position: relative; top: 2px;" class="bi bi-arrow-left-square next-step-icon"></i>
                         </button>
 
-						<button class="submit-btn col-md-1 pe-0" type="submit" on:click={userRegister}>
+						<button class="submit-btn col-md-1 pe-0" type="submit" on:click={registerUser}>
                             <i style="font-size: 2.3rem; position: relative; top: 2px;" class="bi bi-arrow-right-square next-step-icon"></i>
                         </button>
 					</form>

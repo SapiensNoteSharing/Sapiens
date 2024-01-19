@@ -20,7 +20,7 @@
             }
         })
     }
-
+    $: console.log(user)
     let pageTitle
     $: pageTitle = $page.route.id ? $page.route.id.split('/').pop().replace(/_/g, ' ').charAt(0).toUpperCase() + $page.route.id.split('/').pop().replace(/_/g, ' ').slice(1) : '';
 </script>
