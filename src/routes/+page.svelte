@@ -6,6 +6,7 @@
     let accessMode = "login";
     let userLogin = {}
     let userRegister = {}
+    let validated = false;
 
 	onMount(() => {
 		const forms = document.querySelectorAll('.needs-validation');
@@ -38,17 +39,63 @@
     }
 
     async function registerUser() {
-        const resp = await fetch('/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userRegister)
-        });
+        if (checkValidity) {
+            const resp = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userRegister)
+            });
 
-        if (resp.ok) {
-            goto('/home');
+            if (resp.ok) {
+                goto('/home');
+            }
         }
+    }
+
+    function checkValidity() {
+        validated = true;
+
+        if (
+            checkNameValidity(userRegister.name) &&
+            checkLastNameValidity(userRegister.surname) &&
+            checkEmailValidity(userRegister.email) &&
+            checkPasswordValidity(userRegister.password) == 1
+        ) 
+            return true;
+        else
+            return false;
+    }
+
+    function checkNameValidity(name) {
+        if (name?.match(/^[a-zA-Z]+$/))
+            return true;
+        else
+            return false;
+    }
+
+    function checkLastNameValidity(surname) {
+        if (surname?.match(/^[a-zA-Z]+$/))
+            return true;
+        else
+            return false;
+    }
+
+    function checkEmailValidity(email) {
+        if (email?.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g))
+            return true;
+        else
+            return false;
+    }
+
+    function checkPasswordValidity(password) {
+        if (password?.match(/^.{8,32}$/g))
+            return 1;
+        else if (password?.length > 32)
+            return -2;
+        else
+            return -1;
     }
 
     let step = 1;
@@ -56,8 +103,10 @@
     let second_progress_bar = 0;
 
     function second_step() {
-        step = 2;
-        first_progress_bar = 100;
+        if (checkValidity()) {
+            step = 2;
+            first_progress_bar = 100;
+        }
     }
 
     function first_step() {
@@ -74,10 +123,10 @@
                 <span class="display-6 text-dark m-0">Non hai un account? <span class="text-decoration-underline text-dark register-link" on:click={() => accessMode = "registration"}>Registrati</span></span>
 
                 <div class="col-md-12">
-                    <label for="validationLoginEmail" class="form-label"></label>
-                    <div class="input-group has-validation">
-                        <span class="input-icon-label input-group-text" id="inputGroupPrepend1"><i class="bi bi-at"></i></span>
-                        <input type="text" placeholder="E-mail" class="fs-2 form-control border-dark" id="validationLoginEmail" aria-describedby="inputGroupPrepend1" bind:value={userLogin.email} required>
+                    <label for="LoginEmail" class="form-label"></label>
+                    <div class="input-group has-validation" id="show_hide_password">
+                        <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
+                        <input placeholder="E-mail" class="fs-2 form-control border-dark" bind:value={userLogin.email} required>
                         <div id="validationLoginEmailFeedback" class="invalid-feedback">
                             Inserisci un'email valida
                         </div>
@@ -85,10 +134,13 @@
                 </div>
 
                 <div class="col-md-12 mb-3">
-                    <label for="validationLoginPassword" class="form-label"></label>
+                    <label for="LoginPassword" class="form-label"></label>
                     <div class="input-group has-validation">
-                        <span class="input-icon-label input-group-text" id="inputGroupPrepend2"><i class="bi bi-shield-lock-fill"></i></span>
-                        <input type="password" placeholder="Password" class="fs-2 form-control border-dark" id="validationLoginPassword" bind:value={userLogin.password} required>
+                        <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
+                        <input type="password" placeholder="Password" class="fs-2 form-control border-dark" bind:value={userLogin.password} required>
+                        <div class="input-group-addon">
+                            <i class="bi bi-eye-slash text-dark display-3" aria-hidden="true"></i>
+                        </div>
                         <div id="validationLoginPasswordFeedback" class="invalid-feedback">
                             Inserisci una password valida
                         </div>
@@ -142,68 +194,69 @@
                 	<form class="row g-3 needs-validation m-0 align-items-center" novalidate>
                         <h2 class="display-3 my-4 ps-0" id="dati_personali">Dati personali</h2>
                         
-                        <div class="field col-md-6 ps-0">
-                            <label for="validationRegistrationName" class="form-label">Nome</label>
+                        <div class="field col-md-6 ps-0" style="margin-bottom: {validated ? (checkNameValidity(userRegister.name) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                            <label for="RegistrationName" class="form-label">Nome *</label>
                             <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text" id="inputGroupPrepend3"><i class="bi bi-type"></i></span>
-                                <input type="text" class="form-control" id="validationRegistrationName" aria-describedby="inputGroupPrepend3" bind:value={userRegister.name} required>
+                                <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
+                                <input class="form-control {validated ? (checkNameValidity(userRegister.name) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.name} required>
                                 <div class="invalid-feedback">
-                                    Inserisci un nome
+                                    Campo obbligatorio
                                 </div>
                             </div>
                         </div>
-                        <div class="field col-md-6 pe-0">
-                            <label for="validationRegistrationLastName" class="form-label">Cognome</label>
+                        <div class="field col-md-6 pe-0" style="margin-bottom: {validated ? (checkLastNameValidity(userRegister.surname) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                            <label for="RegistrationLastName" class="form-label">Cognome *</label>
                             <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text" id="inputGroupPrepend4"><i class="bi bi-type"></i></span>
-                                <input type="text" class="form-control" id="validationRegistrationLastName" aria-describedby="inputGroupPrepend4" bind:value={userRegister.surname} required>
+                                <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
+                                <input class="form-control {validated ? (checkLastNameValidity(userRegister.surname) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.surname} required>
                                 <div class="invalid-feedback">
-                                    Inserisci un cognome
+                                    Campo obbligatorio
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="field col-md-6 ps-0">
-                            <label for="validationRegistrationEmail" class="form-label">e-mail</label>
+                        <div class="field col-md-6 ps-0" style="margin-bottom: {validated ? (checkEmailValidity(userRegister.email) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                            <label for="RegistrationEmail" class="form-label">e-mail *</label>
                             <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text" id="inputGroupPrepend5"><i class="bi bi-at"></i></span>
-                                <input type="text" class="form-control" id="validationRegistrationEmail" aria-describedby="inputGroupPrepend5" bind:value={userRegister.email} required>
+                                <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
+                                <input class="form-control {validated ? (checkEmailValidity(userRegister.email) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.email} required>
                                 <div class="invalid-feedback">
-                                    Inserisci la tua email
-                                </div>
-                                <div class="valid-feedback">
-                                    email valida
+                                    Email non valida
                                 </div>
                             </div>
                         </div>
-                        <div class="field col-md-6 pe-0">
-                            <label for="validationRegistrationPassword" class="form-label">Password</label>
+                        <div class="field col-md-6 pe-0" style="margin-bottom: {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                            <label for="RegistrationPassword" class="form-label">Password *</label>
                             <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text" id="inputGroupPrepend6">#</span>
-                                <input type="password" class="form-control" id="validationRegistrationPassword" aria-describedby="inputGroupPrepend6" bind:value={userRegister.password} required>
+                                <span class="input-icon-label input-group-text">#</span>
+                                <input type="password" class="form-control {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.password} required>
                                 <div class="invalid-feedback">
-                                    Inserisci una password valida
+                                    {#if checkPasswordValidity(userRegister.password) == -1}
+                                        La password deve contenere almeno 8 caratteri
+                                    {:else if checkPasswordValidity(userRegister.password) == -2}
+                                        La password deve contenere al massimo 32 caratteri
+                                    {/if}
                                 </div>
                             </div>
                         </div>
                         
                         <div class="field col-md-3 ps-0">
-                            <label for="validationServer03" class="form-label">Stato</label>
-                            <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer04Feedback" bind:value={userRegister.country} required>
+                            <label for="RegistrationBirthCountry" class="form-label">Stato</label>
+                            <input class="form-control" bind:value={userRegister.country}>
                             <div class="invalid-feedback">
                                 Inserisci uno stato valido
                             </div>
                         </div>
                         <div class="field col-md-4">
-                            <label for="validationServer04" class="form-label">Regione</label>
-                            <input type="text" class="form-control" id="validationServer04" aria-describedby="validationServer03Feedback" bind:value={userRegister.region} required>
+                            <label for="RegistrationBirthRegion" class="form-label">Regione</label>
+                            <input class="form-control" bind:value={userRegister.region}>
                             <div class="invalid-feedback">
-                                Inserisci una città valida
+                                Inserisci una regione valida
                             </div>
                         </div>
                         <div class="field col-md-4">
-                            <label for="validationServer05" class="form-label">Città</label>
-                            <input type="text" class="form-control" id="validationServer05" aria-describedby="validationServer03Feedback" bind:value={userRegister.city} required>
+                            <label for="RegistrationBirthCity" class="form-label">Città</label>
+                            <input class="form-control" bind:value={userRegister.city}>
                             <div class="invalid-feedback">
                                 Inserisci una città valida
                             </div>
@@ -212,60 +265,73 @@
                             <i style="font-size: 2.3rem; position: relative; top: -2px;" class="bi bi-arrow-right-square next-step-icon"></i>
                         </button>
 					</form>
+                    <p class="m-0 mt-3">* Campi obbligatori</p>
 				{:else if step == 2}
 					<form class="row g-3 needs-validation m-0 align-items-center" novalidate>
-                        <h2 class="display-3 my-4 ps-0" id="dati_accademici">Dati accademici</h2>
+                        <h2 class="display-3 mt-4 mb-2 ps-0" id="dati_accademici">Dati accademici</h2>
+                        <p class="p-0 m-0 mb-5">Questi dati non sono obbligatori, ma ci aiutano a suggerirti corsi relativi al tuo percorso di studi.</p>
                         
                         <div class="field col-md-3 ps-0">
-                            <label for="validationServer06" class="form-label">Regione</label>
-                            <input type="text" class="form-control" id="validationServer06" aria-describedby="validationServer06Feedback" bind:value={userRegister.university_region} required>
+                            <label for="registrationUniversityRegion" class="form-label">Regione</label>
+                            <input class="form-control" bind:value={userRegister.university_region}>
                             <div id="validationServer06Feedback" class="invalid-feedback">
                                 Inserisci una regione valida
                             </div>
                         </div>
                         <div class="field col-md-4">
-                            <label for="validationServer07" class="form-label">Città universitaria</label>
-                            <input type="text" class="form-control" id="validationServer07" aria-describedby="validationServer07Feedback" bind:value={userRegister.university_city} required>
+                            <label for="registrationUniversityCity" class="form-label">Città universitaria</label>
+                            <input class="form-control" bind:value={userRegister.university_city}>
                             <div id="validationServer07Feedback" class="invalid-feedback">
                                 Inserisci una città valida
                             </div>
                         </div>
                         <div class="field col-md-5 pe-0">
-                            <label for="validationServer08" class="form-label">Nome Università</label>
-                            <input type="text" class="form-control" id="validationServer08" aria-describedby="validationServer08Feedback" bind:value={userRegister.university_name} required>
+                            <label for="registrationUniversityName" class="form-label">Nome Università</label>
+                            <input class="form-control" bind:value={userRegister.university_name}>
                             <div id="validationServer08Feedback" class="invalid-feedback">
                                 Inserisci un'Università valida
                             </div>
                         </div>
 
                         <div class="field col-md-5 ps-0">
-                            <label for="validationServer09" class="form-label">Nome facoltà</label>
-                            <input type="text" class="form-control" id="validationServer09" aria-describedby="validationServer09Feedback" bind:value={userRegister.faculty_name} required>
+                            <label for="registrationFacultyName" class="form-label">Nome facoltà</label>
+                            <input class="form-control" bind:value={userRegister.faculty_name}>
                             <div id="validationServer09Feedback" class="invalid-feedback">
                                 Scegli un'opzione
                             </div>
                         </div>
                         <div class="field col-md-4">
-                            <label for="validationServer10" class="form-label">Tipologia di Laurea</label>
-                            <input type="text" class="form-control" id="validationServer10" aria-describedby="validationServer10Feedback" bind:value={userRegister.faculty_type} required>
+                            <label for="registrationFacultyType" class="form-label">Tipologia di Laurea</label>
+                            <input class="form-control" bind:value={userRegister.faculty_type}>
                             <div id="validationServer10Feedback" class="invalid-feedback">
                                 Scegli un'opzione
                             </div>
                         </div>
                         <div class="field col-md-3 pe-0">
-                            <label for="validationServer11" class="form-label">Codice facoltà</label>
-                            <input type="text" class="form-control" id="validationServer11" aria-describedby="validationServer11Feedback" bind:value={userRegister.faculty_code} required>
+                            <label for="registrationFacultyCode" class="form-label">Codice facoltà</label>
+                            <input class="form-control" bind:value={userRegister.faculty_code}>
                             <div id="validationServer11Feedback" class="invalid-feedback">
                                 Scegli un'opzione
                             </div>
                         </div>
-                        <button class="submit-btn col-md-1 pe-0" on:click={first_step}>
-                            <i style="font-size: 2.3rem; position: relative; top: 2px;" class="bi bi-arrow-left-square next-step-icon"></i>
-                        </button>
 
-						<button class="submit-btn col-md-1 pe-0" type="submit" on:click={userRegister}>
-                            <i style="font-size: 2.3rem; position: relative; top: 2px;" class="bi bi-arrow-right-square next-step-icon"></i>
-                        </button>
+                        <div class="d-flex d-row justify-content-between align-items-center">
+                            <button class="submit-btn p-0 m-0" on:click={first_step}>
+                                <i style="font-size: 2.3rem;" class="bi bi-arrow-left-square next-step-icon"></i>
+                            </button>
+                            
+                            <NormalButton classes={"my-4 text-center p-0 m-0"}>
+                                <div slot="name">
+                                    <button type="button" class="btn bg-secondary w-100 text-dark fs-2 rounded-3 m-0" on:click={registerUser}>
+                                        Registrati
+                                    </button>
+                                </div>
+                            </NormalButton>
+
+                            <button class="submit-btn p-0 m-0 text-light no-cursor" style="cursor: default !important;">
+                                <i style="font-size: 2.3rem;" class="bi bi-arrow-left-square"></i>
+                            </button>
+                        </div>
 					</form>
 				{/if}
             </div>
@@ -396,7 +462,6 @@
 		border: none;
 		padding: 0;
 		font: inherit;
-		cursor: pointer;
 		outline: inherit;
 	}
     
@@ -433,6 +498,7 @@
     }
 
     .next-step-icon {
+		cursor: pointer;
         transition: .15s;
 
         &:hover {

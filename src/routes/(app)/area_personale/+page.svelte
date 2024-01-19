@@ -57,98 +57,98 @@
                 <h4 class="display-4 mb-3" id="dati_personali">Dati personali</h4>
 
                 <div class="col-md-6">
-                    <label for="validationServer01" class="form-label">Nome</label>
+                    <label for="userFirstName" class="form-label">Nome</label>
                     <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend1"><i class="bi bi-type"></i></span>
-                        <input type="text" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend1" bind:value={account.name} required>
+                        <span class="input-group-text"><i class="bi bi-type"></i></span>
+                        <input class="form-control" bind:value={account.name} required>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="validationServer02" class="form-label">Cognome</label>
+                    <label for="userLastName" class="form-label">Cognome</label>
                     <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend2"><i class="bi bi-type"></i></span>
-                        <input type="text" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend2" bind:value={account.surname} required>
+                        <span class="input-group-text"><i class="bi bi-type"></i></span>
+                        <input class="form-control" bind:value={account.surname} required>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="validationServer02" class="form-label">e-mail</label>
+                    <label for="userEmail" class="form-label">e-mail</label>
                     <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend2"><i class="bi bi-at"></i></span>
-                        <input type="text" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend2" bind:value={account.email} required>
+                        <span class="input-group-text"><i class="bi bi-at"></i></span>
+                        <input class="form-control" bind:value={account.email} required>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="validationServer02" class="form-label">Password</label>
+                    <label for="userPassword" class="form-label">Password</label>
                     <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend2"><i class="bi bi-at"></i></span>
-                        <input type="password" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend2" required>
+                        <span class="input-group-text"><i class="bi bi-at"></i></span>
+                        <input type="password" class="form-control" required>
                     </div>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="validationServer03" class="form-label">Stato</label>
-                    <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer04Feedback" bind:value={account.country} required>
+                    <label for="userBirthCountry" class="form-label">Stato</label>
+                    <input class="form-control"bind:value={account.country} required>
                 </div>
                 <div class="col-md-4">
-                    <label for="validationServer04" class="form-label">Regione</label>
-                    <input type="text" class="form-control" id="validationServer04" aria-describedby="validationServer03Feedback" bind:value={account.region} required>
+                    <label for="userBirthRegion" class="form-label">Regione</label>
+                    <input class="form-control" bind:value={account.region} required>
                 </div>
                 <div class="col-md-4">
-                    <label for="validationServer05" class="form-label">Città</label>
-                    <input type="text" class="form-control" id="validationServer05" aria-describedby="validationServer03Feedback" bind:value={account.city} required>
+                    <label for="userBirthCity" class="form-label">Città</label>
+                    <input class="form-control" bind:value={account.city} required>
                 </div>
             
                 <h4 class="display-4 mt-5 mb-3" id="dati_accademici">Dati accademici</h4>
 
                 <div class="col-md-3">
-                    <label for="validationServer06" class="form-label">Regione</label>
-                    <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer06Feedback" bind:value={account.university_region} required>
+                    <label for="universityRegion" class="form-label">Regione</label>
+                    <input class="form-control" bind:value={account.university_region} required>
                 </div>
                 <div class="col-md-4">
-                    <label for="validationServer06" class="form-label">Città universitaria</label>
-                    <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer06Feedback" bind:value={account.university_city} required>
+                    <label for="universityCity" class="form-label">Città universitaria</label>
+                    <input class="form-control" bind:value={account.university_city} required>
                 </div>
                 <div class="col-md-5">
-                    <label for="validationServer06" class="form-label">Nome università</label>
-                    <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer06Feedback" bind:value={account.university_name} required>
+                    <label for="universityName" class="form-label">Nome università</label>
+                    <input class="form-control" bind:value={account.university_name} required>
                 </div>
 
                 <div class="col-md-5">
-                    <label for="validationServer07" class="form-label">Nome Facoltà</label>
-                    <input type="text" class="form-control" id="validationServer04" aria-describedby="validationServer07Feedback" bind:value={account.faculty_name} required>
+                    <label for="facultyName" class="form-label">Nome Facoltà</label>
+                    <input class="form-control" bind:value={account.faculty_name} required>
                 </div>
                 <div class="col-md-4">
-                    <label for="validationServer08" class="form-label">Tipologia di Laurea</label>
-                    <select class="form-select" id="validationCustom05" aria-describedby="validationServer08Feedback" bind:value={account.degree_type} required>
+                    <label for="degreeType" class="form-label">Tipologia di Laurea</label>
+                    <select class="form-select" bind:value={account.degree_type} required>
                         <option>Triennale</option>
                         <option>Magistrale</option>
                         <option>A ciclo unico</option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="validationServer07" class="form-label">Codice facoltà</label>
-                    <input type="text" class="form-control" id="validationServer04" aria-describedby="validationServer07Feedback" bind:value={account.faculty_code} required>
+                    <label for="facultyCode" class="form-label">Codice facoltà</label>
+                    <input class="form-control" bind:value={account.faculty_code} required>
                 </div>
 
                 <div class="col-md-2">
-                    <label for="validationServerUsername" class="form-label">Matricola</label>
+                    <label for="studentID" class="form-label">Matricola</label>
                     <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend3">#</span>
-                        <input type="text" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend3" bind:value={account.student_id} required>
+                        <span class="input-group-text">#</span>
+                        <input class="form-control" bind:value={account.student_id} required>
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <label for="validationServer08" class="form-label">Anno</label>
-                    <select class="form-select" id="validationCustom05" aria-describedby="validationServer08Feedback" bind:value={account.year} required>
+                    <label for="year" class="form-label">Anno</label>
+                    <select class="form-select" bind:value={account.year} required>
                         <option>Primo</option>
                         <option>Secondo</option>
                         <option>Terzo</option>
                     </select>
                 </div>
                 <div class="col-md-5">
-                    <label for="validationServer08" class="form-label">Semestre</label>
-                    <select class="form-select" id="validationCustom05" aria-describedby="validationServer08Feedback" bind:value={account.semester} required>
+                    <label for="semester" class="form-label">Semestre</label>
+                    <select class="form-select" bind:value={account.semester} required>
                         <option>Primo</option>
                         <option>Secondo</option>
                     </select>
