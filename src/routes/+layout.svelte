@@ -38,7 +38,6 @@
         <div class="d-flex">
             <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
                 <div class="d-flex w-100 align-items-center">
-                    <!-- Sapiens Logo -->
                     <a href="/home">
                         <img class="sapiens-logo" style="height: 4rem;" src="/src/style/Sapiens Logo.svg" alt="Sapiens-Title">
                     </a>
@@ -47,35 +46,35 @@
 
                     <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
                         <ActiveButton classes={"m-2"}>
-                            <div slot="name" class="display-6 rounded-4 py-2 px-3">
-                                <span class="display-6  align-middle text-dark">{user.streak || 0}</span>
+                            <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
+                                <span class="display-6 align-middle text-dark">{user.streak}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
                             </div>
                         </ActiveButton>
 
                         <ActiveButton classes={"m-2"}>
-                            <div slot="name" class="display-6 rounded-4 py-2 px-3">
-                                <span class="display-6  align-middle text-dark">{user.xp || 0}</span>
+                            <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
+                                <span class="display-6 align-middle text-dark">{user.xp}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
                             </div>
                         </ActiveButton>
 
                         <ActiveButton classes={"m-2"}>
                             <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
-                                <span class="display-6  align-middle text-dark">{user.league_position || 'n'}°</span>
+                                <span class="display-6 align-middle text-dark">{user.league_position || 'n'}°</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.png" alt="league">
                             </div>
                         </ActiveButton>
 
                         <ActiveButton classes={"m-2"}>
-                            <div slot="name" class="d-flex flex-row display-6 rounded-4">
+                            <div slot="name" class="navbar-item d-flex flex-row display-6 rounded-4">
                                 <div class="py-2 px-3">
-                                    <span class="display-6 align-middle text-dark">{user.dna || 0}</span>
+                                    <span class="display-6 align-middle text-dark">{user.dna}</span>
                                     <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
                                 </div>
 
                                 <div class="py-2 px-3">
-                                    <span class="display-6 ù align-middle text-dark">{user.rna || 0}</span>
+                                    <span class="display-6 align-middle text-dark">{user.rna}</span>
                                     <img class="dna-icon" style="height: 2.5rem;" src="/src/style/RNA.png" alt="RNA">
                                 </div>
                             </div>
@@ -173,14 +172,14 @@
     }
 
     .user-icon {
-        width: 3rem; 
+        width: 3rem;
         border-radius: 3rem;
         transition: .15s;
         
-        // &:hover {
-        //     width: 2rem;
-        //     margin-right: .5rem;
-        // }
+        &:hover {
+            width: 2.5rem;
+            margin: .25rem;
+        }
     }
 
     .full-height {

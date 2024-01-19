@@ -52,64 +52,64 @@ export async function GET({ url, fetch }) {
             const primoAnno = (resp.ok && await resp.json())
             resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Secondo%20anno${urlSuffix}`, { headers })
             const secondoAnno = (resp.ok && await resp.json())
-                /*
-                resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Terzo%20Anno${urlSuffix}`, {headers})
-                const terzoAnno = (resp.ok && await resp.json())
-                */
+
+            /*
+            resp = await fetch(`https://api.github.com/repos/${config.git.owner}/${config.git.repo}/contents/${config.git.path}/Terzo%20Anno${urlSuffix}`, {headers})
+            const terzoAnno = (resp.ok && await resp.json())
+            */
+
             let courses = [...primoAnno, ...secondoAnno]
             console.log(courses)
 
-            //    await Directory.deleteMany({})
-            //    await File.deleteMany({})
+            // await Directory.deleteMany({})
+            // await File.deleteMany({})
             
-    for(let course of courses){
+            for (let course of courses) {
+                // Estrazione capitoli 
+                const resp = await fetch(course.url, {headers})
+                const courseContent = (resp.ok && await resp.json())
 
-        // Estrazione capitoli 
-        const resp = await fetch(course.url, {headers})
-        const courseContent = (resp.ok && await resp.json())
+                const chapters = courseContent.filter(obj => obj.type == 'dir' && obj.name.slice(0, 2).match(/\d+/))
+                const extra_content = courseContent.filter(obj => !obj.name.slice(0, 2).match(/\d+/) && obj.name != course.name)
+                console.log('chap e content', chapters, extra_content)
+                let chaptersIds = [], chapterId;
+                for (let chapter of chapters) {
+                    chapterId = await getDir(chapter)
+                    chaptersIds.push(chapterId)
+                }
+                let contentsIds = {
+                    directories: [],
+                    files: []
+                }, contentId;
+                for (let content of extra_content) {
+                    if (content.type == 'dir') {
+                        contentId = await getDir(content)
+                        contentsIds.directories.push(contentId)
+                    } else {
+                        const file = await File.create({name: content.name, content: content.content})
+                        contentsIds.files.push(file._id)
+                    }
+                }
+                
+                const extra = await Directory.create({
+                    name: 'extra_content',
+                    directories: contentsIds.directories,
+                    files: contentsIds.files
+                })
 
-        const chapters = courseContent.filter(obj => obj.type == 'dir' && obj.name.slice(0, 2).match(/\d+/))
-        const extra_content = courseContent.filter(obj => !obj.name.slice(0, 2).match(/\d+/) && obj.name != course.name)
-        console.log('chap e content', chapters, extra_content)
-        let chaptersIds = [], chapterId;
-        for(let chapter of chapters){
-            chapterId = await getDir(chapter)
-            chaptersIds.push(chapterId)
-        }
-        let contentsIds = {
-            directories: [],
-            files: []
-        }, contentId;
-        for(let content of extra_content){
-            if(content.type == 'dir'){
-                contentId = await getDir(content)
-                contentsIds.directories.push(contentId)
-            } else {
-                const file = await File.create({name: content.name, content: content.content})
-                contentsIds.files.push(file._id)
+                await Course.create({
+                    name: course.name,
+                    chapters: chaptersIds,
+                    extra_content: extra._id
+                })
             }
-        }
-        
-        const extra = await Directory.create({
-            name: 'extra_content',
-            directories: contentsIds.directories,
-            files: contentsIds.files
-        })
-
-        await Course.create({
-            name: course.name,
-            chapters: chaptersIds,
-            extra_content: extra._id
-        })
-
-    }
-    
-   /*
-    let data = body1.content
-    let buff = Buffer.from(data, 'base64');
-    let text = buff.toString('utf-8');
-    console.log(text)
-*/
+            
+            /*
+            let data = body1.content
+            let buff = Buffer.from(data, 'base64');
+            let text = buff.toString('utf-8');
+            console.log(text)
+            */
             return new Response(JSON.stringify(body))
         } catch (err) {
             console.log(err)

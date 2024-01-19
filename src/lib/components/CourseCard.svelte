@@ -1,14 +1,27 @@
 <script>
+    import NormalButton from '$lib/components/NormalButton.svelte';
+
     export let course = {};
+
     let classes = '';
     export {classes as class};
+    
     export let style = '';
+
+    export let owned;
 </script>
 
 <div class="course-card d-flex flex-row justify-content-between {classes}" style="width: 47% {style}">
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
             <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name.toLowerCase()}.png" alt="{course.name}">
+
+            <div class="d-flex flex-row justify-content-between">
+                <!-- <i class="text-dark display-3 ms-4 bi bi-file-earmark-fill"></i> -->
+                <i class="text-dark display-3 ms-4 bi bi-pencil-fill"></i>
+                <i class="text-dark display-3 ms-4 bi bi-bookmark-fill"></i>
+                <i class="text-dark display-3 ms-4 me-2 bi bi-question-circle-fill"></i>
+            </div>
         </div>
 
         <h5 class="mt-3 text-dark">{course.code} &bull; {course.cfu} CFU</h5>
@@ -29,12 +42,15 @@
         <div class="d-flex justify-content-between align-items-end">
             <p class="dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
 
-            <div class="d-flex flex-rpw justify-content-between">
-                <!-- <i class="text-dark display-3 ms-4 bi bi-file-earmark-fill"></i> -->
-                <i class="text-dark display-3 ms-4 bi bi-pencil-fill"></i>
-                <i class="text-dark display-3 ms-4 bi bi-bookmark-fill"></i>
-                <i class="text-dark display-3 ms-4 me-2 bi bi-question-circle-fill"></i>
-            </div>
+            {#if owned == 0}
+                <NormalButton classes={""}>
+                    <div slot="name">
+                        <a type="button" class="btn px-4 py-2 text-center w-100 text-dark fs-2">
+                            Ottieni
+                        </a>
+                    </div>
+                </NormalButton>
+            {/if}
         </div>
     </div>
 
@@ -93,6 +109,15 @@
         height: 4rem;
     }
 
+    .btn {
+        background: $primary;
+        border: none;
+
+        &:hover {
+            background: darken($primary, 10%);
+        }
+    }
+
     // vertical progress bar
     // .vertical-progress-bar {
     //     position: relative;
@@ -144,12 +169,6 @@
     //     top: 0px;
     //     left: 0px;
     // }
-
-    a {
-        text-decoration: none;
-        font-size: 16px;
-        color: #0b1613;
-    }
 
     // @keyframes pulse-animation {
     //     0% {

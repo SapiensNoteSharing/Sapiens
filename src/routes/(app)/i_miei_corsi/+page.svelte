@@ -336,12 +336,12 @@
                 </select>
             {:else}
                 <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method}>
-                    <option class="opt" value="chronological_order" selected>Periodo · cronologico</option>
-                    <option class="opt" value="chronological_reverse">Periodo · cronologico inverso</option>
-                    <option class="opt" value="name_ascending">Nome · alfabetico crescente</option>
-                    <option class="opt" value="name_descending">Nome · alfabetico decrescente</option>
-                    <option class="opt" value="code_ascending">Codice · crescente</option>
-                    <option class="opt" value="code_descending">Codice · decrescente</option>
+                    <option class="opt" value="chronological_order" selected>Periodo &bull; cronologico</option>
+                    <option class="opt" value="chronological_reverse">Periodo &bull; cronologico inverso</option>
+                    <option class="opt" value="name_ascending">Nome &bull; alfabetico crescente</option>
+                    <option class="opt" value="name_descending">Nome &bull; alfabetico decrescente</option>
+                    <option class="opt" value="code_ascending">Codice &bull; crescente</option>
+                    <option class="opt" value="code_descending">Codice &bull; decrescente</option>
                     <option class="opt" value="no_order">Nessun ordinamento</option>
                 </select>
             {/if}
@@ -372,7 +372,7 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} class="g-col-4 mb-5"/>
+                    <CourseCard {course} owned=1 class="g-col-4 mb-5"/>
                 {/each}
             {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
                 <div class="w-100 mt-3">
@@ -386,11 +386,11 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} class="g-col-4 mb-5"/>
+                    <CourseCard {course} owned=1 class="g-col-4 mb-5"/>
                 {/each}
             {:else}
                 {#each filtered_owned as course}
-                    <CourseCard {course} class="g-col-4 mb-5"/>
+                    <CourseCard {course} owned=1 class="g-col-4 mb-5"/>
                 {/each}
             {/if}
         </div>

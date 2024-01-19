@@ -4,9 +4,12 @@
 
     let style;
     export {style as style};
+
+    let disabled;
+    export {disabled as disabled}
 </script>
 
-<div class="normal-btn {classes}" style="{style}">
+<div class="normal-btn {classes}" style="{style}" {disabled}>
     <slot name="name"></slot>
 </div>
 
@@ -14,40 +17,10 @@
     @import '$css/variables.scss';
 
     .normal-btn {
-        padding: 0px;
-        margin: 0rem;
-        border-radius: 1rem;
-        background: $primary;
-        // border: 1px solid rgba($dark, 0.15);
+        display: inline-block;
+        width: auto;
+        padding: 0rem;
         transition: .15s;
-        
-        &:hover {
-            transition: .15s;
-            color: rgba($dark, 0.4);
-            background: filter($primary, 10%);
-            cursor: pointer;
-            // background: rgba($dark, 0.05);
-        }
+        background-color: transparent;
     }
-
-    // :global(.navbar-item a) {
-    //     transition: .15s;
-    //     color: rgba($dark, 0.4);
-    //     border-radius: 1rem;
-    // }
-
-    // :global(.active .navbar-item a) {
-    //     background: rgba($dark, 0.05);
-    //     color: $secondary;
-    // }
-    
-    // :global(:not(.active) .navbar-item:hover a) {
-    //     background: rgba($dark, 0.05);
-    //     color: rgba($dark, 0.4);
-    //     transition: .15s;
-    // }
-
-    // :global(.active .navbar-item:hover a) {
-    //     color: $secondary;
-    // }
 </style>

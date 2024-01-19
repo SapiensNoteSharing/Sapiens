@@ -25,10 +25,6 @@
     {/if}
 
     {@html renderedFile}
-
-    <button type="button" class="focus-btn">
-        <img class="focus-img" src="/src/style/focus.png" alt="focus mode">
-    </button>
 </div>
 
 <style lang="scss">
@@ -108,22 +104,4 @@
     //         color: var(--background-accent) !important;
     //     }
     }   
-
-    .focus-btn {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: .4rem;
-        margin: 0rem;
-        border: 1px solid rgba($dark, 0.1);
-        border-radius: 1rem;
-    }
-
-    .focus-img {
-        width: 2rem;
-        height: 2rem;
-    }
 </style>
