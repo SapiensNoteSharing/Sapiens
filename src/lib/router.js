@@ -43,7 +43,7 @@ const router = new Router()
     .unrestrict('.*:/logout')
     .restrict('.*:/test.*', ['admin'])
     .restrict('.*:/admin.*', ['admin'])
-    .unrestrict('.*:/.*', ['admin', 'user'])
+    .restrict('.*:/.*', ['admin', 'user'])
     .build();
 
 const guard = (path, user, opts) => {

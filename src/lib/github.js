@@ -107,19 +107,21 @@ async function getDir(gitDir) {
                 id = await getDir(obj)
                 childDirectories.push(id)
             } else {
-                const fileName = obj.name.replace(/\.(?=[a-z]).*/, '')
-                const oldFile = await File.deleteMany({name: obj.name})
-                console.log('getting file', fileName)
-                const dbFile = await File.findOne({name: fileName}) || {}
-                console.log('dbfile', dbFile.name || 'not found')
-                // if (dbFile.sha != obj.sha) {
-                    const resp = await fetch(obj.url, options)
-                    const fileObj = (resp.ok && await resp.json())
-
-                    const file = await File.findOneAndUpdate({ name: fileName }, {...fileObj, name: fileName}, {upsert: true, new: true})
-                    console.log('saved file', fileName, file.name)
-                    childFiles.push(file._id)
-                // }
+                if(obj.name != dir.name){
+                    const fileName = obj.name.replace(/\.(?=[a-z]).*/, '')
+                    const oldFile = await File.deleteMany({name: obj.name})
+                    console.log('getting file', fileName)
+                    const dbFile = await File.findOne({name: fileName}) || {}
+                    console.log('dbfile', dbFile.name || 'not found')
+                    // if (dbFile.sha != obj.sha) {
+                        const resp = await fetch(obj.url, options)
+                        const fileObj = (resp.ok && await resp.json())
+    
+                        const file = await File.findOneAndUpdate({ name: fileName }, {...fileObj, name: fileName}, {upsert: true, new: true})
+                        console.log('saved file', fileName, file.name)
+                        childFiles.push(file._id)
+                    // }
+                }
             }
         }
         const childFilesId = new Set(childFiles)

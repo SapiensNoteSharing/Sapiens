@@ -1,19 +1,22 @@
 <script>
     import LeftSidebar from "$lib/components/LeftSidebar.svelte";
     import ActiveButton from '$lib/components/ActiveButton.svelte';
+    import { page } from '$app/stores'; 
 
     export let data;
     const fetch = data.fetch
     
     let href = ''
     let body = {}, timer;
-    
+
+    $: user = $page.data.user
+
     function debounce() {
         clearTimeout(timer)
         timer = setTimeout(async () => {
             const resp = await fetch(`/test3?href=${href}`)
             body = (resp.ok && await resp.json()) || []
-            body = JSON.stringify(body, null, 2);
+            body = JSON.stringify(body, null, 4);
         }, 200)
     }
 
@@ -26,7 +29,7 @@
 </script>
 
 <div class="d-flex h-100 align-self-stretch">
-    <LeftSidebar user={data.user}/>
+    <LeftSidebar user={user}/>
 
     <div class="col m-5">
         <ActiveButton active classes={"me-3"}>

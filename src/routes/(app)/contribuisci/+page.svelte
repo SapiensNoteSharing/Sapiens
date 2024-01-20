@@ -17,11 +17,8 @@
 				form.classList.add('was-validated');
 			}, false);
 		});
-	});
 
-    let subpage = "submit";
-
-    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
         const dropZoneElement = inputElement.closest(".drop-zone");
 
         dropZoneElement.addEventListener("click", (e) => {
@@ -56,6 +53,11 @@
             dropZoneElement.classList.remove("drop-zone--over");
         });
     });
+	});
+
+    let subpage = "submit";
+
+    
 
     /**
      * Updates the thumbnail on a drop zone element.

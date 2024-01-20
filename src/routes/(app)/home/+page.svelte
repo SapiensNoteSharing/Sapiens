@@ -16,7 +16,7 @@
 
         <a class="href-box d-flex flex-column justify-content-between mb-4" href="/aula_studio">
             <div class="d-flex flex-row justify-content-between align-items-center">
-                <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course.name.toLowerCase()}.png" alt="{course.name} icon">
+                <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course.name}.png" alt="{course.name} icon">
                 <div class="d-flex flex-column justify-content-between">
                     <NormalButton classes={"mt-3 mx-3"}>
                         <div slot="name">
