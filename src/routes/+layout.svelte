@@ -20,7 +20,7 @@
         })
     }
     
-    $: pageTitle = $page.route.id ? $page.route.id.split('/').pop().replace(/_/g, ' ').charAt(0).toUpperCase() + $page.route.id.split('/').pop().replace(/_/g, ' ').slice(1) : '';
+    $: pageTitle = $page.route.id.endsWith('faq') ? 'FAQ' : ($page.route.id ? $page.route.id.split('/').pop().replace(/_/g, ' ').charAt(0).toUpperCase() + $page.route.id.split('/').pop().replace(/_/g, ' ').slice(1) : '');
 </script>
 
 <div class="page">
@@ -43,28 +43,28 @@
                     <h2 class="nav-primary display-3 text-decoration-none align-self-center m-0 ms-4">{pageTitle}</h2>
 
                     <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
-                        <ActiveButton classes={"m-2"}>
+                        <ActiveButton class={"m-2"}>
                             <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
                                 <span class="display-6 align-middle text-dark">{user.streak}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
                             </div>
                         </ActiveButton>
 
-                        <ActiveButton classes={"m-2"}>
+                        <ActiveButton class={"m-2"}>
                             <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
                                 <span class="display-6 align-middle text-dark">{user.xp}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
                             </div>
                         </ActiveButton>
 
-                        <ActiveButton classes={"m-2"}>
+                        <ActiveButton class={"m-2"}>
                             <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
                                 <span class="display-6 align-middle text-dark">{user.league_position || 'n'}°</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.png" alt="league">
                             </div>
                         </ActiveButton>
 
-                        <ActiveButton classes={"m-2"}>
+                        <ActiveButton class={"m-2"}>
                             <div slot="name" class="page-btn d-flex flex-row display-6 rounded-4">
                                 <div class="py-2 px-3">
                                     <span class="display-6 align-middle text-dark">{user.dna}</span>
@@ -78,7 +78,7 @@
                             </div>
                         </ActiveButton>
 
-                        <ActiveButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} classes={"m-2"}>
+                        <ActiveButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} class={"m-2"}>
                             <div slot="name" class="display-6 rounded-4">
                                 <a href="/area_personale"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
                             </div>
@@ -110,10 +110,10 @@
 
                 <div class="d-flex">
                     <span class="me-5">
-                        <a class="display-6 text-decoration-none footer-element" href="#">Chi siamo</a>
+                        <a class="display-6 text-decoration-none footer-element" href="/chi_siamo">Chi siamo</a>
                     </span>
                     <span class="me-5">
-                        <a class="display-6 text-decoration-none footer-element" href="#">FAQ</a>
+                        <a class="display-6 text-decoration-none footer-element" href="/faq">FAQ</a>
                     </span>
                 </div>
             </div>

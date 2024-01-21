@@ -95,7 +95,7 @@
                     <label for="userPassword" class="form-label">Password</label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
-                        <input type="password" class="form-control" required>
+                        <input type="password" class="form-control" bind:value={account.password} required>
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label for="userBirthCity" class="form-label">Città</label>
+                    <label for="userBirthCity" class="form-label">Provincia</label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                         <input class="form-control" bind:value={account.city} required>
@@ -161,7 +161,7 @@
                         options={["Triennale", "Magistrale", "A ciclo unico"]}
                         labelAsValue
                         class="svelecte-control text-center selection-input m-0"
-                        bind:value={account.degree_type}
+                        bind:value={account.faculty_type}
                         />
                     </div>
                 </div>
@@ -207,27 +207,15 @@
                     </div>
                 </div>
 
-                {#if !changes}
-                    <div class="d-flex flex-row justify-content-end">
-                        <NormalButton classes={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"} disabled>
-                            <div slot="name" class="page-btn">
-                                <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
-                                    Salva modifiche
-                                </a>
-                            </div>
-                        </NormalButton>
-                    </div>
-                {:else}
-                    <div class="d-flex flex-row justify-content-end">
-                        <NormalButton classes={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"}>
-                            <div slot="name" class="page-btn">
-                                <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={save_changes}>
-                                    Salva modifiche
-                                </a>
-                            </div>
-                        </NormalButton>
-                    </div>
-                {/if}
+                <div class="d-flex flex-row justify-content-end">
+                    <NormalButton classes={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"}>
+                        <div slot="name" class="page-btn">
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save_changes}>
+                                Salva modifiche
+                            </a>
+                        </div>
+                    </NormalButton>
+                </div>
             </form>
         </div>
     {:else if subpage == "preferences"}

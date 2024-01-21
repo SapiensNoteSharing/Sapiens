@@ -468,8 +468,10 @@
                                 <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                             {/if}
                         {/each}
+                    </div>
 
-                        <NormalButton classes={"ml-auto"} style={"margin-top: 2rem;"}>
+                    <div class="d-flex flex-row justify-content-center">
+                        <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
                             <div slot="name">
                                 <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
                                     Vedi dettagli
@@ -492,8 +494,9 @@
                                 <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                             {/if}
                         {/each}
-
-                        <NormalButton classes={"ml-auto"} style={"margin-top: 2rem; right: 0px;"}>
+                    </div>
+                    <div class="d-flex flex-row justify-content-center">
+                        <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
                             <div slot="name">
                                 <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
                                     Vedi dettagli
@@ -516,8 +519,10 @@
                         <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                     {/if}
                 {/each}
+            </div>
 
-                <NormalButton classes={"ml-auto"} style={"margin-top: 2rem;"}>
+            <div class="d-flex flex-row justify-content-center">
+                <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
                     <div slot="name">
                         <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
                             Vedi dettagli

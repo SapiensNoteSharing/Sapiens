@@ -74,170 +74,170 @@
 
 <div class="sidebar {open ? '' : 'sidebar-collapse'} {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
     {#if !open}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div in:fly={{x: 50, delay: 1000, duration: 200}} class="position-relative {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
-        <i class="sidebar-btn display-3 bi bi-arrow-bar-left" on:click={() => open = !open}></i>
-    </div>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div in:fly={{x: 50, delay: 1000, duration: 200}} class="position-relative {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
+            <i class="sidebar-btn display-3 bi bi-arrow-bar-left" on:click={() => open = !open}></i>
+        </div>
     {/if}
     
     <div class="right-sidebar">
-        {#if open}<i in:fly={{x: 50, opacity: 1, duration: 1000}} class="sidebar-btn display-3 bi bi-x-lg" on:click={() => open = !open}></i>{/if}
+        {#if open}
+            <i in:fly={{x: 50, opacity: 1, duration: 1000}} class="sidebar-btn display-3 bi bi-x-lg" on:click={() => open = !open}></i>
+        {/if}
         
         {#if $page.route.id == '/(app)/aula_studio'}
-        <div class=" mt-5 course-selection">
-            <Svelecte
-            placeholder="Select Course..."
-            options={courses}
-            valueAsObject
-            valueField="_id"
-            labelField="name"
-            class="svelecte-control text-center course-selection-content mb-4 display-5 bg-light"
-            bind:value={_course}
-            on:change={(ev) => changeCourse(ev)}
-            on:blur={() => _course = course}
-            />
-        </div>
-        
-        <div class="d-flex flex-column">
-            <div class="d-flex flex-rpw justify-content-between">
-                <ActiveButton active={sidebar_page == "chapters" ? 'active' : 'not-active'} classes={""}>
-                    <div slot="name" class="page-btn rounded-3">
-                        <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "chapters"}><i class="display-3 bi bi-file-earmark{sidebar_page == "chapters" ? '-fill' : ''}"></i></a>
-                    </div>
-                </ActiveButton>
-                <ActiveButton active={sidebar_page == "exercises" ? 'active' : 'not-active'} classes={""}>
-                    <div slot="name" class="page-btn rounded-3">
-                        <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "exercises"}><i class="display-3 bi bi-pencil{sidebar_page == "exercises" ? '-fill' : ''}"></i></a>
-                    </div>
-                </ActiveButton>
-                <ActiveButton active={sidebar_page == "questions" ? 'active' : 'not-active'} classes={""}>
-                    <div slot="name" class="page-btn rounded-3">
-                        <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "questions"}><i class="display-3 bi bi-bookmark{sidebar_page == "questions" ? '-fill' : ''}"></i></a>
-                    </div>
-                </ActiveButton>
-                <ActiveButton active={sidebar_page == "formulary" ? 'active' : 'not-active'} classes={""}>
-                    <div slot="name" class="page-btn rounded-3">
-                        <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "formulary"}><i class="display-3 bi bi-question-circle{sidebar_page == "formulary" ? '-fill' : ''}"></i></a>
-                    </div>
-                </ActiveButton>
+            <div class=" mt-5 course-selection">
+                <Svelecte
+                placeholder="Select Course..."
+                options={courses}
+                valueAsObject
+                valueField="_id"
+                labelField="name"
+                class="svelecte-control text-center course-selection-content mb-4 display-5 bg-light"
+                bind:value={_course}
+                on:change={(ev) => changeCourse(ev)}
+                on:blur={() => _course = course}
+                />
             </div>
-        </div>
-        
-        {#if sidebar_page == "chapters"}
-        <div class="right-sidebar-page">
-            <div class="navigation">
-                {#each (course.chapters || []) as chapter}
-                <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
-                    <div slot="menu">
-                        {#each chapter.files || [] as file}
-                        <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
+            
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-rpw justify-content-between">
+                    <ActiveButton active={sidebar_page == "chapters" ? 'active' : 'not-active'} class={""}>
+                        <div slot="name" class="page-btn rounded-3">
+                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "chapters"}><i class="display-3 bi bi-file-earmark{sidebar_page == "chapters" ? '-fill' : ''}"></i></a>
+                        </div>
+                    </ActiveButton>
+                    <ActiveButton active={sidebar_page == "exercises" ? 'active' : 'not-active'} class={""}>
+                        <div slot="name" class="page-btn rounded-3">
+                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "exercises"}><i class="display-3 bi bi-pencil{sidebar_page == "exercises" ? '-fill' : ''}"></i></a>
+                        </div>
+                    </ActiveButton>
+                    <ActiveButton active={sidebar_page == "questions" ? 'active' : 'not-active'} class={""}>
+                        <div slot="name" class="page-btn rounded-3">
+                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "questions"}><i class="display-3 bi bi-bookmark{sidebar_page == "questions" ? '-fill' : ''}"></i></a>
+                        </div>
+                    </ActiveButton>
+                    <ActiveButton active={sidebar_page == "formulary" ? 'active' : 'not-active'} class={""}>
+                        <div slot="name" class="page-btn rounded-3">
+                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "formulary"}><i class="display-3 bi bi-question-circle{sidebar_page == "formulary" ? '-fill' : ''}"></i></a>
+                        </div>
+                    </ActiveButton>
+                </div>
+            </div>
+            {#if sidebar_page == "chapters"}
+                <div class="right-sidebar-page">
+                    <div class="navigation">
+                        {#each (course.chapters || []) as chapter}
+                        <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
+                            <div slot="menu">
+                                {#each chapter.files || [] as file}
+                                <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
+                                {/each}
+                            </div>
+                        </Item>
                         {/each}
                     </div>
-                </Item>
-                {/each}
-            </div>
-        </div>
-        {:else if sidebar_page == "exercises"}
-        <div class="right-sidebar-page d-flex flex-column">
-            <NormalButton classes="bg-light">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 1}>
-                    <div class="d-flex flex-row justify-content-between">
-                        <p class="display-6 text-dark">Capitolo 1</p>
-                        <p class="display-6 text-dark">5/8</p>
-                    </div>
-                    
-                    <div id="progressBar1" class="progress-bar w-100 position-relative">
-                        <div class="progress-bar-filler bg-primary"></div>
-                    </div>
                 </div>
-            </NormalButton>
-            
-            <NormalButton classes="bg-light">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 2}>
-                    <div class="d-flex flex-row justify-content-between">
-                        <p class="display-6 text-dark">Capitolo 2</p>
-                        <p class="display-6 text-dark">17/23</p>
-                    </div>
+            {:else if sidebar_page == "exercises"}
+                <div class="right-sidebar-page d-flex flex-column">
+                    <NormalButton classes="bg-light">
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 1}>
+                            <div class="d-flex flex-row justify-content-between">
+                                <p class="display-6 text-dark">Capitolo 1</p>
+                                <p class="display-6 text-dark">5/8</p>
+                            </div>
+                            
+                            <div id="progressBar1" class="progress-bar w-100 position-relative">
+                                <div class="progress-bar-filler bg-primary"></div>
+                            </div>
+                        </div>
+                    </NormalButton>
                     
-                    <div id="progressBar2" class="progress-bar w-100 position-relative">
-                        <div class="progress-bar-filler bg-primary"></div>
-                    </div>
-                </div>
-            </NormalButton>
-            
-            <NormalButton classes="bg-light">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 3}>
-                    <div class="d-flex flex-row justify-content-between">
-                        <p class="display-6 text-dark">Capitolo 3</p>
-                        <p class="display-6 text-dark">4/21</p>
-                    </div>
+                    <NormalButton classes="bg-light">
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 2}>
+                            <div class="d-flex flex-row justify-content-between">
+                                <p class="display-6 text-dark">Capitolo 2</p>
+                                <p class="display-6 text-dark">17/23</p>
+                            </div>
+                            
+                            <div id="progressBar2" class="progress-bar w-100 position-relative">
+                                <div class="progress-bar-filler bg-primary"></div>
+                            </div>
+                        </div>
+                    </NormalButton>
                     
-                    <div id="progressBar3" class="progress-bar w-100">
-                        <div class="progress-bar-filler bg-primary"></div>
-                    </div>
+                    <NormalButton classes="bg-light">
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 3}>
+                            <div class="d-flex flex-row justify-content-between">
+                                <p class="display-6 text-dark">Capitolo 3</p>
+                                <p class="display-6 text-dark">4/21</p>
+                            </div>
+                            
+                            <div id="progressBar3" class="progress-bar w-100">
+                                <div class="progress-bar-filler bg-primary"></div>
+                            </div>
+                        </div>
+                    </NormalButton>
                 </div>
-            </NormalButton>
-        </div>
-        {:else if sidebar_page == "exercises"}
-        <div class="right-sidebar-page">
-            
-        </div>
-        {:else if sidebar_page == "formulary"}
-        <div class="right-sidebar-page">
-            
-        </div>
-        {/if}
+            {:else if sidebar_page == "exercises"}
+                <div class="right-sidebar-page">
+                    
+                </div>
+            {:else if sidebar_page == "formulary"}
+                <div class="right-sidebar-page">
+                    
+                </div>
+            {/if}
         {:else if $page.route.id == '/(app)/negozio'}
-        <div class="d-flex align-items-center my-5">
-            <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
-        </div>
-        
-        <Searchbar class="align-self-center mb-5"></Searchbar>
-        
-        <Accordion let:id class="mb-5">
-            <AccordionItem class="filter-category">
-                <div slot="name">
-                    Corso Di Laurea
-                </div>
-                <div class="d-flex flex-wrap">
-                    {#each faculties as faculty}
+            <div class="d-flex align-items-center my-5">
+                <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
+            </div>
+            
+            <Searchbar class="align-self-center mb-5"></Searchbar>
+            
+            <Accordion let:id class="mb-5">
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Corso Di Laurea
+                    </div>
+                    <div class="d-flex flex-wrap">
+                        {#each faculties as faculty}
+                        <div class="me-2 mb-2">
+                            <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
+                        </div>
+                        {/each}
+                    </div>
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Tipo di Laurea
+                    </div>
+                    {#each degree_types as type}
                     <div class="me-2 mb-2">
-                        <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
+                        <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
                     </div>
                     {/each}
-                </div>
-            </AccordionItem>
-            <AccordionItem class="filter-category">
-                <div slot="name">
-                    Tipo di Laurea
-                </div>
-                {#each degree_types as type}
-                <div class="me-2 mb-2">
-                    <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
-                </div>
-                {/each}
-            </AccordionItem>
-            <AccordionItem class="filter-category">
-                <div slot="name">
-                    Tags
-                </div>
-                {#each tags as tag}
-                <div class="me-2 mb-2">
-                    <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
-                </div>
-                {/each}
-            </AccordionItem>
-            <AccordionItem class="filter-category">
-                <div slot="name">
-                    Rating
-                </div>
-            </AccordionItem>
-        </Accordion>
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Tags
+                    </div>
+                    {#each tags as tag}
+                    <div class="me-2 mb-2">
+                        <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
+                    </div>
+                    {/each}
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Rating
+                    </div>
+                </AccordionItem>
+            </Accordion>
         {/if}
-        
     </div>
 </div>
 

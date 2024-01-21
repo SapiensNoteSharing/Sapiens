@@ -14,7 +14,6 @@
         </div>
 
         <RightSidebar courses={data.courses}></RightSidebar>
-
     </div>
 </div>
 
@@ -35,5 +34,4 @@
         display: flex;
         width: 100%;
     }
-
 </style>
