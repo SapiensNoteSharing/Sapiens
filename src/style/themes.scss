@@ -162,6 +162,26 @@ i.bi.primary {
     }
 }
 
+.svelecte-custom-selection {
+    .svelecte-control.selection-input {
+        --sv-active-border: 0px;
+        border: 1px solid $dark;
+        border-left: 0px;
+        border-radius: 0rem .4rem .4rem 0rem;
+    }
+
+    .sv-control {
+        height: 100%;
+        border: 0px !important;
+        border-radius: 0rem .4rem .4rem 0rem !important;
+    }
+
+    .sv-content {
+        position: relative;
+        left: .5rem;
+    } 
+}
+
 :root {
     --scroll-size: 10px;
     --scroll-track: $light;

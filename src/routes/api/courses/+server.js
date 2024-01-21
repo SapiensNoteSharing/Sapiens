@@ -17,7 +17,7 @@ export async function GET({ url, locals }) {
         }
 
         const docs = await Course.find(query)
-
+        
         return new Response(JSON.stringify(docs))
     } catch (err) {
         console.log(err)

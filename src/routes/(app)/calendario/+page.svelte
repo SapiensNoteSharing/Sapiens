@@ -1,10 +1,7 @@
 <script>
+	import Calendar from "$lib/components/Calendar.svelte";
 
-import Calendar from "$lib/components/Calendar.svelte";
-
-let calendarContainer, extraOptions = {
-
-}
+	let calendarContainer, extraOptions = {}
 </script>
 
 <div class="h-100">

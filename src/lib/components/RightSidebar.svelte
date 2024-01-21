@@ -82,9 +82,18 @@
     <i style="--sidebarPosition:{sidebarPosition}" class="m-4 close-sidebar-btn display-3 bi bi-x-lg" on:click={toggleSidebar}></i>
     <div class="focus-mode-btn" style="--sidebarPosition:{sidebarPosition}">
         <ActiveButton active={focus_mode == true ? 'active' : 'not-active'}>
-            <div slot="name" class="navbar-item rounded-3">
+            <div slot="name" class="page-btn rounded-3">
                 <a class="d-block px-3 py-2 text-decoration-none" on:click={() => focus_mode = !focus_mode}><i class="display-3 bi bi-crosshair{focus_mode == true ? '2' : ''}"></i></a>
             </div>
+        </ActiveButton>
+        <ActiveButton 
+            active={focus_mode == true ? 'active' : 'not-active'}
+            fill={focus_mode == true ? '-fill' : ''}
+            class={""}
+            on:click={() => focus_mode = !focus_mode}
+            text={""}
+            icon={"bi-crosshair"}
+            >
         </ActiveButton>
     </div>
 
@@ -106,22 +115,22 @@
         <div class="d-flex flex-column">
             <div class="d-flex flex-rpw justify-content-between">
                 <ActiveButton active={sidebar_page == "chapters" ? 'active' : 'not-active'} classes={""}>
-                    <div slot="name" class="navbar-item rounded-3">
+                    <div slot="name" class="page-btn rounded-3">
                         <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "chapters"}><i class="display-3 bi bi-file-earmark{sidebar_page == "chapters" ? '-fill' : ''}"></i></a>
                     </div>
                 </ActiveButton>
                 <ActiveButton active={sidebar_page == "exercises" ? 'active' : 'not-active'} classes={""}>
-                    <div slot="name" class="navbar-item rounded-3">
+                    <div slot="name" class="page-btn rounded-3">
                         <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "exercises"}><i class="display-3 bi bi-pencil{sidebar_page == "exercises" ? '-fill' : ''}"></i></a>
                     </div>
                 </ActiveButton>
                 <ActiveButton active={sidebar_page == "questions" ? 'active' : 'not-active'} classes={""}>
-                    <div slot="name" class="navbar-item rounded-3">
+                    <div slot="name" class="page-btn rounded-3">
                         <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "questions"}><i class="display-3 bi bi-bookmark{sidebar_page == "questions" ? '-fill' : ''}"></i></a>
                     </div>
                 </ActiveButton>
                 <ActiveButton active={sidebar_page == "formulary" ? 'active' : 'not-active'} classes={""}>
-                    <div slot="name" class="navbar-item rounded-3">
+                    <div slot="name" class="page-btn rounded-3">
                         <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "formulary"}><i class="display-3 bi bi-question-circle{sidebar_page == "formulary" ? '-fill' : ''}"></i></a>
                     </div>
                 </ActiveButton>

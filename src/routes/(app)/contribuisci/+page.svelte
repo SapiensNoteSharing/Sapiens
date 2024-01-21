@@ -1,6 +1,12 @@
 <script>
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import { onMount } from 'svelte';
+    import Svelecte from 'svelecte'
+
+    export let data;
+    let account = {...data.user}
+
+    let new_course = {...data.user}
 
 	onMount(() => {
 		// Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -97,22 +103,34 @@
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-5">
-        <ActiveButton active={subpage == "submit" ? 'active' : 'not-active'} classes={"me-3"}>
-            <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "submit"}><i class="me-3 display-5 bi bi-file-earmark-plus{subpage == "submit" ? '-fill' : ''}"></i>Condividi i tuoi appunti</a>
-            </div>
+        <ActiveButton 
+        active={subpage == "submit" ? 'active' : 'not-active'}
+        fill={subpage == "submit" ? '-fill' : ''}
+        on:click={() => subpage = "submit"}
+        class={"me-3"}
+        text={"Condividi i tuoi appunti"}
+        icon={"bi-file-earmark-plus"}
+        >
         </ActiveButton>
 
-        <ActiveButton active={subpage == "correction" ? 'active' : 'not-active'} classes={"me-3"}>
-            <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "correction"}><i class="me-3 display-5 bi bi-exclamation-triangle{subpage == "correction" ? '-fill' : ''}"></i>Suggerisci correzione</a>
-            </div>
+        <ActiveButton 
+        active={subpage == "correction" ? 'active' : 'not-active'}
+        fill={subpage == "correction" ? '-fill' : ''}
+        on:click={() => subpage = "correction"}
+        class={"me-3"}
+        text={"Suggerisci correzione"}
+        icon={"bi-exclamation-triangle"}
+        >
         </ActiveButton>
 
-        <ActiveButton active={subpage == "suggestion" ? 'active' : 'not-active'} classes={"me-3"}>
-            <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "suggestion"}><i class="me-3 display-5 bi bi-chat-dots{subpage == "suggestion" ? '-fill' : ''}"></i>Consigli e commenti</a>
-            </div>
+        <ActiveButton 
+        active={subpage == "suggestion" ? 'active' : 'not-active'}
+        fill={subpage == "suggestion" ? '-fill' : ''}
+        on:click={() => subpage = "suggestion"}
+        class={"me-3"}
+        text={"Consigli e commenti"}
+        icon={"bi-chat-dots"}
+        >
         </ActiveButton>
     </div>
 
@@ -120,99 +138,145 @@
         <div class="scrollspy-example-2" data-bs-spy="scroll" data-bs-target="#personal_area_scrollspy" data-bs-smooth-scroll="true">
             <form class="row g-3 needs-validation m-0" novalidate>
                 <div class="col-md-3">
-                    <label for="validationCustom01" class="form-label">Regione</label>
-                    <input type="text" class="form-control" id="validationCustom01" value="" required>
+                    <label for="accountRegion" class="form-label">Regione</label>
+                    <div class="input-group has-validation">
+                        <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                        <input class="form-control" bind:value={new_course.university_region} required>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <label for="validationCustom01" class="form-label">Città universitaria</label>
-                    <input type="text" class="form-control" id="validationCustom01" value="" required>
+                    <label for="accountUniversityCity" class="form-label">Città universitaria</label>
+                    <div class="input-group has-validation">
+                        <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                        <input class="form-control" bind:value={new_course.university_city} required>
+                    </div>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="validationCustom01" class="form-label">Nome università</label>
-                    <input type="text" class="form-control" id="validationCustom01" value="" required>
+                    <label for="accountUniversityName" class="form-label">Nome università</label>
+                    <div class="input-group has-validation">
+                        <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                        <input class="form-control" bind:value={new_course.university_name} required>
+                    </div>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="validationCustom01" class="form-label">Nome facoltà</label>
-                    <input type="text" class="form-control" id="validationCustom01" value="" required>
+                    <label for="account_faculty_name" class="form-label">Nome facoltà</label>
+                    <div class="input-group has-validation">
+                        <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                        <input class="form-control" bind:value={new_course.faculty_name} required>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <label for="validationCustom04" class="form-label">Tipo di laurea</label>
-                    <select class="form-select" id="validationCustom04" required>
-                        <option selected disabled value="">Seleziona</option>
-                        <option>Triennale</option>
-                        <option>Magistrale</option>
-                        <option>A ciclo unico</option>
-                    </select>
+                    <label for="account_degree_type" class="form-label">Tipo di laurea</label>
+                    <div class="d-flex has-validation svelecte-custom-selection">
+                        <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                        <Svelecte
+                        placeholder="Tipo di laurea"
+                        options={["Triennale", "Magistrale", "A ciclo unico"]}
+                        labelAsValue
+                        class="svelecte-control text-center selection-input m-0"
+                        bind:value={new_course.faculty_type}
+                        />
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <label for="validationCustom01" class="form-label">Codice facoltà</label>
-                    <input type="text" class="form-control" id="validationCustom01" value="" required>
+                    <label for="faculty_code" class="form-label">Codice facoltà</label>
+                    <div class="input-group has-validation">
+                        <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                        <input class="form-control" bind:value={new_course.faculty_code} required>
+                    </div>
                 </div>
 
                 <div class="d-flex flex-row">
                     <div class="row g-3 me-3" style="width: 66%">
                         <div class="col-md-5">
-                            <label for="validationCustom01" class="form-label">Nome corso</label>
-                            <input type="text" class="form-control" id="validationCustom01" value="" required>
+                            <label for="course_name" class="form-label">Nome corso</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>
+                                <input type="text" class="form-control" id="validationCustom01" value="" required>
+                            </div>
                         </div>
-                        <div class="col-md-5">
-                            <label for="validationCustom02" class="form-label">Codice corso</label>
-                            <input type="text" class="form-control" id="validationCustom02" value="" required>
-                        </div>
-
-                        <div class="col-md-2">
-                            <label for="validationCustom02" class="form-label">Numero CFU</label>
-                            <input type="number" class="form-control" id="validationCustom02" min="0" value="0" required>
-                        </div>
-
-                        <div class="col-md-5">
-                            <label for="validationCustom02" class="form-label">Docenti (separare con una virgola)</label>
-                            <input type="text" class="form-control" id="validationCustom02" value="" required>
+                        <div class="col-md-4">
+                            <label for="course_code" class="form-label">Codice corso</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>
+                                <input type="text" class="form-control" id="validationCustom02" value="" required>
+                            </div>
                         </div>
 
                         <div class="col-md-3">
-                            <label for="validationCustom04" class="form-label">Anno</label>
-                            <select class="form-select" id="validationCustom04" required>
-                                <option selected disabled value="">Seleziona</option>
-                                <option>Primo</option>
-                                <option>Secondo</option>
-                                <option>Terzo</option>
-                            </select>
+                            <label for="number_CFU" class="form-label">Numero CFU</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>
+                                <input type="number" class="form-control" id="validationCustom02" min="0" value="0" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="professors" class="form-label">Docenti (separare con una virgola)</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-people-fill"></i></span>
+                                <input type="text" class="form-control" id="validationCustom02" value="" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="year" class="form-label">Anno</label>
+                            <div class="d-flex has-validation svelecte-custom-selection">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-clock-fill"></i></span>
+                                <Svelecte
+                                placeholder="Anno"
+                                options={["Primo", "Secondo", "Terzo"]}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                />
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <label for="validationCustom04" class="form-label">Periodo</label>
-                            <select class="form-select" id="validationCustom04" required>
-                                <option selected disabled value="">Seleziona</option>
-                                <option>Primo semestre</option>
-                                <option>Secondo semestre</option>
-                                <option>Annuale</option>
-                            </select>
+                            <label for="period" class="form-label">Periodo</label>
+                            <div class="d-flex has-validation svelecte-custom-selection">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-clock-fill"></i></span>
+                                <Svelecte
+                                placeholder="Periodo"
+                                options={["Primo semestre", "Secondo semestre", "Annuale"]}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                />
+                            </div>
                         </div>
 
                         <div class="col-md-6">
-                            <label for="validationCustom04" class="form-label">Nome curriculum</label>
-                            <input type="text" class="form-control" id="validationCustom02" value="">
+                            <label for="curriculum_name" class="form-label">Nome curriculum</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-info-lg"></i></span>
+                                <input class="form-control" bind:value={new_course.curriculum_name}>
+                            </div>
                         </div>
 
                         <div class="col-md-3">
-                            <label for="validationCustom04" class="form-label">Codice curriculum</label>
-                            <input type="text" class="form-control" id="validationCustom02" value="">
+                            <label for="curriculum_code" class="form-label">Codice curriculum</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-info-lg"></i></span>
+                                <input class="form-control" bind:value={new_course.curriculum_code}>
+                            </div>
                         </div>
 
                         <div class="col-md-3">
-                            <label for="validationCustom04" class="form-label">Settore</label>
-                            <input type="text" class="form-control" id="validationCustom02" value="">
+                            <label for="sector_code" class="form-label">Codice settore</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-info-lg"></i></span>
+                                <input class="form-control" bind:value={new_course.sector_code}>
+                            </div>
                         </div>
                     </div>
 
                     <div class="file-input p-0 m-0" style="width: 34%">
-                        <label for="validationCustom01" class="form-label">File</label>
+                        <label for="file" class="form-label">File</label>
                         <div class="drop-zone">
                         <span class="display-6 drop-zone__prompt">Scegli un file o trascinalo qui</span>
                             <input type="file" name="myFile" class="drop-zone__input">
@@ -276,6 +340,25 @@
         padding-left: calc(var(--bs-gutter-x) * .5);
         padding-right: calc(var(--bs-gutter-x) * .5);
     }
+
+    .input-group {
+        border-radius: .4rem;
+    }
+
+    .input-icon-label {
+        background: rgba($dark, .15);
+        border: 1px solid $dark;
+        border-radius: .4rem 0rem 0rem .4rem;
+    }
+
+    .form-control, .form-select {
+		border: 1px solid $dark;
+
+		&::placeholder {
+			color: $dark;
+        	opacity: .5;
+		}
+	}
 
     .drop-zone {
         padding: 2rem;

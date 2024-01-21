@@ -2,7 +2,6 @@
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
 
-
     export let icon = '';
     export let active = false;
     export let href = '';
@@ -21,19 +20,16 @@
         if(collapsible) open = !open
         dispatch('click', obj)
     }
-
-    //
-    //
 </script>
 
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <a
-class="item {classes}" {style}
-class:hover={hovering} class:active={active} 
-data-sveltekit-preload-data="hover" 
-on:mouseenter={() => hovering = true} 
-on:mouseleave={() => hovering = false}
+    class="item {classes}" {style}
+    class:hover={hovering} class:active={active} 
+    data-sveltekit-preload-data="hover" 
+    on:mouseenter={() => hovering = true} 
+    on:mouseleave={() => hovering = false}
 >
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="d-flex header" on:click|preventDefault={handleClick} class:hover={hovering} class:open={open} data-bs-toggle="{collapsible ? 'collapse' : ''}" href={collapsible ? `#${id}` : href}  aria-expanded="false" >

@@ -14,7 +14,7 @@
 <div class="course-card d-flex flex-row justify-content-between {classes}" style="width: 47% {style}">
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
-            <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name.toLowerCase()}.png" alt="{course.name}">
+            <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
 
             <div class="d-flex flex-row justify-content-between">
                 <!-- <i class="text-dark display-3 ms-4 bi bi-file-earmark-fill"></i> -->
@@ -45,7 +45,7 @@
             {#if owned == 0}
                 <NormalButton classes={""}>
                     <div slot="name">
-                        <a type="button" class="btn px-4 py-2 text-center w-100 text-dark fs-2">
+                        <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2">
                             Ottieni
                         </a>
                     </div>
@@ -109,12 +109,21 @@
         height: 4rem;
     }
 
-    .btn {
+    :global(.btn-primary) {
         background: $primary;
         border: none;
 
         &:hover {
             background: darken($primary, 10%);
+        }
+    }
+
+    :global(.btn-secondary) {
+        background: $secondary;
+        border: none;
+
+        &:hover {
+            background: darken($secondary, 10%);
         }
     }
 

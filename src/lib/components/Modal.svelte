@@ -60,18 +60,18 @@
 
 			<div class="modal-footer">
 				{#if no}
-					<NormalButton classes={"ml-auto"} style={""}>
+					<NormalButton classes={"ml-auto"} style={""} on:click={close}>
 						<div slot="name">
-							<a type="button" class="btn text-center px-4 py-2 bg-primary rounded-4 w-100 text-dark fs-2">
+							<a type="button" class="btn btn-primary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2">
 								{no}
 							</a>
 						</div>
 					</NormalButton>
 					<!-- <button type="button" class="btn btn-outline-secondary text-dark fs-3 px-4 py-2 border-dark rounded-pill" on:click={() => close(false)}>{no}</button> -->
 				{/if}
-				<NormalButton classes={"ml-auto"} style={""}>
+				<NormalButton classes={"ml-auto"} style={""} on:click={close}>
 					<div slot="name">
-						<a type="button" class="btn text-center px-4 py-2 bg-secondary rounded-4 w-100 text-light fs-2">
+						<a type="button" class="btn btn-secondary text-center px-4 py-2 rounded-4 w-100 text-light fs-2">
 							{yes}
 						</a>
 					</div>

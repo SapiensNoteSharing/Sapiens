@@ -383,7 +383,6 @@
     let course = courses[0];
 
     let selected_option;
-    $: console.log(selected_option);
 </script>
 
 <Modal title="Carrello" yes="Acquista" no="Annulla" classes="" theme="btn-outline-primary" bind:this={cartModal}>
@@ -399,14 +398,14 @@
                     <div class="d-flex flex-row justify-content-start me-2">
                         <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} base" checked bind:group={selected_option}>
                         <ActiveButton active={selected_option != "" ? 'active' : 'not-active'} classes={"me-3"}>
-                            <div slot="name" class="navbar-item outlined display-6 rounded-4">
+                            <div slot="name" class="page-btn outlined display-6 rounded-4">
                                 <label class="d-block display-5 px-3 py-2 text-decoration-none" for="{course.name} base"><i class="me-3 display-5 bi bi-box{subpage == "bundle" ? '-fill' : ''}"></i>Base</label>
                             </div>
                         </ActiveButton>
 
                         <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} completo" bind:group={selected_option}>
                         <ActiveButton active={selected_option == "bundle" ? 'active' : 'not-active'} classes={"me-3"}>
-                            <div slot="name" class="navbar-item outlined display-6 rounded-4">
+                            <div slot="name" class="page-btn outlined display-6 rounded-4">
                                 <label class="d-block display-5 px-3 py-2 text-decoration-none" for="{course.name} completo"><i class="me-3 display-5 bi bi-boxes{subpage == "bundle" ? '-fill' : ''}"></i>Completo</label>
                             </div>
                         </ActiveButton>
@@ -423,22 +422,34 @@
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-5">
-        <ActiveButton active={subpage == "bundle" ? 'active' : 'not-active'} classes={"me-3"}>
-            <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "bundle"}><i class="me-3 display-5 bi bi-box-seam{subpage == "bundle" ? '-fill' : ''}"></i>Pacchetti</a>
-            </div>
+        <ActiveButton 
+        active={subpage == "bundle" ? 'active' : 'not-active'}
+        fill={subpage == "bundle" ? '-fill' : ''}
+        on:click={() => subpage = "bundle"}
+        class={"me-3"}
+        text={"Pacchetti"}
+        icon={"bi-box-seam"}
+        >
         </ActiveButton>
 
-        <ActiveButton active={subpage == "single_course" ? 'active' : 'not-active'} classes={"me-3"}>
-            <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "single_course"}><i class="me-3 display-5 bi bi-1-circle{subpage == "single_course" ? '-fill' : ''}"></i>Corso singolo</a>
-            </div>
+        <ActiveButton 
+        active={subpage == "single_course" ? 'active' : 'not-active'}
+        fill={subpage == "single_course" ? '-fill' : ''}
+        on:click={() => subpage = "single_course"}
+        class={"me-3"}
+        text={"Corso singolo"}
+        icon={"bi-1-circle"}
+        >
         </ActiveButton>
 
-        <ActiveButton active={subpage == "buy_dna" ? 'active' : 'not-active'} classes={"me-3"}>
-            <div slot="name" class="navbar-item outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={() => subpage = "buy_dna"}><i class="me-3 display-5 bi bi-cart{subpage == "buy_dna" ? '-fill' : ''}"></i>Punti DNA</a>
-            </div>
+        <ActiveButton 
+        active={subpage == "buy_dna" ? 'active' : 'not-active'}
+        fill={subpage == "buy_dna" ? '-fill' : ''}
+        on:click={() => subpage = "buy_dna"}
+        class={"me-3"}
+        text={"Punti DNA"}
+        icon={"bi-cart"}
+        >
         </ActiveButton>
     </div>
 
@@ -452,15 +463,15 @@
                     <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
                         {#each semester_bundle_courses as course}
                             {#if course.owned}
-                                <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name}.png" alt="">
+                                <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                             {:else}
-                                <img class="bundle-course-icon" src="/src/style/course_icons/{course.name}.png" alt="">
+                                <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                             {/if}
                         {/each}
 
-                        <NormalButton classes={"bg-primary ml-auto"} style={"margin-top: 2rem;"}>
+                        <NormalButton classes={"ml-auto"} style={"margin-top: 2rem;"}>
                             <div slot="name">
-                                <a type="button" class="btn text-center w-100 text-dark fs-2">
+                                <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
                                     Vedi dettagli
                                 </a>
                             </div>
@@ -476,15 +487,15 @@
                     <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
                         {#each year_bundle_courses as course}
                             {#if course.owned}
-                                <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name}.png" alt="">
+                                <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                             {:else}
-                                <img class="bundle-course-icon" src="/src/style/course_icons/{course.name}.png" alt="">
+                                <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                             {/if}
                         {/each}
 
-                        <NormalButton classes={"bg-primary ml-auto"} style={"margin-top: 2rem; right: 0px;"}>
+                        <NormalButton classes={"ml-auto"} style={"margin-top: 2rem; right: 0px;"}>
                             <div slot="name">
-                                <a type="button" class="btn text-center w-100 text-dark fs-2">
+                                <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
                                     Vedi dettagli
                                 </a>
                             </div>
@@ -500,15 +511,15 @@
             <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
                 {#each degree_bundle_courses as course}
                     {#if course.owned}
-                        <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name}.png" alt="">
+                        <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                     {:else}
-                        <img class="bundle-course-icon" src="/src/style/course_icons/{course.name}.png" alt="">
+                        <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                     {/if}
                 {/each}
 
-                <NormalButton classes={"bg-primary ml-auto"} style={"margin-top: 2rem;"}>
+                <NormalButton classes={"ml-auto"} style={"margin-top: 2rem;"}>
                     <div slot="name">
-                        <a type="button" class="btn text-center w-100 text-dark fs-2">
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
                             Vedi dettagli
                         </a>
                     </div>

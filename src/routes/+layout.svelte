@@ -20,7 +20,6 @@
             }
         })
     }
-    $: console.log(user)
     let pageTitle
     $: pageTitle = $page.route.id ? $page.route.id.split('/').pop().replace(/_/g, ' ').charAt(0).toUpperCase() + $page.route.id.split('/').pop().replace(/_/g, ' ').slice(1) : '';
 </script>
@@ -46,28 +45,28 @@
 
                     <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
                         <ActiveButton classes={"m-2"}>
-                            <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
+                            <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
                                 <span class="display-6 align-middle text-dark">{user.streak}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
                             </div>
                         </ActiveButton>
 
                         <ActiveButton classes={"m-2"}>
-                            <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
+                            <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
                                 <span class="display-6 align-middle text-dark">{user.xp}</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
                             </div>
                         </ActiveButton>
 
                         <ActiveButton classes={"m-2"}>
-                            <div slot="name" class="navbar-item display-6 rounded-4 py-2 px-3">
+                            <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
                                 <span class="display-6 align-middle text-dark">{user.league_position || 'n'}°</span>
                                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.png" alt="league">
                             </div>
                         </ActiveButton>
 
                         <ActiveButton classes={"m-2"}>
-                            <div slot="name" class="navbar-item d-flex flex-row display-6 rounded-4">
+                            <div slot="name" class="page-btn d-flex flex-row display-6 rounded-4">
                                 <div class="py-2 px-3">
                                     <span class="display-6 align-middle text-dark">{user.dna}</span>
                                     <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">

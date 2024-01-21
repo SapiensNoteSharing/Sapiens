@@ -32,10 +32,9 @@
             },
             body: JSON.stringify(userLogin)
         })
-        if(resp.ok){
+        if (resp.ok) {
             goto('/home')
         }
-
     }
 
     async function registerUser() {
@@ -47,7 +46,7 @@
                 },
                 body: JSON.stringify(userRegister)
             });
-            if(resp.ok){
+            if (resp.ok) {
                 goto('/home')
             }
         }
@@ -123,11 +122,11 @@
 
                 <div class="col-md-12">
                     <label for="LoginEmail" class="form-label"></label>
-                    <div class="input-group has-validation" id="show_hide_password">
+                    <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                        <input placeholder="E-mail" class="fs-2 form-control border-dark" bind:value={userLogin.email} required>
+                        <input placeholder="E-mail" class="form-control border-dark" bind:value={userLogin.email} required>
                         <div id="validationLoginEmailFeedback" class="invalid-feedback">
-                            Inserisci un'email valida
+                            Non esiste nessun account collegato a questa Email. Riprova o vai alla registrazione
                         </div>
                     </div>
                 </div>
@@ -136,12 +135,10 @@
                     <label for="LoginPassword" class="form-label"></label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
-                        <input type="password" placeholder="Password" class="fs-2 form-control border-dark" bind:value={userLogin.password} required>
-                        <div class="input-group-addon">
-                            <i class="bi bi-eye-slash text-dark display-3" aria-hidden="true"></i>
-                        </div>
+                        <input type="password" placeholder="Password" class="form-control border-dark" style="border-radius: 0rem 0.4rem 0.4rem 0rem; z-index: 1;" bind:value={userLogin.password} required>
+                        <i class="bi bi-eye-slash text-dark display-3 password-show-btn"></i>
                         <div id="validationLoginPasswordFeedback" class="invalid-feedback">
-                            Inserisci una password valida
+                            La password non è corretta. Riprova
                         </div>
                     </div>
                 </div>
@@ -197,7 +194,7 @@
                             <label for="RegistrationName" class="form-label">Nome *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
-                                <input class="form-control {validated ? (checkNameValidity(userRegister.name) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.name} required>
+                                <input class="form-control {validated ? (checkNameValidity(userRegister.name) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.name}>
                                 <div class="invalid-feedback">
                                     Campo obbligatorio
                                 </div>
@@ -207,7 +204,7 @@
                             <label for="RegistrationLastName" class="form-label">Cognome *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
-                                <input class="form-control {validated ? (checkLastNameValidity(userRegister.surname) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.surname} required>
+                                <input class="form-control {validated ? (checkLastNameValidity(userRegister.surname) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.surname}>
                                 <div class="invalid-feedback">
                                     Campo obbligatorio
                                 </div>
@@ -218,7 +215,7 @@
                             <label for="RegistrationEmail" class="form-label">e-mail *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                                <input class="form-control {validated ? (checkEmailValidity(userRegister.email) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.email} required>
+                                <input class="form-control {validated ? (checkEmailValidity(userRegister.email) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.email}>
                                 <div class="invalid-feedback">
                                     Email non valida
                                 </div>
@@ -227,7 +224,7 @@
                         <div class="field col-md-6 pe-0" style="margin-bottom: {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "2.55" : "1") : "2.55"}rem;">
                             <label for="RegistrationPassword" class="form-label">Password *</label>
                             <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text">#</span>
+                                <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
                                 <input type="password" class="form-control {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.password} required>
                                 <div class="invalid-feedback">
                                     {#if checkPasswordValidity(userRegister.password) == -1}
@@ -241,27 +238,37 @@
                         
                         <div class="field col-md-3 ps-0">
                             <label for="RegistrationBirthCountry" class="form-label">Stato</label>
-                            <input class="form-control" bind:value={userRegister.country}>
-                            <div class="invalid-feedback">
-                                Inserisci uno stato valido
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input class="form-control" bind:value={userRegister.country}>
+                                <div class="invalid-feedback">
+                                    Inserisci uno stato valido
+                                </div>
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="RegistrationBirthRegion" class="form-label">Regione</label>
-                            <input class="form-control" bind:value={userRegister.region}>
-                            <div class="invalid-feedback">
-                                Inserisci una regione valida
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input class="form-control" bind:value={userRegister.region}>
+                                <div class="invalid-feedback">
+                                    Inserisci una regione valida
+                                </div>
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="RegistrationBirthCity" class="form-label">Città</label>
-                            <input class="form-control" bind:value={userRegister.city}>
-                            <div class="invalid-feedback">
-                                Inserisci una città valida
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input class="form-control" bind:value={userRegister.city}>
+                                <div class="invalid-feedback">
+                                    Inserisci una città valida
+                                </div>
                             </div>
                         </div>
+
                         <button class="submit-btn col-md-1 pe-0" on:click={second_step} type="submit">
-                            <i style="font-size: 2.3rem; position: relative; top: -2px;" class="bi bi-arrow-right-square next-step-icon"></i>
+                            <i style="font-size: 2.6rem; position: relative; top: -2px;" class="bi bi-arrow-right-square next-step-icon"></i>
                         </button>
 					</form>
                     <p class="m-0 mt-3">* Campi obbligatori</p>
@@ -272,54 +279,114 @@
                         
                         <div class="field col-md-3 ps-0">
                             <label for="registrationUniversityRegion" class="form-label">Regione</label>
-                            <input class="form-control" bind:value={userRegister.university_region}>
-                            <div id="validationServer06Feedback" class="invalid-feedback">
-                                Inserisci una regione valida
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input class="form-control" bind:value={userRegister.university_region}>
+                                <div class="invalid-feedback">
+                                    Inserisci una regione valida
+                                </div>
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="registrationUniversityCity" class="form-label">Città universitaria</label>
-                            <input class="form-control" bind:value={userRegister.university_city}>
-                            <div id="validationServer07Feedback" class="invalid-feedback">
-                                Inserisci una città valida
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input class="form-control" bind:value={userRegister.university_city}>
+                                <div class="invalid-feedback">
+                                    Inserisci una città valida
+                                </div>
                             </div>
                         </div>
                         <div class="field col-md-5 pe-0">
                             <label for="registrationUniversityName" class="form-label">Nome Università</label>
-                            <input class="form-control" bind:value={userRegister.university_name}>
-                            <div id="validationServer08Feedback" class="invalid-feedback">
-                                Inserisci un'Università valida
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                                <input class="form-control" bind:value={userRegister.university_name}>
+                                <div class="invalid-feedback">
+                                    Inserisci un'Università valida
+                                </div>
                             </div>
                         </div>
 
                         <div class="field col-md-5 ps-0">
                             <label for="registrationFacultyName" class="form-label">Nome facoltà</label>
-                            <input class="form-control" bind:value={userRegister.faculty_name}>
-                            <div id="validationServer09Feedback" class="invalid-feedback">
-                                Scegli un'opzione
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                                <input class="form-control" bind:value={userRegister.faculty_name}>
+                                <div class="invalid-feedback">
+                                    Scegli un'opzione
+                                </div>
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="registrationFacultyType" class="form-label">Tipologia di Laurea</label>
-                            <input class="form-control" bind:value={userRegister.faculty_type}>
-                            <div id="validationServer10Feedback" class="invalid-feedback">
-                                Scegli un'opzione
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                                <select class="form-select" bind:value={userRegister.degree_type}>
+                                    <option>Triennale</option>
+                                    <option>Magistrale</option>
+                                    <option>A ciclo unico</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Scegli un'opzione
+                                </div>
                             </div>
                         </div>
                         <div class="field col-md-3 pe-0">
                             <label for="registrationFacultyCode" class="form-label">Codice facoltà</label>
-                            <input class="form-control" bind:value={userRegister.faculty_code}>
-                            <div id="validationServer11Feedback" class="invalid-feedback">
-                                Scegli un'opzione
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                                <input class="form-control" bind:value={userRegister.faculty_code}>
+                                <div class="invalid-feedback">
+                                    Scegli un'opzione
+                                </div>
                             </div>
                         </div>
 
-                        <div class="d-flex d-row justify-content-between align-items-center">
+                        <div class="field col-md-2 ps-0">
+                            <label for="studentID" class="form-label">Matricola</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
+                                <input class="form-control" bind:value={userRegister.student_id}>
+                                <div class="invalid-feedback">
+                                    Scegli un'opzione
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field col-md-5">
+                            <label for="year" class="form-label">Anno</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
+                                <select class="form-select" bind:value={userRegister.year}>
+                                    <option>Primo</option>
+                                    <option>Secondo</option>
+                                    <option>Terzo</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Scegli un'opzione
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field col-md-5 pe-0">
+                            <label for="semester" class="form-label">Semestre</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
+                                <select class="form-select" bind:value={userRegister.semester}>
+                                    <option>Primo</option>
+                                    <option>Secondo</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Scegli un'opzione
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex d-row justify-content-between align-items-center p-0">
                             <button class="submit-btn p-0 m-0" on:click={first_step}>
-                                <i style="font-size: 2.3rem;" class="bi bi-arrow-left-square next-step-icon"></i>
+                                <i style="font-size: 2.6rem; position: relative; bottom: 2px;" class="bi bi-arrow-left-square next-step-icon"></i>
                             </button>
                             
-                            <NormalButton classes={"my-4 text-center p-0 m-0"}>
+                            <NormalButton classes={"text-center p-0 m-0"}>
                                 <div slot="name">
                                     <button type="button" class="btn bg-secondary w-100 text-dark fs-2 rounded-3 m-0" on:click={registerUser}>
                                         Registrati
@@ -328,7 +395,7 @@
                             </NormalButton>
 
                             <button class="submit-btn p-0 m-0 text-light no-cursor" style="cursor: default !important;">
-                                <i style="font-size: 2.3rem;" class="bi bi-arrow-left-square"></i>
+                                <i style="font-size: 2.6rem;" class="bi bi-arrow-left-square"></i>
                             </button>
                         </div>
 					</form>
@@ -376,12 +443,6 @@
         margin: 0rem 2rem 2rem 2rem;
     }
 
-    .input-icon-label {
-        font-size: 1.25rem;
-        background: rgba($dark, .15);
-        border: 1px solid $dark;
-    }
-
     .login-box, .registration-box {
         padding: 2rem;
         border: 1px solid rgba($dark, .25);
@@ -394,8 +455,16 @@
     }
 
     .registration-box {
-        min-width: 60%;
-        width: 60%;
+        min-width: 75%;
+        width: 75%;
+    }
+
+    .password-show-btn {
+        position: absolute;
+        right: 1rem;
+        margin-top: 5px;
+        z-index: 2;
+        cursor: pointer;
     }
 
     .register-link, .login-link {
@@ -406,12 +475,18 @@
         border-radius: .4rem;
     }
 
+    .input-icon-label {
+        font-size: 1.25rem;
+        background: rgba($dark, .15);
+        border: 1px solid $dark;
+    }
+
     .field {
         margin: 0px;
         margin-bottom: 1rem;
     }
 
-	.form-control {
+	.form-control, .form-select {
 		border: 1px solid $dark;
 
 		&::placeholder {
