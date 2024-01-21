@@ -13,7 +13,9 @@ export async function POST({ url, locals, request }) {
     if (alreadyRegistered) {
         throw error(409, 'This email is already used by another user')
     } else {
-        const user = await User.create({...body, hash: hash, role: 'user' })
+        const u = await User.create({...body, hash: hash})
+        const user = u.toObject()
+        delete user.hash
         const sid = crypto.randomUUID()
 
         locals.sid = sid

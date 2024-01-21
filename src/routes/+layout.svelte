@@ -4,8 +4,7 @@
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import '$css/global.scss';
 
-    export let data;
-    let user = data.user || {};
+    $: user = $page.data.user || {};
         
     let dnaModal;
 
@@ -20,7 +19,7 @@
             }
         })
     }
-    let pageTitle
+    
     $: pageTitle = $page.route.id ? $page.route.id.split('/').pop().replace(/_/g, ' ').charAt(0).toUpperCase() + $page.route.id.split('/').pop().replace(/_/g, ' ').slice(1) : '';
 </script>
 

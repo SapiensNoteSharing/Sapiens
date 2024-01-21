@@ -53,15 +53,16 @@ const UserSchema = new Schema({
     semester: String,
     student_id: String,
     courses: [ObjectId],
-    dna: Number,
-    rna: Number,
-    streak: Number,
-    xp: Number,
+    dna: {type: Number, default: 0},
+    rna: {type: Number, default: 0},
+    streak: {type: Number, default: 0},
+    xp: {type: Number, default: 0},
     hash: String,
-    role: String,
+    role: {type: String, default: 'user'},
 }, {
     timestamps: true
 })
+UserSchema.index({email: 1})
 
 const ReviewSchema = new Schema({
     written_by: String,
@@ -143,6 +144,19 @@ const CourseSchema = new Schema({
     timestamps: true
 })
 
+const ProvinciaSchema = new Schema({
+    cod_regione: {
+        type: Number,
+        ref: 'Regione'
+    },
+    name: String,
+})
+
+const RegioneSchema = new Schema({
+    cod_regione: Number,
+    name: String
+})
+
 CourseSchema.pre('find', function (next) {
     this.populate('chapters')
     this.populate('reviews')
@@ -159,13 +173,13 @@ CourseSchema.pre('findOne', function (next) {
 
 const GridSchema = new Schema({}, {strict: false});
 
-const Grid = mongoose.model.Grid || mongoose.model('Grid', GridSchema, 'fs.files');
-const Config = mongoose.model.Config || mongoose.model('Config', ConfigSchema);
-const User = mongoose.model.User || mongoose.model('User', UserSchema);
-const Review = mongoose.model.Review || mongoose.model('Review', ReviewSchema);
-const Directory = mongoose.model.Directory || mongoose.model('Directory', DirectorySchema)
-const File = mongoose.model.File || mongoose.model('File', FileSchema);
-const Course = mongoose.model.Courses || mongoose.model('Courses', CourseSchema);
+const Grid = mongoose.models.Grid           || mongoose.model('Grid', GridSchema, 'fs.files');
+const Config = mongoose.models.Config       || mongoose.model('Config', ConfigSchema);
+const User = mongoose.models.User           || mongoose.model('User', UserSchema);
+const Review = mongoose.models.Review       || mongoose.model('Review', ReviewSchema);
+const Directory = mongoose.models.Directory || mongoose.model('Directory', DirectorySchema)
+const File = mongoose.models.File           || mongoose.model('File', FileSchema);
+const Course = mongoose.models.Courses      || mongoose.model('Courses', CourseSchema);
 
 export { 
     ObjectId,

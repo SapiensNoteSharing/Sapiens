@@ -38,7 +38,7 @@
     }
 
     async function registerUser() {
-        if (checkValidity) {
+        if (checkValidity()) {
             const resp = await fetch('/register', {
                 method: 'POST',
                 headers: {

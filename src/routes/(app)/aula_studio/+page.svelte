@@ -1,7 +1,7 @@
 <script>
     import { viewing } from '$lib/stores';
     import 'highlight.js/styles/github.css';
-
+    import ActiveButton from '$lib/components/ActiveButton.svelte'
     export let data;
     const fetch = data.fetch;
 
@@ -17,26 +17,42 @@
                 renderedFile = await resp.text()
         }
     }
+
+    let focus_mode = false
 </script>
 
-<div class="cont">
-    {#if $viewing?._id}
-        <center><h1>{$viewing.name || ''}</h1></center>
-    {/if}
+<div class="focus-mode-btn">
+    <ActiveButton active={focus_mode == true ? 'active' : 'not-active'}>
+        <div slot="name" class="navbar-item rounded-3">
+            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => focus_mode = !focus_mode}><i class="display-3 bi bi-crosshair{focus_mode == true ? '2' : ''}"></i></a>
+        </div>
+    </ActiveButton>
+</div>
 
-    {@html renderedFile}
+<div class="content">
+    <div class="file">
+        {#if $viewing?._id}
+            <h1>{$viewing.name || ''}</h1>
+        {/if}
+        {@html renderedFile}
+    </div>
 </div>
 
 <style lang="scss">
     @import '$css/variables.scss';
 
-    .cont {
+    .content {
         min-height: 50vh;
-        width: 90%;
+        width: auto;
         font-size: 1.25rem;
         line-height: 2.25rem;
         color: $dark;
+        transition: all 1s;
 
+        .file {
+            max-width: 50%;
+            overflow-x: auto;
+        }
         :global(p) {
         }
 
@@ -103,5 +119,17 @@
     //     ol li::marker {
     //         color: var(--background-accent) !important;
     //     }
-    }   
+    }  
+    .focus-mode-btn {
+        cursor: pointer;
+        position: absolute;
+        z-index: 2;
+        top: .25rem;
+        left: .25rem;
+        transition: .35s;
+        &:hover {
+            color: $secondary;
+            transition: .35s;
+        }
+    }
 </style>
