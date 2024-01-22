@@ -19,8 +19,18 @@
             }
         })
     }
-    
-    $: pageTitle = $page.route.id.endsWith('faq') ? 'FAQ' : ($page.route.id ? $page.route.id.split('/').pop().replace(/_/g, ' ').charAt(0).toUpperCase() + $page.route.id.split('/').pop().replace(/_/g, ' ').slice(1) : '');
+    function formatPageTitle(page){
+        if(!page.route?.id) return ''
+        
+        let route = page.route.id.split('/').pop().replace(/_/g, ' ')
+        if(route == 'faq') return 'FAQ'
+
+        const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase() 
+        return capitalise(route)
+    } 
+
+    $: console.log($page)
+    $: pageTitle = formatPageTitle($page);
 </script>
 
 <div class="page">
