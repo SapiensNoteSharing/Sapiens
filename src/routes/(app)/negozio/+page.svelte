@@ -3,9 +3,9 @@
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
-    import { view, value, filter_tags, dna } from '$lib/stores';
+    import { view, value, filter_tags} from '$lib/stores';
 
-    let subpage = "bundle";
+    let subpage = "single_course";
 
     export let data;
     let courses = data.courses || [];
@@ -382,7 +382,7 @@
 
     let course = courses[0];
 
-    let selected_option;
+    let selected_option = "base";
 </script>
 
 <Modal title="Carrello" yes="Acquista" no="Annulla" classes="" theme="btn-outline-primary" bind:this={cartModal}>
@@ -396,25 +396,29 @@
             <div class="d-flex mt-3">
                 <section class="btn-group">
                     <div class="d-flex flex-row justify-content-start me-2">
-                        <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} base" checked bind:group={selected_option}>
-                        <ActiveButton active={selected_option != "" ? 'active' : 'not-active'} classes={"me-3"}>
-                            <div slot="name" class="page-btn outlined display-6 rounded-4">
-                                <label class="d-block display-5 px-3 py-2 text-decoration-none" for="{course.name} base"><i class="me-3 display-5 bi bi-box{subpage == "bundle" ? '-fill' : ''}"></i>Base</label>
-                            </div>
-                        </ActiveButton>
+                        <input type="radio" class="btn-check" name="{course.name}-accesso" id="{course.name}-base" bind:group={selected_option}>
+                        <ActiveButton 
+                        active={selected_option == "base" ? 'active' : 'not-active'}
+                        fill={selected_option == "base" ? '-fill' : ''}
+                        class={"me-3"}
+                        text={"Base"}
+                        icon={"bi-box"}
+                        />
 
-                        <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} completo" bind:group={selected_option}>
-                        <ActiveButton active={selected_option == "bundle" ? 'active' : 'not-active'} classes={"me-3"}>
-                            <div slot="name" class="page-btn outlined display-6 rounded-4">
-                                <label class="d-block display-5 px-3 py-2 text-decoration-none" for="{course.name} completo"><i class="me-3 display-5 bi bi-boxes{subpage == "bundle" ? '-fill' : ''}"></i>Completo</label>
-                            </div>
-                        </ActiveButton>
+                        <input type="radio" class="btn-check" name="{course.name}-accesso" id="{course.name}-completo" bind:group={selected_option}>
+                        <ActiveButton 
+                        active={selected_option == "complete" ? 'active' : 'not-active'}
+                        fill={selected_option == "complete" ? '-fill' : ''}
+                        class={"me-3"}
+                        text={"Completo"}
+                        icon={"bi-boxes"}
+                        />
                     </div>
                 </section>
             </div>
         </div>
         <div class="d-flex">
-            <h2 class="align-self-center display-3 my-0">{course.cfu * 3}</h2>
+            <h2 class="align-self-center display-3 my-0">{(10 + course.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2}</h2>
             <img style="width: 2rem;" src="/src/style/DNA.svg" alt="DNA">
         </div>
     </div>
@@ -425,32 +429,29 @@
         <ActiveButton 
         active={subpage == "bundle" ? 'active' : 'not-active'}
         fill={subpage == "bundle" ? '-fill' : ''}
-        on:click={() => subpage = "bundle"}
         class={"me-3"}
         text={"Pacchetti"}
         icon={"bi-box-seam"}
-        >
-        </ActiveButton>
+        on:click={() => subpage = "bundle"}
+        />
 
         <ActiveButton 
         active={subpage == "single_course" ? 'active' : 'not-active'}
         fill={subpage == "single_course" ? '-fill' : ''}
-        on:click={() => subpage = "single_course"}
         class={"me-3"}
         text={"Corso singolo"}
         icon={"bi-1-circle"}
-        >
-        </ActiveButton>
+        on:click={() => subpage = "single_course"}
+        />
 
         <ActiveButton 
         active={subpage == "buy_dna" ? 'active' : 'not-active'}
         fill={subpage == "buy_dna" ? '-fill' : ''}
-        on:click={() => subpage = "buy_dna"}
         class={"me-3"}
         text={"Punti DNA"}
         icon={"bi-cart"}
-        >
-        </ActiveButton>
+        on:click={() => subpage = "buy_dna"}
+        />
     </div>
 
     {#if subpage == "bundle"}

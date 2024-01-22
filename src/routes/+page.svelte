@@ -2,11 +2,41 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
 	import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+    import Svelecte from 'svelecte'
 
     let accessMode = "login";
     let userLogin = {}
     let userRegister = {}
     let validated = false;
+
+    let countries = [
+        "Italia",
+        "Francia",
+        "Germania"
+    ]
+    
+    let regions = [
+        "Toscana",
+        "Puglia"
+    ]
+
+    let university_regions = [...regions];
+
+    let cities = [
+        "Grosseto",
+        "Firenze",
+        "Livorno",
+        "Arezzo"
+    ]
+
+    let university_cities = [...cities];
+    let university_names = ["Università degli Studi di Firenze"]
+    let faculties_names = [
+        "Ingegneria informatica",
+        "Ingegneria gestionale",
+        "Ingegneria elettronica",
+        "Ingegneria civile",
+    ]
 
 	onMount(() => {
 		const forms = document.querySelectorAll('.needs-validation');
@@ -58,7 +88,7 @@
         if (
             checkNameValidity(userRegister.name) &&
             checkLastNameValidity(userRegister.surname) &&
-            checkEmailValidity(userRegister.email) &&
+            checkEmailValidity(userRegister.email) == 1 &&
             checkPasswordValidity(userRegister.password) == 1
         ) 
             return true;
@@ -82,9 +112,11 @@
 
     function checkEmailValidity(email) {
         if (email?.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g))
-            return true;
-        else
-            return false;
+            return 1;
+        else if (email?.length > 0)
+            return -1;
+        else 
+            return -2;
     }
 
     function checkPasswordValidity(password) {
@@ -146,7 +178,7 @@
 
                 <NormalButton classes={"my-4 text-center w-100"}>
                     <div slot="name">
-                        <button type="button" class="btn bg-primary w-100 text-dark fs-2 rounded-3" on:click={loginUser}>
+                        <button type="button" class="btn btn-primary w-100 text-dark fs-2 rounded-3" on:click={loginUser}>
                             Accedi
                         </button>
                     </div>
@@ -215,9 +247,13 @@
                             <label for="RegistrationEmail" class="form-label">e-mail *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                                <input class="form-control {validated ? (checkEmailValidity(userRegister.email) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.email}>
+                                <input class="form-control {validated ? (checkEmailValidity(userRegister.email) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.email}>
                                 <div class="invalid-feedback">
-                                    Email non valida
+                                    {#if checkEmailValidity(userRegister.email) == -1}
+                                        Email non valida
+                                    {:else if checkEmailValidity(userRegister.email) == -2}
+                                        Campo obbligatorio
+                                    {/if}
                                 </div>
                             </div>
                         </div>
@@ -238,36 +274,48 @@
                         
                         <div class="field col-md-3 ps-0">
                             <label for="RegistrationBirthCountry" class="form-label">Stato</label>
-                            <div class="input-group has-validation">
+                            <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <input class="form-control" bind:value={userRegister.country}>
-                                <div class="invalid-feedback">
-                                    Inserisci uno stato valido
-                                </div>
+                                <Svelecte
+                                placeholder="Seleziona stato"
+                                options={countries}
+                                labelAsValue
+                                autocomplete="off"
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.country}
+                                />
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="RegistrationBirthRegion" class="form-label">Regione</label>
-                            <div class="input-group has-validation">
+                            <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <input class="form-control" bind:value={userRegister.region}>
-                                <div class="invalid-feedback">
-                                    Inserisci una regione valida
-                                </div>
+                                <Svelecte
+                                placeholder="Seleziona regione"
+                                options={regions}
+                                labelAsValue
+                                autocomplete="off"
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.region}
+                                />
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="RegistrationBirthCity" class="form-label">Città</label>
-                            <div class="input-group has-validation">
+                            <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <input class="form-control" bind:value={userRegister.city}>
-                                <div class="invalid-feedback">
-                                    Inserisci una città valida
-                                </div>
+                                <Svelecte
+                                placeholder="Seleziona provincia"
+                                options={cities}
+                                labelAsValue
+                                autocomplete="off"
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.city}
+                                />
                             </div>
                         </div>
 
-                        <button class="submit-btn col-md-1 pe-0" on:click={second_step} type="submit">
+                        <button class="submit-btn col-md-1 pe-0" style="width: fit-content" on:click={second_step} type="submit">
                             <i style="font-size: 2.6rem; position: relative; top: -2px;" class="bi bi-arrow-right-square next-step-icon"></i>
                         </button>
 					</form>
@@ -275,61 +323,72 @@
 				{:else if step == 2}
 					<form class="row g-3 needs-validation m-0 align-items-center" novalidate>
                         <h2 class="display-3 mt-4 mb-2 ps-0" id="dati_accademici">Dati accademici</h2>
-                        <p class="p-0 m-0 mb-5">Questi dati non sono obbligatori, ma ci aiutano a suggerirti corsi relativi al tuo percorso di studi.</p>
+                        <p class="p-0 m-0 mb-5">Puoi inserire questi dati anche in seguito: ci aiuteranno a suggerirti corsi relativi al tuo percorso di studi.</p>
                         
                         <div class="field col-md-3 ps-0">
                             <label for="registrationUniversityRegion" class="form-label">Regione</label>
-                            <div class="input-group has-validation">
+                            <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <input class="form-control" bind:value={userRegister.university_region}>
-                                <div class="invalid-feedback">
-                                    Inserisci una regione valida
-                                </div>
+                                <Svelecte
+                                placeholder="Seleziona regione"
+                                options={university_regions}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.university_region}
+                                />
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="registrationUniversityCity" class="form-label">Città universitaria</label>
-                            <div class="input-group has-validation">
+                            <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <input class="form-control" bind:value={userRegister.university_city}>
-                                <div class="invalid-feedback">
-                                    Inserisci una città valida
-                                </div>
+                                <Svelecte
+                                placeholder="Seleziona città"
+                                options={university_cities}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.university_city}
+                                />
                             </div>
                         </div>
                         <div class="field col-md-5 pe-0">
                             <label for="registrationUniversityName" class="form-label">Nome Università</label>
-                            <div class="input-group has-validation">
+                            <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
-                                <input class="form-control" bind:value={userRegister.university_name}>
-                                <div class="invalid-feedback">
-                                    Inserisci un'Università valida
-                                </div>
+                                <Svelecte
+                                placeholder="Seleziona Università"
+                                options={university_names}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.university_name}
+                                />
                             </div>
                         </div>
 
                         <div class="field col-md-5 ps-0">
                             <label for="registrationFacultyName" class="form-label">Nome facoltà</label>
-                            <div class="input-group has-validation">
+                            <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
-                                <input class="form-control" bind:value={userRegister.faculty_name}>
-                                <div class="invalid-feedback">
-                                    Scegli un'opzione
-                                </div>
+                                <Svelecte
+                                placeholder="Seleziona facoltà"
+                                options={faculties_names}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.faculty_name}
+                                />
                             </div>
                         </div>
                         <div class="field col-md-4">
                             <label for="registrationFacultyType" class="form-label">Tipologia di Laurea</label>
-                            <div class="input-group has-validation">
+                            <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
-                                <select class="form-select" bind:value={userRegister.degree_type}>
-                                    <option>Triennale</option>
-                                    <option>Magistrale</option>
-                                    <option>A ciclo unico</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Scegli un'opzione
-                                </div>
+                                <Svelecte
+                                placeholder="Scegli tipologia"
+                                options={["Triennale", "Magistrale", "A ciclo unico"]}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.faculty_type}
+                                />
                             </div>
                         </div>
                         <div class="field col-md-3 pe-0">
@@ -343,38 +402,37 @@
                             </div>
                         </div>
 
-                        <div class="field col-md-2 ps-0">
+                        <div class="field col-md-5 ps-0">
+                            <label for="year" class="form-label">Anno</label>
+                            <div class="d-flex has-validation svelecte-custom-selection">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
+                                <Svelecte
+                                placeholder="Scegli anno"
+                                options={["Primo", "Secondo", "Terzo"]}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.year}
+                                />
+                            </div>
+                        </div>
+                        <div class="field col-md-5">
+                            <label for="semester" class="form-label">Semestre</label>
+                            <div class="d-flex has-validation svelecte-custom-selection">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
+                                <Svelecte
+                                placeholder="Scegli semestre"
+                                options={["Primo", "Secondo"]}
+                                labelAsValue
+                                class="svelecte-control text-center selection-input m-0"
+                                bind:value={userRegister.semester}
+                                />
+                            </div>
+                        </div>
+                        <div class="field col-md-2 pe-0">
                             <label for="studentID" class="form-label">Matricola</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
                                 <input class="form-control" bind:value={userRegister.student_id}>
-                                <div class="invalid-feedback">
-                                    Scegli un'opzione
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field col-md-5">
-                            <label for="year" class="form-label">Anno</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
-                                <select class="form-select" bind:value={userRegister.year}>
-                                    <option>Primo</option>
-                                    <option>Secondo</option>
-                                    <option>Terzo</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Scegli un'opzione
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field col-md-5 pe-0">
-                            <label for="semester" class="form-label">Semestre</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
-                                <select class="form-select" bind:value={userRegister.semester}>
-                                    <option>Primo</option>
-                                    <option>Secondo</option>
-                                </select>
                                 <div class="invalid-feedback">
                                     Scegli un'opzione
                                 </div>
@@ -470,7 +528,8 @@
     .register-link, .login-link {
         cursor: pointer;
     }
-
+    
+    
     .input-group {
         border-radius: .4rem;
     }
@@ -479,14 +538,10 @@
         font-size: 1.25rem;
         background: rgba($dark, .15);
         border: 1px solid $dark;
+        border-radius: .4rem 0rem 0rem .4rem;
     }
 
-    .field {
-        margin: 0px;
-        margin-bottom: 1rem;
-    }
-
-	.form-control, .form-select {
+    .form-control, .form-select {
 		border: 1px solid $dark;
 
 		&::placeholder {
@@ -495,6 +550,10 @@
 		}
 	}
 
+    .field {
+        margin: 0px;
+        margin-bottom: 1rem;
+    }
     .presentation-item {
         height: 80vh;
         border: 1px solid $dark;

@@ -43,40 +43,45 @@
                     <h2 class="nav-primary display-3 text-decoration-none align-self-center m-0 ms-4">{pageTitle}</h2>
 
                     <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
-                        <ActiveButton class={"m-2"}>
-                            <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
-                                <span class="display-6 align-middle text-dark">{user.streak}</span>
-                                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
-                            </div>
-                        </ActiveButton>
+                        <ActiveButton 
+                        class={"m-2"}
+                        type="user_stats"
+                        text={user.streak}
+                        src={"/src/style/streak.png"}
+                        alt={"streak"}
+                        />
 
-                        <ActiveButton class={"m-2"}>
-                            <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
-                                <span class="display-6 align-middle text-dark">{user.xp}</span>
-                                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
-                            </div>
-                        </ActiveButton>
+                        <ActiveButton 
+                        class={"m-2"}
+                        type="user_stats"
+                        text={user.xp}
+                        src={"/src/style/xp.png"}
+                        alt={"xp"}
+                        />
 
-                        <ActiveButton class={"m-2"}>
-                            <div slot="name" class="page-btn display-6 rounded-4 py-2 px-3">
-                                <span class="display-6 align-middle text-dark">{user.league_position || 'n'}°</span>
-                                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league.png" alt="league">
-                            </div>
-                        </ActiveButton>
+                        <ActiveButton 
+                        class={"m-2"}
+                        type="user_stats"
+                        text={(user.league_position || "n") + "°"}
+                        src={"/src/style/league.png"}
+                        alt={"league"}
+                        />
 
-                        <ActiveButton class={"m-2"}>
-                            <div slot="name" class="page-btn d-flex flex-row display-6 rounded-4">
-                                <div class="py-2 px-3">
-                                    <span class="display-6 align-middle text-dark">{user.dna}</span>
-                                    <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
-                                </div>
+                        <ActiveButton 
+                        class={"m-2"}
+                        type="user_stats"
+                        text={user.dna}
+                        src={"/src/style/dna.svg"}
+                        alt={"dna"}
+                        />
 
-                                <div class="py-2 px-3">
-                                    <span class="display-6 align-middle text-dark">{user.rna}</span>
-                                    <img class="dna-icon" style="height: 2.5rem;" src="/src/style/RNA.png" alt="RNA">
-                                </div>
-                            </div>
-                        </ActiveButton>
+                        <ActiveButton 
+                        class={"m-2"}
+                        type="user_stats"
+                        text={user.rna}
+                        src={"/src/style/rna.png"}
+                        alt={"RNA"}
+                        />
 
                         <ActiveButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} class={"m-2"}>
                             <div slot="name" class="display-6 rounded-4">
@@ -133,10 +138,6 @@
         font-size: 20px;
     }
     
-    .display-6 {
-       font-size: 1.4rem;
-    }
-
     .navbar {
         overflow-y: scroll;
 

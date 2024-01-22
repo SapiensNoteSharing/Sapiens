@@ -1,16 +1,18 @@
 <script>
+    export let data;
+    let user = data.user || {};
+
+    let league_names = ["Legno", "Bronzo", "Argento", "Oro", "Diamante"];
 </script>
 
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-row justify-content-center align-items-center">
-        <img class="league-icon" src="src/style/league.png" alt="">
-        <img class="league-icon" src="src/style/league.png" alt="">
-        <img class="league-icon my-league" src="src/style/league.png" alt="">
-        <img class="league-icon" src="src/style/league.png" alt="">
-        <img class="league-icon" src="src/style/league.png" alt="">
+        {#each Array(5) as _, i}
+            <img class="league-icon {user.league_level == i ? "my-league" : ""}" src="src/style/league_level_{i}.png" alt="">
+        {/each}        
     </div>
-    <h2 class="league-title display-4 mx-auto">My League</h2>
+    <h2 class="league-title display-4 mx-auto">Lega {league_names[user.league_level]}</h2>
 </div>
 
 

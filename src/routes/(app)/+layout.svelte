@@ -3,7 +3,6 @@
     import RightSidebar from "$lib/components/RightSidebar.svelte";
 
     export let data;
-    
 </script>
 
 <div class="d-flex h-100 align-self-stretch">
