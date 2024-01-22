@@ -72,17 +72,17 @@
 </script>
 
 
-<div class="sidebar {open ? '' : 'sidebar-collapse'} {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
+<div class="sidebar {open ? '' : 'closed'} {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
     {#if !open}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div in:fly={{x: 50, delay: 1000, duration: 200}} class="position-relative {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
-            <i class="sidebar-btn display-3 bi bi-arrow-bar-left" on:click={() => open = !open}></i>
+            <i class="open-btn display-3 bi bi-arrow-bar-left" on:click={() => open = !open}></i>
         </div>
     {/if}
     
     <div class="right-sidebar">
         {#if open}
-            <i in:fly={{x: 50, opacity: 1, duration: 1000}} class="sidebar-btn display-3 bi bi-x-lg" on:click={() => open = !open}></i>
+            <i in:fly={{x: 50, opacity: 1, duration: 1000}} class="close-btn display-3 bi bi-x-lg" on:click={() => open = !open}></i>
         {/if}
         
         {#if $page.route.id == '/(app)/aula_studio'}
@@ -249,21 +249,22 @@
         position: relative;
         border-left: 1px solid rgba($dark, 0.25);
         width: 300px;
+        transition: width 1s, transform 1s;
         min-height: 89vh;
-        transition: all 1s;
-    }
-    .sidebar.closed {
-        transition: all 1s;
-        width: 0px;
+        &.closed {
+            transform: translateX(100%);
+            width: 0px;
+            transition: transform 1s, width 1s;
+        }
     }
 
     .right-sidebar {
         max-width: 300px;
-        transition: all 1s;
         padding: 0 1.5rem;
+        min-width: 300px;
     }
     
-    .sidebar-btn {
+    .close-btn {
         position: absolute;
         top: .5rem;
         right: 1rem;
@@ -275,10 +276,17 @@
             transition: .35s;
         }
     }
-    .sidebar-collapse {
-        position: relative;
-        width: 0px;
-        transition: all 1s;
+    .open-btn {
+        position: absolute;
+        top: .5rem;
+        left: -2rem;
+        cursor: pointer;
+        transition: .35s;
+        
+        &:hover {
+            color: $secondary;
+            transition: .35s;
+        }
     }
 
     .right-sidebar-container {
@@ -324,6 +332,7 @@
     .right-sidebar-page {
         margin-top: 1.5rem;
         padding-bottom: 1rem;
+        min-width: fit-content;
     }
     
     .navigation {    

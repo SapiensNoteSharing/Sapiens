@@ -48,11 +48,6 @@
         line-height: 2.25rem;
         color: $dark;
         transition: all 1s;
-
-        .file {
-            max-width: 50%;
-            overflow-x: auto;
-        }
         :global(p) {
         }
 
