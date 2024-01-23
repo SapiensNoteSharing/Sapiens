@@ -4,7 +4,7 @@
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Searchbar from '$lib/components/Searchbar.svelte';
-    import { view, value, filter_tags, viewing } from '$lib/stores';
+    import { viewing } from '$lib/stores';
     import { fly } from 'svelte/transition'
     import { page } from '$app/stores';
     import Item from './Item.svelte'
@@ -191,7 +191,7 @@
                     
                 </div>
             {/if}
-        {:else if $page.route.id == '/(app)/negozio'}
+        {:else if $page.route.id == '/(app)/negozio/corsi_singoli'}
             <div class="d-flex align-items-center my-5">
                 <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
             </div>

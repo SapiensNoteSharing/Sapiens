@@ -8,6 +8,7 @@
 <div class="left-sidebar px-4">
     <div class="mt-5 sidebar-container">
         <ActiveButton 
+        type={"navigation_link"}
         active={$page.route.id == "/(app)/home" ? 'active' : 'not-active'} 
         fill={$page.route.id == "/(app)/home" ? '-fill' : ''}
         class={"my-2"}
@@ -18,6 +19,7 @@
         </ActiveButton>
 
         <ActiveButton 
+        type={"navigation_link"}
         active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} 
         fill={$page.route.id == "/(app)/aula_studio" ? '-fill' : ''}
         class={"my-2"}
@@ -28,6 +30,7 @@
         </ActiveButton>
 
         <ActiveButton 
+        type={"navigation_link"}
         active={$page.route.id == "/(app)/i_miei_corsi" ? 'active' : 'not-active'} 
         fill={$page.route.id == "/(app)/i_miei_corsi" ? '-fill' : ''}
         class={"my-2"}
@@ -38,6 +41,7 @@
         </ActiveButton>
 
         <ActiveButton 
+        type={"navigation_link"}
         active={$page.route.id == "/(app)/calendario" ? 'active' : 'not-active'} 
         fill={$page.route.id == "/(app)/calendario" ? '-fill' : ''}
         class={"my-2"}
@@ -50,26 +54,29 @@
         <hr class="mx-3">
 
         <ActiveButton 
-        active={$page.route.id == "/(app)/negozio" ? 'active' : 'not-active'} 
-        fill={$page.route.id == "/(app)/negozio" ? '-fill' : ''}
+        type={"navigation_link"}
+        active={$page.route.id.startsWith("/(app)/negozio") ? 'active' : 'not-active'} 
+        fill={$page.route.id.startsWith("/(app)/negozio") ? '-fill' : ''}
         class={"my-2"}
-        href={"/negozio"}
+        href={"/negozio/pacchetti"}
         text={"Negozio"}
         icon={"bi-bag"}
         >
         </ActiveButton>
 
         <ActiveButton 
-        active={$page.route.id == "/(app)/contribuisci" ? 'active' : 'not-active'} 
-        fill={$page.route.id == "/(app)/contribuisci" ? '-fill' : ''}
+        type={"navigation_link"}
+        active={$page.route.id.startsWith("/(app)/contribuisci") ? 'active' : 'not-active'} 
+        fill={$page.route.id.startsWith("/(app)/contribuisci") ? '-fill' : ''}
         class={"my-2"}
-        href={"/contribuisci"}
+        href={"/contribuisci/condividi_appunti"}
         text={"Contribuisci"}
         icon={"bi-puzzle"}
         >
         </ActiveButton>
 
         <ActiveButton 
+        type={"navigation_link"}
         active={$page.route.id == "/(app)/sfide" ? 'active' : 'not-active'} 
         fill={$page.route.id == "/(app)/sfide" ? '-fill' : ''}
         disabled={user.streak < 7}
@@ -81,6 +88,7 @@
         </ActiveButton>
 
         <ActiveButton 
+        type={"navigation_link"}
         active={$page.route.id == "/(app)/classifiche" ? 'active' : 'not-active'} 
         fill={$page.route.id == "/(app)/classifiche" ? '-fill' : ''}
         disabled={user.streak < 14}
@@ -95,6 +103,7 @@
             <hr class="mx-3">
 
             <ActiveButton 
+            type={"navigation_link"}
             active={$page.route.id == "/(app)/test" ? 'active' : 'not-active'} 
             fill={$page.route.id == "/(app)/test" ? '-fill' : ''}
             class={"my-2"}
@@ -105,6 +114,7 @@
             </ActiveButton>
 
             <ActiveButton 
+            type={"navigation_link"}
             active={$page.route.id == "/(app)/admin" ? 'active' : 'not-active'}
             fill={$page.route.id == "/(app)/admin" ? '-fill' : ''}
             class={"my-2"}

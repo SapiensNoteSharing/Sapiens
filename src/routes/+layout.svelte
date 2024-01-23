@@ -93,9 +93,9 @@
                         alt={"RNA"}
                         />
 
-                        <ActiveButton active={$page.route.id == "/(app)/area_personale" ? 'active' : 'not-active'} class={"m-2"}>
+                        <ActiveButton active={$page.route.id == "/(app)/area_personale/dati_account" ? 'active' : 'not-active'} class={"m-2"}>
                             <div slot="name" class="display-6 rounded-4">
-                                <a href="/area_personale"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
+                                <a href="/area_personale/dati_account"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
                             </div>
                         </ActiveButton>
                     </div>

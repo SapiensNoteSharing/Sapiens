@@ -17,6 +17,7 @@
     export let alt
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="active-btn {classes} {!disabled ? active : ''}" style="{style}" {disabled} on:click={() => {dispatch("click")}}>
     <slot name="name">
         {#if type == "user_stats"}
@@ -24,7 +25,7 @@
                 <span class="display-4 align-middle text-dark">{text}</span>
                 <img style="height: 2.5rem;" src={src} alt={alt}>
             </div>
-        {:else}
+        {:else if type == "navigation_link"}
             <div class="page-btn display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" href={href} {disabled}><i class="me-3 display-5 bi {icon}{fill}"></i>{text}</a>
             </div>
