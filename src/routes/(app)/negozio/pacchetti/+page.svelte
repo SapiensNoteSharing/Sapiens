@@ -1,6 +1,7 @@
 <script>
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
+    import Modal from '$lib/components/Modal.svelte';
     import { page } from '$app/stores';
 
     export let data;
@@ -161,15 +162,55 @@
         })
     }
 
+    let selected_option = "base";
     let course = courses[0];
 </script>
+
+<Modal title="Carrello" yes="Acquista" no="Annulla" classes="" theme="btn-outline-primary" bind:this={cartModal}>
+    <div class="d-flex m-4 justify-content-between">
+        <div>
+            <span class="display-6">{course.code}</span>
+            <h2 class="display-4 text-dark">{course.name}</h2>
+            {#each course.professors as professor, i}
+                <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
+            {/each}
+            <div class="d-flex mt-3">
+                <section class="btn-group">
+                    <div class="d-flex flex-row justify-content-start me-2">
+                        <input type="radio" class="btn-check" name="{course.name}-accesso" id="{course.name}-base" bind:group={selected_option}>
+                        <ActiveButton 
+                        active={selected_option == "base" ? 'active' : 'not-active'}
+                        fill={selected_option == "base" ? '-fill' : ''}
+                        class={"me-3"}
+                        text={"Base"}
+                        icon={"bi-box"}
+                        />
+
+                        <input type="radio" class="btn-check" name="{course.name}-accesso" id="{course.name}-completo" bind:group={selected_option}>
+                        <ActiveButton 
+                        active={selected_option == "complete" ? 'active' : 'not-active'}
+                        fill={selected_option == "complete" ? '-fill' : ''}
+                        class={"me-3"}
+                        text={"Completo"}
+                        icon={"bi-boxes"}
+                        />
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="d-flex">
+            <h2 class="align-self-center display-3 my-0">{(10 + course.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2}</h2>
+            <img style="width: 2rem;" src="/src/style/DNA.svg" alt="DNA">
+        </div>
+    </div>
+</Modal>
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-5">
         <ActiveButton
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/negozio/pacchetti" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/negozio/pacchetti" ? '-fill' : ''}
+        active={$page.route.id.startsWith("/(app)/negozio/pacchetti") ? 'active' : 'not-active'}
+        fill={$page.route.id.startsWith("/(app)/negozio/pacchetti") ? '-fill' : ''}
         class={"me-3"}
         text={"Pacchetti"}
         icon={"bi-box-seam"}
@@ -178,8 +219,8 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/negozio/corsi_singoli" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/negozio/corsi_singoli" ? '-fill' : ''}
+        active={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? 'active' : 'not-active'}
+        fill={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? '-fill' : ''}
         class={"me-3"}
         text={"Corsi singoli"}
         icon={"bi-1-circle"}
@@ -188,12 +229,12 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/negozio/compra_dna" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/negozio/compra_dna" ? '-fill' : ''}
+        active={$page.route.id == "/(app)/negozio/punti_dna" ? 'active' : 'not-active'}
+        fill={$page.route.id == "/(app)/negozio/punti_dna" ? '-fill' : ''}
         class={"me-3"}
         text={"Punti DNA"}
         icon={"bi-cart"}
-        href={"/negozio/compra_dna"}
+        href={"/negozio/punti_dna"}
         />
     </div>
 
@@ -213,12 +254,16 @@
                     {/each}
                 </div>
 
-                <div class="d-flex flex-row justify-content-center">
-                    <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
+                <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
+                    <NormalButton classes={"mx-2"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
-                                Vedi dettagli
-                            </a>
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Vedi dettagli</a>
+                        </div>
+                    </NormalButton>
+
+                    <NormalButton classes={"mx-2"}>
+                        <div slot="name">
+                            <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
                         </div>
                     </NormalButton>
                 </div>
@@ -238,12 +283,16 @@
                         {/if}
                     {/each}
                 </div>
-                <div class="d-flex flex-row justify-content-center">
-                    <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
+                <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
+                    <NormalButton classes={"mx-2"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
-                                Vedi dettagli
-                            </a>
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Vedi dettagli</a>
+                        </div>
+                    </NormalButton>
+
+                    <NormalButton classes={"mx-2"}>
+                        <div slot="name">
+                            <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
                         </div>
                     </NormalButton>
                 </div>
@@ -264,12 +313,16 @@
             {/each}
         </div>
 
-        <div class="d-flex flex-row justify-content-center">
-            <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
+        <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
+            <NormalButton classes={"mx-2"}>
                 <div slot="name">
-                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
-                        Vedi dettagli
-                    </a>
+                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Vedi dettagli</a>
+                </div>
+            </NormalButton>
+
+            <NormalButton classes={"mx-2"}>
+                <div slot="name">
+                    <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
                 </div>
             </NormalButton>
         </div>

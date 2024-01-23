@@ -319,56 +319,6 @@
         return Math.map(distance, 0, max_dist, 0, 2);
     }
     
-    function get_semester_bundle_courses() {
-        let semester_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code &&
-                course.year == data.user.year &&
-                course.semester == data.user.semester
-            ) {
-                semester_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-        return semester_bundle_courses
-    }
-
-    function get_year_bundle_courses() {
-        let year_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code &&
-                course.year == data.user.year
-            ) {
-                year_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-        return year_bundle_courses
-    }
-
-    function get_degree_bundle_courses() {
-        let degree_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code
-            ) {
-                degree_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-
-        return degree_bundle_courses
-    }
-
-    let semester_bundle_courses = get_semester_bundle_courses()
-    sort_course_list(semester_bundle_courses, "chronological_order");
-    let year_bundle_courses = get_year_bundle_courses()
-    sort_course_list(year_bundle_courses, "chronological_order");
-    let degree_bundle_courses = get_degree_bundle_courses()
-    sort_course_list(degree_bundle_courses, "chronological_order");
-
     let cartModal;
     function openCart() {
         cartModal.show().then(async res => {
@@ -392,27 +342,27 @@
                 <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
             {/each}
             <div class="d-flex mt-3">
-                <section class="btn-group">
-                    <div class="d-flex flex-row justify-content-start me-2">
-                        <input type="radio" class="btn-check" name="{course.name}-accesso" id="{course.name}-base" bind:group={selected_option}>
-                        <ActiveButton 
-                        active={selected_option == "base" ? 'active' : 'not-active'}
-                        fill={selected_option == "base" ? '-fill' : ''}
-                        class={"me-3"}
-                        text={"Base"}
-                        icon={"bi-box"}
-                        />
+                <div class="d-flex flex-row justify-content-start me-2">
+                    <ActiveButton
+                    type="navigation_link"
+                    active={selected_option == "base" ? 'active' : 'not-active'}
+                    fill={selected_option == "base" ? '-fill' : ''}
+                    class={"me-3"}
+                    text={"Base"}
+                    icon={"bi-file-earmark"}
+                    on:click={() => selected_option = "base"}
+                    />
 
-                        <input type="radio" class="btn-check" name="{course.name}-accesso" id="{course.name}-completo" bind:group={selected_option}>
-                        <ActiveButton 
-                        active={selected_option == "complete" ? 'active' : 'not-active'}
-                        fill={selected_option == "complete" ? '-fill' : ''}
-                        class={"me-3"}
-                        text={"Completo"}
-                        icon={"bi-boxes"}
-                        />
-                    </div>
-                </section>
+                    <ActiveButton 
+                    type="navigation_link"
+                    active={selected_option == "complete" ? 'active' : 'not-active'}
+                    fill={selected_option == "complete" ? '-fill' : ''}
+                    class={"me-3"}
+                    text={"Completo"}
+                    icon={"bi-folder"}
+                    on:click={() => selected_option = "complete"}
+                    />
+                </div>
             </div>
         </div>
         <div class="d-flex">
@@ -426,8 +376,8 @@
     <div class="d-flex flex-row mb-5">
         <ActiveButton
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/negozio/pacchetti" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/negozio/pacchetti" ? '-fill' : ''}
+        active={$page.route.id.startsWith("/(app)/negozio/pacchetti") ? 'active' : 'not-active'}
+        fill={$page.route.id.startsWith("/(app)/negozio/pacchetti") ? '-fill' : ''}
         class={"me-3"}
         text={"Pacchetti"}
         icon={"bi-box-seam"}
@@ -436,8 +386,8 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/negozio/corsi_singoli" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/negozio/corsi_singoli" ? '-fill' : ''}
+        active={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? 'active' : 'not-active'}
+        fill={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? '-fill' : ''}
         class={"me-3"}
         text={"Corsi singoli"}
         icon={"bi-1-circle"}
@@ -446,12 +396,12 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/negozio/compra_dna" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/negozio/compra_dna" ? '-fill' : ''}
+        active={$page.route.id == "/(app)/negozio/punti_dna" ? 'active' : 'not-active'}
+        fill={$page.route.id == "/(app)/negozio/punti_dna" ? '-fill' : ''}
         class={"me-3"}
         text={"Punti DNA"}
         icon={"bi-cart"}
-        href={"/negozio/compra_dna"}
+        href={"/negozio/punti_dna"}
         />
     </div>
 
@@ -466,7 +416,7 @@
 
             {#each $filter_tags as tag}
                 {#if tag.selected}
-                    <span class="badge my-auto p-2 bg-{ tag.color } ms-3 filter_badge text-dark">{ tag.name }</span>
+                    <span class="badge my-auto p-2 bg-{tag.color} ms-3 filter_badge text-dark">{tag.name}</span>
                 {/if}
             {/each}
         </div>
@@ -514,7 +464,7 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5"/>
+                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
                 {/each}
             {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
                 <div class="w-100 mt-3">
@@ -528,11 +478,11 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5"/>
+                    <CourseCard {course} owned={false} class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
                 {/each}
             {:else}
                 {#each filtered_not_owned as course}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5"/>
+                    <CourseCard {course} owned={false} class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
                 {/each}
             {/if}
         </div>
@@ -543,33 +493,4 @@
 
 <style lang="scss">
     @import '$css/variables.scss';
-
-    .bundle {
-        border: 1px solid rgba($dark, 0.25);
-        background: $light;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        cursor: pointer;
-        transition: .25s ease-in-out;
-
-        &:hover {
-            transition: .25s ease-in-out;
-            position: relative;
-            box-shadow: 0px 5px 10px 0px rgba($dark, 0.1);
-        }
-    }
-
-    .box {
-        padding: 2rem;
-        border: 1px solid rgba($dark, 0.25);
-        background: $light;
-        border-radius: 2rem;
-        cursor: pointer;
-        transition: .25s ease-in-out;
-    }
-
-    .bundle-course-icon {
-        width: 3.5rem;
-        margin: 2rem 1.5rem 0rem 1.5rem;
-    }
 </style>

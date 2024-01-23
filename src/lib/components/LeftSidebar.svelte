@@ -20,23 +20,23 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} 
-        fill={$page.route.id == "/(app)/aula_studio" ? '-fill' : ''}
-        class={"my-2"}
-        href={"/aula_studio"}
-        text={"Aula Studio"}
-        icon={"bi-book"}
-        >
-        </ActiveButton>
-
-        <ActiveButton 
-        type={"navigation_link"}
         active={$page.route.id == "/(app)/i_miei_corsi" ? 'active' : 'not-active'} 
         fill={$page.route.id == "/(app)/i_miei_corsi" ? '-fill' : ''}
         class={"my-2"}
         href={"/i_miei_corsi"}
         text={"I miei corsi"}
         icon={"bi-backpack2"}
+        >
+        </ActiveButton>
+
+        <ActiveButton 
+        type={"navigation_link"}
+        active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} 
+        fill={$page.route.id == "/(app)/aula_studio" ? '-fill' : ''}
+        class={"my-2"}
+        href={"/aula_studio"}
+        text={"Aula Studio"}
+        icon={"bi-book"}
         >
         </ActiveButton>
 
@@ -51,8 +51,6 @@
         >
         </ActiveButton>
 
-        <hr class="mx-3">
-
         <ActiveButton 
         type={"navigation_link"}
         active={$page.route.id.startsWith("/(app)/negozio") ? 'active' : 'not-active'} 
@@ -63,6 +61,8 @@
         icon={"bi-bag"}
         >
         </ActiveButton>
+
+        <hr class="mx-3">
 
         <ActiveButton 
         type={"navigation_link"}

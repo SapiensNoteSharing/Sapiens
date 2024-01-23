@@ -75,14 +75,14 @@
 <div class="sidebar {open ? '' : 'closed'} {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
     {#if !open}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div in:fly={{x: 50, delay: 1000, duration: 200}} class="position-relative {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
+        <div in:fly={{x: 50, delay: 200, duration: 200}} class="position-relative {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
             <i class="open-btn display-3 bi bi-arrow-bar-left" on:click={() => open = !open}></i>
         </div>
     {/if}
     
     <div class="right-sidebar">
         {#if open}
-            <i in:fly={{x: 50, opacity: 1, duration: 1000}} class="close-btn display-3 bi bi-x-lg" on:click={() => open = !open}></i>
+            <i in:fly={{x: 50, delay: 250, opacity: 1, duration: 600}} class="close-btn display-3 bi bi-x-lg" on:click={() => open = !open}></i>
         {/if}
         
         {#if $page.route.id == '/(app)/aula_studio'}
@@ -237,6 +237,52 @@
                     </div>
                 </AccordionItem>
             </Accordion>
+        {:else if $page.route.id == '/(app)/i_miei_corsi'}
+            <div class="d-flex align-items-center my-5">
+                <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
+            </div>
+            
+            <Searchbar class="align-self-center mb-5"></Searchbar>
+            
+            <Accordion let:id class="mb-5">
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Corso Di Laurea
+                    </div>
+                    <div class="d-flex flex-wrap">
+                        {#each faculties as faculty}
+                        <div class="me-2 mb-2">
+                            <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
+                        </div>
+                        {/each}
+                    </div>
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Tipo di Laurea
+                    </div>
+                    {#each degree_types as type}
+                    <div class="me-2 mb-2">
+                        <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
+                    </div>
+                    {/each}
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Tags
+                    </div>
+                    {#each tags as tag}
+                    <div class="me-2 mb-2">
+                        <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
+                    </div>
+                    {/each}
+                </AccordionItem>
+                <AccordionItem class="filter-category">
+                    <div slot="name">
+                        Rating
+                    </div>
+                </AccordionItem>
+            </Accordion>
         {/if}
     </div>
 </div>
@@ -249,12 +295,12 @@
         position: relative;
         border-left: 1px solid rgba($dark, 0.25);
         width: 300px;
-        transition: width 1s, transform 1s;
+        transition: transform .7s, width .7s;
         min-height: 89vh;
         &.closed {
             transform: translateX(100%);
             width: 0px;
-            transition: transform 1s, width 1s;
+            transition: transform .7s, width .7s;
         }
     }
 

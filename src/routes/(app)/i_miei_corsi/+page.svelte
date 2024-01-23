@@ -387,7 +387,7 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} owned=1 class="g-col-4 mb-5"/>
+                    <CourseCard {course} owned=1 class="g-col-4 mb-5" href="/aula_studio"/>
                 {/each}
             {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
                 <div class="w-100 mt-3">

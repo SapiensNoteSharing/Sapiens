@@ -213,7 +213,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-5 ps-0">
+                    <div class="col-md-6 ps-0">
                         <label for="professors" class="form-label">Docenti (separare con una virgola) *</label>
                         <div class="input-group has-validation">
                             <span class="input-icon-label input-group-text"><i class="bi bi-people-fill"></i></span>
@@ -233,7 +233,7 @@
                             />
                         </div>
                     </div>
-                    <div class="col-md-4 pe-0">
+                    <div class="col-md-3 pe-0">
                         <label for="period" class="form-label">Periodo *</label>
                         <div class="d-flex has-validation svelecte-custom-selection">
                             <span class="input-icon-label input-group-text"><i class="bi bi-clock-fill"></i></span>

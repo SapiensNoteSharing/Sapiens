@@ -1,5 +1,7 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
+    import {createEventDispatcher} from "svelte";
+    const dispatch = createEventDispatcher();
 
     export let course = {};
 
@@ -7,30 +9,33 @@
     export {classes as class};
     
     export let style = '';
-
+    export let href;
     export let owned;
 </script>
 
-<div class="course-card d-flex flex-row justify-content-between {classes}" style="width: 47% {style}">
+<a class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="width: 47%; {style}" href={href}>
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
             <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
 
             <div class="d-flex flex-row justify-content-between">
                 <!-- <i class="text-dark display-3 ms-4 bi bi-file-earmark-fill"></i> -->
-                <i class="text-dark display-3 ms-4 bi bi-pencil-fill"></i>
-                <i class="text-dark display-3 ms-4 bi bi-bookmark-fill"></i>
-                <i class="text-dark display-3 ms-4 me-2 bi bi-question-circle-fill"></i>
+                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-pencil-fill"></i></a>
+                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-bookmark-fill"></i></a>
+                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-question-circle-fill"></i></a>
+                {#if owned == true}
+                    <a class="course_extra_icon" href={"/negozio/corsi_singoli/dettagli_corso"}><i class="display-3 ms-4 me-2 bi bi-info-circle-fill"></i></a>
+                {/if}
             </div>
         </div>
 
         <h5 class="mt-3 text-dark">{course.code} &bull; {course.cfu} CFU</h5>
         <h1 class="display-4 mb-3 text-dark">{course.name}</h1>
 
-        <div class="d-flex flex-row justify-content-between mb-2">
+        <div class="d-flex text-dark flex-row justify-content-between mb-2">
             <div>
                 {#each course.professors as professor, i}
-                    <span class="text-decoration-none professor text-dark">{professor}</span>{i != course.professors.length-1 ? " / " : ""}
+                    <span class="text-decoration-none professor">{professor}</span>{i != course.professors.length - 1 ? " / " : ""}
                 {/each}
             </div>
         </div>
@@ -40,9 +45,17 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-end">
-            <p class="dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
+            <p class="text-dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
 
-            {#if owned == 0}
+            {#if owned == true}
+                <!-- <NormalButton classes={""}>
+                    <div slot="name">
+                        <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" href={"/negozio/corsi_singoli/dettagli_corso"}>
+                            Info
+                        </a>
+                    </div>
+                </NormalButton> -->
+            {:else}
                 <NormalButton classes={""}>
                     <div slot="name">
                         <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2">
@@ -83,7 +96,7 @@
             <h6 class="vertical-progress-bar-text">64%</h6>
         </div>
     </div> -->
-</div>
+</a>
 
 <style lang="scss">
     @import "$css/variables.scss";
@@ -102,29 +115,40 @@
             transform: translate(0px, -2px);
             box-shadow: 0px 5px 10px 0px rgba($dark, 0.1);
         }
-    }
 
-    .course-icon {
-        width: 4rem;
-        height: 4rem;
-    }
+        .course_extra_icon i {
+            color: rgba($dark, .5);
+            transition: .15s;
 
-    :global(.btn-primary) {
-        background: $primary;
-        border: none;
+            &:hover {
+                color: $secondary;
+            }
+        }
+
+        .course-icon {
+            width: 4rem;
+            height: 4rem;
+        }
+    }
+    
+    .professor {
+        transition: .3s;
+        color: $dark;
 
         &:hover {
-            background: darken($primary, 10%);
+            color: $secondary;
         }
     }
 
-    :global(.btn-secondary) {
-        background: $secondary;
-        border: none;
+    .icon-container {
+        position: relative;
+        right: 2rem;
+    }
 
-        &:hover {
-            background: darken($secondary, 10%);
-        }
+    .icon-container i {
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
     // vertical progress bar
@@ -196,29 +220,4 @@
     //     animation-duration: .5s;
     //     animation-iteration-count: 1;
     // }    
-
-    .professor {
-        transition: .3s;
-        color: $dark;
-
-        &:hover {
-            color: $secondary;
-        }
-    }
-
-    .bi {
-        opacity: .4;
-        transition: .15s;
-    }
-
-    .icon-container {
-        position: relative;
-        right: 2rem;
-    }
-
-    .icon-container i {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
 </style>
