@@ -238,7 +238,7 @@
         />
     </div>
 
-    <div class="row g-3 mb-4">
+    <div class="row g-3 mb-4 align-items-center">
         <div class="col-md-5" style="--bs-gutter-x: 1.5rem">
             <div class="bundle">
                 <h2 class="display-3">Pacchetto <span class="text-dark">{data.user.semester} semestre</span></h2>
@@ -257,7 +257,7 @@
                 <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
                     <NormalButton classes={"mx-2"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Vedi dettagli</a>
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Dettagli</a>
                         </div>
                     </NormalButton>
 
@@ -286,7 +286,7 @@
                 <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
                     <NormalButton classes={"mx-2"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Vedi dettagli</a>
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Dettagli</a>
                         </div>
                     </NormalButton>
 
@@ -316,7 +316,7 @@
         <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
             <NormalButton classes={"mx-2"}>
                 <div slot="name">
-                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Vedi dettagli</a>
+                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Dettagli</a>
                 </div>
             </NormalButton>
 

@@ -191,7 +191,7 @@
 
             <div class="d-flex flex-row">
                 <div class="row g-3 me-3" style="width: 75%">
-                    <div class="col-md-5 ps-0">
+                    <div class="col-md-6 ps-0">
                         <label for="course_name" class="form-label">Nome corso *</label>
                         <div class="input-group has-validation">
                             <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>
@@ -205,7 +205,7 @@
                             <input class="form-control" bind:value={new_course.course_code} required>
                         </div>
                     </div>
-                    <div class="col-md-3 pe-0">
+                    <div class="col-md-2 pe-0">
                         <label for="number_CFU" class="form-label">Numero CFU *</label>
                         <div class="input-group has-validation">
                             <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>

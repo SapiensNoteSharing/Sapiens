@@ -69,12 +69,13 @@
                         alt={"xp"}
                         />
 
-                        <ActiveButton 
+                        <ActiveButton
                         class={"m-2"}
                         type="user_stats"
                         text={(user.league_position || "n") + "°"}
-                        src={"/src/style/league.png"}
+                        src={"/src/style/league_level_" + user.league_level + ".png"}
                         alt={"league"}
+                        href={"/classifiche"}
                         />
 
                         <ActiveButton 

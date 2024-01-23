@@ -102,26 +102,41 @@
             
             <div class="d-flex flex-column">
                 <div class="d-flex flex-rpw justify-content-between">
-                    <ActiveButton active={sidebar_page == "chapters" ? 'active' : 'not-active'} class={""}>
-                        <div slot="name" class="page-btn rounded-3">
-                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "chapters"}><i class="display-3 bi bi-file-earmark{sidebar_page == "chapters" ? '-fill' : ''}"></i></a>
-                        </div>
-                    </ActiveButton>
-                    <ActiveButton active={sidebar_page == "exercises" ? 'active' : 'not-active'} class={""}>
-                        <div slot="name" class="page-btn rounded-3">
-                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "exercises"}><i class="display-3 bi bi-pencil{sidebar_page == "exercises" ? '-fill' : ''}"></i></a>
-                        </div>
-                    </ActiveButton>
-                    <ActiveButton active={sidebar_page == "questions" ? 'active' : 'not-active'} class={""}>
-                        <div slot="name" class="page-btn rounded-3">
-                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "questions"}><i class="display-3 bi bi-bookmark{sidebar_page == "questions" ? '-fill' : ''}"></i></a>
-                        </div>
-                    </ActiveButton>
-                    <ActiveButton active={sidebar_page == "formulary" ? 'active' : 'not-active'} class={""}>
-                        <div slot="name" class="page-btn rounded-3">
-                            <a class="d-block px-3 py-2 text-decoration-none" on:click={() => sidebar_page = "formulary"}><i class="display-3 bi bi-question-circle{sidebar_page == "formulary" ? '-fill' : ''}"></i></a>
-                        </div>
-                    </ActiveButton>
+                    <ActiveButton
+                    type={"notes_subpages"}
+                    active={sidebar_page == "chapters" ? 'active' : 'not-active'}
+                    fill={sidebar_page == "chapters" ? '-fill' : ''}
+                    class={"d-block py-2 text-decoration-none"}
+                    icon={"bi-file-earmark"}
+                    on:click={() => sidebar_page = "chapters"}
+                    />
+
+                    <ActiveButton
+                    type={"notes_subpages"}
+                    active={sidebar_page == "exercises" ? 'active' : 'not-active'}
+                    fill={sidebar_page == "exercises" ? '' : ''}
+                    class={"d-block py-2 text-decoration-none"}
+                    icon={"bi-pencil-square"}
+                    on:click={() => sidebar_page = "exercises"}
+                    />
+
+                    <ActiveButton
+                    type={"notes_subpages"}
+                    active={sidebar_page == "questions" ? 'active' : 'not-active'}
+                    fill={sidebar_page == "questions" ? '' : ''}
+                    class={"d-block py-2 text-decoration-none"}
+                    icon={"bi-plus-slash-minus"}
+                    on:click={() => sidebar_page = "questions"}
+                    />
+
+                    <ActiveButton
+                    type={"notes_subpages"}
+                    active={sidebar_page == "formulary" ? 'active' : 'not-active'}
+                    fill={sidebar_page == "formulary" ? '-fill' : ''}
+                    class={"d-block py-2 text-decoration-none"}
+                    icon={"bi-chat-dots"}
+                    on:click={() => sidebar_page = "formulary"}
+                    />
                 </div>
             </div>
             {#if sidebar_page == "chapters"}

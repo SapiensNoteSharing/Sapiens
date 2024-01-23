@@ -158,8 +158,10 @@ i.bi.primary {
     }
     
     &.btn-secondary {
+        background: lighten($secondary, 10%);
+        
         &:hover {
-            background: darken($secondary, 10%);
+            background: $secondary;
         }
     }
 }

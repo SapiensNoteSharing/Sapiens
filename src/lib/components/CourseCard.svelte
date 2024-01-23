@@ -19,10 +19,9 @@
             <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
 
             <div class="d-flex flex-row justify-content-between">
-                <!-- <i class="text-dark display-3 ms-4 bi bi-file-earmark-fill"></i> -->
-                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-pencil-fill"></i></a>
-                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-bookmark-fill"></i></a>
-                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-question-circle-fill"></i></a>
+                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-pencil-square"></i></a>
+                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-plus-slash-minus"></i></a>
+                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-chat-dots"></i></a>
                 {#if owned == true}
                     <a class="course_extra_icon" href={"/negozio/corsi_singoli/dettagli_corso"}><i class="display-3 ms-4 me-2 bi bi-info-circle-fill"></i></a>
                 {/if}
