@@ -1,4 +1,4 @@
-[
+export const provinces = [
 	{
 		"regionId": 1,
 		"provinceId": 1,
@@ -549,4 +549,6 @@
 		"provinceId": 107,
 		"provinceName": "Carbonia-Iglesias"
 	}
-] 
+];
+
+export default provinces

@@ -23,6 +23,11 @@ export async function POST({ url, locals, request }) {
 
         await setSession(sid, user)
 
+        cookies.set('sid', sid, {
+            path: '/',
+            // maxAge: 3600
+        })
+
         return new Response('OK')
     }
 }

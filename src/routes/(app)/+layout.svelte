@@ -32,5 +32,6 @@
         background: $light-primary;
         display: flex;
         width: 100%;
+        max-width: calc(100vw - 250px)
     }
 </style>

@@ -144,17 +144,31 @@ const CourseSchema = new Schema({
     timestamps: true
 })
 
-const ProvinciaSchema = new Schema({
-    cod_regione: {
-        type: Number,
-        ref: 'Regione'
-    },
+const ProvinceSchema = new Schema({
+    _id: Number,
     name: String,
+    region: {
+        type: Number,
+        ref: 'Region'
+    },
+    state: {
+        type: Number,
+        ref: 'State'
+    }
 })
 
-const RegioneSchema = new Schema({
-    cod_regione: Number,
+const RegionSchema = new Schema({
+    _id: Number,
+    state: {
+        type: Number,
+        ref: 'State' 
+    },
     name: String
+})
+
+const StateSchema = new Schema({
+    _id: Number,
+    name: String,
 })
 
 CourseSchema.pre('find', function (next) {
@@ -176,6 +190,9 @@ const GridSchema = new Schema({}, {strict: false});
 const Grid = mongoose.models.Grid           || mongoose.model('Grid', GridSchema, 'fs.files');
 const Config = mongoose.models.Config       || mongoose.model('Config', ConfigSchema);
 const User = mongoose.models.User           || mongoose.model('User', UserSchema);
+const State = mongoose.models.State         || mongoose.model('State', StateSchema)
+const Region = mongoose.models.Region       || mongoose.model('Region', RegionSchema)
+const Province = mongoose.models.Province   || mongoose.model('Province', ProvinceSchema)
 const Review = mongoose.models.Review       || mongoose.model('Review', ReviewSchema);
 const Directory = mongoose.models.Directory || mongoose.model('Directory', DirectorySchema)
 const File = mongoose.models.File           || mongoose.model('File', FileSchema);
@@ -187,6 +204,9 @@ export {
     GridFs, 
     Config, 
     User,
+    State,
+    Region,
+    Province,
     Review,
     Course,
     Directory,

@@ -20,9 +20,6 @@ export async function POST({ url, locals, request, cookies }) {
 
         cookies.set('sid', sid, {
             path: '/',
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: false,
             // maxAge: 3600
         })
 

@@ -2,9 +2,16 @@ import { config } from '$lib/config';
 import { getSession, updateTtl } from '$lib/redis';
 import guard from '$lib/router';
 import { redirect } from '@sveltejs/kit';
+import { storePlaces } from '$lib/loadPlaces';
 
 process.on('SIGINT', function () { process.exit(); }); // Ctrl+C  
 process.on('SIGTERM', function () { process.exit(); }); // docker stop
+
+try{
+    storePlaces()
+}catch(err){
+    console.log(err)
+}
 
 export async function handle({ event, resolve }) {
     const sid = event.cookies.get('sid')
