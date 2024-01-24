@@ -17,14 +17,14 @@
             <div class="d-flex flex-row justify-content-between align-items-center">
                 <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name} icon">
                 <div class="d-flex flex-column justify-content-between">
-                    <NormalButton classes={"mt-3 mx-3"}>
+                    <NormalButton class={"mt-3 mx-3"}>
                         <div slot="name">
                             <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/aula_studio">
                                 Sfoglia gli appunti
                             </a>
                         </div>
                     </NormalButton>
-                    <NormalButton classes={"mt-3 mx-3"}>
+                    <NormalButton class={"mt-3 mx-3"}>
                         <div slot="name">
                             <a type="button" class="btn btn-secondary border-0 px-4 text-center w-100 text-dark fs-2" href="/aula_studio">
                                 Vai agli esercizi

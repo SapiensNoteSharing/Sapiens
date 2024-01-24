@@ -75,12 +75,12 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/area_personale/preferenze" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/area_personale/preferenze" ? '-fill' : ''}
+        active={$page.route.id == "/(app)/area_personale/impostazioni" ? 'active' : 'not-active'}
+        fill={$page.route.id == "/(app)/area_personale/impostazioni" ? '-fill' : ''}
         class={"me-3"}
-        text={"Preferenze"}
+        text={"Impostazioni"}
         icon={"bi-gear"}
-        href={"/area_personale/preferenze"}
+        href={"/area_personale/impostazioni"}
         />
 
         <ActiveButton 
@@ -215,7 +215,7 @@
 
             <div class="col-md-5">
                 <label for="facultyName" class="form-label">Nome Facoltà</label>
-                <div class="input-group has-validation">
+                <div class="d-flex has-validation svelecte-custom-selection">
                     <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona facoltà"
@@ -282,7 +282,7 @@
             </div>
 
             <div class="d-flex flex-row justify-content-end">
-                <NormalButton classes={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"}>
+                <NormalButton class={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"}>
                     <div slot="name" class="page-btn">
                         <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save_changes}>
                             Salva modifiche

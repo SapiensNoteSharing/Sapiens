@@ -13,6 +13,15 @@
     ].filter(Boolean);
 
     let sorting_method;
+    let sorting_methods = [
+        {id:"chronological_order", name:"Periodo · cronologico"},
+        {id:"chronological_reverse", name:"Periodo · cronologico inverso"},
+        {id:"name_ascending", name:"Nome · alfabetico crescente"},
+        {id:"name_descending", name:"Nome · alfabetico decrescente"},
+        {id:"code_ascending", name:"Codice · crescente"},
+        {id:"code_descending", name:"Codice · decrescente"},
+        {id:"no_order", name:"Nessun ordinamento"}
+    ]
 
     function sort_course_list(course_list) {
         switch(sorting_method) {
@@ -336,29 +345,13 @@
                     <option class="opt" value="match_ascending" selected>Corrispondenza</option>
                 </select>
             {:else}
-                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method}>
-                    <option class="opt" value="chronological_order" selected>Periodo &bull; cronologico</option>
-                    <option class="opt" value="chronological_reverse">Periodo &bull; cronologico inverso</option>
-                    <option class="opt" value="name_ascending">Nome &bull; alfabetico crescente</option>
-                    <option class="opt" value="name_descending">Nome &bull; alfabetico decrescente</option>
-                    <option class="opt" value="code_ascending">Codice &bull; crescente</option>
-                    <option class="opt" value="code_descending">Codice &bull; decrescente</option>
-                    <option class="opt" value="no_order">Nessun ordinamento</option>
-                </select>
-                <!-- <Svelecte
+                <Svelecte
+                style="width: 18rem;"
                 placeholder="Ordina per:"
-                options={`[
-                    {"value":"chronological_order","text":"Periodo · cronologico"},
-                    {"value":"chronological_reverse","text":"Periodo · cronologico inverso"},
-                    {"value":"name_ascending","text":"Nome · alfabetico crescente"}
-                    {"value":"name_descending","text":"Nome · alfabetico decrescente"}
-                    {"value":"code_ascending","text":"Codice · crescente"}
-                    {"value":"code_descending","text":"Codice · decrescente"}
-                    {"value":"no_order","text":"Nessun ordinamento"}
-                ]`}
-                class="svelecte-control text-center selection-input m-0"
+                options={sorting_methods}
+                class="svelecte-control text-left selection-input"
                 bind:value={sorting_method}
-                /> -->
+                />
             {/if}
         </div>
     </div>
@@ -414,7 +407,7 @@
     {/if}
 </div>
 
-<!-- <Modal title="Carrello" yes="Acquista" no="Chiudi" classes="bg-primary border-dark" theme="btn-outline-primary" bind:this={cartModal}>
+<!-- <Modal title="Carrello" yes="Acquista" no="Chiudi" class="bg-primary border-dark" theme="btn-outline-primary" bind:this={cartModal}>
     {#each courses as course}
         {#if course.in_cart}
             <div class="d-flex m-4 justify-content-between">

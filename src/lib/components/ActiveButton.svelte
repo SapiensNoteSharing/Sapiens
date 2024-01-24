@@ -26,8 +26,8 @@
                 <img style="height: 2.5rem;" src={src} alt={alt}>
             </a>
         {:else if type == "navigation_link"}
-            <div class="page-btn display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" href={href} {disabled}><i class="me-3 display-5 bi {icon}{fill}"></i>{text}</a>
+            <div class="page-btn display-6 rounded-4 {disabled ? "disabled" : ""}">
+                <a class="d-block display-5 px-3 py-2 text-decoration-none" href={disabled ? "" : href}><i class="me-3 display-5 bi {icon}{disabled ? "-fill" : fill}"></i>{text}</a>
             </div>
         {:else if type == "notes_subpages"}
             <div class="page-btn display-6 rounded-4">
@@ -57,7 +57,12 @@
             color: rgba($dark, 0.4);
         }
 
-        &:hover .page-btn {
+        .page-btn.disabled a {
+            color: rgba($dark, 0.2);
+            cursor: not-allowed !important;
+        }
+
+        &:hover :not(.disabled).page-btn {
             transition: .15s;
             color: rgba($dark, 0.4);
             background: rgba($dark, 0.05);

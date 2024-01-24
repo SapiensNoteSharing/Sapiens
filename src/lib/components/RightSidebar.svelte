@@ -155,7 +155,7 @@
                 </div>
             {:else if sidebar_page == "exercises"}
                 <div class="right-sidebar-page d-flex flex-column">
-                    <NormalButton classes="bg-light">
+                    <NormalButton class="bg-light">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 1}>
                             <div class="d-flex flex-row justify-content-between">
@@ -169,7 +169,7 @@
                         </div>
                     </NormalButton>
                     
-                    <NormalButton classes="bg-light">
+                    <NormalButton class="bg-light">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 2}>
                             <div class="d-flex flex-row justify-content-between">
@@ -183,7 +183,7 @@
                         </div>
                     </NormalButton>
                     
-                    <NormalButton classes="bg-light">
+                    <NormalButton class="bg-light">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <div slot="name" class="exercise-category-btn d-flex flex-column justify-content-between p-3 mb-4" on:click={() => exercises_category = 3}>
                             <div class="d-flex flex-row justify-content-between">
