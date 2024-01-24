@@ -6,9 +6,9 @@ import { storePlaces } from '$lib/loadPlaces';
 
 process.on('SIGINT', function () { process.exit(); }); // Ctrl+C  
 process.on('SIGTERM', function () { process.exit(); }); // docker stop
-try{
 
-storePlaces()
+try{
+    storePlaces()
 }catch(err){
     console.log(err)
 }
