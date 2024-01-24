@@ -176,7 +176,7 @@
                 </div>
                 <p class="display-6 text-dark">Hai dimenticato la password? <a href="" class="text-dark">Recuperala</a></p>
 
-                <NormalButton classes={"my-4 text-center w-100"}>
+                <NormalButton class={"my-4 text-center w-100"}>
                     <div slot="name">
                         <button type="button" class="btn btn-primary w-100 text-dark fs-2 rounded-3" on:click={loginUser}>
                             Accedi
@@ -444,7 +444,7 @@
                                 <i style="font-size: 2.6rem; position: relative; bottom: 2px;" class="bi bi-arrow-left-square next-step-icon"></i>
                             </button>
                             
-                            <NormalButton classes={"text-center p-0 m-0"}>
+                            <NormalButton class={"text-center p-0 m-0"}>
                                 <div slot="name">
                                     <button type="button" class="btn bg-secondary w-100 text-dark fs-2 rounded-3 m-0" on:click={registerUser}>
                                         Registrati

@@ -20,12 +20,12 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/area_personale/preferenze" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/area_personale/preferenze" ? '-fill' : ''}
+        active={$page.route.id == "/(app)/area_personale/impostazioni" ? 'active' : 'not-active'}
+        fill={$page.route.id == "/(app)/area_personale/impostazioni" ? '-fill' : ''}
         class={"me-3"}
-        text={"Preferenze"}
+        text={"Impostazioni"}
         icon={"bi-gear"}
-        href={"/area_personale/preferenze"}
+        href={"/area_personale/impostazioni"}
         />
 
         <ActiveButton 

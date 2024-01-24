@@ -1,6 +1,7 @@
 <script>
     import LeftSidebar from "$lib/components/LeftSidebar.svelte";
     import ActiveButton from '$lib/components/ActiveButton.svelte';
+    import NormalButton from '$lib/components/NormalButton.svelte';
     import { page } from '$app/stores'; 
 
     export let data;
@@ -32,24 +33,23 @@
     <LeftSidebar user={user}/>
 
     <div class="col m-5">
-        <ActiveButton active class={"me-3"}>
-            <div slot="name" class="page-btn outlined display-6 rounded-4">
-                <a class="d-block display-5 px-3 py-2 text-decoration-none" on:click={update}><i class="me-3 display-5 bi bi-arrow-clockwise"></i>Update</a>
+        <NormalButton class={"me-3"}>
+            <div slot="name" class="page-btn rounded-4 mb-3">
+                <a class="btn btn-primary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={update}><i class="me-3 display-5 bi bi-arrow-clockwise"></i>Update</a>
             </div>
-        </ActiveButton>
-        <input bind:value={href} class="form-control">
-        <span class="text">Usage: /{'<path of dir/file>'}</span>
-        <br>
-        <span class="text">Response:<br>
-        </span>
-        <textarea class="w-100 h-100">
+        </NormalButton>
+        <p class="text mb-3">Usage: /{'<path of dir/file>'}</p>
+        <input class="form-control mb-2" bind:value={href}>
+        <p class="text mb-3">Response:</p>
+        <textarea class="response">
             {body}
         </textarea>
     </div>
 </div>
 
 <style>
-    .m-5 {
-        height: 100vh;
+    .response {
+        width: 100%;
+        height: 80%;
     }
 </style>

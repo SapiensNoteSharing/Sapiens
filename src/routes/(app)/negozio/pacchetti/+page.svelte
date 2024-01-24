@@ -166,7 +166,7 @@
     let course = courses[0];
 </script>
 
-<Modal title="Carrello" yes="Acquista" no="Annulla" classes="" theme="btn-outline-primary" bind:this={cartModal}>
+<Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
     <div class="d-flex m-4 justify-content-between">
         <div>
             <span class="display-6">{course.code}</span>
@@ -239,7 +239,7 @@
     </div>
 
     <div class="row g-3 mb-4 align-items-center">
-        <div class="col-md-5" style="--bs-gutter-x: 1.5rem">
+        <div class="col-md-4" style="--bs-gutter-x: 1.5rem">
             <div class="bundle">
                 <h2 class="display-3">Pacchetto <span class="text-dark">{data.user.semester} semestre</span></h2>
                 <h2 class="display-6">{semester_bundle_courses.length} corsi</h2>
@@ -247,21 +247,21 @@
                 <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
                     {#each semester_bundle_courses as course}
                         {#if course.owned}
-                            <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
+                            <!-- <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt=""> -->
                         {:else}
-                            <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
+                            <!-- <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt=""> -->
                         {/if}
                     {/each}
                 </div>
 
                 <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
-                    <NormalButton classes={"mx-2"}>
+                    <NormalButton class={"mx-2"}>
                         <div slot="name">
                             <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Dettagli</a>
                         </div>
                     </NormalButton>
 
-                    <NormalButton classes={"mx-2"}>
+                    <NormalButton class={"mx-2"}>
                         <div slot="name">
                             <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
                         </div>
@@ -269,7 +269,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-4" style="--bs-gutter-x: 1.5rem">
             <div class="bundle">
                 <h2 class="display-3">Pacchetto <span class="text-dark">{data.user.year} anno</span></h2>
                 <h2 class="display-6">{year_bundle_courses.length} corsi</h2>
@@ -277,20 +277,20 @@
                 <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
                     {#each year_bundle_courses as course}
                         {#if course.owned}
-                            <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
+                            <!-- <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt=""> -->
                         {:else}
-                            <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
+                            <!-- <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt=""> -->
                         {/if}
                     {/each}
                 </div>
                 <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
-                    <NormalButton classes={"mx-2"}>
+                    <NormalButton class={"mx-2"}>
                         <div slot="name">
                             <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Dettagli</a>
                         </div>
                     </NormalButton>
 
-                    <NormalButton classes={"mx-2"}>
+                    <NormalButton class={"mx-2"}>
                         <div slot="name">
                             <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
                         </div>
@@ -298,33 +298,35 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="bundle col-md-12">
-        <h2 class="display-3">Pacchetto <span class="text-dark">{data.user.faculty_name}</span></h2>
-        <h2 class="display-6">{degree_bundle_courses.length} corsi</h2>
-
-        <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
-            {#each degree_bundle_courses as course}
-                {#if course.owned}
-                    <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
-                {:else}
-                    <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
-                {/if}
-            {/each}
-        </div>
-
-        <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
-            <NormalButton classes={"mx-2"}>
-                <div slot="name">
-                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Dettagli</a>
+        <div class="col-md-4" style="--bs-gutter-x: 1.5rem">
+            <div class="bundle">
+                <h2 class="display-3">Pacchetto <span class="text-dark">{data.user.faculty_name}</span></h2>
+                <h2 class="display-6">{degree_bundle_courses.length} corsi</h2>
+                
+                <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
+                    {#each degree_bundle_courses as course}
+                    {#if course.owned}
+                    <!-- <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt=""> -->
+                    {:else}
+                    <!-- <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt=""> -->
+                    {/if}
+                    {/each}
                 </div>
-            </NormalButton>
-
-            <NormalButton classes={"mx-2"}>
-                <div slot="name">
-                    <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
+                
+                <div class="d-flex flex-row justify-content-center" style={"margin-top: 3rem;"}>
+                    <NormalButton class={"mx-2"}>
+                        <div slot="name">
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/negozio/pacchetti/dettagli_pacchetto">Dettagli</a>
+                        </div>
+                    </NormalButton>
+                    
+                    <NormalButton class={"mx-2"}>
+                        <div slot="name">
+                            <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
+                        </div>
+                    </NormalButton>
                 </div>
-            </NormalButton>
+            </div>
         </div>
     </div>
 </div>

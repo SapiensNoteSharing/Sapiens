@@ -333,7 +333,7 @@
     let selected_option = "base";
 </script>
 
-<Modal title="Carrello" yes="Acquista" no="Annulla" classes="" theme="btn-outline-primary" bind:this={cartModal}>
+<Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
     <div class="d-flex m-4 justify-content-between">
         <div>
             <span class="display-6">{course.code}</span>

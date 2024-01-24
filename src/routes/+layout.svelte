@@ -29,7 +29,6 @@
         return capitalise(route)
     } 
 
-    $: console.log($page)
     $: pageTitle = formatPageTitle($page);
 </script>
 
@@ -73,7 +72,7 @@
                         class={"m-2"}
                         type="user_stats"
                         text={(user.league_position || "n") + "°"}
-                        src={"/src/style/league_level_" + user.league_level + ".png"}
+                        src={"/src/style/leagues/level_" + user.league_level + ".png"}
                         alt={"league"}
                         href={"/classifiche"}
                         />

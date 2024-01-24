@@ -47,7 +47,7 @@
             <p class="text-dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
 
             {#if owned == true}
-                <!-- <NormalButton classes={""}>
+                <!-- <NormalButton class={""}>
                     <div slot="name">
                         <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" href={"/negozio/corsi_singoli/dettagli_corso"}>
                             Info
@@ -55,7 +55,7 @@
                     </div>
                 </NormalButton> -->
             {:else}
-                <NormalButton classes={""}>
+                <NormalButton class={""}>
                     <div slot="name">
                         <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2">
                             Ottieni

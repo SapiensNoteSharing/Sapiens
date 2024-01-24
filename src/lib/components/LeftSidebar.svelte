@@ -104,8 +104,8 @@
 
             <ActiveButton 
             type={"navigation_link"}
-            active={$page.route.id == "/(app)/test" ? 'active' : 'not-active'} 
-            fill={$page.route.id == "/(app)/test" ? '-fill' : ''}
+            active={$page.route.id == "/test" ? 'active' : 'not-active'} 
+            fill={$page.route.id == "/test" ? '-fill' : ''}
             class={"my-2"}
             href={"/test"}
             text={"Test"}
@@ -115,10 +115,10 @@
 
             <ActiveButton 
             type={"navigation_link"}
-            active={$page.route.id == "/(app)/admin" ? 'active' : 'not-active'}
-            fill={$page.route.id == "/(app)/admin" ? '-fill' : ''}
+            active={$page.route.id == "/admin/courses" ? 'active' : 'not-active'}
+            fill={$page.route.id == "/admin/courses" ? '-fill' : ''}
             class={"my-2"}
-            href={"/admin"}
+            href={"/admin/courses"}
             text={"Admin"}
             icon={"bi-person"}
             >
