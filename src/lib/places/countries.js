@@ -1,4 +1,4 @@
-[
+export const countries = [
     {
       "countryId": 1,
       "countryName": "Afghanistan"
@@ -996,3 +996,5 @@
       "countryName": "Zimbabwe"
     }
 ]
+
+export default countries;

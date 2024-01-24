@@ -1,4 +1,4 @@
-[
+export const regions = [
     {"code": "01", "name": "Piemonte"},
     {"code": "02", "name": "Valle D'Aosta"},
     {"code": "03", "name": "Lombardia"},
@@ -20,3 +20,4 @@
     {"code": "19", "name": "Sicilia"},
     {"code": "20", "name": "Sardegna"}
 ]
+export default regions;
