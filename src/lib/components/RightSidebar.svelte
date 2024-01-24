@@ -106,7 +106,7 @@
                     type={"notes_subpages"}
                     active={sidebar_page == "chapters" ? 'active' : 'not-active'}
                     fill={sidebar_page == "chapters" ? '-fill' : ''}
-                    class={"d-block py-2 text-decoration-none"}
+                    class={"d-block py-2 text-decoration-none h-100"}
                     icon={"bi-file-earmark"}
                     on:click={() => sidebar_page = "chapters"}
                     />
@@ -115,7 +115,7 @@
                     type={"notes_subpages"}
                     active={sidebar_page == "exercises" ? 'active' : 'not-active'}
                     fill={sidebar_page == "exercises" ? '' : ''}
-                    class={"d-block py-2 text-decoration-none"}
+                    class={"d-block py-2 text-decoration-none h-100"}
                     icon={"bi-pencil-square"}
                     on:click={() => sidebar_page = "exercises"}
                     />
@@ -124,7 +124,7 @@
                     type={"notes_subpages"}
                     active={sidebar_page == "questions" ? 'active' : 'not-active'}
                     fill={sidebar_page == "questions" ? '' : ''}
-                    class={"d-block py-2 text-decoration-none"}
+                    class={"d-block py-2 text-decoration-none h-100"}
                     icon={"bi-plus-slash-minus"}
                     on:click={() => sidebar_page = "questions"}
                     />
@@ -133,7 +133,7 @@
                     type={"notes_subpages"}
                     active={sidebar_page == "formulary" ? 'active' : 'not-active'}
                     fill={sidebar_page == "formulary" ? '-fill' : ''}
-                    class={"d-block py-2 text-decoration-none"}
+                    class={"d-block py-2 text-decoration-none h-100"}
                     icon={"bi-chat-dots"}
                     on:click={() => sidebar_page = "formulary"}
                     />
@@ -143,13 +143,13 @@
                 <div class="right-sidebar-page">
                     <div class="navigation">
                         {#each (course.chapters || []) as chapter}
-                        <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
-                            <div slot="menu">
-                                {#each chapter.files || [] as file}
-                                <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
-                                {/each}
-                            </div>
-                        </Item>
+                            <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
+                                <div slot="menu">
+                                    {#each chapter.files || [] as file}
+                                        <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
+                                    {/each}
+                                </div>
+                            </Item>
                         {/each}
                     </div>
                 </div>
@@ -197,11 +197,11 @@
                         </div>
                     </NormalButton>
                 </div>
-            {:else if sidebar_page == "exercises"}
+            {:else if sidebar_page == "formulary"}
                 <div class="right-sidebar-page">
                     
                 </div>
-            {:else if sidebar_page == "formulary"}
+            {:else if sidebar_page == "questions"}
                 <div class="right-sidebar-page">
                     
                 </div>
@@ -220,9 +220,9 @@
                     </div>
                     <div class="d-flex flex-wrap">
                         {#each faculties as faculty}
-                        <div class="me-2 mb-2">
-                            <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
-                        </div>
+                            <div class="me-2 mb-2">
+                                <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
+                            </div>
                         {/each}
                     </div>
                 </AccordionItem>
@@ -231,9 +231,9 @@
                         Tipo di Laurea
                     </div>
                     {#each degree_types as type}
-                    <div class="me-2 mb-2">
-                        <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
-                    </div>
+                        <div class="me-2 mb-2">
+                            <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
+                        </div>
                     {/each}
                 </AccordionItem>
                 <AccordionItem class="filter-category">
@@ -241,9 +241,9 @@
                         Tags
                     </div>
                     {#each tags as tag}
-                    <div class="me-2 mb-2">
-                        <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
-                    </div>
+                        <div class="me-2 mb-2">
+                            <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
+                        </div>
                     {/each}
                 </AccordionItem>
                 <AccordionItem class="filter-category">

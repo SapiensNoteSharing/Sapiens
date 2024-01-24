@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { afterUpdate, onMount } from "svelte";
     import { page } from '$app/stores';
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import '$css/global.scss';
@@ -8,8 +8,9 @@
         
     let dnaModal;
 
+    let bootstrap;
     onMount(async () => {
-        const bootstrap = await import('bootstrap');
+        bootstrap = await import('bootstrap');
     })
 
     function openDnaModal() {   
@@ -30,6 +31,11 @@
     } 
 
     $: pageTitle = formatPageTitle($page);
+
+    // afterUpdate(() => {
+    //     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    //     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+    // })
 </script>
 
 <div class="page">
@@ -52,6 +58,10 @@
                     <h2 class="nav-primary display-3 text-decoration-none align-self-center m-0 ms-4">{pageTitle}</h2>
 
                     <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
+                        <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <button class="btn btn-primary" type="button" disabled>Disabled button</button>
+                        </span>
+
                         <ActiveButton 
                         class={"m-2"}
                         type="user_stats"

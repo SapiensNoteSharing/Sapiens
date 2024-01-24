@@ -1,7 +1,6 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
     import ActiveButton from '$lib/components/ActiveButton.svelte';
-    import Modal from '$lib/components/Modal.svelte';
     import { value, filter_tags } from '$lib/stores';
     import { page } from '$app/stores';
 
@@ -10,7 +9,6 @@
     let user = data.user || {};
 
     let owned = [
-        courses.find(course => course.name == "Analisi Matematica I"),
         courses.find(course => course.name == "Fisica I"),
         courses.find(course => course.name == "Algoritmi e strutture dati"),
     ].filter(Boolean);
@@ -333,45 +331,6 @@
     let selected_option = "base";
 </script>
 
-<Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
-    <div class="d-flex m-4 justify-content-between">
-        <div>
-            <span class="display-6">{course.code}</span>
-            <h2 class="display-4 text-dark">{course.name}</h2>
-            {#each course.professors as professor, i}
-                <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
-            {/each}
-            <div class="d-flex mt-3">
-                <div class="d-flex flex-row justify-content-start me-2">
-                    <ActiveButton
-                    type="navigation_link"
-                    active={selected_option == "base" ? 'active' : 'not-active'}
-                    fill={selected_option == "base" ? '-fill' : ''}
-                    class={"me-3"}
-                    text={"Base"}
-                    icon={"bi-file-earmark"}
-                    on:click={() => selected_option = "base"}
-                    />
-
-                    <ActiveButton 
-                    type="navigation_link"
-                    active={selected_option == "complete" ? 'active' : 'not-active'}
-                    fill={selected_option == "complete" ? '-fill' : ''}
-                    class={"me-3"}
-                    text={"Completo"}
-                    icon={"bi-folder"}
-                    on:click={() => selected_option = "complete"}
-                    />
-                </div>
-            </div>
-        </div>
-        <div class="d-flex">
-            <h2 class="align-self-center display-3 my-0">{(10 + course.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2}</h2>
-            <img style="width: 2rem;" src="/src/style/DNA.svg" alt="DNA">
-        </div>
-    </div>
-</Modal>
-
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-5">
         <ActiveButton
@@ -444,7 +403,7 @@
         <div class="d-flex flex-wrap justify-content-between align-content-between">
             {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
                 <div class="w-100 mb-3">
-                    <h3 class="display-3 m-0" on:click={openCart}>{filtered_not_owned[0].year} anno</h3>
+                    <h3 class="display-3 m-0">{filtered_not_owned[0].year} anno</h3>
                 </div>
                 <div class="w-100 mb-4">
                     <h3 class="display-4 m-0">{filtered_not_owned[0].semester} semestre</h3>
@@ -464,7 +423,7 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
+                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/{course.name.toLowerCase().replace(/\s/g, '_')}"/>
                 {/each}
             {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
                 <div class="w-100 mt-3">
@@ -478,11 +437,11 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} owned={false} class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
+                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/{course.name.toLowerCase().replace(/\s/g, '_')}"/>
                 {/each}
             {:else}
                 {#each filtered_not_owned as course}
-                    <CourseCard {course} owned={false} class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
+                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/{course.name.toLowerCase().replace(/\s/g, '_')}"/>
                 {/each}
             {/if}
         </div>

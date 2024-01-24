@@ -12,12 +12,13 @@
     export {classes as class};
     export let style = '';
     
-    const id = 'menu-' + Math.floor(Math.random()*100000) + Math.floor(Math.random()*10000) 
+    const id = 'menu-' + Math.floor(Math.random() * 100000) + Math.floor(Math.random() * 10000) 
     let hovering = false;
-    let open = false
+    export let open = false
 
-    function handleClick(ev){
-        if(collapsible) open = !open
+    function handleClick(ev) {
+        if (collapsible) 
+            open = !open
         dispatch('click', obj)
     }
 </script>

@@ -1,6 +1,8 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
+    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import {createEventDispatcher} from "svelte";
+    import Modal from '$lib/components/Modal.svelte';
     const dispatch = createEventDispatcher();
 
     export let course = {};
@@ -11,7 +13,57 @@
     export let style = '';
     export let href;
     export let owned;
+
+    let cartModal;
+    function openCart() {
+        cartModal.show().then(async res => {
+            if (res) {
+                
+            }
+        })
+    }
+
+    let selected_option = "complete"
 </script>
+
+<Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
+    <div class="d-flex m-4 justify-content-between">
+        <div>
+            <span class="display-6">{course.code}</span>
+            <h2 class="display-4 text-dark">{course.name}</h2>
+            {#each course.professors as professor, i}
+                <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
+            {/each}
+            <div class="d-flex mt-3">
+                <div class="d-flex flex-row justify-content-start me-2">
+                    <ActiveButton
+                    type="navigation_link"
+                    active={selected_option == "base" ? 'active' : 'not-active'}
+                    fill={selected_option == "base" ? '-fill' : ''}
+                    class={"me-3"}
+                    text={"Base"}
+                    icon={"bi-file-earmark"}
+                    on:click={() => selected_option = "base"}
+                    />
+
+                    <ActiveButton 
+                    type="navigation_link"
+                    active={selected_option == "complete" ? 'active' : 'not-active'}
+                    fill={selected_option == "complete" ? '-fill' : ''}
+                    class={"me-3"}
+                    text={"Completo"}
+                    icon={"bi-folder"}
+                    on:click={() => selected_option = "complete"}
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <h2 class="align-self-center display-3 my-0">{(10 + course.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2}</h2>
+            <img style="width: 2rem;" src="/src/style/DNA.svg" alt="DNA">
+        </div>
+    </div>
+</Modal>
 
 <a class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="width: 47%; {style}" href={href}>
     <div class="d-flex flex-column justify-content-between w-100">
@@ -57,7 +109,7 @@
             {:else}
                 <NormalButton class={""}>
                     <div slot="name">
-                        <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2">
+                        <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click={openCart}>
                             Ottieni
                         </a>
                     </div>

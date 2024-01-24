@@ -8,7 +8,6 @@
     let user = data.user || {};
 
     let owned = [
-        courses.find(course => course.name == "Analisi Matematica I"),
         courses.find(course => course.name == "Fisica I"),
         courses.find(course => course.name == "Algoritmi e strutture dati"),
     ].filter(Boolean);
