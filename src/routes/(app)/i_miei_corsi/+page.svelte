@@ -1,6 +1,7 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
     import { view, value, filter_tags, dna } from '$lib/stores';
+    import Svelecte from 'svelecte';
     
     export let data;
     let courses = data.courses || [];
@@ -344,6 +345,20 @@
                     <option class="opt" value="code_descending">Codice &bull; decrescente</option>
                     <option class="opt" value="no_order">Nessun ordinamento</option>
                 </select>
+                <!-- <Svelecte
+                placeholder="Ordina per:"
+                options={`[
+                    {"value":"chronological_order","text":"Periodo · cronologico"},
+                    {"value":"chronological_reverse","text":"Periodo · cronologico inverso"},
+                    {"value":"name_ascending","text":"Nome · alfabetico crescente"}
+                    {"value":"name_descending","text":"Nome · alfabetico decrescente"}
+                    {"value":"code_ascending","text":"Codice · crescente"}
+                    {"value":"code_descending","text":"Codice · decrescente"}
+                    {"value":"no_order","text":"Nessun ordinamento"}
+                ]`}
+                class="svelecte-control text-center selection-input m-0"
+                bind:value={sorting_method}
+                /> -->
             {/if}
         </div>
     </div>
@@ -372,7 +387,7 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} owned=1 class="g-col-4 mb-5"/>
+                    <CourseCard {course} owned=1 class="g-col-4 mb-5" href="/aula_studio"/>
                 {/each}
             {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
                 <div class="w-100 mt-3">

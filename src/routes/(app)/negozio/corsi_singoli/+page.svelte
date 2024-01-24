@@ -1,11 +1,9 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
     import ActiveButton from '$lib/components/ActiveButton.svelte';
-    import NormalButton from '$lib/components/NormalButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
-    import { view, value, filter_tags} from '$lib/stores';
-
-    let subpage = "single_course";
+    import { value, filter_tags } from '$lib/stores';
+    import { page } from '$app/stores';
 
     export let data;
     let courses = data.courses || [];
@@ -321,56 +319,6 @@
         return Math.map(distance, 0, max_dist, 0, 2);
     }
     
-    function get_semester_bundle_courses() {
-        let semester_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code &&
-                course.year == data.user.year &&
-                course.semester == data.user.semester
-            ) {
-                semester_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-        return semester_bundle_courses
-    }
-
-    function get_year_bundle_courses() {
-        let year_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code &&
-                course.year == data.user.year
-            ) {
-                year_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-        return year_bundle_courses
-    }
-
-    function get_degree_bundle_courses() {
-        let degree_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code
-            ) {
-                degree_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-
-        return degree_bundle_courses
-    }
-
-    let semester_bundle_courses = get_semester_bundle_courses()
-    sort_course_list(semester_bundle_courses, "chronological_order");
-    let year_bundle_courses = get_year_bundle_courses()
-    sort_course_list(year_bundle_courses, "chronological_order");
-    let degree_bundle_courses = get_degree_bundle_courses()
-    sort_course_list(degree_bundle_courses, "chronological_order");
-
     let cartModal;
     function openCart() {
         cartModal.show().then(async res => {
@@ -394,27 +342,27 @@
                 <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
             {/each}
             <div class="d-flex mt-3">
-                <section class="btn-group">
-                    <div class="d-flex flex-row justify-content-start me-2">
-                        <input type="radio" class="btn-check" name="{course.name}-accesso" id="{course.name}-base" bind:group={selected_option}>
-                        <ActiveButton 
-                        active={selected_option == "base" ? 'active' : 'not-active'}
-                        fill={selected_option == "base" ? '-fill' : ''}
-                        class={"me-3"}
-                        text={"Base"}
-                        icon={"bi-box"}
-                        />
+                <div class="d-flex flex-row justify-content-start me-2">
+                    <ActiveButton
+                    type="navigation_link"
+                    active={selected_option == "base" ? 'active' : 'not-active'}
+                    fill={selected_option == "base" ? '-fill' : ''}
+                    class={"me-3"}
+                    text={"Base"}
+                    icon={"bi-file-earmark"}
+                    on:click={() => selected_option = "base"}
+                    />
 
-                        <input type="radio" class="btn-check" name="{course.name}-accesso" id="{course.name}-completo" bind:group={selected_option}>
-                        <ActiveButton 
-                        active={selected_option == "complete" ? 'active' : 'not-active'}
-                        fill={selected_option == "complete" ? '-fill' : ''}
-                        class={"me-3"}
-                        text={"Completo"}
-                        icon={"bi-boxes"}
-                        />
-                    </div>
-                </section>
+                    <ActiveButton 
+                    type="navigation_link"
+                    active={selected_option == "complete" ? 'active' : 'not-active'}
+                    fill={selected_option == "complete" ? '-fill' : ''}
+                    class={"me-3"}
+                    text={"Completo"}
+                    icon={"bi-folder"}
+                    on:click={() => selected_option = "complete"}
+                    />
+                </div>
             </div>
         </div>
         <div class="d-flex">
@@ -426,229 +374,123 @@
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-5">
-        <ActiveButton 
-        active={subpage == "bundle" ? 'active' : 'not-active'}
-        fill={subpage == "bundle" ? '-fill' : ''}
+        <ActiveButton
+        type={"navigation_link"}
+        active={$page.route.id.startsWith("/(app)/negozio/pacchetti") ? 'active' : 'not-active'}
+        fill={$page.route.id.startsWith("/(app)/negozio/pacchetti") ? '-fill' : ''}
         class={"me-3"}
         text={"Pacchetti"}
         icon={"bi-box-seam"}
-        on:click={() => subpage = "bundle"}
+        href={"/negozio/pacchetti"}
         />
 
         <ActiveButton 
-        active={subpage == "single_course" ? 'active' : 'not-active'}
-        fill={subpage == "single_course" ? '-fill' : ''}
+        type={"navigation_link"}
+        active={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? 'active' : 'not-active'}
+        fill={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? '-fill' : ''}
         class={"me-3"}
-        text={"Corso singolo"}
+        text={"Corsi singoli"}
         icon={"bi-1-circle"}
-        on:click={() => subpage = "single_course"}
+        href={"/negozio/corsi_singoli"}
         />
 
         <ActiveButton 
-        active={subpage == "buy_dna" ? 'active' : 'not-active'}
-        fill={subpage == "buy_dna" ? '-fill' : ''}
+        type={"navigation_link"}
+        active={$page.route.id == "/(app)/negozio/punti_dna" ? 'active' : 'not-active'}
+        fill={$page.route.id == "/(app)/negozio/punti_dna" ? '-fill' : ''}
         class={"me-3"}
         text={"Punti DNA"}
         icon={"bi-cart"}
-        on:click={() => subpage = "buy_dna"}
+        href={"/negozio/punti_dna"}
         />
     </div>
 
-    {#if subpage == "bundle"}
-        <div class="row g-3 mb-4">
-            <div class="col-md-5" style="--bs-gutter-x: 1.5rem">
-                <div class="bundle">
-                    <h2 class="display-3">Pacchetto <span class="text-dark">{data.user.semester} semestre</span></h2>
-                    <h2 class="display-6">{semester_bundle_courses.length} corsi</h2>
+    <div class="d-flex mb-5 justify-content-between">
+        <div class="d-flex align-items-center">
+            {#if $filter_tags.length == 2}
+                <span class=""><i class="icon bi bi-funnel"></i></span>
+                <h4 class="fs-6 ms-3 my-0">Nessun filtro selezionato</h4>
+            {:else}
+                <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
+            {/if}
 
-                    <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
-                        {#each semester_bundle_courses as course}
-                            {#if course.owned}
-                                <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
-                            {:else}
-                                <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
-                            {/if}
-                        {/each}
-                    </div>
+            {#each $filter_tags as tag}
+                {#if tag.selected}
+                    <span class="badge my-auto p-2 bg-{tag.color} ms-3 filter_badge text-dark">{tag.name}</span>
+                {/if}
+            {/each}
+        </div>
+        
+        <div class="d-flex align-items-center">
+            {#if $value != "" && $value != undefined}
+                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method} disabled>
+                    <option class="opt" value="match_ascending" selected>Corrispondenza</option>
+                </select>
+            {:else}
+                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method}>
+                    <option class="opt" value="chronological_order" selected>Periodo · cronologico</option>
+                    <option class="opt" value="chronological_reverse">Periodo · cronologico inverso</option>
+                    <option class="opt" value="name_ascending">Nome · alfabetico crescente</option>
+                    <option class="opt" value="name_descending">Nome · alfabetico decrescente</option>
+                    <option class="opt" value="code_ascending">Codice · crescente</option>
+                    <option class="opt" value="code_descending">Codice · decrescente</option>
+                    <option class="opt" value="no_order">Nessun ordinamento</option>
+                </select>
+            {/if}
+        </div>
+    </div>
 
-                    <div class="d-flex flex-row justify-content-center">
-                        <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
-                            <div slot="name">
-                                <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
-                                    Vedi dettagli
-                                </a>
-                            </div>
-                        </NormalButton>
-                    </div>
+    {#if filtered_not_owned.length != 0}
+        <div class="d-flex flex-wrap justify-content-between align-content-between">
+            {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
+                <div class="w-100 mb-3">
+                    <h3 class="display-3 m-0" on:click={openCart}>{filtered_not_owned[0].year} anno</h3>
                 </div>
-            </div>
-            <div class="col-md-7">
-                <div class="bundle">
-                    <h2 class="display-3">Pacchetto <span class="text-dark">{data.user.year} anno</span></h2>
-                    <h2 class="display-6">{year_bundle_courses.length} corsi</h2>
-
-                    <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
-                        {#each year_bundle_courses as course}
-                            {#if course.owned}
-                                <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
-                            {:else}
-                                <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
-                            {/if}
-                        {/each}
-                    </div>
-                    <div class="d-flex flex-row justify-content-center">
-                        <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
-                            <div slot="name">
-                                <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
-                                    Vedi dettagli
-                                </a>
-                            </div>
-                        </NormalButton>
-                    </div>
+                <div class="w-100 mb-4">
+                    <h3 class="display-4 m-0">{filtered_not_owned[0].semester} semestre</h3>
                 </div>
-            </div>
-        </div>
-        <div class="bundle col-md-12">
-            <h2 class="display-3">Pacchetto <span class="text-dark">{data.user.faculty_name}</span></h2>
-            <h2 class="display-6">{degree_bundle_courses.length} corsi</h2>
-
-            <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
-                {#each degree_bundle_courses as course}
-                    {#if course.owned}
-                        <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
-                    {:else}
-                        <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
-                    {/if}
-                {/each}
-            </div>
-
-            <div class="d-flex flex-row justify-content-center">
-                <NormalButton classes={"ml-auto"} style={"margin-top: 3rem; right: 0px;"}>
-                    <div slot="name">
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
-                            Vedi dettagli
-                        </a>
-                    </div>
-                </NormalButton>
-            </div>
-        </div>
-    {:else if subpage == "single_course"}
-        <div class="d-flex mb-5 justify-content-between">
-            <div class="d-flex align-items-center">
-                {#if $filter_tags.length == 2}
-                    <span class=""><i class="icon bi bi-funnel"></i></span>
-                    <h4 class="fs-6 ms-3 my-0">Nessun filtro selezionato</h4>
-                {:else}
-                    <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
-                {/if}
-
-                {#each $filter_tags as tag}
-                    {#if tag.selected}
-                        <span class="badge my-auto p-2 bg-{ tag.color } ms-3 filter_badge text-dark">{ tag.name }</span>
-                    {/if}
-                {/each}
-            </div>
-            
-            <div class="d-flex align-items-center">
-                {#if $value != "" && $value != undefined}
-                    <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method} disabled>
-                        <option class="opt" value="match_ascending" selected>Corrispondenza</option>
-                    </select>
-                {:else}
-                    <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method}>
-                        <option class="opt" value="chronological_order" selected>Periodo · cronologico</option>
-                        <option class="opt" value="chronological_reverse">Periodo · cronologico inverso</option>
-                        <option class="opt" value="name_ascending">Nome · alfabetico crescente</option>
-                        <option class="opt" value="name_descending">Nome · alfabetico decrescente</option>
-                        <option class="opt" value="code_ascending">Codice · crescente</option>
-                        <option class="opt" value="code_descending">Codice · decrescente</option>
-                        <option class="opt" value="no_order">Nessun ordinamento</option>
-                    </select>
-                {/if}
-            </div>
-        </div>
-
-        {#if filtered_not_owned.length != 0}
-            <div class="d-flex flex-wrap justify-content-between align-content-between">
-                {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
-                    <div class="w-100 mb-3">
-                        <h3 class="display-3 m-0" on:click={openCart}>{filtered_not_owned[0].year} anno</h3>
-                    </div>
-                    <div class="w-100 mb-4">
-                        <h3 class="display-4 m-0">{filtered_not_owned[0].semester} semestre</h3>
-                    </div>
-                    {#each filtered_not_owned as course, $index}
-                        {#if $index > 0}
-                            {#if course.year != filtered_not_owned[$index - 1].year}
-                                <div class="w-100 mb-3">
-                                    <h3 class="display-3 m-0">{course.year} anno</h3>
-                                </div>
-                                <div class="w-100 mb-4">
-                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
-                                </div>
-                            {:else if course.semester != filtered_not_owned[$index - 1].semester}
-                                <div class="w-100 mb-4">
-                                    <h3 class="display-4 m-0">{course.semester} semestre</h3>
-                                </div>
-                            {/if}
+                {#each filtered_not_owned as course, $index}
+                    {#if $index > 0}
+                        {#if course.year != filtered_not_owned[$index - 1].year}
+                            <div class="w-100 mb-3">
+                                <h3 class="display-3 m-0">{course.year} anno</h3>
+                            </div>
+                            <div class="w-100 mb-4">
+                                <h3 class="display-4 m-0">{course.semester} semestre</h3>
+                            </div>
+                        {:else if course.semester != filtered_not_owned[$index - 1].semester}
+                            <div class="w-100 mb-4">
+                                <h3 class="display-4 m-0">{course.semester} semestre</h3>
+                            </div>
                         {/if}
-                        <CourseCard {course} owned=0 class="g-col-4 mb-5"/>
-                    {/each}
-                {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
-                    <div class="w-100 mt-3">
-                        <h3 class="display-3 m-0">{filtered_not_owned[0].name[0]}</h3>
-                    </div>
-                    {#each filtered_not_owned as course, $index}
-                        {#if $index > 0}
-                            {#if course.name[0] != filtered_not_owned[$index - 1].name[0]}
-                                <div class="w-100 my-4">
-                                    <h3 class="display-4">{course.name[0]}</h3>
-                                </div>
-                            {/if}
+                    {/if}
+                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
+                {/each}
+            {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
+                <div class="w-100 mt-3">
+                    <h3 class="display-3 m-0">{filtered_not_owned[0].name[0]}</h3>
+                </div>
+                {#each filtered_not_owned as course, $index}
+                    {#if $index > 0}
+                        {#if course.name[0] != filtered_not_owned[$index - 1].name[0]}
+                            <div class="w-100 my-4">
+                                <h3 class="display-4">{course.name[0]}</h3>
+                            </div>
                         {/if}
-                        <CourseCard {course} owned=0 class="g-col-4 mb-5"/>
-                    {/each}
-                {:else}
-                    {#each filtered_not_owned as course}
-                        <CourseCard {course} owned=0 class="g-col-4 mb-5"/>
-                    {/each}
-                {/if}
-            </div>
-        {:else}
-            <h2>Hai comprato tutti i corsi disponibili! Grazie!</h2>
-        {/if}
+                    {/if}
+                    <CourseCard {course} owned={false} class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
+                {/each}
+            {:else}
+                {#each filtered_not_owned as course}
+                    <CourseCard {course} owned={false} class="g-col-4 mb-5" href="/negozio/corsi_singoli/dettagli_corso"/>
+                {/each}
+            {/if}
+        </div>
+    {:else}
+        <h2>Hai comprato tutti i corsi disponibili! Grazie!</h2>
     {/if}
 </div>
 
 <style lang="scss">
     @import '$css/variables.scss';
-
-    .bundle {
-        border: 1px solid rgba($dark, 0.25);
-        background: $light;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        cursor: pointer;
-        transition: .25s ease-in-out;
-
-        &:hover {
-            transition: .25s ease-in-out;
-            position: relative;
-            box-shadow: 0px 5px 10px 0px rgba($dark, 0.1);
-        }
-    }
-
-    .box {
-        padding: 2rem;
-        border: 1px solid rgba($dark, 0.25);
-        background: $light;
-        border-radius: 2rem;
-        cursor: pointer;
-        transition: .25s ease-in-out;
-    }
-
-    .bundle-course-icon {
-        width: 3.5rem;
-        margin: 2rem 1.5rem 0rem 1.5rem;
-    }
 </style>

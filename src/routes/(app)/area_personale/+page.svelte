@@ -19,7 +19,7 @@
     }
 
     function checkValidity(){
-        checkNameVali
+        return true
     }
 
     let subpage = "account_data";

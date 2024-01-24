@@ -21,13 +21,17 @@
 <div class="active-btn {classes} {!disabled ? active : ''}" style="{style}" {disabled} on:click={() => {dispatch("click")}}>
     <slot name="name">
         {#if type == "user_stats"}
-            <div class="page-btn rounded-4 py-2 px-3">
-                <span class="display-4 align-middle text-dark">{text}</span>
+            <a class="page-btn rounded-4 py-2 px-3 text-decoration-none" href={href}>
+                <span class="display-3 align-middle text-dark me-1">{text}</span>
                 <img style="height: 2.5rem;" src={src} alt={alt}>
-            </div>
-        {:else}
+            </a>
+        {:else if type == "navigation_link"}
             <div class="page-btn display-6 rounded-4">
                 <a class="d-block display-5 px-3 py-2 text-decoration-none" href={href} {disabled}><i class="me-3 display-5 bi {icon}{fill}"></i>{text}</a>
+            </div>
+        {:else if type == "notes_subpages"}
+            <div class="page-btn display-6 rounded-4">
+                <a class="d-block display-5 px-3 py-2 text-decoration-none" href={href} {disabled}><i class="display-3 bi {icon}{fill}"></i></a>
             </div>
         {/if}
     </slot>
@@ -40,7 +44,19 @@
         padding: 0px;
         margin: 0rem;
         border-radius: 1rem;
+        transition: .15s;
         
+        .page-btn {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .page-btn a {
+            transition: .15s;
+            color: rgba($dark, 0.4);
+        }
+
         &:hover .page-btn {
             transition: .15s;
             color: rgba($dark, 0.4);
@@ -48,30 +64,12 @@
             cursor: pointer;
         }
 
-        .page-btn a {
-            transition: .15s;
-            color: rgba($dark, 0.4);
-            border-radius: 1rem;
+        &.active .page-btn {
+            background: rgba($dark, 0.05);
         }
 
         &.active .page-btn a {
-            background: rgba($dark, 0.05);
             color: $secondary;
         }
-
-        // :not([disabled]) .page-btn a {
-        //     transition: .15s;
-        //     color: rgba($dark, 0.4);
-        //     border-radius: 1rem;
-        // }
-
-        // [disabled] .page-btn a {
-        //     color: rgba($dark, 0.2);
-        // }
-
-        // :not([disabled]) :not(.active) .page-btn:hover {
-        //     background: rgba($dark, 0.05);
-        //     transition: .15s;
-        // }
     }
 </style>
