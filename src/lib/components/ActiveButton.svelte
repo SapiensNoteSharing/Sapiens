@@ -17,6 +17,7 @@
     export let alt
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="active-btn {classes} {!disabled ? active : ''}" style="{style}" {disabled} on:click={() => {dispatch("click")}}>
     <slot name="name">
         {#if type == "user_stats"}

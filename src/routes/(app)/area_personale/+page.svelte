@@ -4,28 +4,22 @@
     import Svelecte from 'svelecte'
 
     export let data;
-    let account = {...data.user}
+    let account = {...data.user};
 
-    function save_changes() {
-        for (let key in account) {
-            if (data.user[key] != account[key]) {
-                data.user[key] = account[key];
-            }
+    async function save(){
+        if(checkValidity()){
+            const resp = await fetch(`/api/user/${account._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(account)
+            })
         }
     }
 
-    function check_changes() {
-        for (let key in account) {
-            if (data.user[key] != account[key]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    let changes = false;
-    $: {
-        changes = check_changes();
+    function checkValidity(){
+        checkNameVali
     }
 
     let subpage = "account_data";
@@ -210,7 +204,7 @@
                 <div class="d-flex flex-row justify-content-end">
                     <NormalButton classes={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"}>
                         <div slot="name" class="page-btn">
-                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save_changes}>
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={save}>
                                 Salva modifiche
                             </a>
                         </div>
