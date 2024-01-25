@@ -38,31 +38,81 @@ const UserSchema = new Schema({
     name: String,
     surname: String,
     email: String,
-    country: String,
-    region: String,
-    city: String,
-    university_region: String,
-    university_city: String,
-    university_name: String,
-    faculty_name: String,
-    faculty_type: String,
-    faculty_code: String,
-    curriculum_code: String,
-    curriculum_name: String,
+    username: String,
+    country: {
+        type: Number,
+        ref: 'State'
+    },
+    region: {
+        type: Number,
+        ref: 'Region'
+    },
+    city: {
+        type: Number,
+        ref: 'Province'
+    },
+    university: {
+        type: ObjectId,
+        ref: 'University'
+    },
+    degree: {
+        type: ObjectId,
+        ref: 'Degree'
+    },
     year: String,
     semester: String,
     student_id: String,
-    courses: [ObjectId],
+    courses: [
+        {
+            course: {
+                type: ObjectId,
+                ref: 'Course'
+            },
+            bookmark: {
+                type: ObjectId,
+                ref: 'File'
+            }
+        }
+    ],
     dna: {type: Number, default: 0},
     rna: {type: Number, default: 0},
     streak: {type: Number, default: 0},
     xp: {type: Number, default: 0},
-    hash: String,
     role: {type: String, default: 'user'},
+    hash: String,
 }, {
     timestamps: true
 })
 UserSchema.index({email: 1})
+UserSchema.post('findOne', function (next){
+    this.populate('country')
+    this.populate('region')
+    this.populate('city')
+    this.populate('university')
+    this.populate('degree')
+})
+
+const UniversitySchema = new Schema({
+    name: String,
+    country: {
+        type: Number,
+        ref: 'State'
+    },
+    region: {
+        type: Number,
+        ref: 'Region'
+    },
+    city: {
+        type: Number,
+        ref: 'Province'
+    }
+})
+UniversitySchema.index({name: 1})
+
+const DegreeSchema = new Schema({
+    name: String,
+    type: String,
+})
 
 const ReviewSchema = new Schema({
     written_by: String,

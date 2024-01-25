@@ -10,6 +10,6 @@ export async function load({ url, locals, cookies, fetch }) {
 
     return {
         user,
-        courses: courses.filter(course => userCourses.has(course._id))
+        courses
     };
 }

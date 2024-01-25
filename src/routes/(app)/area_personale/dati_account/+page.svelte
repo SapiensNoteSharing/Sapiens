@@ -7,42 +7,25 @@
     export let data;
     let account = {...data.user}
 
-    let countries = [
-        "Italia",
-        "Francia",
-        "Germania"
-    ]
-    
-    let regions = [
-        "Toscana",
-        "Puglia"
-    ]
-
-    let university_regions = [...regions];
-
-    let cities = [
-        "Grosseto",
-        "Firenze",
-        "Livorno",
-        "Arezzo"
-    ]
-
-    let university_cities = [...cities];
-    let university_names = ["Università degli Studi di Firenze"]
-    let faculties_names = [
-        "Ingegneria informatica",
-        "Ingegneria gestionale",
-        "Ingegneria elettronica",
-        "Ingegneria civile",
-    ]
-
-    function save_changes() {
-        for (let key in account) {
-            if (data.user[key] != account[key]) {
-                data.user[key] = account[key];
-            }
+    async function save(){
+        if(checkValidity()){
+            const resp = await fetch(`/api/user/${account._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(account)
+            })
         }
     }
+
+    function checkValidity(){
+        return true
+    }
+    let university_regions = []
+    let university_cities = []
+    let university_names = []
+    let faculties_names = []
 
     function check_changes() {
         for (let key in account) {
@@ -59,6 +42,7 @@
     }
 
     let subpage = "account_data";
+    $: console.log(account)
 </script>
 
 <div>
@@ -122,8 +106,10 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona stato"
-                    options={countries}
-                    labelAsValue
+                    fetch="/api/states"
+                    valueAsObject
+                    valueField="_id"
+                    labelField="name"
                     autocomplete="off"
                     class="svelecte-control text-center selection-input m-0"
                     bind:value={account.country}
@@ -136,8 +122,10 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona regione"
-                    options={regions}
-                    labelAsValue
+                    fetch="/api/regions?s={account.country?._id}"
+                    valueAsObject
+                    valueField="_id"
+                    labelField="name"
                     autocomplete="off"
                     class="svelecte-control text-center selection-input m-0"
                     bind:value={account.region}
@@ -150,8 +138,10 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona provincia"
-                    options={cities}
-                    labelAsValue
+                    fetch="/api/provinces?s={account.country?._id}&r={account.region?._id}"
+                    valueAsObject
+                    valueField="_id"
+                    labelField="name"
                     autocomplete="off"
                     class="svelecte-control text-center selection-input m-0"
                     bind:value={account.city}
