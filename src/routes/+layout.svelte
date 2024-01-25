@@ -103,7 +103,7 @@
                         type="user_stats"
                         text={user.rna}
                         src={"/src/style/rna.png"}
-                        alt={"RNA"}
+                        alt={"rna"}
                         />
 
                         <ActiveButton active={$page.route.id == "/(app)/area_personale/dati_account" ? 'active' : 'not-active'} class={"m-2"}>

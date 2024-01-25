@@ -435,7 +435,7 @@
                 </div>
                 <div class="d-flex">
                     <h2 class="align-self-center fs-1 my-0">{5 + course.CFU * 5 / 3}</h2>
-                    <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                    <img style="width: 1.5rem;" src="/src/style/dna.svg" alt="dna">
                 </div>
             </div>
             <hr class="m-0">
@@ -449,7 +449,7 @@
         <h2 class="m-0 fs-1 align-self-left">Sequenze di DNA</h2>
         <div class="d-flex">
             <h2 class="m-0 fs-1 align-self-right">{$dna}</h2>
-            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+            <img style="width: 1.5rem;" src="/src/style/dna.svg" alt="dna">
         </div>
     </div>
     <div class="d-flex w-100 px-4 pt-3 justify-content-between">
@@ -460,7 +460,7 @@
                 acc += 5 + curr.CFU * 5 / 3;
                 return acc;
             }, 0)}</h2>
-            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+            <img style="width: 1.5rem;" src="/src/style/dna.svg" alt="dna">
         </div>
     </div>
     <div class="d-flex w-100 px-4 py-3 justify-content-between">
@@ -471,7 +471,7 @@
                     acc += 5 + curr.CFU * 5 / 3;
                 return acc;
             }, 0)}</h2>
-            <img style="width: 1.5rem;" src="/src/style/DNA.svg" alt="DNA">
+            <img style="width: 1.5rem;" src="/src/style/dna.svg" alt="dna">
         </div>
     </div>
 </Modal> -->

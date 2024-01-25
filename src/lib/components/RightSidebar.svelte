@@ -69,13 +69,15 @@
             $viewing = {}
         }
     }
+
+    $: isEnabled = $page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio/corsi_singoli';
 </script>
 
 
-<div class="sidebar {open ? '' : 'closed'} {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
+<div class="sidebar {open ? '' : 'closed'} {isEnabled ? '' : 'd-none'}">
     {#if !open}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div in:fly={{x: 50, delay: 200, duration: 200}} class="position-relative {$page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio' ? '' : 'd-none'}">
+        <div in:fly={{x: 50, delay: 200, duration: 200}} class="position-relative {isEnabled ? '' : 'd-none'}">
             <i class="open-btn display-3 bi bi-arrow-bar-left" on:click={() => open = !open}></i>
         </div>
     {/if}

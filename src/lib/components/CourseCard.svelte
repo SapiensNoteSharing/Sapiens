@@ -15,7 +15,9 @@
     export let owned;
 
     let cartModal;
-    function openCart() {
+    function openCart(ev) {
+        ev.stopPropagation();
+
         cartModal.show().then(async res => {
             if (res) {
                 
@@ -60,7 +62,7 @@
         </div>
         <div class="d-flex">
             <h2 class="align-self-center display-3 my-0">{(10 + course.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2}</h2>
-            <img style="width: 2rem;" src="/src/style/DNA.svg" alt="DNA">
+            <img style="width: 2rem;" src="/src/style/dna.svg" alt="dna">
         </div>
     </div>
 </Modal>

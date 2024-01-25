@@ -34,7 +34,7 @@
 			// user.dna -= cost;
 			close();
 		// } else {
-			// alert("Non hai abbastanza punti DNA")
+			// alert("Non hai abbastanza punti dna")
 		// }
 	}
 

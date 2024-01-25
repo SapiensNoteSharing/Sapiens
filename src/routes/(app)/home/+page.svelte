@@ -5,7 +5,6 @@
     let user = data.user || {}
     let league_names = ["Vetro", "Bronzo", "Argento", "Oro", "Diamante"];
 
-    let course = courses.find(course => course.name == "Algoritmi e strutture dati") || undefined;
     let best_sellers = []
     best_sellers.push(courses.find(course => course.name == "Algoritmi e strutture dati"))
     best_sellers.push(courses.find(course => course.name == "Analisi Matematica I"))
@@ -14,12 +13,12 @@
 
 <div class="d-flex flex-row">
     <div class="main-content d-flex flex-column me-5">
-        {#if course != undefined}
+        {#if courses.length > 0}
             <h1 class="display-4 mb-4">Continua da dove hai interrotto</h1>
 
             <a class="href-box d-flex flex-column justify-content-between mb-4" href="/aula_studio">
                 <div class="d-flex flex-row justify-content-between align-items-center">
-                    <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{course?.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course?.name} icon">
+                    <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{courses[0]?.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{courses[0]?.name} icon">
                     <div class="d-flex flex-column justify-content-between">
                         <NormalButton class={"mt-3 mx-3"}>
                             <div slot="name">
@@ -37,23 +36,23 @@
                         </NormalButton>
                     </div>
                 </div>
-                <h5 class="mt-3 text-dark">{course?.code} &bull; {course?.cfu} CFU</h5>
-                <h1 class="display-4 mb-3 text-dark">{course?.name}</h1>
+                <h5 class="mt-3 text-dark">{courses[0]?.code} &bull; {courses[0]?.cfu} CFU</h5>
+                <h1 class="display-4 mb-3 text-dark">{courses[0]?.name}</h1>
             
                 <div class="d-flex flex-row justify-content-between mb-2">
                     <div>
-                        {#each (course?.professors || []) as professor, i}
-                            <span class="text-decoration-none professor text-dark">{professor}</span>{i != course?.professors.length-1 ? " / " : ""}
+                        {#each (courses[0]?.professors || []) as professor, i}
+                            <span class="text-decoration-none professor text-dark">{professor}</span>{i != courses[0]?.professors.length-1 ? " / " : ""}
                         {/each}
                     </div>
                 </div>
             
                 <div>
-                    <p>{course?.description}</p>
+                    <p>{courses[0]?.description}</p>
                 </div>
             
                 <div class="d-flex justify-content-left">
-                    <p class="dark" style="margin: 0px;">{course?.year} anno &bull; {course?.semester} semestre</p>
+                    <p class="dark" style="margin: 0px;">{courses[0]?.year} anno &bull; {courses[0]?.semester} semestre</p>
                 </div>
             </a>
         {:else}
@@ -135,9 +134,9 @@
         
         <a class="href-box d-flex flex-column mb-4" href="negozio/punti_dna">
             <div class="d-flex align-items-center flex-row mb-3">
-                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/DNA.svg" alt="DNA">
+                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/dna.svg" alt="dna">
                 <span class="display-4 ms-3">Punti DNA e RNA</span>
-                <img class="dna-icon ms-3" style="height: 2.5rem;" src="/src/style/RNA.png" alt="RNA">
+                <img class="dna-icon ms-3" style="height: 2.5rem;" src="/src/style/rna.png" alt="rna">
             </div>
             <p class="mb-2 display-6">Il tuo bilancio è di:</p>
             <ul class="display-6 mb-0">

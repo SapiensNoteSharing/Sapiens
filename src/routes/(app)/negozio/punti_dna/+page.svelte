@@ -16,37 +16,6 @@
 </script>
 
 <div class="d-flex flex-column">
-    <div class="d-flex flex-row mb-5">
-        <ActiveButton
-        type={"navigation_link"}
-        active={$page.route.id.startsWith("/(app)/negozio/pacchetti") ? 'active' : 'not-active'}
-        fill={$page.route.id.startsWith("/(app)/negozio/pacchetti") ? '-fill' : ''}
-        class={"me-3"}
-        text={"Pacchetti"}
-        icon={"bi-box-seam"}
-        href={"/negozio/pacchetti"}
-        />
-
-        <ActiveButton 
-        type={"navigation_link"}
-        active={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? 'active' : 'not-active'}
-        fill={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? '-fill' : ''}
-        class={"me-3"}
-        text={"Corsi singoli"}
-        icon={"bi-1-circle"}
-        href={"/negozio/corsi_singoli"}
-        />
-
-        <ActiveButton 
-        type={"navigation_link"}
-        active={$page.route.id == "/(app)/negozio/punti_dna" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/negozio/punti_dna" ? '-fill' : ''}
-        class={"me-3"}
-        text={"Punti DNA"}
-        icon={"bi-cart"}
-        href={"/negozio/punti_dna"}
-        />
-    </div>
 </div>
 
 <style lang="scss">

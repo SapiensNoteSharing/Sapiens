@@ -36,7 +36,7 @@
         </div>
         <div class="d-flex">
             <h2 class="align-self-center display-3 my-0"></h2>
-            <img style="width: 2rem;" src="/src/style/DNA.svg" alt="DNA">
+            <img style="width: 2rem;" src="/src/style/dna.svg" alt="dna">
         </div>
     </div>
 </Modal>

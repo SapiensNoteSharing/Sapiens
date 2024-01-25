@@ -1,9 +1,7 @@
 <script>
-    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
     import { onMount } from 'svelte';
     import Svelecte from 'svelecte'
-    import { page } from '$app/stores';
 
     export let data;
     let user = data.user || []
@@ -105,38 +103,6 @@
 </script>
 
 <div class="d-flex flex-column">
-    <div class="d-flex flex-row mb-5">
-        <ActiveButton
-        type={"navigation_link"}
-        active={$page.route.id == "/(app)/contribuisci/condividi_appunti" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/contribuisci/condividi_appunti" ? '-fill' : ''}
-        class={"me-3"}
-        text={"Condividi i tuoi appunti"}
-        icon={"bi-file-earmark-plus"}
-        href={"/contribuisci/condividi_appunti"}
-        />
-
-        <ActiveButton 
-        type={"navigation_link"}
-        active={$page.route.id == "/(app)/contribuisci/suggerisci_correzione" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/contribuisci/suggerisci_correzione" ? '-fill' : ''}
-        class={"me-3"}
-        text={"Suggerisci correzione"}
-        icon={"bi-exclamation-triangle"}
-        href={"/contribuisci/suggerisci_correzione"}
-        />
-
-        <ActiveButton 
-        type={"navigation_link"}
-        active={$page.route.id == "/(app)/contribuisci/consigli_e_commenti" ? 'active' : 'not-active'}
-        fill={$page.route.id == "/(app)/contribuisci/consigli_e_commenti" ? '-fill' : ''}
-        class={"me-3"}
-        text={"Consigli e commenti"}
-        icon={"bi-chat-dots"}
-        href={"/contribuisci/consigli_e_commenti"}
-        />
-    </div>
-
     {#if user.role == "contributor" || user.role == "admin"}
         <p class="m-0">* Campi obbligatori</p>
         <div class="scrollspy-example-2" data-bs-spy="scroll" data-bs-target="#personal_area_scrollspy" data-bs-smooth-scroll="true">
