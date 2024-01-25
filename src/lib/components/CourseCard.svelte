@@ -4,7 +4,7 @@
     import {createEventDispatcher} from "svelte";
     import Modal from '$lib/components/Modal.svelte';
     const dispatch = createEventDispatcher();
-
+    import { goto } from '$app/navigation';
     export let course = {};
 
     let classes = '';
@@ -17,6 +17,7 @@
     let cartModal;
     function openCart(ev) {
         ev.stopPropagation();
+        ev.stopImmediatePropagation();
 
         cartModal.show().then(async res => {
             if (res) {
@@ -67,7 +68,8 @@
     </div>
 </Modal>
 
-<a class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="width: 47%; {style}" href={href}>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="width: 47%; {style}" on:click={() => goto(href)}>
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
             <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
@@ -111,6 +113,8 @@
             {:else}
                 <NormalButton class={""}>
                     <div slot="name">
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <!-- svelte-ignore a11y-missing-attribute -->
                         <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click={openCart}>
                             Ottieni
                         </a>
@@ -149,7 +153,7 @@
             <h6 class="vertical-progress-bar-text">64%</h6>
         </div>
     </div> -->
-</a>
+</div>
 
 <style lang="scss">
     @import "$css/variables.scss";
