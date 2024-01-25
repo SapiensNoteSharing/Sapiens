@@ -1,25 +1,25 @@
 <script>
     import ActiveButton from '$lib/components/ActiveButton.svelte';
-    import NormalButton from '$lib/components/NormalButton.svelte';
-    import { page } from '$app/stores';
+    import Modal from '$lib/components/Modal.svelte';
 
     export let data;
     let courses = data.courses || [];
     let user = data.user || {};
 
-    let owned = [
-        courses.find(course => course.name == "Fisica I"),
-        courses.find(course => course.name == "Algoritmi e strutture dati"),
-    ].filter(Boolean);
+    let owned = []
+    // let owned = [
+    //     courses.find(course => course.name == "Fisica I"),
+    //     courses.find(course => course.name == "Algoritmi e strutture dati"),
+    // ].filter(Boolean);
 
     function get_semester_bundle_courses() {
         let semester_bundle_courses = [];
         for (let course of courses) {
             if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code &&
-                course.year == data.user.year &&
-                course.semester == data.user.semester
+                course.university_name == user.university_name &&
+                course.faculty_name == user.faculty_name &&
+                course.year == user.year &&
+                course.semester == user.semester
             ) {
                 semester_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -31,9 +31,9 @@
         let year_bundle_courses = [];
         for (let course of courses) {
             if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code &&
-                course.year == data.user.year
+                course.university_name == user.university_name &&
+                course.faculty_name == user.faculty_name &&
+                course.year == user.year
             ) {
                 year_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -45,8 +45,8 @@
         let degree_bundle_courses = [];
         for (let course of courses) {
             if (
-                course.university_name == data.user.university_name &&
-                course.faculty_code == data.user.faculty_code
+                course.university_name == user.university_name &&
+                course.faculty_name == user.faculty_name
             ) {
                 degree_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -159,9 +159,25 @@
             }
         })
     }
-
-    let course = courses[0];
 </script>
+
+<Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
+    <div class="d-flex m-4 justify-content-between">
+        <div>
+            <div class="d-flex mt-3">
+                <section class="btn-group">
+                    <div class="d-flex flex-row justify-content-start me-2">
+                        
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="d-flex">
+            <h2 class="align-self-center display-3 my-0"></h2>
+            <img style="width: 2rem;" src="/src/style/DNA.svg" alt="DNA">
+        </div>
+    </div>
+</Modal>
 
 <div class="d-flex flex-column">
 

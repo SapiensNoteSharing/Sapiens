@@ -58,9 +58,9 @@
                     <h2 class="nav-primary display-3 text-decoration-none align-self-center m-0 ms-4">{pageTitle}</h2>
 
                     <div class="d-flex nav-secondary flex-row justify-right align-items-center me-3">
-                        <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                        <!-- <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
                             <button class="btn btn-primary" type="button" disabled>Disabled button</button>
-                        </span>
+                        </span> -->
 
                         <ActiveButton 
                         class={"m-2"}
@@ -78,14 +78,16 @@
                         alt={"xp"}
                         />
 
-                        <ActiveButton
-                        class={"m-2"}
-                        type="user_stats"
-                        text={(user.league_position || "n") + "°"}
-                        src={"/src/style/leagues/level_" + user.league_level + ".png"}
-                        alt={"league"}
-                        href={"/classifiche"}
-                        />
+                        {#if user.streak >= 14}
+                            <ActiveButton
+                            class={"m-2"}
+                            type="user_stats"
+                            text={(user.league_position || "n") + "°"}
+                            src={"/src/style/leagues/level_" + user.league_level + ".png"}
+                            alt={"league"}
+                            href={"/classifiche"}
+                            />
+                        {/if}
 
                         <ActiveButton 
                         class={"m-2"}
@@ -93,6 +95,7 @@
                         text={user.dna}
                         src={"/src/style/dna.svg"}
                         alt={"dna"}
+                        href={"/negozio/punti_dna"}
                         />
 
                         <ActiveButton 

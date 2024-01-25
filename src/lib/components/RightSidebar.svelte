@@ -88,7 +88,7 @@
         {#if $page.route.id == '/(app)/aula_studio'}
             <div class=" mt-5 course-selection">
                 <Svelecte
-                placeholder="Select Course..."
+                placeholder="Seleziona corso"
                 options={courses}
                 valueAsObject
                 valueField="_id"

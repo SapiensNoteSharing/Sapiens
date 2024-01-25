@@ -1,17 +1,18 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
-    import { view, value, filter_tags, dna } from '$lib/stores';
+    import { value, filter_tags } from '$lib/stores';
     import Svelecte from 'svelecte';
     
     export let data;
     let courses = data.courses || [];
 
-    let owned = [
-        courses.find(course => course.name == "Fisica II"),
-        courses.find(course => course.name == "Algoritmi e strutture dati"),
-    ].filter(Boolean);
+    let owned = []
+    // let owned = [
+    //     courses.find(course => course.name == "Fisica I"),
+    //     courses.find(course => course.name == "Algoritmi e strutture dati"),
+    // ].filter(Boolean);
 
-    let sorting_method;
+    let sorting_method = "chronological_order";
     let sorting_methods = [
         {id:"chronological_order", name:"Periodo · cronologico"},
         {id:"chronological_reverse", name:"Periodo · cronologico inverso"},

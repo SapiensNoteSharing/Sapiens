@@ -3,21 +3,32 @@
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import { value, filter_tags } from '$lib/stores';
     import { page } from '$app/stores';
+    import Svelecte from 'svelecte';
 
     export let data;
     let courses = data.courses || [];
     let user = data.user || {};
 
-    let owned = [
-        courses.find(course => course.name == "Fisica I"),
-        courses.find(course => course.name == "Algoritmi e strutture dati"),
-    ].filter(Boolean);
+    let owned = []
+    // let owned = [
+    //     courses.find(course => course.name == "Fisica I"),
+    //     courses.find(course => course.name == "Algoritmi e strutture dati"),
+    // ].filter(Boolean);
 
     // elenco dei corsi non posseduti
     let ownedCoursesNames = owned.map(course => course.name);
     let not_owned = courses.filter(course => !ownedCoursesNames.includes(course.name));
 
     let sorting_method = "chronological_order";
+    let sorting_methods = [
+        {id:"chronological_order", name:"Periodo · cronologico"},
+        {id:"chronological_reverse", name:"Periodo · cronologico inverso"},
+        {id:"name_ascending", name:"Nome · alfabetico crescente"},
+        {id:"name_descending", name:"Nome · alfabetico decrescente"},
+        {id:"code_ascending", name:"Codice · crescente"},
+        {id:"code_descending", name:"Codice · decrescente"},
+        {id:"no_order", name:"Nessun ordinamento"}
+    ]
 
     function sort_course_list(course_list, sort_method = sorting_method) {
         switch(sort_method) {
@@ -386,15 +397,13 @@
                     <option class="opt" value="match_ascending" selected>Corrispondenza</option>
                 </select>
             {:else}
-                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method}>
-                    <option class="opt" value="chronological_order" selected>Periodo · cronologico</option>
-                    <option class="opt" value="chronological_reverse">Periodo · cronologico inverso</option>
-                    <option class="opt" value="name_ascending">Nome · alfabetico crescente</option>
-                    <option class="opt" value="name_descending">Nome · alfabetico decrescente</option>
-                    <option class="opt" value="code_ascending">Codice · crescente</option>
-                    <option class="opt" value="code_descending">Codice · decrescente</option>
-                    <option class="opt" value="no_order">Nessun ordinamento</option>
-                </select>
+                <Svelecte
+                style="width: 18rem;"
+                placeholder="Ordina per:"
+                options={sorting_methods}
+                class="svelecte-control text-left selection-input"
+                bind:value={sorting_method}
+                />
             {/if}
         </div>
     </div>

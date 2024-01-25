@@ -8,8 +8,6 @@
     export let data;
     let course = data.course || [];
 
-    console.log(course.name)
-
     let cartModal;
     function openCart() {
         cartModal.show().then(async res => {

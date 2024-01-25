@@ -1,6 +1,5 @@
 import { Course } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
-import { User } from '$lib/mongodb';
 
 export async function GET({ url, locals }) {
     const user = locals.user

@@ -98,33 +98,53 @@
         <form class="row g-3 needs-validation">
             <h4 class="display-4 mb-3" id="dati_personali">Dati personali</h4>
 
-            <div class="col-md-6">
-                <label for="userFirstName" class="form-label">Nome</label>
-                <div class="input-group has-validation">
-                    <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
-                    <input class="form-control" bind:value={account.name} required>
+            <div class="d-flex flex-row align-items-center p-0">
+                <div class="d-flex flex-column justify-content-end align-items-start h-100" style="width: 15%; margin-left: calc(var(--bs-gutter-x) * .5);">
+                    <label for="userProfilePicture" class="form-label">Immagine profilo</label>
+                    <ActiveButton active={$page.route.id == "/(app)/area_personale/dati_account" ? 'active' : 'not-active'} class={"mt-1"}>
+                        <div slot="name" class="display-6 rounded-4">
+                            <a href="/area_personale/dati_account"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
+                        </div>
+                    </ActiveButton>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <label for="userLastName" class="form-label">Cognome</label>
-                <div class="input-group has-validation">
-                    <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
-                    <input class="form-control" bind:value={account.surname} required>
-                </div>
-            </div>
 
-            <div class="col-md-6">
-                <label for="userEmail" class="form-label">e-mail</label>
-                <div class="input-group has-validation">
-                    <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                    <input class="form-control" bind:value={account.email} required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <label for="userPassword" class="form-label">Password</label>
-                <div class="input-group has-validation">
-                    <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
-                    <input type="password" class="form-control" bind:value={account.password} required>
+                <div  class="row g-3 p-0 m-0" style="width: 85%">
+                    <div class="col-md-6">
+                        <label for="userFirstName" class="form-label">Nome</label>
+                        <div class="input-group has-validation">
+                            <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
+                            <input class="form-control" bind:value={account.name} required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="userLastName" class="form-label">Cognome</label>
+                        <div class="input-group has-validation">
+                            <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
+                            <input class="form-control" bind:value={account.surname} required>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label for="userUsername" class="form-label">Username</label>
+                        <div class="input-group has-validation">
+                            <span class="input-icon-label input-group-text"><i class="bi bi-person-fill"></i></span>
+                            <input class="form-control" bind:value={account.username} required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="userEmail" class="form-label">e-mail</label>
+                        <div class="input-group has-validation">
+                            <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
+                            <input class="form-control" bind:value={account.email} required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="userPassword" class="form-label">Password</label>
+                        <div class="input-group has-validation">
+                            <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
+                            <input type="password" class="form-control" bind:value={account.password} required>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -316,4 +336,11 @@
         	opacity: .5;
 		}
 	}
+
+    .user-icon {
+        width: 8.25rem;
+        border: 1px solid $dark;
+        border-radius: 5rem;
+        transition: .15s;
+    }
 </style>

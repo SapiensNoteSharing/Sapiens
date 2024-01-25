@@ -81,7 +81,12 @@
     <div class="col">
         <div class="mb-3">
             <label for="professors" class="form-label">Docente/i</label>
-            <Svelecte options={professors} multiple labelAsValue bind:value={current.professors} placeholder="Seleziona docenti"/>
+            <Svelecte 
+            options={professors} 
+            multiple 
+            labelAsValue 
+            bind:value={current.professors} 
+            placeholder="Seleziona docenti"/>
         </div>
     </div>
 </div>

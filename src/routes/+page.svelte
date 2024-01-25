@@ -62,6 +62,7 @@
             },
             body: JSON.stringify(userLogin)
         })
+
         if (resp.ok) {
             goto('/home')
         }
@@ -88,6 +89,7 @@
         if (
             checkNameValidity(userRegister.name) &&
             checkLastNameValidity(userRegister.surname) &&
+            checkUsernameValidity(userRegister.username) == 1 &&
             checkEmailValidity(userRegister.email) == 1 &&
             checkPasswordValidity(userRegister.password) == 1
         ) 
@@ -108,6 +110,14 @@
             return true;
         else
             return false;
+    }
+
+    function checkUsernameValidity(username) {
+        // se l'username è già stato preso restituire -1
+        if (username?.match(/^[a-zA-Z]+$/))
+            return 1;
+        else
+            return -2;
     }
 
     function checkEmailValidity(email) {
@@ -156,7 +166,7 @@
                     <label for="LoginEmail" class="form-label"></label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                        <input placeholder="E-mail" class="form-control border-dark" bind:value={userLogin.email} required>
+                        <input placeholder="E-mail o username" class="form-control border-dark" bind:value={userLogin.email} required>
                         <div id="validationLoginEmailFeedback" class="invalid-feedback">
                             Non esiste nessun account collegato a questa Email. Riprova o vai alla registrazione
                         </div>
@@ -243,7 +253,21 @@
                             </div>
                         </div>
                         
-                        <div class="field col-md-6 ps-0" style="margin-bottom: {validated ? (checkEmailValidity(userRegister.email) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                        <div class="field col-md-4 ps-0" style="margin-bottom: {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                            <label for="RegistrationEmail" class="form-label">Username</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input class="form-control {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.username}>
+                                <div class="invalid-feedback">
+                                    {#if checkUsernameValidity(userRegister.username) == -1}
+                                        Nome utente già esistente
+                                    {:else if checkUsernameValidity(userRegister.username) == -2}
+                                        Campo obbligatorio
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field col-md-4" style="margin-bottom: {validated ? (checkEmailValidity(userRegister.email) == 1 ? "2.55" : "1") : "2.55"}rem;">
                             <label for="RegistrationEmail" class="form-label">e-mail *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
@@ -257,7 +281,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="field col-md-6 pe-0" style="margin-bottom: {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                        <div class="field col-md-4 pe-0" style="margin-bottom: {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "2.55" : "1") : "2.55"}rem;">
                             <label for="RegistrationPassword" class="form-label">Password *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
