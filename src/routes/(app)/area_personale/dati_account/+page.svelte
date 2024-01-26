@@ -7,8 +7,8 @@
     export let data;
     let account = {...data.user}
 
-    async function save(){
-        if(checkValidity()){
+    async function save_changes() {
+        if (checkValidity()) {
             const resp = await fetch(`/api/user/${account._id}`, {
                 method: 'PUT',
                 headers: {
@@ -25,7 +25,7 @@
     let university_regions = []
     let university_cities = []
     let university_names = []
-    let faculties_names = []
+    let faculties_names = ["Ingegneria informatica"]
 
     function check_changes() {
         for (let key in account) {
@@ -42,7 +42,6 @@
     }
 
     let subpage = "account_data";
-    $: console.log(account)
 </script>
 
 <div>

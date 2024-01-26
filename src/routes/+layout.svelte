@@ -137,12 +137,27 @@
                 </div>
 
                 <div class="d-flex">
-                    <span class="me-5">
-                        <a class="display-6 text-decoration-none footer-element" href="/chi_siamo">Chi siamo</a>
-                    </span>
-                    <span class="me-5">
-                        <a class="display-6 text-decoration-none footer-element" href="/faq">FAQ</a>
-                    </span>
+                    <ActiveButton 
+                    type={"navigation_link"}
+                    active={$page.route.id == "/(app)/chi_siamo" ? 'active' : 'not-active'} 
+                    fill={$page.route.id == "/(app)/chi_siamo" ? '' : ''}
+                    class={"m-2"}
+                    href={"/chi_siamo"}
+                    text={"Chi siamo"}
+                    icon={"bi-person-raised-hand"}
+                    >
+                    </ActiveButton>
+
+                    <ActiveButton 
+                    type={"navigation_link"}
+                    active={$page.route.id == "/(app)/faq" ? 'active' : 'not-active'} 
+                    fill={$page.route.id == "/(app)/faq" ? '-fill' : ''}
+                    class={"m-2"}
+                    href={"/faq"}
+                    text={"FAQ"}
+                    icon={"bi-question-circle"}
+                    >
+                    </ActiveButton>
                 </div>
             </div>
         </nav>

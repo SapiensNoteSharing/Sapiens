@@ -75,9 +75,9 @@
             <img class="mb-2 course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
 
             <div class="d-flex flex-row justify-content-between">
-                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-pencil-square"></i></a>
-                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-plus-slash-minus"></i></a>
-                <a class="course_extra_icon" href={"/aula_studio"}><i class="display-3 ms-4 bi bi-chat-dots"></i></a>
+                <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-pencil-square"></i></a>
+                <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-plus-slash-minus"></i></a>
+                <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-chat-dots"></i></a>
                 {#if owned == true}
                     <a class="course_extra_icon" href={"/negozio/corsi_singoli/dettagli_corso"}><i class="display-3 ms-4 me-2 bi bi-info-circle-fill"></i></a>
                 {/if}
@@ -102,15 +102,7 @@
         <div class="d-flex justify-content-between align-items-end">
             <p class="text-dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
 
-            {#if owned == true}
-                <!-- <NormalButton class={""}>
-                    <div slot="name">
-                        <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" href={"/negozio/corsi_singoli/dettagli_corso"}>
-                            Info
-                        </a>
-                    </div>
-                </NormalButton> -->
-            {:else}
+            {#if owned == false}
                 <NormalButton class={""}>
                     <div slot="name">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -173,11 +165,13 @@
             box-shadow: 0px 5px 10px 0px rgba($dark, 0.1);
         }
 
-        .course_extra_icon i {
-            color: rgba($dark, .5);
-            transition: .15s;
+        .course_extra_icon {
+            i {
+                color: rgba($dark, .5);
+                transition: .15s;
+            }
 
-            &:hover {
+            &:not(.disabled) i:hover {
                 color: $secondary;
             }
         }

@@ -11,7 +11,7 @@
     export let href
     export let text
     export let icon
-    export let fill
+    export let fill = "";
     export let type
     export let src
     export let alt

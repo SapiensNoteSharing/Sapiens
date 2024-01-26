@@ -107,7 +107,7 @@ async function getDir(gitDir) {
                 id = await getDir(obj)
                 childDirectories.push(id)
             } else {
-                const fileName = obj.name.replace(/\.(?=[a-z]).*/, '')
+                const fileName = obj.name.replace(/\.[^.]*$/, '');
                 if (fileName != dir.name) {
                     const oldFile = await File.deleteMany({name: obj.name})
                     console.log('getting file', fileName)
