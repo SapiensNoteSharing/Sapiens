@@ -83,13 +83,16 @@ const UserSchema = new Schema({
 }, {
     timestamps: true
 })
-UserSchema.index({email: 1})
-UserSchema.post('findOne', function (next){
+UserSchema.index({email: 1}, {unique: true})
+UserSchema.index({username: 1}, {unique: true})
+
+UserSchema.pre('findOne', function (next){
     this.populate('country')
     this.populate('region')
     this.populate('city')
     this.populate('university')
     this.populate('degree')
+    next()
 })
 
 const UniversitySchema = new Schema({
@@ -237,16 +240,18 @@ CourseSchema.pre('findOne', function (next) {
 
 const GridSchema = new Schema({}, {strict: false});
 
-const Grid = mongoose.models.Grid           || mongoose.model('Grid', GridSchema, 'fs.files');
-const Config = mongoose.models.Config       || mongoose.model('Config', ConfigSchema);
-const User = mongoose.models.User           || mongoose.model('User', UserSchema);
-const State = mongoose.models.State         || mongoose.model('State', StateSchema)
-const Region = mongoose.models.Region       || mongoose.model('Region', RegionSchema)
-const Province = mongoose.models.Province   || mongoose.model('Province', ProvinceSchema)
-const Review = mongoose.models.Review       || mongoose.model('Review', ReviewSchema);
-const Directory = mongoose.models.Directory || mongoose.model('Directory', DirectorySchema)
-const File = mongoose.models.File           || mongoose.model('File', FileSchema);
-const Course = mongoose.models.Courses      || mongoose.model('Courses', CourseSchema);
+const Grid = mongoose.models.Grid               || mongoose.model('Grid', GridSchema, 'fs.files');
+const Config = mongoose.models.Config           || mongoose.model('Config', ConfigSchema);
+const User = mongoose.models.User               || mongoose.model('User', UserSchema);
+const State = mongoose.models.State             || mongoose.model('State', StateSchema)
+const Region = mongoose.models.Region           || mongoose.model('Region', RegionSchema)
+const Province = mongoose.models.Province       || mongoose.model('Province', ProvinceSchema)
+const University = mongoose.models.University   || mongoose.model('University', UniversitySchema)
+const Degree = mongoose.models.Degree           || mongoose.model('Degree', DegreeSchema)
+const Review = mongoose.models.Review           || mongoose.model('Review', ReviewSchema);
+const Directory = mongoose.models.Directory     || mongoose.model('Directory', DirectorySchema)
+const File = mongoose.models.File               || mongoose.model('File', FileSchema);
+const Course = mongoose.models.Courses          || mongoose.model('Courses', CourseSchema);
 
 export { 
     ObjectId,

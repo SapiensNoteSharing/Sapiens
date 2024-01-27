@@ -122,7 +122,9 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona regione"
+                    disabled={!account.country}
                     fetch="/api/regions?s={account.country?._id}"
+                    minQuery={1}
                     valueAsObject
                     valueField="_id"
                     labelField="name"
@@ -138,6 +140,8 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona provincia"
+                    disabled={!account.region}
+                    minQuery={1}
                     fetch="/api/provinces?s={account.country?._id}&r={account.region?._id}"
                     valueAsObject
                     valueField="_id"
@@ -262,7 +266,7 @@
             <div class="d-flex flex-row justify-content-end">
                 <NormalButton class={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"}>
                     <div slot="name" class="page-btn">
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save_changes}>
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save}>
                             Salva modifiche
                         </a>
                     </div>

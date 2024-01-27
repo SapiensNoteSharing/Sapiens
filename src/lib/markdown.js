@@ -5,6 +5,7 @@ import { markdownItTable } from "markdown-it-table"
 import hl from 'highlight.js'
 import { File } from '$lib/mongodb'
 import Rating from '$lib/components/Rating.svelte'
+import mermaid from "mermaid";
 
 const md2 = new MarkdownIt({
     breaks: true,
@@ -37,6 +38,10 @@ const md = new MarkdownIt({
                 } catch (err) {}
             } else {
                 try {
+                    if(str.startsWith('flowchart')){
+                        
+                    }
+                    console.log(str)
                     let rendered = md2.render(str)
                     return `<pre class="no-language"><code>` + rendered + '</code></pre>'
                 } catch(err) {
@@ -46,7 +51,6 @@ const md = new MarkdownIt({
             return ''
         }
     })
-    
     .use(texMath, {
         engine: katex,
         delimiters: 'dollars',
@@ -72,10 +76,10 @@ export async function render(data) {
     for (let image of images) {
         let img = image.substring(3, image.length - 2).split("|");
         let src = img[0]?.replace(/\.(?=[a-z]).*/, '');
-        let size = "1000";
+        let size = "800";
         if (img.length == 2)
             size = img[1];
-
+        console.log('looking for', src)
         const imgtag = await File.findOne({ name: src });
         if(imgtag){
             data = data.replace(image, `<center><img src="data:image/png;base64,${imgtag.content}" alt=${imgtag.name} width=${size}></center>`);
