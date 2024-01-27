@@ -77,13 +77,13 @@
                 <div class="d-flex flex-row justify-content-center mt-3">
                     <NormalButton class={"mx-2"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href={href}>Dettagli</a>
+                            <a type="button" class="btn btn-primary text-center w-100 fs-2" href={href}>Dettagli</a>
                         </div>
                     </NormalButton>
 
                     <NormalButton class={"mx-2"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
+                            <a type="button" class="btn btn-secondary text-center w-100 fs-2" on:click={openCart}>Ottieni</a>
                         </div>
                     </NormalButton>
                 </div>
@@ -98,9 +98,9 @@
                 <h4 class="fs-3 mb-4">Aiutaci mandandoci i tuoi appunti.</h4>
 
                 <div class="d-flex flex-row justify-content-center">
-                    <NormalButton class={"mx-2"}>
+                    <NormalButton class={"w-100"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/contribuisci/condividi_appunti">Contribuisci</a>
+                            <a type="button" class="btn btn-primary text-center w-100 fs-2" href="/contribuisci/condividi_appunti">Contribuisci</a>
                         </div>
                     </NormalButton>
                 </div>
@@ -108,16 +108,16 @@
         {:else}
             <h4 class="fs-3 mb-4">Non abbiamo abbastanza informazioni per creare questo pacchetto per te.</h4>
             {#if type == "semester"}
-                <h4 class="fs-3 mb-4">Inserisci il <strong>semestre</strong> che stai frequentando.</h4>
+                <h4 class="fs-3">Inserisci il <strong>semestre</strong> che stai frequentando.</h4>
             {:else if type == "year"}
-                <h4 class="fs-3 mb-4">Inserisci l'<strong>anno</strong> che stai frequentando.</h4>
+                <h4 class="fs-3">Inserisci l'<strong>anno</strong> che stai frequentando.</h4>
             {:else if type == "faculty"}
-                <h4 class="fs-3 mb-4">Inserisci la <strong>facoltà</strong> alla quale sei iscritto.</h4>
+                <h4 class="fs-3">Inserisci la <strong>facoltà</strong> alla quale sei iscritto.</h4>
             {/if}
-            <div class="d-flex flex-row justify-content-center">
-                <NormalButton class={"mx-2"}>
+            <div class="d-flex flex-row justify-content-center mt-5">
+                <NormalButton class={"w-100"}>
                     <div slot="name">
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" href="/area_personale/dati_account">Aggiungi dati</a>
+                        <a type="button" class="btn btn-primary text-center w-100 fs-2" href="/area_personale/dati_account">Aggiungi dati</a>
                     </div>
                 </NormalButton>
             </div>

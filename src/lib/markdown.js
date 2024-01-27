@@ -2,9 +2,8 @@ import MarkdownIt from "markdown-it";
 import texMath from 'markdown-it-texmath'
 import katex from "katex";
 import { markdownItTable } from "markdown-it-table"
-import hl from 'highlight.js'
 import { File } from '$lib/mongodb'
-import Rating from '$lib/components/Rating.svelte'
+import hl from 'highlight.js'
 import mermaid from "mermaid";
 
 const md2 = new MarkdownIt({
@@ -63,11 +62,9 @@ const md = new MarkdownIt({
 export async function render(data) {
     let errors = data.match(/(?<!!)\[\[(.*)\]\]/gi) || [];
 
-    for(let error of errors){ // image tag mistakenly written
+    for (let error of errors) { // image tag mistakenly written
         data = data.replace(error, `!${error}`)
     }
-
-    // images
 
     let images = data.match(/!\[\[(.*)\]\]/gi) || [];
 
@@ -81,7 +78,7 @@ export async function render(data) {
             size = img[1];
         console.log('looking for', src)
         const imgtag = await File.findOne({ name: src });
-        if(imgtag){
+        if (imgtag) {
             data = data.replace(image, `<center><img src="data:image/png;base64,${imgtag.content}" alt=${imgtag.name} width=${size}></center>`);
         }
     }

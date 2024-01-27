@@ -152,6 +152,8 @@ i.bi.primary {
 
 .btn {
     &.btn-primary {
+        background: $primary;
+
         &:hover {
             background: darken($primary, 10%);
         }
@@ -162,6 +164,15 @@ i.bi.primary {
         
         &:hover {
             background: $secondary;
+        }
+    }
+
+    &.btn-dark {
+        background: rgba($dark, .9);
+        color: $light;
+
+        &:hover {
+            background: rgba($dark, 1);
         }
     }
 }

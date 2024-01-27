@@ -1,6 +1,5 @@
 <script>
     import LeftSidebar from "$lib/components/LeftSidebar.svelte";
-    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
     import { page } from '$app/stores'; 
 

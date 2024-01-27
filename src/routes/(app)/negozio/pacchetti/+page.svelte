@@ -159,15 +159,6 @@
     $: load_bundles();
 
     load_bundles();
-
-    let cartModal;
-    function openCart() {
-        cartModal.show().then(async res => {
-            if (res) {
-                
-            }
-        })
-    }
 </script>
 
 <div class="d-flex flex-column">

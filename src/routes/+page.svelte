@@ -254,7 +254,7 @@
                         </div>
                         
                         <div class="field col-md-4 ps-0" style="margin-bottom: {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "2.55" : "1") : "2.55"}rem;">
-                            <label for="RegistrationEmail" class="form-label">Username</label>
+                            <label for="RegistrationEmail" class="form-label">Username *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-person-fill"></i></span>
                                 <input class="form-control {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.username}>
@@ -302,8 +302,10 @@
                                 <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                                 <Svelecte
                                 placeholder="Seleziona stato"
-                                options={countries}
-                                labelAsValue
+                                fetch="/api/states"
+                                valueAsObject
+                                valueField="_id"
+                                labelField="name"
                                 autocomplete="off"
                                 class="svelecte-control text-center selection-input m-0"
                                 bind:value={userRegister.country}
@@ -316,8 +318,10 @@
                                 <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                                 <Svelecte
                                 placeholder="Seleziona regione"
-                                options={regions}
-                                labelAsValue
+                                fetch="/api/regions?s={userRegister.country?._id}"
+                                valueAsObject
+                                valueField="_id"
+                                labelField="name"
                                 autocomplete="off"
                                 class="svelecte-control text-center selection-input m-0"
                                 bind:value={userRegister.region}
@@ -330,8 +334,10 @@
                                 <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                                 <Svelecte
                                 placeholder="Seleziona provincia"
-                                options={cities}
-                                labelAsValue
+                                fetch="/api/provinces?s={userRegister.country?._id}&r={userRegister.region?._id}"
+                                valueAsObject
+                                valueField="_id"
+                                labelField="name"
                                 autocomplete="off"
                                 class="svelecte-control text-center selection-input m-0"
                                 bind:value={userRegister.city}
@@ -470,7 +476,7 @@
                             
                             <NormalButton class={"text-center p-0 m-0"}>
                                 <div slot="name">
-                                    <button type="button" class="btn bg-secondary w-100 text-dark fs-2 rounded-3 m-0" on:click={registerUser}>
+                                    <button type="button" class="btn btn-secondary w-100 text-dark fs-2 rounded-3 m-0" on:click={registerUser}>
                                         Registrati
                                     </button>
                                 </div>

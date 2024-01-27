@@ -1,8 +1,6 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
-    import ActiveButton from '$lib/components/ActiveButton.svelte';
     import { value, filter_tags } from '$lib/stores';
-    import { page } from '$app/stores';
     import Svelecte from 'svelecte';
 
     export let data;
@@ -215,7 +213,7 @@
 
         return filtered_courses_list;
     }
-    
+
     function filter_and_sort(course_list) {
         let filtered_course_list = filter_course_list(course_list)
         sort_course_list(filtered_course_list)

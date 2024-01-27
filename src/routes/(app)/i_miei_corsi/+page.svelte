@@ -5,6 +5,7 @@
     
     export let data;
     let courses = data.courses || [];
+    let my_courses = data.my_courses || [];
 
     let owned = []
     // let owned = [
@@ -323,40 +324,40 @@
 </script>
 
 <div class="d-flex flex-column">
-    <div class="d-flex mb-5 justify-content-between">
-        <div class="d-flex align-items-center">
-            {#if $filter_tags.length == 2}
-                <span class=""><i class="icon bi bi-funnel"></i></span>
-                <h4 class="fs-6 ms-3 my-0">Nessun filtro selezionato</h4>
-            {:else}
-                <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
-            {/if}
-
-            {#each $filter_tags as tag}
-                {#if tag.selected}
-                    <span class="badge my-auto p-2 bg-{ tag.color } ms-3 filter_badge text-dark">{ tag.name }</span>
+    {#if my_courses.length > 0}
+        <div class="d-flex mb-5 justify-content-between">
+            <div class="d-flex align-items-center">
+                {#if $filter_tags.length == 2}
+                    <span class=""><i class="icon bi bi-funnel"></i></span>
+                    <h4 class="fs-6 ms-3 my-0">Nessun filtro selezionato</h4>
+                {:else}
+                    <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
                 {/if}
-            {/each}
-        </div>
-        
-        <div class="d-flex align-items-center">
-            {#if $value != "" && $value != undefined}
-                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method} disabled>
-                    <option class="opt" value="match_ascending" selected>Corrispondenza</option>
-                </select>
-            {:else}
-                <Svelecte
-                style="width: 18rem;"
-                placeholder="Ordina per:"
-                options={sorting_methods}
-                class="svelecte-control text-left selection-input"
-                bind:value={sorting_method}
-                />
-            {/if}
-        </div>
-    </div>
 
-    {#if filtered_owned.length != 0}
+                {#each $filter_tags as tag}
+                    {#if tag.selected}
+                        <span class="badge my-auto p-2 bg-{ tag.color } ms-3 filter_badge text-dark">{ tag.name }</span>
+                    {/if}
+                {/each}
+            </div>
+            
+            <div class="d-flex align-items-center">
+                {#if $value != "" && $value != undefined}
+                    <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method} disabled>
+                        <option class="opt" value="match_ascending" selected>Corrispondenza</option>
+                    </select>
+                {:else}
+                    <Svelecte
+                    style="width: 18rem;"
+                    placeholder="Ordina per:"
+                    options={sorting_methods}
+                    class="svelecte-control text-left selection-input"
+                    bind:value={sorting_method}
+                    />
+                {/if}
+            </div>
+        </div>
+
         <div class="d-flex flex-wrap justify-content-between align-content-between">
             {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
                 <div class="w-100 mb-3">
@@ -365,7 +366,7 @@
                 <div class="w-100 mb-4">
                     <h3 class="display-4 m-0">{filtered_owned[0].semester} semestre</h3>
                 </div>
-                {#each filtered_owned as course, $index}
+                {#each my_courses as course, $index}
                     {#if $index > 0}
                         {#if course.year != filtered_owned[$index - 1].year}
                             <div class="w-100 mb-3">
@@ -403,7 +404,7 @@
             {/if}
         </div>
     {:else}
-        <h2>Acquista il tuo primo corso</h2>
+        <h2 class="display-4">Acquista il tuo primo corso</h2>
     {/if}
 </div>
 
