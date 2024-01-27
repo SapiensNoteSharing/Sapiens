@@ -67,7 +67,7 @@
     .content-container {
         border: 1px solid rgba($dark, .25);
         border-radius: 1rem;
-        font-size: 1.25rem;
+        font-size: 1.2rem;
         line-height: 2rem;
         letter-spacing: -.2px;
         color: $dark;
@@ -94,6 +94,11 @@
             padding: 1.5rem 0rem .5rem 0rem;
         }
 
+        :global(h4) {
+            font-size: 1.25rem;
+            padding: .5rem 0rem .5rem 0rem;
+        }
+
         :global(h2 + h3) {
             padding: 0rem 0rem .5rem 0rem;
         }
@@ -108,8 +113,24 @@
         }
 
         :global(code) {
-            background: $primary;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
+            line-height: 2rem;
+            letter-spacing: -.2px;
+        }
+
+        :global(td) {
+            border: 1px solid rgba($dark, .25);
+            padding: .5rem;
+        }
+
+        :global(th) {
+            background: rgba($dark, .1);
+            border: 1px solid rgba($dark, .25);
+            padding: .5rem;
+        }
+
+        :global(table) {
+            margin-bottom: 1.25rem;
         }
 
 

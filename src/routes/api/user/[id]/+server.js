@@ -6,7 +6,7 @@ export async function PUT({ request, url, params }) {
     try {
         let body = await request.json()
 
-        const user = await User.findOneAndUpdate(params.id, body)
+        const user = await User.findByIdAndUpdate(params.id, body)
 
         return new Response('OK')
     } catch (err) {

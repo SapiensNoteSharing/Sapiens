@@ -9,6 +9,10 @@
 
     async function save_changes() {
         if (checkValidity()) {
+            account.country = account.country?._id;
+            account.region = account.region?._id;
+            account.province = account.province?._id;
+
             const resp = await fetch(`/api/user/${account._id}`, {
                 method: 'PUT',
                 headers: {
@@ -18,6 +22,8 @@
             })
         }
     }
+
+    $: console.log(account)
 
     function checkValidity(){
         return true
@@ -50,7 +56,7 @@
             <h4 class="display-4 mb-3" id="dati_personali">Dati personali</h4>
 
             <div class="d-flex flex-row align-items-center p-0">
-                <div class="d-flex flex-column justify-content-end align-items-start h-100" style="width: 15%; margin-left: calc(var(--bs-gutter-x) * .5);">
+                <div class="d-flex flex-column justify-content-end align-items-start h-100" style="width: 11rem; margin-left: calc(var(--bs-gutter-x) * .5);">
                     <label for="userProfilePicture" class="form-label">Immagine profilo</label>
                     <ActiveButton active={$page.route.id == "/(app)/area_personale/dati_account" ? 'active' : 'not-active'} class={"mt-1"}>
                         <div slot="name" class="display-6 rounded-4">
@@ -59,7 +65,7 @@
                     </ActiveButton>
                 </div>
 
-                <div  class="row g-3 p-0 m-0" style="width: 85%">
+                <div  class="row g-3 p-0 m-0" style="width: calc(100% - 11rem)">
                     <div class="col-md-6">
                         <label for="userFirstName" class="form-label">Nome</label>
                         <div class="input-group has-validation">
@@ -143,7 +149,7 @@
                     labelField="name"
                     autocomplete="off"
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.city}
+                    bind:value={account.province}
                     />
                 </div>
             </div>

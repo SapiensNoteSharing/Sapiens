@@ -47,7 +47,7 @@ const UserSchema = new Schema({
         type: Number,
         ref: 'Region'
     },
-    city: {
+    province: {
         type: Number,
         ref: 'Province'
     },
