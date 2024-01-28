@@ -63,6 +63,7 @@
         const resp = await fetch(`/admin/api/courses/${current._id}`)
         current = (resp.ok && await resp.json()) || {}
     }
+
 </script>
 
 <div class="d-flex align-items-center mb-2">
@@ -102,14 +103,22 @@
     <div class="col">
         <div class="mb-3">
             <label for="name" class="form-label">Anno di insegnamento</label>
-            <input class="form-control" bind:value={current.year} placeholder="Anno">
+            <Svelecte 
+            options={['Primo', 'Secondo', 'Terzo']} 
+            labelAsValue
+            bind:value={current.year} 
+            placeholder="Seleziona anno di insegnamento"/>
         </div>
     </div>
 
     <div class="col">
         <div class="mb-3">
             <label for="name" class="form-label">Semestre</label>
-            <input class="form-control" bind:value={current.semester} placeholder="Semestre">
+            <Svelecte 
+            options={['Primo', 'Secondo', 'Primo e Secondo']} 
+            labelAsValue
+            bind:value={current.semester} 
+            placeholder="Seleziona anno di insegnamento"/>
         </div>
     </div>
 

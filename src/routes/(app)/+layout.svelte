@@ -13,7 +13,7 @@
         let route = page.route.id.split('/').pop().replace(/_/g, ' ')
         if(route == 'faq') return 'FAQ'
 
-        const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase() 
+        const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1)
         return capitalise(route)
     } 
 

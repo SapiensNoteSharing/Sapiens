@@ -16,10 +16,6 @@ conn.once('open', () => {
     GridFs = new mongoose.mongo.GridFSBucket(conn.db);
 });
 
-const courseAutoPopulate = (next) => {
-    this.populate('content')
-}
-
 const ConfigSchema = new Schema({
     tenant: {
         type: String,
@@ -177,6 +173,7 @@ const CourseSchema = new Schema({
     name: String,
     cfu: Number,
     professors: [String],
+    code: String,
     year: String,
     semester: String,
     tags: [String],
