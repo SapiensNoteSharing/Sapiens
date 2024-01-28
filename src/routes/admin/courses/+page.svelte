@@ -97,7 +97,7 @@
         //     format: val => val || 'Lorem ipsum dolor sit amet. Est tempora perferendis eos quia rerum a rerum laborum eum atque eligendi ut laboriosam optio 33 fugiat quae. At nihil nostrum et Quis magnam ab aliquam temporibus est ipsa reiciendis sed facilis odit aut mollitia consequatur. Aut consectetur veritatis ea adipisci ratione et iste quaerat. Ut beatae obcaecati est harum unde et galisum similique ut officia architecto sed nesciunt delectus.'
         // },
         {
-            id: 'content',
+            id: 'chapters',
             label: '# capitoli',
             format: val => val?.length || 0
         },

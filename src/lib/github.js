@@ -1,5 +1,5 @@
 import { config } from '$lib/config';
-import { Course, Directory, File, dropContents } from '$lib/mongodb';
+import { Course, Directory, File, University, Degree } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
 
 
@@ -189,10 +189,21 @@ export async function update() {
                 files: contentsIds.files,
             }, {upsert: true, new: true})
 
+            const uni = await University.findOne({
+                name: metadata.university_name
+            })
+
+            const degree = await Degree.findOneAndUpdate({
+                name: metadata?.degree?.name,
+                type: metadata?.degree?.type
+            }, {upsert: true})
+
             await Course.findOneAndUpdate({name: course.name}, {
                 ...metadata,
                 chapters: chapterIds,
-                extra_content: extra._id
+                extra_content: extra._id,
+                university: uni?._id,
+                degree: degree?._id
             }, {upsert: true})
 
             console.log('finished course', course.name)
