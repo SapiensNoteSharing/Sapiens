@@ -355,33 +355,7 @@
                         <h2 class="display-3 mt-4 mb-2 ps-0" id="dati_accademici">Dati accademici</h2>
                         <p class="p-0 m-0 mb-5">Puoi inserire questi dati anche in seguito: ci aiuteranno a suggerirti corsi relativi al tuo percorso di studi.</p>
                         
-                        <div class="field col-md-3 ps-0">
-                            <label for="registrationUniversityRegion" class="form-label">Regione</label>
-                            <div class="d-flex has-validation svelecte-custom-selection">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <Svelecte
-                                placeholder="Seleziona regione"
-                                options={university_regions}
-                                labelAsValue
-                                class="svelecte-control text-center selection-input m-0"
-                                bind:value={userRegister.university_region}
-                                />
-                            </div>
-                        </div>
-                        <div class="field col-md-4">
-                            <label for="registrationUniversityCity" class="form-label">Città universitaria</label>
-                            <div class="d-flex has-validation svelecte-custom-selection">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <Svelecte
-                                placeholder="Seleziona città"
-                                options={university_cities}
-                                labelAsValue
-                                class="svelecte-control text-center selection-input m-0"
-                                bind:value={userRegister.university_city}
-                                />
-                            </div>
-                        </div>
-                        <div class="field col-md-5 pe-0">
+                        <div class="field col-md-4 ps-0">
                             <label for="registrationUniversityName" class="form-label">Nome Università</label>
                             <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
@@ -394,8 +368,7 @@
                                 />
                             </div>
                         </div>
-
-                        <div class="field col-md-5 ps-0">
+                        <div class="field col-md-4">
                             <label for="registrationFacultyName" class="form-label">Nome facoltà</label>
                             <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
@@ -408,7 +381,7 @@
                                 />
                             </div>
                         </div>
-                        <div class="field col-md-4">
+                        <div class="field col-md-4 pe-0">
                             <label for="registrationFacultyType" class="form-label">Tipologia di Laurea</label>
                             <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
@@ -419,16 +392,6 @@
                                 class="svelecte-control text-center selection-input m-0"
                                 bind:value={userRegister.faculty_type}
                                 />
-                            </div>
-                        </div>
-                        <div class="field col-md-3 pe-0">
-                            <label for="registrationFacultyCode" class="form-label">Codice facoltà</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
-                                <input class="form-control" bind:value={userRegister.faculty_code}>
-                                <div class="invalid-feedback">
-                                    Scegli un'opzione
-                                </div>
                             </div>
                         </div>
 
