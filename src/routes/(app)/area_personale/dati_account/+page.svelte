@@ -11,6 +11,8 @@
     if (!account.university) account.university = {}
     if (!(typeof account.degree == 'object')) account.degree = {}
 
+$: console.log(data.user, account)
+
     async function save_changes() {
         if (checkValidity()) {
             let body = {

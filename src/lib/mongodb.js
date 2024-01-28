@@ -106,6 +106,7 @@ UserSchema.pre('findOneAndUpdate', function (next) {
 
 const UniversitySchema = new Schema({
     name: String,
+    type: String,
     country: {
         type: Number,
         ref: 'State'
@@ -117,13 +118,17 @@ const UniversitySchema = new Schema({
     province: {
         type: Number,
         ref: 'Province'
-    }
+    },
+}, {
+    timestamps: true
 })
 UniversitySchema.index({name: 1})
 
 const DegreeSchema = new Schema({
     name: String,
     type: String,
+}, {
+    timestamps: true
 })
 DegreeSchema.index({name: 1, type: 1}, {unique: true})
 

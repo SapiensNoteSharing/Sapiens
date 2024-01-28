@@ -2,13 +2,13 @@ import { config } from '$lib/config';
 import { getSession, updateTtl } from '$lib/redis';
 import guard from '$lib/router';
 import { redirect } from '@sveltejs/kit';
-import { storePlaces } from '$lib/loadPlaces';
+import { loadDatabase } from '$lib/loadDatabase';
 
 process.on('SIGINT', function () { process.exit(); }); // Ctrl+C  
 process.on('SIGTERM', function () { process.exit(); }); // docker stop
 
 try{
-    storePlaces()
+    loadDatabase()
 }catch(err){
     console.log(err)
 }
