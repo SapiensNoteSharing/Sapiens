@@ -1,8 +1,9 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
+    import { invalidate } from '$app/navigation' 
 
     export let data;
-    let user = data.user || {}
+    $: user = data.user || {}
     
     let dna = 0;
     let euro = 0;
@@ -15,9 +16,9 @@
             },
             body: JSON.stringify({ dna: user.dna + dna })
         })
-
-        const body = (resp.ok && await resp.json()) || {}
-        data.user = body;
+        if(resp.ok){
+            invalidate('user')
+        }
     }
 
     function updateDNA() {

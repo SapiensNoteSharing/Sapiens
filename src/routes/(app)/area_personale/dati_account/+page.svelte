@@ -3,7 +3,7 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Svelecte from 'svelecte'
     import { page } from '$app/stores';
-    import { invalidateAll } from '$app/navigation'
+    import { invalidate } from '$app/navigation'
 
     export let data;
 
@@ -32,7 +32,7 @@
                 body: JSON.stringify(body)
             })
             if(resp.ok){
-                invalidateAll()
+                invalidate('user')
             }
 
         }

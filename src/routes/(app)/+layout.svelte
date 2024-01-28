@@ -5,7 +5,7 @@
     import { page } from '$app/stores';
 
     export let data;
-    let user = data.user || {};
+    $: user = data.user || {};
 
     function formatPageTitle(page){
         if(!page.route?.id) return ''
