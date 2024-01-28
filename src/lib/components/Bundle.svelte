@@ -47,9 +47,9 @@
 
         {#if disabled == false}
             {#if courses.length > 0}
-                <h2 class="display-5 mt-2"><span class="text-dark">{subtitle} &bull; {courses.length} corsi</span></h2>
+                <h2 class="display-5 my-3"><span class="text-dark">{subtitle} &bull; {courses.length} corsi</span></h2>
 
-                <div class="d-flex flex-column justify-content-between">
+                <div class="d-flex flex-column justify-content-between mt-4">
                     {#if courses.length <= max_list_length}
                         {#each courses as course, i}
                             <p class="display-6 text-truncate">{course.name}</p>
@@ -75,7 +75,7 @@
                     {/each}
                 </div> -->
 
-                <div class="d-flex flex-row justify-content-center mt-3">
+                <div class="d-flex flex-row justify-content-center">
                     <NormalButton class={"mx-2"}>
                         <div slot="name">
                             <a type="button" class="btn btn-primary text-center w-100 fs-2" href={href}>Dettagli</a>
