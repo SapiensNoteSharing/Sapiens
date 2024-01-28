@@ -169,7 +169,7 @@
         
             <h4 class="display-4 mt-5 mb-3" id="dati_accademici">Dati accademici</h4>
 
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <label for="universityName" class="form-label">Nome università</label>
                 <div class="d-flex has-validation svelecte-custom-selection">
                     <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
@@ -184,8 +184,7 @@
                     />
                 </div>
             </div>
-
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <label for="facultyName" class="form-label">Nome Facoltà</label>
                 <div class="d-flex has-validation svelecte-custom-selection">
                     <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
@@ -211,13 +210,7 @@
                     />
                 </div>
             </div>
-            <div class="col-md-2">
-                <label for="studentID" class="form-label">Matricola</label>
-                <div class="input-group has-validation">
-                    <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
-                    <input class="form-control" bind:value={account.student_id} required>
-                </div>
-            </div>
+
             <div class="col-md-5">
                 <label for="year" class="form-label">Anno</label>
                 <div class="d-flex has-validation svelecte-custom-selection">
@@ -242,6 +235,13 @@
                     class="svelecte-control text-center selection-input m-0"
                     bind:value={account.semester}
                     />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="studentID" class="form-label">Matricola</label>
+                <div class="input-group has-validation">
+                    <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
+                    <input class="form-control" bind:value={account.student_id} required>
                 </div>
             </div>
 
