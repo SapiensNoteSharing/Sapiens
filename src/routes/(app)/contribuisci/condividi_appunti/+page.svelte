@@ -5,13 +5,13 @@
     import { invalidate } from '$app/navigation';
 
     export let data;
-    $: user = data.user || []
+    $: user = data.user || {}
 
     let new_course = {
-        university: user.university || {},
-        degree: user.degree || {},
-        year: user.year,
-        semester: user.semester,
+        university: user?.university || {},
+        degree: user?.degree || {},
+        year: user?.year,
+        semester: user?.semester,
         cfu: 0
     }
 

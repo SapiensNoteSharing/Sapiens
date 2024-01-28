@@ -161,24 +161,35 @@
 
 <div class="d-flex flex-column">
     <div class="row g-3 mb-4">
-        {#if user?.semester && user?.year && user?.degree?.name}
-            <!-- <Bundle type="semester" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto " + `${user?.semester}` + " semestre"} subtitle={`${user?.year}` + " anno - " + `${user?.degree?.name}`} href="/negozio/pacchetti/{user?.semester?.toLowerCase()}_semestre"></Bundle> -->
-            <Bundle type="semester" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto semestrale"} subtitle={`${user?.semester}` + " semestre"} href="/negozio/pacchetti/{user?.semester?.toLowerCase()}_semestre"></Bundle>
-        {:else}
-            <Bundle type="semester" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto semestrale"} disabled={true}></Bundle>
-        {/if}
-        {#if user?.year && user?.degree?.name}
-            <!-- <Bundle type="year" class="col-md-4" courses={year_bundle_courses} title={"Pacchetto " + `${user?.year}` + " anno"} subtitle={user?.degree?.name} href="/negozio/pacchetti/{user?.year?.toLowerCase()}_anno"></Bundle> -->
-            <Bundle type="semester" class="col-md-4" courses={year_bundle_courses} title={"Pacchetto annuale"} subtitle={`${user?.year}` + " anno"} href="/negozio/pacchetti/{user?.year?.toLowerCase()}_semestre"></Bundle>
-            {:else}
-            <Bundle type="year" class="col-md-4" courses={year_bundle_courses} title={"Pacchetto annuale"} disabled={true}></Bundle>
-        {/if}
-        {#if user?.degree?.name}
-        <!-- <Bundle type="faculty" class="col-md-4" courses={degree_bundle_courses} title={"Pacchetto " + `${user?.degree?.name}`} href="/negozio/pacchetti/{user?.degree?.name?.toLowerCase()?.replace(/\s/g, '_')}"></Bundle> -->
-            <Bundle type="semester" class="col-md-4" courses={degree_bundle_courses} title={"Pacchetto facoltà"} subtitle={user?.degree?.name} href="/negozio/pacchetti/{user?.degree?.name?.toLowerCase()?.replace(/\s/g, '_')}"></Bundle>
-        {:else}
-            <Bundle type="faculty" class="col-md-4" courses={degree_bundle_courses} title={"Pacchetto facoltà"} disabled={true}></Bundle>
-        {/if}
+        <Bundle 
+            type="semester" 
+            class="col-md-4"
+            courses={semester_bundle_courses} 
+            title={"Pacchetto semestrale"} 
+            subtitle={`${user?.semester}` + " semestre"} 
+            href="/negozio/pacchetti/{user?.semester?.toLowerCase()}_semestre" 
+            enabled={user?.semester && user?.year && user?.degree?.name != false}>
+        </Bundle>
+
+        <Bundle 
+            type="year" 
+            class="col-md-4" 
+            courses={year_bundle_courses} 
+            title={"Pacchetto annuale"} 
+            subtitle={`${user?.year}` + " anno"} 
+            href="/negozio/pacchetti/{user?.year?.toLowerCase()}_anno" 
+            enabled={user?.year && user?.degree?.name != false}>
+        </Bundle>
+        
+        <Bundle 
+            type="faculty" 
+            class="col-md-4" 
+            courses={degree_bundle_courses} 
+            title={"Pacchetto facoltà"} 
+            subtitle={user?.degree?.name} 
+            href="/negozio/pacchetti/{user?.degree?.name?.toLowerCase()?.replace(/\s/g, '_')}" 
+            enabled={user?.degree?.name != false}>
+        </Bundle>
     </div>
 </div>
 

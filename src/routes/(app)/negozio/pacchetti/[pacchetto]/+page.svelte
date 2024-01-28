@@ -1,188 +1,119 @@
 <script>
-    import ActiveButton from '$lib/components/ActiveButton.svelte';
-    import Modal from '$lib/components/Modal.svelte';
+    import NormalButton from '$lib/components/NormalButton.svelte';
+    import Cart from '$lib/components/Cart.svelte';
+    import Item from '$lib/components/Item.svelte';
+    import { viewing } from '$lib/stores';
 
     export let data;
-    let courses = data.courses || [];
-    $: user = data.user || {};
-
-    let owned = []
-    // let owned = [
-    //     courses.find(course => course.name == "Fisica I"),
-    //     courses.find(course => course.name == "Algoritmi e strutture dati"),
-    // ].filter(Boolean);
-
-    function get_semester_bundle_courses() {
-        let semester_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == user.university_name &&
-                course.faculty_name == user.faculty_name &&
-                course.year == user.year &&
-                course.semester == user.semester
-            ) {
-                semester_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-        return semester_bundle_courses
-    }
-
-    function get_year_bundle_courses() {
-        let year_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == user.university_name &&
-                course.faculty_name == user.faculty_name &&
-                course.year == user.year
-            ) {
-                year_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-        return year_bundle_courses
-    }
-
-    function get_degree_bundle_courses() {
-        let degree_bundle_courses = [];
-        for (let course of courses) {
-            if (
-                course.university_name == user.university_name &&
-                course.faculty_name == user.faculty_name
-            ) {
-                degree_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
-            }
-        }
-
-        return degree_bundle_courses
-    }
-
-    function sort_course_list(course_list, sort_method = sorting_method) {
-        switch(sort_method) {
-            case "no_order":
-                course_list.sort((a, b) => {
-                    if (Math.random() < 0.5)
-                        return -1;
-                    else
-                        return 1;
-                });
-                break;
-            case "name_ascending":
-                course_list.sort((a, b) => {
-                    if (a.name < b.name)
-                        return -1;
-                    else if (a.name == b.name) 
-                        return 0;
-                    else
-                        return 1;
-                });
-                break;
-            case "name_descending":
-                course_list.sort((a, b) => {
-                    if (a.name > b.name)
-                        return -1;
-                    else if (a.name == b.name) 
-                        return 0;
-                    else
-                        return 1;
-                });
-                break;
-            case "code_ascending":
-                course_list.sort((a, b) => {
-                    if (a.code < b.code)
-                        return -1;
-                    else if (a.code == b.code) 
-                        return 0;
-                    else
-                        return 1;
-                });
-                break;
-            case "code_descending":
-                course_list.sort((a, b) => {
-                    if (a.code > b.code)
-                        return -1;
-                    else if (a.code == b.code) 
-                        return 0;
-                    else
-                        return 1;
-                });
-                break;
-            case "chronological_order":
-                course_list.sort((a, b) => {
-                    const yearOrder = { "Primo": 1, "Secondo": 2, "Terzo": 3 };
-                    const semesterOrder = { "Primo e secondo": 0, "Primo": 1, "Secondo": 2 };
-
-                    if (yearOrder[a.year] < yearOrder[b.year])
-                        return -1;
-                    else if (yearOrder[a.year] == yearOrder[b.year]) {
-                        if (semesterOrder[a.semester] < semesterOrder[b.semester])
-                            return -1;
-                        else if (semesterOrder[a.semester] == semesterOrder[b.semester])
-                            return 0;
-                        else
-                            return 1;
-                    } else
-                        return 1;
-                });
-                break;
-            case "chronological_reverse":
-                course_list.sort((a, b) => {
-                    const yearOrder = { "Primo": 1, "Secondo": 2, "Terzo": 3 };
-                    const semesterOrder = { "Primo e secondo": 0, "Primo": 1, "Secondo": 2 };
-
-                    if (yearOrder[a.year] < yearOrder[b.year])
-                        return 1;
-                    else if (yearOrder[a.year] == yearOrder[b.year]) {
-                        if (semesterOrder[a.semester] < semesterOrder[b.semester])
-                            return 1;
-                        else if (semesterOrder[a.semester] == semesterOrder[b.semester])
-                            return 0;
-                        else
-                            return -1;
-                    } else
-                        return -1;
-                });
-                break;
-        }
-    }
-
-    let semester_bundle_courses = get_semester_bundle_courses()
-    sort_course_list(semester_bundle_courses, "chronological_order");
-    let year_bundle_courses = get_year_bundle_courses()
-    sort_course_list(year_bundle_courses, "chronological_order");
-    let degree_bundle_courses = get_degree_bundle_courses()
-    sort_course_list(degree_bundle_courses, "chronological_order");
+    let course = data.course || [];
 
     let cartModal;
-    function openCart() {
-        cartModal.show().then(async res => {
-            if (res) {
-                
-            }
-        })
-    }
 </script>
 
-<Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
-    <div class="d-flex m-4 justify-content-between">
-        <div>
-            <div class="d-flex mt-3">
-                <section class="btn-group">
-                    <div class="d-flex flex-row justify-content-start me-2">
-                        
-                    </div>
-                </section>
+<Cart {course} bind:this={cartModal}/>
+
+<div class="course-details-container d-flex flex-column bg-light p-5">
+    <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-column">
+                <div class="d-flex text-dark flex-row justify-content-between mb-2">
+                </div>
             </div>
         </div>
-        <div class="d-flex">
-            <h2 class="align-self-center display-3 my-0"></h2>
-            <img style="width: 2rem;" src="/src/style/dna.svg" alt="dna">
+
+        <div class="d-flex flex-column align-items-end">
         </div>
     </div>
-</Modal>
 
-<div class="d-flex flex-column">
+    <div class="my-4">
+        <h2 class="display-4">Argomenti del corso</h2>
+    </div>
 
+    <div class="navigation d-flex flex-row justify-content-between">
+        <div class="d-flex flex-row justify-content-center mt-3 align-items-start">
+            <NormalButton class={"mx-2"}>
+                <div slot="name">
+                    <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" href="/negozio/pacchetti">Torna ai pacchetti</a>
+                </div>
+            </NormalButton>
+
+            <NormalButton class={"mx-2"}>
+                <div slot="name">
+                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={cartModal.openCart}>Ottieni</a>
+                </div>
+            </NormalButton>
+        </div>
+    </div>
 </div>
 
 <style lang="scss">
     @import '$css/variables.scss';
+
+    .course-details-container {
+        border: 1px solid rgba($dark, .25);
+        border-radius: 1rem;
+    }
+
+    .professor {
+        transition: .3s;
+        color: $dark;
+
+        &:hover {
+            color: $secondary;
+            cursor: pointer;
+        }
+    }
+
+    .course-icon {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .navigation {    
+        :global(.course) {
+            background-color: $light !important;
+            font-size: 1.05rem;
+            font-weight: 500;
+            border: none;
+        }
+        
+        :global(.chapter) {
+            background-color: $light !important;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        
+        :global(.file) {
+            background-color: $light !important;
+            font-size: .95rem;
+            font-weight: 300;
+            padding-left: 1rem;
+        }
+        
+        :global(.item) {
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+        }
+        
+        :global(.submenu) {
+            border: none !important;
+        }
+        
+        :global(.header.open) {
+            background-color: $light !important;
+        }
+        
+        :global(.item.file) {
+            margin-left: 0.5rem;
+            border-left: 1px solid rgba($dark, .25);
+        }
+        
+        :global(.href) {
+            padding-left: .5rem;
+        }
+        
+        :global(.bi-chevron-right.rotate) {
+            color: $secondary !important;
+        }
+    }
 </style>
