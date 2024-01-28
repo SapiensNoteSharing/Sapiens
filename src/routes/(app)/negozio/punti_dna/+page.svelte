@@ -16,7 +16,7 @@
             },
             body: JSON.stringify({ dna: user.dna + dna })
         })
-        if(resp.ok){
+        if (resp.ok) {
             invalidate('user')
         }
     }

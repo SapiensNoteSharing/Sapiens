@@ -37,7 +37,7 @@ const md = new MarkdownIt({
                 } catch (err) {}
             } else {
                 try {
-                    if(str.startsWith('flowchart')){
+                    if (str.startsWith('flowchart')) {
                         
                     }
                     console.log(str)

@@ -20,7 +20,7 @@
         }, 200)
     }
 
-    async function update(){
+    async function update() {
         const resp = await fetch(`/api/testupdate`)
         const body = (resp.ok && await resp.json()) || {}
     }

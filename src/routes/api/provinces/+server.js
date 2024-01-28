@@ -7,10 +7,11 @@ export async function GET({ url, locals }) {
         const params = url.searchParams
         const query = {}
 
-        if(params.get('s') && params.get('s') != 'undefined'){
+        if (params.get('s') && params.get('s') != 'undefined') {
             query.state = params.get('s')
         }
-        if(params.get('r') && params.get('r') != 'undefined'){
+        
+        if (params.get('r') && params.get('r') != 'undefined') {
             query.region = params.get('r')
         }
 

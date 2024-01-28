@@ -2,10 +2,9 @@ import { error } from '@sveltejs/kit'
 
 
 
-export async function GET({locals}){
+export async function GET({locals}) {
     const user = locals.user
-    try{
-
+    try {
         const calendarEvents = [] //Calendar.findOne({user: user._id})
 
         return new Response(JSON.stringify(calendarEvents), {
@@ -13,10 +12,8 @@ export async function GET({locals}){
                 'Content-Type': 'application/json'
             }
         })
-    }catch(err){
+    } catch(err) {
         console.log(err);
         throw error(500, err)
     }
-
-
 }

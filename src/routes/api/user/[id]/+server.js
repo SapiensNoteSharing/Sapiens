@@ -7,15 +7,16 @@ export async function PUT({ request, url, locals, cookies, params }) {
     try {
         let body = await request.json()
 
-        if(body.hash) delete body.hash
+        if (body.hash) 
+            delete body.hash
 
         const sid = cookies.get('sid')
         if (sid) {
             const user = await getSession(sid);
             if (user) {
-
                 let degree = await Degree.findOne({name: body?.degree?.name, type: body?.degree?.type}) || {}
-                if(!degree?._id && body?.degree?.name && body?.degree?.type){
+
+                if (!degree?._id && body?.degree?.name && body?.degree?.type) {
                     degree = await Degree.create({name: body.degree.name, type: body.degree.type})
                 }
 

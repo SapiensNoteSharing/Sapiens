@@ -7,7 +7,7 @@ export async function GET({ url, locals }) {
         const params = url.searchParams
         const query = {}
 
-        if(params.get('s') && params.get('s') != 'undefined'){
+        if (params.get('s') && params.get('s') != 'undefined') {
             query.state = params.get('s')
         }
 

@@ -4,16 +4,22 @@
 
     export let course;
 
+    let selected_option = "complete"
+
     export let cartModal;
     export function openCart() {
         cartModal.show().then(async res => {
-            if(res){
-                const resp = await fetch(`/api/user/acquisti`)
-            }
+            if (res) {
+                const resp = await fetch(`/api/courses/${course._id}/buy`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ type: selected_option })
+                });
+            };
         })
     }
-
-    let selected_option = "complete"
 </script>
 
 <Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>

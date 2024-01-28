@@ -37,44 +37,6 @@
             <h4 class="">{course?.degree?.name} &bull; {course?.degree?.type}</h4>
             <h4 class="">{course?.year} anno &bull; {course?.semester} semestre</h4>
         </div>
-    
-        <!-- <div class="d-flex flex-row h-100">
-            <ActiveButton
-            type={"notes_subpages"}
-            active={selected_content == "chapters" ? 'active' : 'not-active'}
-            fill={selected_content == "chapters" ? '-fill' : ''}
-            class={"d-block py-2 mx-2 text-decoration-none h-100"}
-            icon={"bi-file-earmark"}
-            on:click={() => selected_content = "chapters"}
-            />
-
-            <ActiveButton
-            type={"notes_subpages"}
-            active={selected_content == "exercises" ? 'active' : 'not-active'}
-            fill={selected_content == "exercises" ? '' : ''}
-            class={"d-block py-2 mx-2 text-decoration-none h-100"}
-            icon={"bi-pencil-square"}
-            on:click={() => selected_content = "exercises"}
-            />
-
-            <ActiveButton
-            type={"notes_subpages"}
-            active={selected_content == "questions" ? 'active' : 'not-active'}
-            fill={selected_content == "questions" ? '' : ''}
-            class={"d-block py-2 mx-2 text-decoration-none h-100"}
-            icon={"bi-plus-slash-minus"}
-            on:click={() => selected_content = "questions"}
-            />
-
-            <ActiveButton
-            type={"notes_subpages"}
-            active={selected_content == "formulary" ? 'active' : 'not-active'}
-            fill={selected_content == "formulary" ? '-fill' : ''}
-            class={"d-block py-2 mx-2 text-decoration-none h-100"}
-            icon={"bi-chat-dots"}
-            on:click={() => selected_content = "formulary"}
-            />
-        </div> -->
     </div>
 
     <div class="my-4">
