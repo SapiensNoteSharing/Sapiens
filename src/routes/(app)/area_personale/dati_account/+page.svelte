@@ -3,6 +3,7 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Svelecte from 'svelecte'
     import { page } from '$app/stores';
+    import { invalidateAll } from '$app/navigation'
 
     export let data;
 
@@ -23,7 +24,6 @@
                     type: account.degree?.type?.replaceAll('*', '')
                 }
             }
-            console.log('body', body)
             const resp = await fetch(`/api/user/${account._id}`, {
                 method: 'PUT',
                 headers: {
@@ -31,6 +31,9 @@
                 },
                 body: JSON.stringify(body)
             })
+            if(resp.ok){
+                invalidateAll()
+            }
 
         }
     }
