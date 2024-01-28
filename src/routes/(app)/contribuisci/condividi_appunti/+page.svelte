@@ -27,7 +27,7 @@
 			}, false);
 		});
 
-        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+        document.querySelectorAll(".drop-zone-input").forEach((inputElement) => {
         const dropZoneElement = inputElement.closest(".drop-zone");
 
         dropZoneElement.addEventListener("click", (e) => {
@@ -42,12 +42,12 @@
 
         dropZoneElement.addEventListener("dragover", (e) => {
             e.preventDefault();
-            dropZoneElement.classList.add("drop-zone--over");
+            dropZoneElement.classList.add("drop-zone-over");
         });
 
         ["dragleave", "dragend"].forEach((type) => {
             dropZoneElement.addEventListener(type, (e) => {
-            dropZoneElement.classList.remove("drop-zone--over");
+            dropZoneElement.classList.remove("drop-zone-over");
             });
         });
 
@@ -59,7 +59,7 @@
                 updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
             }
 
-            dropZoneElement.classList.remove("drop-zone--over");
+            dropZoneElement.classList.remove("drop-zone-over");
         });
     });
 	});
@@ -72,7 +72,7 @@
      */
     
     function updateThumbnail(dropZoneElement, file) {
-        let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+        let thumbnailElement = dropZoneElement.querySelector(".drop-zone-thumb");
 
         // First time - remove the prompt
         if (dropZoneElement.querySelector(".drop-zone__prompt")) {
@@ -82,7 +82,7 @@
         // First time - there is no thumbnail element, so lets create it
         if (!thumbnailElement) {
             thumbnailElement = document.createElement("div");
-            thumbnailElement.classList.add("drop-zone__thumb");
+            thumbnailElement.classList.add("drop-zone-thumb");
             dropZoneElement.appendChild(thumbnailElement);
         }
 
@@ -242,7 +242,7 @@
                         <label for="file" class="form-label">File</label>
                         <div class="drop-zone">
                         <span class="display-6 drop-zone__prompt">Scegli un file o trascinalo qui</span>
-                            <input type="file" name="myFile" class="drop-zone__input">
+                            <input type="file" name="myFile" class="drop-zone-input">
                         </div>
                     </div>
                 </div>
@@ -254,8 +254,14 @@
                             Accetta Termini e condizioni
                         </label>
                     </div>
-                    
-                    <button class="submit-btn display-4 text-dark fs-3 px-4 py-2" type="submit">Invia i tuoi appunti</button>
+
+                    <NormalButton class={"ms-3"} style={""}>
+                        <div slot="name" class="page-btn">
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
+                                Invia i tuoi appunti
+                            </a>
+                        </div>
+                    </NormalButton>
                 </div>
             </form>
         </div>
@@ -299,18 +305,6 @@
 <style lang="scss">
     @import '$css/variables.scss';
 
-    .main-content {
-        width: 70%;
-        height: 100%;
-        box-sizing: border-box;
-    }
-
-    .side-content {
-        width: 30%;
-        height: 100%;
-        box-sizing: border-box;
-    }
-
     .box {
         padding: 2rem;
         border: 1px solid rgba($dark, 0.25);
@@ -318,18 +312,6 @@
         border-radius: 2rem;
         cursor: pointer;
         transition: .25s ease-in-out;
-    }
-
-    .submit-btn {
-        background: $primary;
-        // border: 1px solid rgba($dark, 0.25);
-        border: 0px;
-        border-radius: 1rem;
-        transition: .15s;
-
-        &:hover {
-            background: darken($primary, 10%);
-        }
     }
 
     .file-input {
@@ -348,7 +330,7 @@
         border-radius: .4rem 0rem 0rem .4rem;
     }
 
-    .form-control, .form-select {
+    .form-control {
 		border: 1px solid $dark;
 
 		&::placeholder {
@@ -370,15 +352,15 @@
         border-radius: 1rem;
     }
 
-    .drop-zone--over {
+    .drop-zone-over {
         border-style: solid;    
     }
 
-    .drop-zone__input {
+    .drop-zone-input {
         display: none;
     }
 
-    .drop-zone__thumb {
+    .drop-zone-thumb {
         width: 100%;
         height: 100%;
         border-radius: 1rem;
@@ -388,7 +370,7 @@
         position: relative;
     }
 
-    .drop-zone__thumb::after {
+    .drop-zone-thumb::after {
         content: attr(data-label);
         position: absolute;
         bottom: 0;

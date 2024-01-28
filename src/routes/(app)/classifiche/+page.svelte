@@ -21,7 +21,7 @@
             <img class="league-icon" src="src/style/leagues/blank.png" alt="">
         {/each}       
     </div>
-    <h2 class="league-title text-dark display-3 mx-auto my-2">Lega {league_names[user.league_level]}</h2>
+    <h2 class="text-dark display-3 mx-auto my-2">Lega {league_names[user.league_level]}</h2>
 </div>
 
 
@@ -39,13 +39,5 @@
     .my-league {
         height: 7rem;
         width: 7rem;
-    }
-
-    .league-title {
-
-    }
-
-    .custom-scrollbar {
-        scroll-behavior: smooth;
     }
 </style>

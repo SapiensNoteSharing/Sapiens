@@ -2,11 +2,11 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
 
-    export let type;
-    export let title;
-    export let subtitle;
-    export let courses;
-    export let href
+    export let type = "";
+    export let title = "";
+    export let subtitle = "";
+    export let courses = [];
+    export let href = ""
     export let disabled = false;
     let classes = "";
     export {classes as class}

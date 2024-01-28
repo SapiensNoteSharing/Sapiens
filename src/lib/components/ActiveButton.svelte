@@ -5,16 +5,16 @@
 
     export {classes as class};
 
-    export let active;
-    export let style
-    export let disabled
-    export let href
-    export let text
-    export let icon
-    export let fill = "";
-    export let type
-    export let src
-    export let alt
+    export let active = false
+    export let style = ""
+    export let disabled = false
+    export let href = ""
+    export let text = ""
+    export let icon = ""
+    export let fill = ""
+    export let type = ""
+    export let src = ""
+    export let alt = ""
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

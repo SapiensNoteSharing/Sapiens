@@ -269,7 +269,7 @@
         border-radius: .4rem 0rem 0rem .4rem;
     }
 
-    .form-control, .form-select {
+    .form-control {
 		border: 1px solid $dark;
 
 		&::placeholder {

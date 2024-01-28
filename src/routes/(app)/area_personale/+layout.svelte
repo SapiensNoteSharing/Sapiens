@@ -38,3 +38,7 @@
     
     <slot></slot>
 </div>
+
+<style lang="scss">
+	@import '$css/variables.scss';
+</style>

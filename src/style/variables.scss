@@ -1,4 +1,6 @@
+// light mode
 $light: rgb(250, 250, 250);
+$dark: #131319;
 $primary: #9de3c4;
 $light-primary: rgb(241, 240, 242);
 $primary-shade-1: #f5fcfb;
@@ -8,7 +10,9 @@ $success: #9de3c4;
 $info: rgb(161, 214, 249);
 $warning: #c38054;
 $danger: #ff3666;
-$dark: #131319;
+$yellow: rgb(237, 162, 105);
+$blue: #3c76c6;
+
 // dark mode
 // $primary: #9fcbe4;
 // $primary-shade-1: #F5FCFB;
@@ -20,8 +24,9 @@ $dark: #131319;
 // $danger: #DD6B6B;
 // $light: #1e1e21;
 // $dark: #fafffe;
-$yellow: rgb(237, 162, 105);
-$blue: #3c76c6;
+// $yellow: rgb(237, 162, 105);
+// $blue: #3c76c6;
+
 // scss-docs-start gray-color-variables
 $gray-500: #F7F8F8 !default;
 $gray-600: #EEEEEF !default;

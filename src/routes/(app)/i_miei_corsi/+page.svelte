@@ -1,17 +1,12 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
+    import TopChoices from '$lib/components/TopChoices.svelte';
     import { value, filter_tags } from '$lib/stores';
     import Svelecte from 'svelecte';
     
     export let data;
     let courses = data.courses || [];
     let my_courses = data.my_courses || [];
-
-    let owned = []
-    // let owned = [
-    //     courses.find(course => course.name == "Fisica I"),
-    //     courses.find(course => course.name == "Algoritmi e strutture dati"),
-    // ].filter(Boolean);
 
     let sorting_method = "chronological_order";
     let sorting_methods = [
@@ -217,11 +212,11 @@
         return filtered_course_list
     }
 
-    let filtered_owned = filter_and_sort(owned)
+    let filtered_owned = filter_and_sort(my_courses)
 
-    $: sorting_method && (filtered_owned = filter_and_sort(owned))
-    $: $filter_tags && (filtered_owned = filter_and_sort(owned))
-    $: $value !== undefined && (filtered_owned = filter_and_sort(owned))
+    $: sorting_method && (filtered_owned = filter_and_sort(my_courses))
+    $: $filter_tags && (filtered_owned = filter_and_sort(my_courses))
+    $: $value !== undefined && (filtered_owned = filter_and_sort(my_courses))
     
     function edit_distance(x, y) {
         let m = x.length;
@@ -321,6 +316,32 @@
         // and normalize the calculated distance
         return Math.map(distance, 0, max_dist, 0, 2);
     }
+
+    let suggestions_category = "best_sellers";
+    let best_sellers = ["Algoritmi e strutture dati", "Analisi Matematica I", "Fisica I"];
+    let new_courses = ["Fisica II", "Geometria e algebra lineare", "Algoritmi e strutture dati"];
+    let best_courses = ["Fondamenti di ricerca operativa", "Fondamenti di informatica", "Fondamenti di segnali e trasmissione"];
+
+    let showed = []
+    function load_showed_courses(suggestions_category) {
+        showed = []
+        switch (suggestions_category) {
+            case "best_sellers":
+                for (let i = 0; i < best_sellers.length; i++)
+                    showed.push(courses.find(course => course.name == best_sellers[i]));
+                break;
+            case "new_courses":
+                for (let i = 0; i < best_sellers.length; i++)
+                    showed.push(courses.find(course => course.name == new_courses[i]));
+                break;
+            case "best_reviewed":
+                for (let i = 0; i < best_sellers.length; i++)
+                    showed.push(courses.find(course => course.name == best_courses[i]));
+                break;
+        }
+    }
+
+    $: load_showed_courses(suggestions_category);
 </script>
 
 <div class="d-flex flex-column">
@@ -404,90 +425,21 @@
             {/if}
         </div>
     {:else}
-        <h2 class="display-4">Acquista il tuo primo corso</h2>
+        <h2 class="display-4 mb-4">Al momento non hai nessun corso</h2>
+
+        <TopChoices
+        courses={courses}
+        class={""}
+        style={"width: 800px;"}
+        best_sellers={["Algoritmi e strutture dati", "Analisi Matematica I", "Fisica I"]}
+        new_courses={["Fisica II", "Geometria e algebra lineare", "Algoritmi e strutture dati"]}
+        best_courses={["Fondamenti di ricerca operativa", "Fondamenti di informatica", "Fondamenti di segnali e trasmissione"]}
+        />
     {/if}
 </div>
 
-<!-- <Modal title="Carrello" yes="Acquista" no="Chiudi" class="bg-primary border-dark" theme="btn-outline-primary" bind:this={cartModal}>
-    {#each courses as course}
-        {#if course.in_cart}
-            <div class="d-flex m-4 justify-content-between">
-                <div>
-                    <h2>{course.code} - {course.name}</h2>
-                    {#each course.professors as professor, i}
-                        <span class="text-dark">{professor}{i != course.professors.length - 1 ? " / " : ""}</span>
-                    {/each}
-                    <div class="d-flex mt-3">
-                        <section class="btn-group">
-                            <div class="me-2">
-                                <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} base">
-                                <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} base">
-                                    Base
-                                </label>
-                            </div>
-                            <div class="me-2">
-                                <input type="radio" class="btn-check" name="{course.name} accesso" id="{course.name} completo" checked>
-                                <label class="btn btn-outline-primary text-dark fs-3 px-4 py-2 border-dark rounded-pill" for="{course.name} completo">
-                                    Completo
-                                </label>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <h2 class="align-self-center fs-1 my-0">{5 + course.CFU * 5 / 3}</h2>
-                    <img style="width: 1.5rem;" src="/src/style/dna.svg" alt="dna">
-                </div>
-            </div>
-            <hr class="m-0">
-        {/if}
-    {/each}
-
-    {#if courses.reduce((acc, course) => acc + (course.in_cart ? 1 : 0), 0) > 0}
-        <hr class="m-0 border-2 opacity-100">
-    {/if}
-    <div class="d-flex w-100 px-4 pt-3 justify-content-between">
-        <h2 class="m-0 fs-1 align-self-left">Sequenze di DNA</h2>
-        <div class="d-flex">
-            <h2 class="m-0 fs-1 align-self-right">{$dna}</h2>
-            <img style="width: 1.5rem;" src="/src/style/dna.svg" alt="dna">
-        </div>
-    </div>
-    <div class="d-flex w-100 px-4 pt-3 justify-content-between">
-        <h2 class="m-0 fs-1 align-self-center">Totale</h2>
-        <div class="d-flex">
-            <h2 class="m-0 fs-1 align-self-center">{courses.reduce((acc, curr) => {
-                if (curr.in_cart)
-                acc += 5 + curr.CFU * 5 / 3;
-                return acc;
-            }, 0)}</h2>
-            <img style="width: 1.5rem;" src="/src/style/dna.svg" alt="dna">
-        </div>
-    </div>
-    <div class="d-flex w-100 px-4 py-3 justify-content-between">
-        <h2 class="m-0 fs-1 align-self-center">Rimanente</h2>
-        <div class="d-flex">
-            <h2 class="m-0 fs-1 align-self-center">{$dna - courses.reduce((acc, curr) => {
-                if (curr.in_cart)
-                    acc += 5 + curr.CFU * 5 / 3;
-                return acc;
-            }, 0)}</h2>
-            <img style="width: 1.5rem;" src="/src/style/dna.svg" alt="dna">
-        </div>
-    </div>
-</Modal> -->
-
 <style lang="scss">
     @import '$css/variables.scss';
-
-    .custom-scrollbar {
-        scroll-behavior: smooth;
-    }
-
-    .outlined {
-        border: 1px solid rgba($dark, 0.25);
-    }
-    
     .icon {
         display: inline-block;
         position: relative;
@@ -495,10 +447,6 @@
         height: 1.5rem;
     }
 
-    #graph-view-btn {
-        cursor: not-allowed !important;
-    }
-    
     .filter_badge {
         border: 1px solid $dark;
     }

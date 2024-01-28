@@ -149,8 +149,14 @@
     }
 </script>
 
-<div class="base-layer mt-3">
-    <div class="full-height d-flex justify-content-evenly align-items-center">
+<div class="base-layer">
+    <nav class="navbar navbar-expand-lg bg-light w-100">
+        <div class="d-flex w-100 justify-content-center align-items-center">
+            <img style="width: 14rem;" src="/src/style/sapiens_logo.svg" alt="Sapiens-Title">
+        </div>
+    </nav>
+
+    <div class="full-height d-flex justify-content-evenly align-items-center mt-3">
         {#if accessMode == "login"}
             <div class="login-box d-flex flex-column p-5">
                 <h2 class="display-2 text-dark m-0 mb-2">Accedi</h2>
@@ -248,7 +254,7 @@
                         </div>
                         
                         <div class="field col-md-4 ps-0" style="margin-bottom: {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "2.55" : "1") : "2.55"}rem;">
-                            <label for="RegistrationEmail" class="form-label">Username *</label>
+                            <label for="RegistrationUsername" class="form-label">Username *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-person-fill"></i></span>
                                 <input class="form-control {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.username}>
@@ -485,7 +491,7 @@
             </div>
         {/if}
 
-        <!-- <img src="/src/style/Sapiens Logo Cartoon.png" alt="" class="landing-page-image m-5"> -->
+        <!-- <img src="/src/style/sapiens_logo_cartoon.png" alt="" class="landing-page-image m-5"> -->
     </div>
 
     <div class="presentation-item d-flex justify-content-evenly align-items-center bg-primary">
@@ -493,11 +499,11 @@
             <h1 class="title text-dark">Studia</h1>
             <h1 class="subtitle text-dark">Sfoglia tra decine di corsi universitari messi a disposizione dai tuoi colleghi</h1>
         </div>
-        <img src="/src/style/landing page.png" alt="" class="presentation-image">
+        <img src="/src/style/landing_page.png" alt="" class="presentation-image">
     </div>
     
     <div class="presentation-item d-flex justify-content-evenly align-items-center bg-light">
-        <img src="/src/style/landing page.png" alt="" class="presentation-image">
+        <img src="/src/style/landing_page.png" alt="" class="presentation-image">
         <div class="d-flex flex-column">
             <h1 class="title text-dark">Contribuisci</h1>
             <h1 class="subtitle text-dark">Aiutaci a migliorare Sapiens condividendo i tuoi appunti e ricevendo in cambio grandi ricompense!</h1>
@@ -509,7 +515,7 @@
             <h1 class="title text-dark">Valuta</h1>
             <h1 class="subtitle text-dark">Recensisci i contenuti proposti: vogliamo sapereno cosa ne pensi!</h1>
         </div>
-        <img src="/src/style/landing page.png" alt="" class="presentation-image">
+        <img src="/src/style/landing_page.png" alt="" class="presentation-image">
     </div>
 </div>
 
