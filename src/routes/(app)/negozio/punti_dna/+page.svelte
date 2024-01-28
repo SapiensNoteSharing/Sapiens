@@ -15,9 +15,6 @@
             },
             body: JSON.stringify({ dna: user.dna + dna })
         })
-
-        const body = (resp.ok && await resp.json()) || {}
-        data.user = body;
     }
 
     function updateDNA() {
