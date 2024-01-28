@@ -108,6 +108,50 @@
             <slot></slot>
         </div>
     </div>
+
+    <div class="d-flex footer">
+        <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
+            <div class="container-fluid">
+                <div>
+                    <img class="ms-3 footer-logo" src="/src/style/sapiens_logo.svg" alt="Sapiens-Title">
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-whatsapp"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-discord"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-instagram"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-facebook"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-twitter-x"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-linkedin"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-tiktok"></i></a>
+                </div>
+
+                <div class="d-flex">
+                    <ActiveButton 
+                    type={"navigation_link"}
+                    active={$page.route.id == "/(app)/chi_siamo" ? 'active' : 'not-active'} 
+                    fill={$page.route.id == "/(app)/chi_siamo" ? '' : ''}
+                    class={"m-2"}
+                    href={"/chi_siamo"}
+                    text={"Chi siamo"}
+                    icon={"bi-person-raised-hand"}
+                    >
+                    </ActiveButton>
+
+                    <ActiveButton 
+                    type={"navigation_link"}
+                    active={$page.route.id == "/(app)/faq" ? 'active' : 'not-active'} 
+                    fill={$page.route.id == "/(app)/faq" ? '-fill' : ''}
+                    class={"m-2"}
+                    href={"/faq"}
+                    text={"FAQ"}
+                    icon={"bi-question-circle"}
+                    >
+                    </ActiveButton>
+                </div>
+            </div>
+        </nav>
+    </div>
 </div>
 
 
@@ -123,9 +167,8 @@
         font-size: 20px;
     }
     .content {
-        max-width: calc(100vw - (250px + 6rem));
+        max-width: calc(100vw - 250px);
     }
-    
     .navbar {
         overflow-y: scroll;
 

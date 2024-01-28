@@ -42,9 +42,9 @@
     $: fileData && reRender()
 </script>
 
-<div class="d-flex align-items-center mb-2">
+<div class="d-flex position-relative align-items-center mb-2">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
+    <span class="back" on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
     <h1 class="mx-auto mb-0">{current?._id ? 'Edit' : 'Create New'} File</h1>
 </div>
 
@@ -69,14 +69,16 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row justify-content-center">
     <div class="col">
         <span class="text">Unformatted text</span>
         <div bind:this={input} class="textarea p-2" bind:innerText={fileData} contenteditable="true" spellcheck="false"></div>
     </div>
     <div class="col">
         <span class="text">Formatted text</span>
-        <div class="border rounded mb-2 p-2">{@html renderedData}</div>
+        <div class="border rounded formatted mb-2 p-2">
+            {@html renderedData}
+        </div>
         <div class="d-flex justify-content-end">
             <button class="btn btn-secondary me-2" on:click={cancel}>Cancel</button>
             <button class="btn btn-primary me-1" on:click={save}>Save</button>
@@ -95,6 +97,12 @@
         max-width: 48%
     }
 
+    .back {
+        position: absolute;
+        left: 0;
+        top: 0.8rem
+    }
+
     .textarea {
         width: 100%;
         max-width: 100%;
@@ -103,5 +111,9 @@
         margin-bottom: 1rem;
         border: 1px solid lightgray;
         border-radius: 5px;
+        background-color: white;
+    }
+    .formatted {
+        background-color: white;
     }
 </style>
