@@ -15,7 +15,7 @@ export async function PUT({ request, url, locals, cookies, params }) {
             if (user) {
 
                 let degree = await Degree.findOne({name: body.degree.name, type: body.degree.type}) || {}
-                if(!degree?._id){
+                if(!degree?._id && body.degree.name && body.degree.type){
                     degree = await Degree.create({name: body.degree.name, type: body.degree.type})
                 }
 
@@ -26,12 +26,7 @@ export async function PUT({ request, url, locals, cookies, params }) {
                 await setSession(sid, user)
             }
         }
-
-        return new Response(JSON.stringify(user), {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+        return new Response('OK');
     } catch (err) {
         console.log(err)
         throw error(500, err)
