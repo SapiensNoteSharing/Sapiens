@@ -191,12 +191,13 @@ export async function update() {
 
             const uni = await University.findOneAndUpdate({
                 name: metadata.university_name
-            }, {upsert: true})
+            }, {upsert: true, new: true})
 
+            console.log('UNIVERSIT°', uni)
             const degree = await Degree.findOneAndUpdate({
                 name: metadata?.degree?.name,
                 type: metadata?.degree?.type
-            }, {upsert: true})
+            }, {upsert: true, new: true})
 
             await Course.findOneAndUpdate({name: course.name}, {
                 ...metadata,

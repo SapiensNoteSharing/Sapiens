@@ -27,7 +27,7 @@ export async function loadDatabase(){
             university.region = region?._id
             university.province = province?._id
 
-            await University.findOneAndUpdate({name: university.name, type: university.type}, university, {upsert: true, new: true})
+            await University.findOneAndUpdate({name: university.name, type: university.type}, {...university, state: 118}, {upsert: true, new: true})
         })
     }catch(err){
         console.log(err)
