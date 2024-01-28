@@ -36,7 +36,7 @@ $: console.log(data.user, account)
             })
 
             if (resp.ok) {
-                invalidate('user')
+                invalidate('https://localhost:5173/')
             }
         }
     }
