@@ -155,6 +155,8 @@
     }
 
     load_bundles();
+
+    $: console.log(user?.semester != null, user?.year != null, user?.degree?.name != undefined)
 </script>
 
 <div class="d-flex flex-column">
@@ -166,7 +168,7 @@
             title={"Pacchetto semestrale"} 
             subtitle={`${user?.semester}` + " semestre"} 
             href="/negozio/pacchetti/{user?.semester?.toLowerCase()}_semestre" 
-            enabled={user?.semester != false && user?.year != false && user?.degree?.name != false}>
+            enabled={user?.semester != null && user?.year != null && user?.degree?.name != undefined}>
         </Bundle>
 
         <Bundle 
@@ -176,7 +178,7 @@
             title={"Pacchetto annuale"} 
             subtitle={`${user?.year}` + " anno"} 
             href="/negozio/pacchetti/{user?.year?.toLowerCase()}_anno" 
-            enabled={user?.year != false && user?.degree?.name != false}>
+            enabled={user?.year != null && user?.degree?.name != undefined}>
         </Bundle>
         
         <Bundle 
@@ -186,7 +188,7 @@
             title={"Pacchetto facoltà"} 
             subtitle={user?.degree?.name} 
             href="/negozio/pacchetti/{user?.degree?.name?.toLowerCase()?.replace(/\s/g, '_')}" 
-            enabled={user?.degree?.name != false}>
+            enabled={user?.degree?.name != undefined}>
         </Bundle>
     </div>
 </div>

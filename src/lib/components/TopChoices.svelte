@@ -20,11 +20,11 @@
                     showed.push(courses.find(course => course.name == best_sellers[i]));
                 break;
             case "new_courses":
-                for (let i = 0; i < best_sellers.length; i++)
+                for (let i = 0; i < new_courses.length; i++)
                     showed.push(courses.find(course => course.name == new_courses[i]));
                 break;
             case "best_reviewed":
-                for (let i = 0; i < best_sellers.length; i++)
+                for (let i = 0; i < best_courses.length; i++)
                     showed.push(courses.find(course => course.name == best_courses[i]));
                 break;
         }

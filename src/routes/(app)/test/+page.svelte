@@ -10,22 +10,10 @@
     let href = ''
     let body = {}, timer;
 
-
-    function debounce() {
-        clearTimeout(timer)
-        timer = setTimeout(async () => {
-            const resp = await fetch(`/test3?href=${href}`)
-            body = (resp.ok && await resp.json()) || []
-            body = JSON.stringify(body, null, 4);
-        }, 200)
-    }
-
     async function update() {
         const resp = await fetch(`/api/testupdate`)
         const body = (resp.ok && await resp.json()) || {}
     }
-    
-    $: href != undefined && debounce()
 </script>
 
 <div class="d-flex h-100 align-self-stretch">
