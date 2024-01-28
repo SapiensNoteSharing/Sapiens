@@ -3,7 +3,7 @@
 
     export let data;
     let courses = data.courses || [];
-    let user = data.user || {};
+    $: user = data.user || {};
     let owned = data.my_courses || [];
 
     function get_semester_bundle_courses() {
