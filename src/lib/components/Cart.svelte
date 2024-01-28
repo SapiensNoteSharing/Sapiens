@@ -3,7 +3,6 @@
     import Modal from '$lib/components/Modal.svelte';
 
     export let course;
-    console.log(course)
 
     export let cartModal;
     export function openCart() {
