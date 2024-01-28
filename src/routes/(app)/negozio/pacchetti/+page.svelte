@@ -3,7 +3,7 @@
 
     export let data;
     let courses = data.courses || [];
-    $: user = data.user || {};
+    let user = data.user || {};
     let owned = data.my_courses || [];
 
     function get_semester_bundle_courses() {
@@ -154,8 +154,6 @@
         sort_course_list(degree_bundle_courses, "chronological_order");
     }
 
-    $: load_bundles();
-
     load_bundles();
 </script>
 
@@ -168,7 +166,7 @@
             title={"Pacchetto semestrale"} 
             subtitle={`${user?.semester}` + " semestre"} 
             href="/negozio/pacchetti/{user?.semester?.toLowerCase()}_semestre" 
-            enabled={user?.semester && user?.year && user?.degree?.name != false}>
+            enabled={user?.semester != false && user?.year != false && user?.degree?.name != false}>
         </Bundle>
 
         <Bundle 
@@ -178,7 +176,7 @@
             title={"Pacchetto annuale"} 
             subtitle={`${user?.year}` + " anno"} 
             href="/negozio/pacchetti/{user?.year?.toLowerCase()}_anno" 
-            enabled={user?.year && user?.degree?.name != false}>
+            enabled={user?.year != false && user?.degree?.name != false}>
         </Bundle>
         
         <Bundle 

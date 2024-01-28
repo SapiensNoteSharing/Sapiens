@@ -2,7 +2,7 @@ import { Course, User } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
 import { setSession } from '$lib/redis';
 
-export async function POST({ url, request, locals, params }) {
+export async function POST({ url, request, locals, params, cookies }) {
     let user = locals.user
     try {
         const body = request.json()
@@ -11,7 +11,7 @@ export async function POST({ url, request, locals, params }) {
         const course = await Course.findById(params.course)
         const cost = (10 + course?.cfu * 5 / 6) * (body.type == "base" ? 0.8 : 1) * 2
 
-        if(user.dna >= cost){
+        if (user.dna >= cost) {
             user = await User.findByIdAndUpdate(user._id, {dna: user.dna - cost, $addToSet: {courses: course._id}}, {new: true})
         }
 

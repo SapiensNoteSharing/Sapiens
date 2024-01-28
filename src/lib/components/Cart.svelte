@@ -7,7 +7,10 @@
     let selected_option = "complete"
 
     export let cartModal;
-    export function openCart() {
+    export function openCart(ev) {
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+
         cartModal.show().then(async res => {
             if (res) {
                 const resp = await fetch(`/api/courses/${course._id}/buy`, {
