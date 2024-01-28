@@ -238,6 +238,8 @@ CourseSchema.pre('find', function (next) {
     this.populate('chapters')
     this.populate('reviews')
     this.populate('extra_content')
+    this.populate('university')
+    this.populate('degree')
     next()
 })
 
@@ -245,6 +247,8 @@ CourseSchema.pre('findOne', function (next) {
     this.populate('chapters')
     this.populate('reviews')
     this.populate('extra_content')
+    this.populate('university')
+    this.populate('degree')
     next()
 })
 

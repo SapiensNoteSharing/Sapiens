@@ -104,7 +104,7 @@
     <div class="d-flex h-100 align-self-stretch">
         <LeftSidebar user={data.user}/>
     
-        <div class="flex-grow-1 position-relative m-5">
+        <div class="content flex-grow-1 position-relative p-5">
             <slot></slot>
         </div>
     </div>
@@ -121,6 +121,9 @@
 
     .icon {
         font-size: 20px;
+    }
+    .content {
+        max-width: calc(100vw - (250px + 6rem));
     }
     
     .navbar {

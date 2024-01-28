@@ -189,9 +189,9 @@ export async function update() {
                 files: contentsIds.files,
             }, {upsert: true, new: true})
 
-            const uni = await University.findOne({
+            const uni = await University.findOneAndUpdate({
                 name: metadata.university_name
-            })
+            }, {upsert: true})
 
             const degree = await Degree.findOneAndUpdate({
                 name: metadata?.degree?.name,
