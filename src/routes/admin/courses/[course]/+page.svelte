@@ -66,9 +66,9 @@
 
 </script>
 
-<div class="d-flex align-items-center mb-2">
+<div class="d-flex position-relative align-items-center mb-2">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Indietro</span>
+    <span class="back" on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Indietro</span>
     <h1 class="mx-auto mb-0">{current?._id ? 'Modifica' : 'Crea nuovo'} Corso</h1>
 </div>
 
@@ -88,6 +88,17 @@
             labelAsValue 
             bind:value={current.professors} 
             placeholder="Seleziona docenti"/>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label for="professors" class="form-label">Tags</label>
+            <Svelecte 
+            options={['Best Seller', 'New', 'Best Reviews']} 
+            multiple 
+            labelAsValue 
+            bind:value={current.tags} 
+            placeholder="Seleziona tags"/>
         </div>
     </div>
 </div>
@@ -153,5 +164,10 @@
         text-decoration: none;
         color: inherit;
         margin: 0.5rem
+    }
+    .back {
+        position: absolute;
+        left: 0;
+        top: 0.8rem
     }
 </style>

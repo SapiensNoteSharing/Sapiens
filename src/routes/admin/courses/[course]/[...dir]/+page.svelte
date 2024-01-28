@@ -63,9 +63,9 @@
     }
 </script>
 
-<div class="d-flex align-items-center mb-2">
+<div class="d-flex position-relative align-items-center mb-2">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <span on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
+    <span class="back" on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
     <h1 class="mx-auto mb-0">{current?._id ? 'Edit' : 'Create New'} Directory</h1>
 </div>
 
@@ -116,5 +116,10 @@
         text-decoration: none;
         color: inherit;
         margin: 0 .5rem
+    }
+    .back {
+        position: absolute;
+        left: 0;
+        top: 0.8rem
     }
 </style>
