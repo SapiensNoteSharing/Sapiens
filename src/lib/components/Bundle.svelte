@@ -11,7 +11,7 @@
     let classes = "";
     export {classes as class}
 
-    let max_list_length = 4;
+    let max_list_length = 5;
 
     let cartModal;
     function openCart() {
@@ -44,23 +44,24 @@
 <div class={classes} style="--bs-gutter-x: 1.5rem">
     <div class="bundle">
         <h2 class="display-3"><span class="text-dark">{title}</span></h2>
-        {#if subtitle != undefined}
-            <h2 class="display-5 mt-2"><span class="text-dark">{subtitle}</span></h2>
-        {/if}
 
         {#if disabled == false}
             {#if courses.length > 0}
-                <h2 class="display-6 mb-4">{courses.length} corsi</h2>
+                <h2 class="display-5 mt-2"><span class="text-dark">{subtitle} &bull; {courses.length} corsi</span></h2>
 
                 <div class="d-flex flex-column justify-content-between">
-                    {#each courses as course, i}
-                        {#if i < max_list_length}
-                            <p class="display-6">{course.name}</p>
-                        {/if}
-                    {/each}
+                    {#if courses.length <= max_list_length}
+                        {#each courses as course, i}
+                            <p class="display-6 text-truncate">{course.name}</p>
+                        {/each}
+                    {:else}
+                        {#each courses as course, i}
+                            {#if i < max_list_length - 1}
+                                <p class="display-6 text-truncate">{course.name}</p>
+                            {/if}
+                        {/each}
 
-                    {#if courses.length >= max_list_length}
-                        <p class="display-6">... +{courses.length - max_list_length}</p>
+                        <p class="display-6">... +{courses.length - max_list_length + 1}</p>
                     {/if}
                 </div>
                     

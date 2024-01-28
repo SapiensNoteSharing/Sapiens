@@ -7,11 +7,11 @@
     export let data;
     $: user = data.user || {};
 
-    function formatPageTitle(page){
-        if(!page.route?.id) return ''
+    function formatPageTitle(page) {
+        if (!page.route?.id) return ''
         
         let route = page.route.id.split('/').pop().replace(/_/g, ' ')
-        if(route == 'faq') return 'FAQ'
+        if (route == 'faq') return 'FAQ'
 
         const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1)
         return capitalise(route)

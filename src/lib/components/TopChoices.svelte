@@ -69,14 +69,14 @@
             {#each showed as course}
                 <div class="d-flex flex-row text-decoration-none justify-content-between align-items-end">
                     <div class="d-flex flex-row align-items-center">
-                        <img class="me-4" style="height: 5rem;" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name} icon">
+                        <img class="me-4" style="height: 5rem;" src="/src/style/course_icons/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}.png" alt="{course?.name} icon">
                         <div class="d-flex flex-column text-dark align-items-start">
-                            <h2 class="display-4">{course.name}</h2>
-                            <h4 class="">{course.code} &bull; {course.cfu} CFU</h4>
+                            <h2 class="display-4">{course?.name}</h2>
+                            <h4 class="">{course?.code} &bull; {course?.cfu} CFU</h4>
                             <div class="d-flex text-dark flex-row justify-content-between mb-2">
                                 <div>
-                                    {#each course.professors as professor, i}
-                                        <span class="text-decoration-none professor">{professor}</span>{i != course.professors.length - 1 ? " / " : ""}
+                                    {#each course?.professors as professor, i}
+                                        <span class="text-decoration-none professor">{professor}</span>{i != course?.professors?.length - 1 ? " / " : ""}
                                     {/each}
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
 
                     <NormalButton class={"ms-3"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi_singoli/{course.name.toLowerCase().replace(/\s/g, '_')}">
+                            <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi_singoli/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}">
                                 Dettagli
                             </a>
                         </div>
