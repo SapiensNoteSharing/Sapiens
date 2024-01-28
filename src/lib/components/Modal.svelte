@@ -62,7 +62,7 @@
 				{#if no}
 					<NormalButton class={"ml-auto"} style={""}>
 						<div slot="name">
-							<a type="button" class="btn btn-primary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={close}>
+							<a type="button" class="btn btn-primary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={() => close(false)}>
 								{no}
 							</a>
 						</div>
@@ -70,7 +70,7 @@
 				{/if}
 				<NormalButton class={"ml-auto"} style={""}>
 					<div slot="name">
-						<a type="button" class="btn btn-secondary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={close}>
+						<a type="button" class="btn btn-secondary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={() => close(true)}>
 							{yes}
 						</a>
 					</div>

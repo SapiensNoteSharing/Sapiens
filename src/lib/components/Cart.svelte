@@ -3,12 +3,13 @@
     import Modal from '$lib/components/Modal.svelte';
 
     export let course;
+    console.log(course)
 
     export let cartModal;
     export function openCart() {
         cartModal.show().then(async res => {
-            if (res) {
-                
+            if(res){
+                const resp = await fetch(`/api/user/acquisti`)
             }
         })
     }

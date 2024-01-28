@@ -1,6 +1,6 @@
 <script>
     export let data;
-    let user = data.user || {};
+    $: user = data.user || {};
 
     let league_names = ["Vetro", "Bronzo", "Argento", "Oro", "Diamante"];
 

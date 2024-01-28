@@ -12,7 +12,7 @@
     // let selected_content = "chapters"
 </script>
 
-<Cart course/>
+<Cart {course} bind:this={cartModal}/>
 
 <div class="course-details-container d-flex flex-column bg-light p-5">
     <div class="d-flex flex-row justify-content-between">
@@ -105,7 +105,7 @@
 
             <NormalButton class={"mx-2"}>
                 <div slot="name">
-                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={openCart}>Ottieni</a>
+                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={cartModal.openCart}>Ottieni</a>
                 </div>
             </NormalButton>
         </div>

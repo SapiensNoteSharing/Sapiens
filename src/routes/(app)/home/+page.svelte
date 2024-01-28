@@ -3,7 +3,7 @@
     import TopChoices from '$lib/components/TopChoices.svelte';
 
     export let data;
-    let user = data.user || {}
+    $: user = data.user || {}
     let courses = data.courses || []
     let my_courses = data.my_courses || []
     

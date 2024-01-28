@@ -35,6 +35,7 @@ const UserSchema = new Schema({
     surname: String,
     email: String,
     username: String,
+    paypal_email: String,
     country: {
         type: Number,
         ref: 'State'

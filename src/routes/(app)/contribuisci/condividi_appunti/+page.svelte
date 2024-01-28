@@ -2,11 +2,10 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     import { onMount } from 'svelte';
     import Svelecte from 'svelecte'
+    import { invalidate } from '$app/navigation';
 
     export let data;
-    let user = data.user || []
-
-    $: console.log(user)
+    $: user = data.user || []
 
     let new_course = {
         university: user.university || {},
@@ -14,6 +13,19 @@
         year: user.year,
         semester: user.semester,
         cfu: 0
+    }
+
+    async function becomeContributor(){
+        const resp = await fetch(`/api/user/${user._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({role: 'contributor'})
+        })
+        if(resp.ok){
+            invalidate('user')
+        }
     }
 
 	onMount(() => {
@@ -254,7 +266,7 @@
 
                 <NormalButton class={"ms-3"} style={""}>
                     <div slot="name" class="page-btn">
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={becomeContributor}>
                             Diventa contributore
                         </a>
                     </div>
