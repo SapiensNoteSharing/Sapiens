@@ -62,6 +62,9 @@ const UserSchema = new Schema({
     year: String,
     semester: String,
     student_id: String,
+    league_xp: {type: Number, default: 0},
+    league_position: Number,
+    league_level: {type: Number, default: 0},
     courses: [
         {
             course: {
@@ -89,7 +92,16 @@ UserSchema.index({username: 1}, {unique: true})
 UserSchema.pre('findOne', function (next){
     this.populate('country')
     this.populate('region')
-    this.populate('city')
+    this.populate('province')
+    this.populate('university')
+    this.populate('degree')
+    next()
+})
+
+UserSchema.pre('findOneAndUpdate', function (next){
+    this.populate('country')
+    this.populate('region')
+    this.populate('province')
     this.populate('university')
     this.populate('degree')
     next()
@@ -105,7 +117,7 @@ const UniversitySchema = new Schema({
         type: Number,
         ref: 'Region'
     },
-    city: {
+    province: {
         type: Number,
         ref: 'Province'
     }
@@ -116,6 +128,7 @@ const DegreeSchema = new Schema({
     name: String,
     type: String,
 })
+DegreeSchema.index({name: 1, type: 1}, {unique: true})
 
 const ReviewSchema = new Schema({
     written_by: String,
@@ -161,15 +174,7 @@ DirectorySchema.pre('find', function (next) {
 })
 
 const CourseSchema = new Schema({
-    university_name: String,
     name: String,
-    code: String,
-    faculty_name: String,
-    faculty_type: String,
-    faculty_code: String,
-    sector_code: String,
-    curriculum_code: [String],
-    curriculum_name: [String],
     cfu: Number,
     professors: [String],
     year: String,
@@ -182,6 +187,10 @@ const CourseSchema = new Schema({
             ref: 'Directory'
         }
     ],
+    extra_content: {
+        type: ObjectId,
+        ref: 'Directory'
+    },
     reviews: [
         {
             type: ObjectId,
@@ -189,10 +198,14 @@ const CourseSchema = new Schema({
         }
     ],
     rating: Number,
-    extra_content: {
+    university: {
         type: ObjectId,
-        ref: 'Directory'
-    }
+        ref: 'University'
+    },
+    degree: {
+        type: ObjectId,
+        ref: 'Degree'
+    },
 }, {
     timestamps: true
 })
@@ -265,5 +278,7 @@ export {
     Review,
     Course,
     Directory,
+    University,
+    Degree,
     File
 };

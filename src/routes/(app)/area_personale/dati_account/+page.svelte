@@ -5,33 +5,39 @@
     import { page } from '$app/stores';
 
     export let data;
+
     let account = {...data.user}
+    if(!account.university) account.university = {}
+    if(!(typeof account.degree == 'object')) account.degree = {}
 
     async function save_changes() {
         if (checkValidity()) {
-            account.country = account.country?._id;
-            account.region = account.region?._id;
-            account.province = account.province?._id;
-
+            let body = {
+                ...account,
+                country: account.country?._id,
+                region: account.region?._id,
+                province: account.province?._id,
+                university: account.university?._id,
+                degree: {
+                    name: account.degree?.name?.replaceAll('*', ''),
+                    type: account.degree?.type?.replaceAll('*', '')
+                }
+            }
+            console.log('body', body)
             const resp = await fetch(`/api/user/${account._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(account)
+                body: JSON.stringify(body)
             })
+
         }
     }
-
-    $: console.log(account)
 
     function checkValidity(){
         return true
     }
-    let university_regions = []
-    let university_cities = []
-    let university_names = []
-    let faculties_names = ["Ingegneria informatica"]
 
     function check_changes() {
         for (let key in account) {
@@ -160,42 +166,18 @@
         
             <h4 class="display-4 mt-5 mb-3" id="dati_accademici">Dati accademici</h4>
 
-            <div class="col-md-3">
-                <label for="universityRegion" class="form-label">Regione</label>
-                <div class="d-flex has-validation svelecte-custom-selection">
-                    <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                    <Svelecte
-                    placeholder="Seleziona regione"
-                    options={university_regions}
-                    labelAsValue
-                    class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.university_region}
-                    />
-                </div>
-            </div>
-            <div class="col-md-4">
-                <label for="universityCity" class="form-label">Città universitaria</label>
-                <div class="d-flex has-validation svelecte-custom-selection">
-                    <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                    <Svelecte
-                    placeholder="Seleziona città"
-                    options={university_cities}
-                    labelAsValue
-                    class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.university_city}
-                    />
-                </div>
-            </div>
             <div class="col-md-5">
                 <label for="universityName" class="form-label">Nome università</label>
                 <div class="d-flex has-validation svelecte-custom-selection">
                     <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona Università"
-                    options={university_names}
-                    labelAsValue
+                    fetch="/api/universities"
+                    valueAsObject
+                    valueField="_id"
+                    labelField="name"
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.university_name}
+                    bind:value={account.university}
                     />
                 </div>
             </div>
@@ -206,10 +188,10 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona facoltà"
-                    options={faculties_names}
+                    options={[...new Set(data.degrees)]}
                     labelAsValue
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.faculty_name}
+                    bind:value={account.degree.name}
                     />
                 </div>
             </div>
@@ -219,21 +201,13 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                     <Svelecte
                     placeholder="Scegli tipologia"
-                    options={["Triennale", "Magistrale", "A ciclo unico"]}
+                    options={['Triennale', 'Magistrale', 'A Ciclo Unico']}
                     labelAsValue
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.faculty_type}
+                    bind:value={account.degree.type}
                     />
                 </div>
             </div>
-            <div class="col-md-3">
-                <label for="facultyCode" class="form-label">Codice facoltà</label>
-                <div class="input-group has-validation">
-                    <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
-                    <input class="form-control" bind:value={account.faculty_code} required>
-                </div>
-            </div>
-
             <div class="col-md-2">
                 <label for="studentID" class="form-label">Matricola</label>
                 <div class="input-group has-validation">
@@ -271,7 +245,7 @@
             <div class="d-flex flex-row justify-content-end">
                 <NormalButton class={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"}>
                     <div slot="name" class="page-btn">
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save}>
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save_changes}>
                             Salva modifiche
                         </a>
                     </div>

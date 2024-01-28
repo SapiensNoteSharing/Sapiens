@@ -99,22 +99,16 @@
     }
 
     function checkNameValidity(name) {
-        if (name?.match(/^[a-zA-Z]+$/))
-            return true;
-        else
-            return false;
+        return name?.match(/^[a-zA-Z]+$/)
     }
 
     function checkLastNameValidity(surname) {
-        if (surname?.match(/^[a-zA-Z]+$/))
-            return true;
-        else
-            return false;
+        return surname?.match(/^[a-zA-Z]+$/)
     }
 
     function checkUsernameValidity(username) {
         // se l'username è già stato preso restituire -1
-        if (username?.match(/^[a-zA-Z]+$/))
+        if (username?.match(/^[a-zA-Z0-9]+$/))
             return 1;
         else
             return -2;

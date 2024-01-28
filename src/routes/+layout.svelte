@@ -4,7 +4,8 @@
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import '$css/global.scss';
 
-    $: user = $page.data.user || {};
+    export let data;
+    $: user = $page.data.user
         
     let dnaModal;
 

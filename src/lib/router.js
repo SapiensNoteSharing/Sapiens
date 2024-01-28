@@ -39,7 +39,7 @@ class Router {
 
 const router = new Router()
     .unrestrict('.*:/login')
-    .unrestrict('.*:/callback')
+    .unrestrict('.*:/register')
     .unrestrict('.*:/logout')
     .restrict('.*:/test.*', ['admin'])
     .restrict('.*:/admin.*', ['admin'])

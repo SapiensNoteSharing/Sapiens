@@ -1,12 +1,31 @@
 
 import { error } from "@sveltejs/kit"
-import { User } from '$lib/mongodb';
+import { User, Degree } from '$lib/mongodb'
+import { getSession, setSession } from '$lib/redis'
 
-export async function PUT({ request, url, params }) {
+export async function PUT({ request, url, locals, cookies, params }) {
     try {
         let body = await request.json()
 
-        const user = await User.findByIdAndUpdate(params.id, body)
+        if(body.hash) delete body.hash
+
+        const sid = cookies.get('sid')
+        if (sid) {
+            const user = await getSession(sid);
+            if (user) {
+
+                let degree = await Degree.findOne({name: body.degree.name, type: body.degree.type}) || {}
+                if(!degree?._id){
+                    degree = await Degree.create({name: body.degree.name, type: body.degree.type})
+                }
+
+                body.degree = degree._id
+                const user = await User.findByIdAndUpdate(params.id, body, {new: true})
+
+                delete user.hash
+                await setSession(sid, user)
+            }
+        }
 
         return new Response('OK')
     } catch (err) {

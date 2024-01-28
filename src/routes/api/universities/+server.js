@@ -1,4 +1,4 @@
-import { Region } from '$lib/mongodb';
+import { University } from '$lib/mongodb';
 import { error } from '@sveltejs/kit';
 
 export async function GET({ url, locals }) {
@@ -7,11 +7,7 @@ export async function GET({ url, locals }) {
         const params = url.searchParams
         const query = {}
 
-        if(params.get('s') && params.get('s') != 'undefined'){
-            query.state = params.get('s')
-        }
-
-        const docs = await Region.find(query)
+        const docs = await University.find(query)
         
         return new Response(JSON.stringify(docs))
     } catch (err) {

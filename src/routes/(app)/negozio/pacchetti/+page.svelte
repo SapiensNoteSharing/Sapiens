@@ -163,7 +163,7 @@
 
 <div class="d-flex flex-column">
     <div class="row g-3 mb-4">
-        {#if user?.semester && user?.year && user?.faculty_name}
+        {#if user?.semester && user?.year && user?.degree.name}
             <Bundle type="semester" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto " + `${user.semester}` + " semestre"} subtitle={`${user.year}` + " anno - " + `${user.faculty_name}`} href="/negozio/pacchetti/{user.semester.toLowerCase()}_semestre"></Bundle>
         {:else}
             <Bundle type="semester" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto semestrale"} disabled={true}></Bundle>

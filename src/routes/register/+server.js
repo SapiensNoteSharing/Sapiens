@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit'
 import { setSession } from "$lib/redis";
 import { redirect } from "@sveltejs/kit";
 
-export async function POST({ url, locals, request }) {
+export async function POST({ url, locals, cookies, request }) {
     const body = await request.json();
 
     const hash = await createHash(body.password)
