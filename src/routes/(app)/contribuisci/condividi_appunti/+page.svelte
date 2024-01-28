@@ -6,9 +6,14 @@
     export let data;
     let user = data.user || []
 
+    $: console.log(user)
+
     let new_course = {
-        ...user,
-        number_CFU: 0
+        university: user.university || {},
+        degree: user.degree || {},
+        year: user.year,
+        semester: user.semester,
+        cfu: 0
     }
 
 	onMount(() => {
@@ -104,39 +109,25 @@
 
 <div class="d-flex flex-column">
     {#if user.role == "contributor" || user.role == "admin"}
-        <p class="m-0">* Campi obbligatori</p>
+        <h2 class="display-4 mb-3">Dati del corso</h2>
+        <p class="mb-3">* Campi obbligatori</p>
         <div class="scrollspy-example-2" data-bs-spy="scroll" data-bs-target="#personal_area_scrollspy" data-bs-smooth-scroll="true">
             <form class="row g-3 needs-validation m-0" novalidate>
-                <div class="col-md-3 ps-0">
-                    <label for="accountRegion" class="form-label">Regione *</label>
-                    <div class="input-group has-validation">
-                        <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                        <input class="form-control" bind:value={new_course.university_region} required>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <label for="accountUniversityCity" class="form-label">Città universitaria *</label>
-                    <div class="input-group has-validation">
-                        <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                        <input class="form-control" bind:value={new_course.university_city} required>
-                    </div>
-                </div>
-                <div class="col-md-6 pe-0">
+                <div class="col-md-5 ps-0" style="margin-bottom: 2.55rem">
                     <label for="accountUniversityName" class="form-label">Nome università *</label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
-                        <input class="form-control" bind:value={new_course.university_name} required>
+                        <input class="form-control" bind:value={new_course.university.name} required>
                     </div>
                 </div>
-
-                <div class="col-md-6 ps-0">
+                <div class="col-md-4" style="margin-bottom: 2.55rem">
                     <label for="account_faculty_name" class="form-label">Nome facoltà *</label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
-                        <input class="form-control" bind:value={new_course.faculty_name} required>
+                        <input class="form-control" bind:value={new_course.degree.name} required>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 pe-0" style="margin-bottom: 2.55rem">
                     <label for="account_degree_type" class="form-label">Tipo di laurea *</label>
                     <div class="d-flex has-validation svelecte-custom-selection">
                         <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
@@ -145,50 +136,43 @@
                         options={["Triennale", "Magistrale", "A ciclo unico"]}
                         labelAsValue
                         class="svelecte-control text-center selection-input m-0"
-                        bind:value={new_course.faculty_type}
+                        bind:value={new_course.degree.type}
                         />
-                    </div>
-                </div>
-                <div class="col-md-3 pe-0">
-                    <label for="faculty_code" class="form-label">Codice facoltà</label>
-                    <div class="input-group has-validation">
-                        <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
-                        <input class="form-control" bind:value={new_course.faculty_code} required>
                     </div>
                 </div>
 
                 <div class="d-flex flex-row">
                     <div class="row g-3 me-3" style="width: 75%">
-                        <div class="col-md-6 ps-0">
+                        <div class="col-md-7 ps-0" style="margin-bottom: 2.55rem">
                             <label for="course_name" class="form-label">Nome corso *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>
-                                <input class="form-control"  bind:value={new_course.course_name} required>
+                                <input class="form-control"  bind:value={new_course.name} required>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="course_code" class="form-label">Codice corso *</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>
-                                <input class="form-control" bind:value={new_course.course_code} required>
-                            </div>
-                        </div>
-                        <div class="col-md-2 pe-0">
+                        <div class="col-md-2" style="margin-bottom: 2.55rem">
                             <label for="number_CFU" class="form-label">Numero CFU *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>
-                                <input type="number" class="form-control" bind:value={new_course.number_CFU} min="0" required>
+                                <input type="number" class="form-control" bind:value={new_course.cfu} min="0" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pe-0" style="margin-bottom: 2.55rem">
+                            <label for="course_code" class="form-label">Codice corso</label>
+                            <div class="input-group has-validation">
+                                <span class="input-icon-label input-group-text"><i class="bi bi-book-fill"></i></span>
+                                <input class="form-control" bind:value={new_course.code}>
                             </div>
                         </div>
 
-                        <div class="col-md-5 ps-0">
+                        <div class="col-md-5 ps-0" style="margin-bottom: 2.55rem">
                             <label for="professors" class="form-label">Docenti (separare con una virgola) *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-people-fill"></i></span>
                                 <input class="form-control" bind:value={new_course.professors} required>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="margin-bottom: 2.55rem">
                             <label for="year" class="form-label">Anno *</label>
                             <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-clock-fill"></i></span>
@@ -201,7 +185,7 @@
                                 />
                             </div>
                         </div>
-                        <div class="col-md-4 pe-0">
+                        <div class="col-md-4 pe-0" style="margin-bottom: 2.55rem">
                             <label for="period" class="form-label">Periodo *</label>
                             <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-clock-fill"></i></span>
@@ -210,36 +194,14 @@
                                 options={["Primo semestre", "Secondo semestre", "Annuale"]}
                                 labelAsValue
                                 class="svelecte-control text-center selection-input m-0"
-                                bind:value={new_course.period}
+                                bind:value={new_course.semester}
                                 />
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 ps-0">
-                            <label for="curriculum_name" class="form-label">Nome curriculum</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-info-lg"></i></span>
-                                <input class="form-control" bind:value={new_course.curriculum_name}>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="curriculum_code" class="form-label">Codice curriculum</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-info-lg"></i></span>
-                                <input class="form-control" bind:value={new_course.curriculum_code}>
-                            </div>
-                        </div>
-                        <div class="col-md-3 pe-0">
-                            <label for="sector_code" class="form-label">Codice settore</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-info-lg"></i></span>
-                                <input class="form-control" bind:value={new_course.sector_code}>
                             </div>
                         </div>
                     </div>
 
                     <div class="file-input p-0 m-0" style="width: 35%">
-                        <label for="file" class="form-label">File</label>
+                        <label for="file" class="form-label">File *</label>
                         <div class="drop-zone">
                         <span class="display-6 drop-zone__prompt">Scegli un file o trascinalo qui</span>
                             <input type="file" name="myFile" class="drop-zone-input">
@@ -251,7 +213,7 @@
                     <div class="form-check ps-3">
                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                         <label class="form-check-label" for="invalidCheck">
-                            Accetta Termini e condizioni
+                            Accetta Termini e condizioni *
                         </label>
                     </div>
 

@@ -1,6 +1,5 @@
-export async function load({ fetch, locals }) {
+export async function load({ fetch }) {
     return { 
         fetch: fetch, 
-        user: locals.user
     }
 }

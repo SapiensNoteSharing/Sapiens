@@ -9,27 +9,6 @@
     let userRegister = {}
     let validated = false;
 
-    let countries = [
-        "Italia",
-        "Francia",
-        "Germania"
-    ]
-    
-    let regions = [
-        "Toscana",
-        "Puglia"
-    ]
-
-    let university_regions = [...regions];
-
-    let cities = [
-        "Grosseto",
-        "Firenze",
-        "Livorno",
-        "Arezzo"
-    ]
-
-    let university_cities = [...cities];
     let university_names = ["Università degli Studi di Firenze"]
     let faculties_names = [
         "Ingegneria informatica",
@@ -480,6 +459,50 @@
         </div>
         <img src="/src/style/landing_page.png" alt="" class="presentation-image">
     </div>
+
+    <div class="d-flex footer">
+        <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
+            <div class="container-fluid">
+                <div>
+                    <img class="ms-3 footer-logo" src="/src/style/sapiens_logo.svg" alt="Sapiens-Title">
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-whatsapp"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-discord"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-instagram"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-facebook"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-twitter-x"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-linkedin"></i></a>
+                    <a href="" class="me-4"><i class="icon footer-element bi bi-tiktok"></i></a>
+                </div>
+
+                <!-- <div class="d-flex">
+                    <ActiveButton 
+                    type={"navigation_link"}
+                    active={$page.route.id == "/(app)/chi_siamo" ? 'active' : 'not-active'} 
+                    fill={$page.route.id == "/(app)/chi_siamo" ? '' : ''}
+                    class={"m-2"}
+                    href={"/chi_siamo"}
+                    text={"Chi siamo"}
+                    icon={"bi-person-raised-hand"}
+                    >
+                    </ActiveButton>
+
+                    <ActiveButton 
+                    type={"navigation_link"}
+                    active={$page.route.id == "/(app)/faq" ? 'active' : 'not-active'} 
+                    fill={$page.route.id == "/(app)/faq" ? '-fill' : ''}
+                    class={"m-2"}
+                    href={"/faq"}
+                    text={"FAQ"}
+                    icon={"bi-question-circle"}
+                    >
+                    </ActiveButton>
+                </div> -->
+            </div>
+        </nav>
+    </div>
 </div>
 
 <style lang="scss">
@@ -658,5 +681,25 @@
 
     #facebook-icon {
         color: hsl(217, 100%, 52%)
+    }
+
+    .footer {
+        border-top: 1px solid rgba($dark, 0.25);
+    }
+    
+    .footer-logo {
+        height: 3rem;
+        filter: brightness(0);
+    }
+    
+    .footer-element {
+        color: $dark;
+        opacity: 0.5;
+
+        &:hover {
+            color: $secondary;
+            transition: 0.1s;
+            opacity: 1;
+        }
     }
 </style>

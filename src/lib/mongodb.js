@@ -89,7 +89,7 @@ const UserSchema = new Schema({
 UserSchema.index({email: 1}, {unique: true})
 UserSchema.index({username: 1}, {unique: true})
 
-UserSchema.pre('findOne', function (next){
+UserSchema.pre('findOne', function (next) {
     this.populate('country')
     this.populate('region')
     this.populate('province')
@@ -98,7 +98,7 @@ UserSchema.pre('findOne', function (next){
     next()
 })
 
-UserSchema.pre('findOneAndUpdate', function (next){
+UserSchema.pre('findOneAndUpdate', function (next) {
     this.populate('country')
     this.populate('region')
     this.populate('province')

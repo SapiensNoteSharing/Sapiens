@@ -10,10 +10,11 @@
         let semester_bundle_courses = [];
         for (let course of courses) {
             if (
-                course.university_name == user.university_name &&
-                course.faculty_name == user.faculty_name &&
-                course.year == user.year &&
-                course.semester == user.semester
+                course?.university?.name == user?.university?.name &&
+                course?.degree?.name == user?.degree?.name &&
+                course?.degree?.type == user?.degree?.type &&
+                course?.year == user?.year &&
+                course?.semester == user?.semester
             ) {
                 semester_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -25,9 +26,10 @@
         let year_bundle_courses = [];
         for (let course of courses) {
             if (
-                course.university_name == user.university_name &&
-                course.faculty_name == user.faculty_name &&
-                course.year == user.year
+                course?.university?.name == user?.university?.name &&
+                course?.degree?.name == user?.degree?.name &&
+                course?.degree?.type == user?.degree?.type &&
+                course?.year == user?.year
             ) {
                 year_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -38,9 +40,11 @@
     function get_degree_bundle_courses() {
         let degree_bundle_courses = [];
         for (let course of courses) {
+            console.log(course, user)
             if (
-                course.university_name == user.university_name &&
-                course.faculty_name == user.faculty_name
+                course?.university?.name == user?.university?.name &&
+                course?.degree?.name == user?.degree?.name &&
+                course?.degree?.type == user?.degree?.type
             ) {
                 degree_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -158,18 +162,18 @@
 
 <div class="d-flex flex-column">
     <div class="row g-3 mb-4">
-        {#if user?.semester && user?.year && user?.degree.name}
-            <Bundle type="semester" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto " + `${user.semester}` + " semestre"} subtitle={`${user.year}` + " anno - " + `${user.faculty_name}`} href="/negozio/pacchetti/{user.semester.toLowerCase()}_semestre"></Bundle>
+        {#if user?.semester && user?.year && user?.degree?.name}
+            <Bundle type="semester" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto " + `${user?.semester}` + " semestre"} subtitle={`${user?.year}` + " anno - " + `${user?.degree?.name}`} href="/negozio/pacchetti/{user?.semester?.toLowerCase()}_semestre"></Bundle>
         {:else}
             <Bundle type="semester" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto semestrale"} disabled={true}></Bundle>
         {/if}
-        {#if user?.year && user?.faculty_name}
-            <Bundle type="year" class="col-md-4" courses={year_bundle_courses} title={"Pacchetto " + `${user.year}` + " anno"} subtitle={user.faculty_name} href="/negozio/pacchetti/{user.year.toLowerCase()}_anno"></Bundle>
+        {#if user?.year && user?.degree?.name}
+            <Bundle type="year" class="col-md-4" courses={year_bundle_courses} title={"Pacchetto " + `${user?.year}` + " anno"} subtitle={user?.degree?.name} href="/negozio/pacchetti/{user?.year?.toLowerCase()}_anno"></Bundle>
         {:else}
             <Bundle type="year" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto annuale"} disabled={true}></Bundle>
         {/if}
-        {#if user?.faculty_name}
-            <Bundle type="faculty" class="col-md-4" courses={degree_bundle_courses} title={"Pacchetto " + `${user.faculty_name}`} href="/negozio/pacchetti/{user.faculty_name.toLowerCase().replace(/\s/g, '_')}"></Bundle>
+        {#if user?.degree?.name}
+            <Bundle type="faculty" class="col-md-4" courses={degree_bundle_courses} title={"Pacchetto " + `${user?.degree?.name}`} href="/negozio/pacchetti/{user?.degree?.name?.toLowerCase()?.replace(/\s/g, '_')}"></Bundle>
         {:else}
             <Bundle type="faculty" class="col-md-4" courses={semester_bundle_courses} title={"Pacchetto facoltà"} disabled={true}></Bundle>
         {/if}

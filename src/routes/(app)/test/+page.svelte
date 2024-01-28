@@ -29,9 +29,7 @@
 </script>
 
 <div class="d-flex h-100 align-self-stretch">
-    <LeftSidebar user={user}/>
-
-    <div class="col m-5">
+    <div class="col">
         <NormalButton class={"me-3"}>
             <div slot="name" class="page-btn rounded-4 mb-3">
                 <a class="btn btn-primary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={update}><i class="me-3 display-5 bi bi-arrow-clockwise"></i>Update</a>

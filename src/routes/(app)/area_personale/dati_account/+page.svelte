@@ -8,8 +8,8 @@
     export let data;
 
     let account = {...data.user}
-    if(!account.university) account.university = {}
-    if(!(typeof account.degree == 'object')) account.degree = {}
+    if (!account.university) account.university = {}
+    if (!(typeof account.degree == 'object')) account.degree = {}
 
     async function save_changes() {
         if (checkValidity()) {
