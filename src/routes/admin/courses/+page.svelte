@@ -10,7 +10,7 @@
     let current = {}
     let cols = [
         {
-            id: 'university_name',
+            id: 'university.name',
             label: 'Università',
             format: val => val || '-',
             searchable: true,
@@ -27,41 +27,17 @@
             searchable: true,
         },
         {
-            id: 'faculty_name',
+            id: 'degree.name',
             label: 'Nome facoltà',
             format: val => val || '-',
             searchable: true,
         },   
         {
-            id: 'faculty_type',
+            id: 'degree.type',
             label: 'Tipo facoltà',
             format: val => val || '-',
             searchable: true,
         },              
-        {
-            id: 'faculty_code',
-            label: 'Codice facoltà',
-            format: val => val || '-',
-            searchable: true,
-        }, 
-        {
-            id: 'sector_code',
-            label: 'Codice settore',
-            format: val => val || '-',
-            searchable: true,
-        }, 
-        {
-            id: 'curriculum_code',
-            label: 'Codice curriculum',
-            format: val => val || '-',
-            searchable: true,
-        },
-        {
-            id: 'curriculum_name',
-            label: 'Nome curriculum',
-            format: val => val || '-',
-            searchable: true,
-        },
         { 
             id: 'cfu',
             label: 'CFU',
@@ -144,7 +120,7 @@
         }
 
         deleteModal.show(current).then(async res => {
-            if(res){
+            if (res) {
                 const resp = await fetch('/admin/api/courses', {
                     method: 'DELETE',
                     headers: {

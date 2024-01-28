@@ -52,9 +52,9 @@ $:  options = {
         };
     });
 
-$:	if(calendar && options) updateCalendarOptions();
+$: if (calendar && options) updateCalendarOptions();
     
-    export async function reload(){
+    export async function reload() {
         const resp = await fetch(`/api/calendar`);
         events = (resp.ok && await resp.json()).events || [];
         events = events.map(event => ({
@@ -66,24 +66,25 @@ $:	if(calendar && options) updateCalendarOptions();
         }))
     }
 
-    export function changeView(type, range){
+    export function changeView(type, range) {
         calendar.changeView(type, range)
     }
     
-    export function getView(){
+    export function getView() {
         return calendar.view;
     }
 
-    export function prevDay(){
+    export function prevDay() {
         calendar.prev();
     }
 
-    export function nextDay(){
+    export function nextDay() {
         calendar.next();
     }
 
-    export function today(){
-        if(calendar.view.type == 'timeGridWeek') calendar.changeView('timeGridDay')
+    export function today() {
+        if (calendar.view.type == 'timeGridWeek') 
+            calendar.changeView('timeGridDay')
         calendar.today();
     }
 

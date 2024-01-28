@@ -1,5 +1,4 @@
-export async function load({fetch}){
-
+export async function load({fetch}) {
     const resp = await fetch(`/api/degrees`);
     const degrees = (resp.ok && await resp.json()) || []
 

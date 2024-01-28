@@ -7,9 +7,9 @@ import { loadDatabase } from '$lib/loadDatabase';
 process.on('SIGINT', function () { process.exit(); }); // Ctrl+C  
 process.on('SIGTERM', function () { process.exit(); }); // docker stop
 
-try{
+try {
     loadDatabase()
-}catch(err){
+} catch(err) {
     console.log(err)
 }
 
@@ -27,12 +27,12 @@ export async function handle({ event, resolve }) {
     const auth = guard(`${event.request.method}:${event.url.pathname}`, user);
     
 
-    if(event.url.pathname != '/status' && event.url.pathname != '/api/auth') {
+    if (event.url.pathname != '/status' && event.url.pathname != '/api/auth') {
         await updateTtl(sid);
         console.log(`${event.request.method}:${event.url.pathname}`, auth)
     }
 
-    if(auth.status != 200 && event.url.pathname != '/') {
+    if (auth.status != 200 && event.url.pathname != '/') {
         console.log('auth status != 200', event.url.pathname)
 
         event.cookies.set('redirect', (event.url.pathname == '/api/auth') ? '/' : event.url.href, {

@@ -26,6 +26,7 @@ $: console.log(data.user, account)
                     type: account.degree?.type?.replaceAll('*', '')
                 }
             }
+
             const resp = await fetch(`/api/user/${account._id}`, {
                 method: 'PUT',
                 headers: {
@@ -33,14 +34,14 @@ $: console.log(data.user, account)
                 },
                 body: JSON.stringify(body)
             })
-            if(resp.ok){
+
+            if (resp.ok) {
                 invalidate('user')
             }
-
         }
     }
 
-    function checkValidity(){
+    function checkValidity() {
         return true
     }
 

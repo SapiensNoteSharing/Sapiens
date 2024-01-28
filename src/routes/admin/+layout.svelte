@@ -7,20 +7,20 @@
     export let data;
     $: user = data.user
 
-    function formatPageTitle(page){
-        if(!page.route?.id) return ''
+    function formatPageTitle(page) {
+        if (!page.route?.id) 
+            return ''    
         
         let route = page.route.id.split('/').pop().replace(/_/g, ' ')
         route = substitute(route)
-        if(route == 'faq') return 'FAQ'
-
-
+        if (route == 'faq') 
+            return 'FAQ'
 
         const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1)
         return capitalise(route)
     }
 
-    function substitute(text){
+    function substitute(text) {
         text = text.replace(/\[course\]/, $page.data?.course?.name);
         text = text.replace(/\[...dir\]/, $page.data?.directory?.name)
         text = text.replace(/\[file\]/, $page.data?.file?.name)

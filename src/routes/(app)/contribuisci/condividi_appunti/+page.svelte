@@ -15,7 +15,7 @@
         cfu: 0
     }
 
-    async function becomeContributor(){
+    async function becomeContributor() {
         const resp = await fetch(`/api/user/${user._id}`, {
             method: 'PUT',
             headers: {
@@ -23,7 +23,7 @@
             },
             body: JSON.stringify({role: 'contributor'})
         })
-        if(resp.ok){
+        if (resp.ok) {
             invalidate('user')
         }
     }

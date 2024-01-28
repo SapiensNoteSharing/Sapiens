@@ -16,7 +16,7 @@
     ]
     
     async function save() {
-        if(current.name){
+        if (current.name) {
             await fetch(`/admin/api/courses/${params.course}/${params.dir}`, {
                 method: current?._id ? 'PUT' : 'POST',
                 headers: {

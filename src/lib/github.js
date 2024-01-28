@@ -72,9 +72,9 @@ export async function get(file) {
     return body
 }
 
-function substitute(href){
+function substitute(href) {
     return href?.split('')?.map(char => {
-        if(htmlMapping[char] != undefined) 
+        if (htmlMapping[char] != undefined) 
             return htmlMapping[char];
         return char
     })?.join('')
@@ -145,7 +145,7 @@ export async function update() {
         let courses = []
 
         for (let dir of body) {
-            if(dir.name != 'Hidden'){
+            if (dir.name != 'Hidden') {
                 const res = await fetch(`${base}${substitute(dir.path)}`, options)
                 courses = [...courses, ...((res.ok && await res.json()) || [])]
             }
