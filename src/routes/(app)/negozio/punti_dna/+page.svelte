@@ -17,7 +17,7 @@
             body: JSON.stringify({ dna: user.dna + dna })
         })
         if (resp.ok) {
-            invalidate('user')
+            invalidate('http://localhost:5173/') //(app)/negozio/punti_dna/user
         }
     }
 
