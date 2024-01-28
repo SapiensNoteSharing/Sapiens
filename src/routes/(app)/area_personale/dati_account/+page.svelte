@@ -271,7 +271,7 @@
             <div class="d-flex flex-row justify-content-end">
                 <NormalButton class={"mt-5"} style={"margin-left: calc(var(--bs-gutter-x) * .5);"}>
                     <div slot="name" class="page-btn">
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save}>
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" disabled={!changes} on:click={save_changes}>
                             Salva modifiche
                         </a>
                     </div>
@@ -295,7 +295,7 @@
         border-radius: .4rem 0rem 0rem .4rem;
     }
 
-    .form-control, .form-select {
+    .form-control {
 		border: 1px solid $dark;
 
 		&::placeholder {

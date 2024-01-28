@@ -13,8 +13,11 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ ...user, dna: user.dna + 2 })
+            body: JSON.stringify({ dna: user.dna + dna })
         })
+
+        const body = (resp.ok && await resp.json()) || {}
+        data.user = body;
     }
 
     function updateDNA() {

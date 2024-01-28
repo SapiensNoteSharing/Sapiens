@@ -185,33 +185,4 @@
 
 <style lang="scss">
     @import '$css/variables.scss';
-
-    .bundle {
-        border: 1px solid rgba($dark, 0.25);
-        background: $light;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        cursor: pointer;
-        transition: .25s ease-in-out;
-
-        &:hover {
-            transition: .25s ease-in-out;
-            position: relative;
-            box-shadow: 0px 5px 10px 0px rgba($dark, 0.1);
-        }
-    }
-
-    .box {
-        padding: 2rem;
-        border: 1px solid rgba($dark, 0.25);
-        background: $light;
-        border-radius: 2rem;
-        cursor: pointer;
-        transition: .25s ease-in-out;
-    }
-
-    .bundle-course-icon {
-        width: 3.5rem;
-        margin: 2rem 1.5rem 0rem 1.5rem;
-    }
 </style>

@@ -8,18 +8,6 @@
 <style lang="scss">
     @import '$css/variables.scss';
 
-    .main-content {
-        width: 70%;
-        height: 100%;
-        box-sizing: border-box;
-    }
-
-    .side-content {
-        width: 30%;
-        height: 100%;
-        box-sizing: border-box;
-    }
-
     .box {
         padding: 2rem;
         border: 1px solid rgba($dark, 0.25);

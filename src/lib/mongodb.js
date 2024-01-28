@@ -89,7 +89,7 @@ UserSchema.index({username: 1}, {unique: true})
 UserSchema.pre('findOne', function (next){
     this.populate('country')
     this.populate('region')
-    this.populate('city')
+    this.populate('province')
     this.populate('university')
     this.populate('degree')
     next()
@@ -105,7 +105,7 @@ const UniversitySchema = new Schema({
         type: Number,
         ref: 'Region'
     },
-    city: {
+    province: {
         type: Number,
         ref: 'Province'
     }

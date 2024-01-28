@@ -104,8 +104,8 @@
 
             <ActiveButton 
             type={"navigation_link"}
-            active={$page.route.id == "/test" ? 'active' : 'not-active'} 
-            fill={$page.route.id == "/test" ? '-fill' : ''}
+            active={$page.route.id == "/(app)/test" ? 'active' : 'not-active'} 
+            fill={$page.route.id == "/(app)/test" ? '-fill' : ''}
             class={"my-2"}
             href={"/test"}
             text={"Test"}

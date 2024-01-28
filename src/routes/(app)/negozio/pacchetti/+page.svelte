@@ -4,12 +4,7 @@
     export let data;
     let courses = data.courses || [];
     let user = data.user || {};
-
-    let owned = []
-    // let owned = [
-    //     courses.find(course => course.name == "Fisica I"),
-    //     courses.find(course => course.name == "Algoritmi e strutture dati"),
-    // ].filter(Boolean);
+    let owned = data.my_courses || [];
 
     function get_semester_bundle_courses() {
         let semester_bundle_courses = [];

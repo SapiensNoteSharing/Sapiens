@@ -2,10 +2,10 @@
     let classes = "";
     export {classes as class};
 
-    let style;
+    let style = "";
     export {style as style};
 
-    let disabled;
+    let disabled = false;
     export {disabled as disabled}
 </script>
 

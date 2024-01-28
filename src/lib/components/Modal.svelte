@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
-	
+
 	/** @type {string} **/
 	export let id = Date.now();
 	/** @type {string} **/
@@ -28,15 +28,6 @@
 	function close(resp) {
 		modal.hide();
 		cache[id].resolve(resp);
-	}
-
-	function buy() {
-		// if (user.dna > cost) {
-			// user.dna -= cost;
-			close();
-		// } else {
-			// alert("Non hai abbastanza punti dna")
-		// }
 	}
 
 	export function show(props = {}) {
@@ -79,7 +70,7 @@
 				{/if}
 				<NormalButton class={"ml-auto"} style={""}>
 					<div slot="name">
-						<a type="button" class="btn btn-secondary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={buy}>
+						<a type="button" class="btn btn-secondary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={close}>
 							{yes}
 						</a>
 					</div>

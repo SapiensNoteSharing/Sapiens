@@ -5,13 +5,7 @@
 
     export let data;
     let courses = data.courses || [];
-    let user = data.user || {};
-
-    let owned = []
-    // let owned = [
-    //     courses.find(course => course.name == "Fisica I"),
-    //     courses.find(course => course.name == "Algoritmi e strutture dati"),
-    // ].filter(Boolean);
+    let owned = data.my_courses || [];
 
     // elenco dei corsi non posseduti
     let ownedCoursesNames = owned.map(course => course.name);
