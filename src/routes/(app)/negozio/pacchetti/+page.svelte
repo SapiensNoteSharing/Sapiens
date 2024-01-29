@@ -1,20 +1,19 @@
 <script>
     import Bundle from '$lib/components/Bundle.svelte';
-
+    import { user } from '$lib/stores'
     export let data;
     let courses = data.courses || [];
-    let user = data.user || {};
     let owned = data.my_courses || [];
 
     function get_semester_bundle_courses() {
         let semester_bundle_courses = [];
         for (let course of courses) {
             if (
-                // course?.university?.name == user?.university?.name &&
-                course?.degree?.name == user?.degree?.name &&
-                course?.degree?.type == user?.degree?.type &&
-                course?.year == user?.year &&
-                course?.semester == user?.semester
+                // course?.university?.name == $user?.university?.name &&
+                course?.degree?.name == $user?.degree?.name &&
+                course?.degree?.type == $user?.degree?.type &&
+                course?.year == $user?.year &&
+                course?.semester == $user?.semester
             ) {
                 semester_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -26,10 +25,10 @@
         let year_bundle_courses = [];
         for (let course of courses) {
             if (
-                // course?.university?.name == user?.university?.name &&
-                course?.degree?.name == user?.degree?.name &&
-                course?.degree?.type == user?.degree?.type &&
-                course?.year == user?.year
+                // course?.university?.name == $user?.university?.name &&
+                course?.degree?.name == $user?.degree?.name &&
+                course?.degree?.type == $user?.degree?.type &&
+                course?.year == $user?.year
             ) {
                 year_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -41,9 +40,9 @@
         let degree_bundle_courses = [];
         for (let course of courses) {
             if (
-                // course?.university?.name == user?.university?.name &&
-                course?.degree?.name == user?.degree?.name &&
-                course?.degree?.type == user?.degree?.type
+                // course?.university?.name == $user?.university?.name &&
+                course?.degree?.name == $user?.degree?.name &&
+                course?.degree?.type == $user?.degree?.type
             ) {
                 degree_bundle_courses.push(JSON.parse(JSON.stringify({ ...course, owned: owned.includes(course) })));
             }
@@ -156,7 +155,7 @@
 
     load_bundles();
 
-    $: console.log(user?.semester != null, user?.year != null, user?.degree?.name != undefined)
+    $: console.log($user?.semester != null, $user?.year != null, $user?.degree?.name != undefined)
 </script>
 
 <div class="d-flex flex-column">
@@ -166,9 +165,9 @@
             class="col-md-4"
             courses={semester_bundle_courses} 
             title={"Pacchetto semestrale"} 
-            subtitle={`${user?.semester}` + " semestre"} 
-            href="/negozio/pacchetti/{user?.semester?.toLowerCase()}_semestre" 
-            enabled={user?.semester != null && user?.year != null && user?.degree?.name != undefined}>
+            subtitle={`${$user?.semester}` + " semestre"} 
+            href="/negozio/pacchetti/{$user?.semester?.toLowerCase()}_semestre" 
+            enabled={$user?.semester != null && $user?.year != null && $user?.degree?.name != undefined}>
         </Bundle>
 
         <Bundle 
@@ -176,9 +175,9 @@
             class="col-md-4" 
             courses={year_bundle_courses} 
             title={"Pacchetto annuale"} 
-            subtitle={`${user?.year}` + " anno"} 
-            href="/negozio/pacchetti/{user?.year?.toLowerCase()}_anno" 
-            enabled={user?.year != null && user?.degree?.name != undefined}>
+            subtitle={`${$user?.year}` + " anno"} 
+            href="/negozio/pacchetti/{$user?.year?.toLowerCase()}_anno" 
+            enabled={$user?.year != null && $user?.degree?.name != undefined}>
         </Bundle>
         
         <Bundle 
@@ -186,9 +185,9 @@
             class="col-md-4" 
             courses={degree_bundle_courses} 
             title={"Pacchetto facoltà"} 
-            subtitle={user?.degree?.name} 
-            href="/negozio/pacchetti/{user?.degree?.name?.toLowerCase()?.replace(/\s/g, '_')}" 
-            enabled={user?.degree?.name != undefined}>
+            subtitle={$user?.degree?.name} 
+            href="/negozio/pacchetti/{$user?.degree?.name?.toLowerCase()?.replace(/\s/g, '_')}" 
+            enabled={$user?.degree?.name != undefined}>
         </Bundle>
     </div>
 </div>

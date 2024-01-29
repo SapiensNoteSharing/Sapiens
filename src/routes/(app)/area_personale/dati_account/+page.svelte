@@ -4,40 +4,19 @@
     import Svelecte from 'svelecte'
     import { page } from '$app/stores';
     import { invalidate } from '$app/navigation'
+    import { user } from '$lib/stores';
 
     export let data;
 
-    let account = {...data.user}
+    let account = {...$user}
     if (!account.university) account.university = {}
     if (!(typeof account.degree == 'object')) account.degree = {}
 
-$: console.log(data.user, account)
+$: console.log($user, account)
 
     async function save_changes() {
         if (checkValidity()) {
-            let body = {
-                ...account,
-                country: account.country?._id,
-                region: account.region?._id,
-                province: account.province?._id,
-                university: account.university?._id,
-                degree: {
-                    name: account.degree?.name?.replaceAll('*', ''),
-                    type: account.degree?.type?.replaceAll('*', '')
-                }
-            }
-
-            const resp = await fetch(`/api/user/${account._id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            })
-
-            if (resp.ok) {
-                invalidate('https://localhost:5173/')
-            }
+            $user = account
         }
     }
 
@@ -47,7 +26,7 @@ $: console.log(data.user, account)
 
     function check_changes() {
         for (let key in account) {
-            if (data.user[key] != account[key]) {
+            if ($user[key] != account[key]) {
                 return true;
             }
         }

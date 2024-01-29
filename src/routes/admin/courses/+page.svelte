@@ -139,7 +139,7 @@
 </Modal>
         
 <div class="d-flex mb-2 justify-content-between align-items-center">
-    <h2 class="mb-0">Courses</h2>
+    <h1 class="mb-0">Courses</h1>
     <button class="ms-auto me-3 btn btn-primary btn-sm border-dark" on:click={() => goto('/admin/courses/new')} data-sveltekit-preload-data="hover">New</button>
 </div>
 

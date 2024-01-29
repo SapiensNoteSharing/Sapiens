@@ -1,11 +1,11 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
     import TopChoices from '$lib/components/TopChoices.svelte';
-
+    import { user } from '$lib/stores'
     export let data;
-    $: user = data.user || {}
     let courses = data.courses || []
-    let my_courses = data.my_courses || []
+    let userCourses = new Set($user.courses.map(course => course.course));
+    let my_courses = courses.filter(course => userCourses.has(course._id)) || [];
     
     let league_names = ["Vetro", "Bronzo", "Argento", "Oro", "Diamante"];
 </script>
@@ -82,7 +82,7 @@
                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
                 <span class="display-4 ms-3">Streak</span>
             </div>
-            <span class="display-6">La tua streak è lunga {user.streak} giorni!</span>
+            <span class="display-6">La tua streak è lunga {$user.streak} giorni!</span>
         </div>
 
         <div class="href-box d-flex flex-column mb-4">
@@ -90,16 +90,16 @@
                 <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
                 <span class="display-4 ms-3">Punti XP</span>
             </div>
-            <span class="display-6">Hai guadagnato un totale di {user.xp} XP!</span>
+            <span class="display-6">Hai guadagnato un totale di {$user.xp} XP!</span>
         </div>
 
-        {#if user.streak >= 14}
+        {#if $user.streak >= 14}
             <a class="href-box d-flex flex-column mb-4" href="/classifiche">
                 <div class="d-flex align-items-center flex-row mb-3">
-                    <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league_level_{user.league_level}.png" alt="league">
+                    <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league_level_{$user.league_level}.png" alt="league">
                     <span class="display-4 ms-3">Lega</span>
                 </div>
-                <span class="display-6">Fai parte della Lega {league_names[user.league_level]}!</span>
+                <span class="display-6">Fai parte della Lega {league_names[$user.league_level]}!</span>
             </a>
         {/if}
         
@@ -111,8 +111,8 @@
             </div>
             <p class="mb-2 display-6">Il tuo bilancio è di:</p>
             <ul class="display-6 mb-0">
-                <li class="mb-1">{user.dna} punti DNA</li>
-                <li>{user.rna} punti RNA</li>
+                <li class="mb-1">{$user.dna} punti DNA</li>
+                <li>{$user.rna} punti RNA</li>
             </ul>
         </a>
     </div>

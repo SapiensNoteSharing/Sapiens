@@ -3,9 +3,10 @@
     import RightSidebar from "$lib/components/RightSidebar.svelte";
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import { page } from '$app/stores';
+    import { user } from '$lib/stores'
 
     export let data;
-    $: user = data.user || {};
+    $user = data.user || {}
 
 
     function formatPageTitle(page) {
@@ -39,7 +40,7 @@
                     <ActiveButton 
                     class={"m-2"}
                     type="user_stats"
-                    text={user.streak}
+                    text={$user.streak}
                     src={"/src/style/streak.png"}
                     alt={"streak"}
                     />
@@ -47,17 +48,17 @@
                     <ActiveButton 
                     class={"m-2"}
                     type="user_stats"
-                    text={user.xp}
+                    text={$user.xp}
                     src={"/src/style/xp.png"}
                     alt={"xp"}
                     />
 
-                    {#if user.streak >= 14}
+                    {#if $user.streak >= 14}
                         <ActiveButton
                         class={"m-2"}
                         type="user_stats"
-                        text={(user.league_position || "n") + "°"}
-                        src={"/src/style/leagues/level_" + user.league_level + ".png"}
+                        text={($user.league_position || "n") + "°"}
+                        src={"/src/style/leagues/level_" + $user.league_level + ".png"}
                         alt={"league"}
                         href={"/classifiche"}
                         />
@@ -66,7 +67,7 @@
                     <ActiveButton 
                     class={"m-2"}
                     type="user_stats"
-                    text={user.dna}
+                    text={$user.dna}
                     src={"/src/style/dna.svg"}
                     alt={"dna"}
                     href={"/negozio/punti_dna"}
@@ -75,7 +76,7 @@
                     <ActiveButton 
                     class={"m-2"}
                     type="user_stats"
-                    text={user.rna}
+                    text={$user.rna}
                     src={"/src/style/rna.png"}
                     alt={"rna"}
                     />
@@ -91,7 +92,7 @@
     </div>
 
     <div class="d-flex h-100 align-self-stretch">
-        <LeftSidebar user={data.user}/>
+        <LeftSidebar user={$user}/>
         <div class="background">
             <div class="content">
                 <slot></slot>

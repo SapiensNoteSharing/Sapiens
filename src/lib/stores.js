@@ -18,3 +18,22 @@ export const filter_tags = writable([
 ]);
 
 export const viewing = writable({})
+
+function createUser(){
+    
+    const { subscribe, set, update } = writable({});
+    return {
+        subscribe,
+        update,
+        set: (val) => {
+            set(val)
+            fetch(`http://localhost:5173/api/user/${val._id}`, {
+                method: 'PUT',
+                body: JSON.stringify(val)
+            })
+        },
+    }
+
+}
+
+export const user = createUser()

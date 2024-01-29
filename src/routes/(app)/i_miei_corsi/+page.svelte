@@ -1,12 +1,13 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
     import TopChoices from '$lib/components/TopChoices.svelte';
-    import { value, filter_tags } from '$lib/stores';
+    import { value, filter_tags, user } from '$lib/stores';
     import Svelecte from 'svelecte';
     
     export let data;
     let courses = data.courses || [];
-    let my_courses = data.my_courses || [];
+    let userCourses = new Set($user.courses.map(course => course.course));
+    let my_courses = courses.filter(course => userCourses.has(course._id)) || [];
 
     let sorting_method = "chronological_order";
     let sorting_methods = [

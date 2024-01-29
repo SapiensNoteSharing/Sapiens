@@ -1,24 +1,15 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
     import { invalidate } from '$app/navigation' 
+    import { user } from '$lib/stores';
 
     export let data;
-    $: user = data.user || {}
-    
+
     let dna = 0;
     let euro = 0;
 
     async function addDNA() {
-        const resp = await fetch(`/api/user/${user._id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ dna: user.dna + dna })
-        })
-        if (resp.ok) {
-            invalidate('http://localhost:5173/') //(app)/negozio/punti_dna/user
-        }
+        $user.dna += dna
     }
 
     function updateDNA() {

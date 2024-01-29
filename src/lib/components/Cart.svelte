@@ -1,9 +1,8 @@
 <script>
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
-
+    import { user } from '$lib/stores';
     export let course;
-
     let selected_option = "complete"
 
     export let cartModal;
@@ -13,16 +12,22 @@
 
         cartModal.show().then(async res => {
             if (res) {
-                const resp = await fetch(`/api/courses/${course._id}/buy`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ type: selected_option })
-                });
+
+                const cost = (10 + course?.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2
+                if($user.dna > cost){
+                    let update = {
+                        dna: $user.dna - cost,
+                        courses: [...$user.courses, {
+                            course: course._id
+                        }]
+                    }
+                    $user = {...$user, ...update};
+
+                }
             };
         })
     }
+    $: console.log($user)
 </script>
 
 <Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>

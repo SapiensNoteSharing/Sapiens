@@ -148,7 +148,7 @@
                             <Item collapsible obj={chapter} icon="chevron" class="chapter" active={chapter.files.map(file => file._id).includes($viewing._id)}>
                                 <div slot="menu">
                                     {#each chapter.files || [] as file}
-                                        <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail} active={$viewing._id == file._id}></Item>
+                                        <Item obj={file} class="file" on:click={(ev) => $viewing = {...ev.detail, course: course}} active={$viewing._id == file._id}></Item>
                                     {/each}
                                 </div>
                             </Item>

@@ -3,29 +3,24 @@
     import { onMount } from 'svelte';
     import Svelecte from 'svelecte'
     import { invalidate } from '$app/navigation';
+    import { user } from '$lib/stores'
 
     export let data;
-    $: user = data.user || {}
+
+    let account = {...$user}
+
 
     let new_course = {
-        university: user?.university || {},
-        degree: user?.degree || {},
-        year: user?.year,
-        semester: user?.semester,
+        university: $user?.university || {},
+        degree: $user?.degree || {},
+        year: $user?.year,
+        semester: $user?.semester,
         cfu: 0
     }
 
     async function becomeContributor() {
-        const resp = await fetch(`/api/user/${user._id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({role: 'contributor'})
-        })
-        if (resp.ok) {
-            invalidate('user')
-        }
+        $user.role = 'contributor'
+        $user.paypal_email = account.paypal_email
     }
 
 	onMount(() => {
@@ -120,7 +115,7 @@
 </script>
 
 <div class="d-flex flex-column">
-    {#if user.role == "contributor" || user.role == "admin"}
+    {#if $user.role == "contributor" || $user.role == "admin"}
         <h2 class="display-4 mb-3">Dati del corso</h2>
         <p class="mb-3">* Campi obbligatori</p>
         <div class="scrollspy-example-2" data-bs-spy="scroll" data-bs-target="#personal_area_scrollspy" data-bs-smooth-scroll="true">
@@ -260,7 +255,7 @@
                     <label for="userUsername" class="form-label">PayPal e-mail</label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-paypal"></i></span>
-                        <input class="form-control" bind:value={user.paypal_email} required>
+                        <input class="form-control" bind:value={account.paypal_email} required>
                     </div>
                 </div>
 
