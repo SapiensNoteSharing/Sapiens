@@ -152,15 +152,15 @@ export async function update() {
         }
         
         courses.forEach(async course => {
-            console.log('doing asyncronus')
-            let dbCourse = dbCourses.find(c => c.name == course.name) 
-            const resp = await fetch(course.url, options)
-            const body = (resp.ok && await resp.json()) || {}
+            console.log('doing asynchronous')
+            let dbCourse = dbCourses.find(c => c.name == course.name) || {}
+            const r = await fetch(course.url, options)
+            const b = (r.ok && await r.json()) || {}
 
             const metadata = await getMetadata(course.path)
 
-            const chapters = body.filter(obj => obj.type == 'dir' && obj.name.slice(0, 2).match(/\d+/))
-            const extra_content = body.filter(obj => !obj.name.slice(0, 2).match(/\d+/) && obj.name != course.name)
+            const chapters = b.filter(obj => obj.type == 'dir' && obj.name.slice(0, 2).match(/\d+/))
+            const extra_content = b.filter(obj => !obj.name.slice(0, 2).match(/\d+/) && obj.name != course.name)
             
             let chapterIds = [], chapterId
             for (let chapter of chapters) {
@@ -183,23 +183,37 @@ export async function update() {
                 }
             }
 
-            const extra = await Directory.findOneAndUpdate({_id: dbCourse?.extra_content}, {
-                name: `${course.name}:extraContent`,
-                directories: contentsIds.directories,
-                files: contentsIds.files,
-            }, {upsert: true, new: true})
+            let extra;
+            if(dbCourse.extra_content){
+                extra = await Directory.findOneAndUpdate({_id: dbCourse.extra_content}, {
+                    name: `${course.name}:extraContent`,
+                    directories: contentsIds.directories,
+                    files: contentsIds.files,
+                })
+            } else {
+                extra = await Directory.create({
+                    name: `${course.name}:extraContent`,
+                    directories: contentsIds.directories,
+                    files: contentsIds.files,
+                })
+            }
 
+            console.log('extra content', extra)
             const uni = await University.findOneAndUpdate({
-                name: metadata.university_name
-            }, {upsert: true, new: true})
+                name: new RegExp(`^${metadata.university_name}$`, 'i'),
+            }, {upsert: true})
 
-            console.log('UNIVERSIT°', uni)
-            const degree = await Degree.findOneAndUpdate({
-                name: metadata?.degree?.name,
-                type: metadata?.degree?.type
-            }, {upsert: true, new: true})
+            let degree;
+            if(metadata?.degree?.name && metadata?.degree?.type ){
+                degree = await Degree.findOneAndUpdate({
+                    name: new RegExp(`^${metadata.degree.name}$`, 'i'),
+                    type: metadata.degree.type
+                }, {upsert: true})
+            }
 
-            await Course.findOneAndUpdate({name: course.name}, {
+            console.log('UNIVERSITà', metadata, uni, degree, new RegExp(`${metadata.degree.name}`, 'i').toString())
+
+            const c = await Course.findOneAndUpdate({name: new RegExp(`^${course.name}$`, 'i')}, {
                 ...metadata,
                 chapters: chapterIds,
                 extra_content: extra._id,
@@ -207,7 +221,7 @@ export async function update() {
                 degree: degree?._id
             }, {upsert: true})
 
-            console.log('finished course', course.name)
+            console.log('finished course', c, course.name)
         })
 
         const gitCoursesNames = new Set(courses.map(course => course.name))
