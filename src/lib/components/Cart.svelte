@@ -2,6 +2,7 @@
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import { user } from '$lib/stores';
+    import { goto } from '$app/navigation';
     export let course;
     let selected_option = "complete"
 
@@ -12,9 +13,8 @@
 
         cartModal.show().then(async res => {
             if (res) {
-
                 const cost = (10 + course?.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2
-                if($user.dna > cost){
+                if ($user.dna >= cost) {
                     let update = {
                         dna: $user.dna - cost,
                         courses: [...$user.courses, {
@@ -22,12 +22,12 @@
                         }]
                     }
                     $user = {...$user, ...update};
-
+                } else {
+                    goto('/negozio/punti_dna')
                 }
             };
         })
     }
-    $: console.log($user)
 </script>
 
 <Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>

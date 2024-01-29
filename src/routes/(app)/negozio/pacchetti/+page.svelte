@@ -154,8 +154,6 @@
     }
 
     load_bundles();
-
-    $: console.log($user?.semester != null, $user?.year != null, $user?.degree?.name != undefined)
 </script>
 
 <div class="d-flex flex-column">

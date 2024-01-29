@@ -6,8 +6,7 @@
     
     export let data;
     let courses = data.courses || [];
-    let userCourses = new Set($user.courses.map(course => course.course));
-    let my_courses = courses.filter(course => userCourses.has(course._id)) || [];
+    let my_courses = data.my_courses || [];
 
     let sorting_method = "chronological_order";
     let sorting_methods = [
@@ -346,7 +345,7 @@
 </script>
 
 <div class="d-flex flex-column">
-    {#if my_courses.length > 0}
+    {#if filtered_owned.length > 0}
         <div class="d-flex mb-5 justify-content-between">
             <div class="d-flex align-items-center">
                 {#if $filter_tags.length == 2}
@@ -388,7 +387,7 @@
                 <div class="w-100 mb-4">
                     <h3 class="display-4 m-0">{filtered_owned[0].semester} semestre</h3>
                 </div>
-                {#each my_courses as course, $index}
+                {#each filtered_owned as course, $index}
                     {#if $index > 0}
                         {#if course.year != filtered_owned[$index - 1].year}
                             <div class="w-100 mb-3">

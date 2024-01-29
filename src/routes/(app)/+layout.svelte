@@ -8,7 +8,6 @@
     export let data;
     $user = data.user || {}
 
-
     function formatPageTitle(page) {
         if (!page.route?.id) return ''
         

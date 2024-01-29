@@ -1,14 +1,11 @@
 <script>
-    import LeftSidebar from "$lib/components/LeftSidebar.svelte";
     import NormalButton from '$lib/components/NormalButton.svelte';
-    import { page } from '$app/stores';
 
     export let data;
-    $: user = data.user || {};
     const fetch = data.fetch
     
     let href = ''
-    let body = {}, timer;
+    let body = {};
 
     async function update() {
         const resp = await fetch(`/api/testupdate`)

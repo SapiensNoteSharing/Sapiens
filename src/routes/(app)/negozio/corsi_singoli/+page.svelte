@@ -7,9 +7,7 @@
     let courses = data.courses || [];
     let owned = data.my_courses || [];
 
-    // elenco dei corsi non posseduti
-    let ownedCoursesNames = owned.map(course => course.name);
-    let not_owned = courses.filter(course => !ownedCoursesNames.includes(course.name));
+    let not_owned = courses.filter(course => !owned.includes(course));
 
     let sorting_method = "chronological_order";
     let sorting_methods = [
@@ -319,19 +317,6 @@
         // and normalize the calculated distance
         return Math.map(distance, 0, max_dist, 0, 2);
     }
-    
-    let cartModal;
-    function openCart() {
-        cartModal.show().then(async res => {
-            if (res) {
-                
-            }
-        })
-    }
-
-    let course = courses[0];
-
-    let selected_option = "base";
 </script>
 
 <div class="d-flex flex-column">

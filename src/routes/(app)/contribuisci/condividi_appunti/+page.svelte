@@ -2,13 +2,11 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     import { onMount } from 'svelte';
     import Svelecte from 'svelecte'
-    import { invalidate } from '$app/navigation';
     import { user } from '$lib/stores'
 
     export let data;
 
     let account = {...$user}
-
 
     let new_course = {
         university: $user?.university || {},
@@ -19,8 +17,10 @@
     }
 
     async function becomeContributor() {
-        $user.role = 'contributor'
-        $user.paypal_email = account.paypal_email
+        if (account.paypal_email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+            $user.role = 'contributor'
+            $user.paypal_email = account.paypal_email
+        }
     }
 
 	onMount(() => {
@@ -255,7 +255,7 @@
                     <label for="userUsername" class="form-label">PayPal e-mail</label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-paypal"></i></span>
-                        <input class="form-control" bind:value={account.paypal_email} required>
+                        <input class="form-control" bind:value={account.paypal_email}>
                     </div>
                 </div>
 

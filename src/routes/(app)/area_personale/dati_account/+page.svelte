@@ -3,7 +3,6 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Svelecte from 'svelecte'
     import { page } from '$app/stores';
-    import { invalidate } from '$app/navigation'
     import { user } from '$lib/stores';
 
     export let data;
@@ -11,8 +10,6 @@
     let account = {...$user}
     if (!account.university) account.university = {}
     if (!(typeof account.degree == 'object')) account.degree = {}
-
-$: console.log($user, account)
 
     async function save_changes() {
         if (checkValidity()) {
@@ -37,8 +34,6 @@ $: console.log($user, account)
     $: {
         changes = check_changes();
     }
-
-    let subpage = "account_data";
 </script>
 
 <div>
