@@ -20,9 +20,10 @@ export async function PUT({ request, url, locals, cookies, params }) {
                     degree = await Degree.create({name: body.degree.name, type: body.degree.type})
                 }
 
-                body.degree = degree?._id
-                const user = await User.findByIdAndUpdate(params.id, body, {new: true})
-                const u = user.toObject()
+                body.degree = degree?._id || null
+
+                const u = await User.findByIdAndUpdate(params.id, body, {new: true})
+                const user = u.toObject()
                 delete user.hash
                 await setSession(sid, user)
 

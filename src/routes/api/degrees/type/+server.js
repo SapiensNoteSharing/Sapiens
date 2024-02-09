@@ -18,9 +18,9 @@ export async function GET({ url, locals }) {
             }
         ]
 
-        const docs = await Degree.aggregate(query) || []
+        const docs = await Degree.aggregate(query)
         
-        return new Response(JSON.stringify(docs[0]?.types || []))
+        return new Response(JSON.stringify(docs[0]?.types))
     } catch (err) {
         console.log(err)
         throw error(500, err)

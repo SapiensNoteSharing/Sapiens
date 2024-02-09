@@ -17,6 +17,10 @@
     export let extraOptions = {};
 
     let events = []; 
+    const colors = {
+        studio: {text: '#51d69b', background: '#c7ebdb'},
+        esercizi: {text: '#ff3666', background: '#e8cfcf'},
+    }
 
     /** @type {import('@fullcalendar/core').CalendarOptions} */
 $:  options = {
@@ -37,7 +41,32 @@ $:  options = {
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
         ...extraOptions,
-        events: events
+        events: [
+            {
+                type: 'studio',
+                start: new Date(1707312600000),
+                end: new Date(1707319800000),
+                title: 'Calcolatori: Capitoli 5-6',
+                borderColor: colors['studio'].background,
+                backgroundColor: colors['studio'].background,
+                textColor: colors['studio'].text
+            },
+            {
+                type: 'esercizi',
+                start: new Date(1707321600000),
+                end: new Date(1707328800000),
+                title: 'Calcolatori: Esercizi di ripasso ',
+                borderColor: colors['studio'].background,
+                backgroundColor: colors['esercizi'].background,
+                textColor: colors['esercizi'].text
+            },
+            {
+                type: 'formulario',
+                start: new Date(1707328800000),
+                end: new Date(1707332400000),
+                title: 'Calcolatori: Rivedere formulario',
+            },
+        ]
     }
 
     /** @type {import('@fullcalendar/core').Calendar}  */
@@ -106,5 +135,8 @@ $: if (calendar && options) updateCalendarOptions();
     :global(.calendar-header) {
         text-decoration: none;
         color: white;
+    }
+    :global(.fc-view-harness.fc-view-harness-active){
+        background-color: white;
     }
 </style>

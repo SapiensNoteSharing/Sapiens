@@ -8,10 +8,10 @@ export async function POST({ url, locals, cookies, request }) {
     const body = await request.json();
 
     const hash = await createHash(body.password)
-    const alreadyRegistered = await User.findOne({ email: body.email })
+    const alreadyRegistered = await User.findOne({$or: [{email: body.email}, {username: body.username}]})
 
     if (alreadyRegistered) {
-        throw error(409, 'This email is already used by another user')
+        throw error(409, 'This email/username is already used by another user')
     } else {
         const u = await User.create({...body, hash: hash})
         const user = u.toObject()

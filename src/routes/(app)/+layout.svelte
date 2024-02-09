@@ -246,9 +246,11 @@
         position: relative;
         overflow-y: auto;
         overflow-x: hidden;
-        height: 89vh;
+        height: 100%;
         padding: 3rem;
         transition: width .5s;
+        display: flex;
+        flex-direction: column;
         flex: 1 0;
     }
     .background {

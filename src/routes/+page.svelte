@@ -65,16 +65,11 @@
     function checkValidity() {
         validated = true;
 
-        if (
-            checkNameValidity(userRegister.name) &&
+        return checkNameValidity(userRegister.name) &&
             checkLastNameValidity(userRegister.surname) &&
             checkUsernameValidity(userRegister.username) == 1 &&
             checkEmailValidity(userRegister.email) == 1 &&
             checkPasswordValidity(userRegister.password) == 1
-        ) 
-            return true;
-        else
-            return false;
     }
 
     function checkNameValidity(name) {
@@ -145,7 +140,7 @@
                     <label for="LoginEmail" class="form-label"></label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                        <input placeholder="E-mail o username" class="form-control border-dark" bind:value={userLogin.email} required>
+                        <input placeholder="E-mail o username" class="form-control border-dark" bind:value={userLogin.identifier} required>
                         <div id="validationLoginEmailFeedback" class="invalid-feedback">
                             Non esiste nessun account collegato a questa Email. Riprova o vai alla registrazione
                         </div>

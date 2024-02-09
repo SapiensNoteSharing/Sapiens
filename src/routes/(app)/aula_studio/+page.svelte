@@ -21,7 +21,7 @@
     let focus_mode = false
 </script>
 
-<div class="m-auto" style="max-width: 1000px;">
+<div class="m-auto flex-grow-1" style="max-width: 1000px;">
     <div class="focus-mode-btn">
         <!-- <ActiveButton active={focus_mode == true ? 'active' : 'not-active'}>
             <div slot="name" class="navbar-item rounded-3">
@@ -30,11 +30,9 @@
         </ActiveButton> -->
     </div>
     
-    <div class="content-container p-5 bg-light mb-5">
+    <div class="content-container bg-light mb-5 p-5">
         <div class="file">
-            {#if $viewing?._id}
-                <h1>{$viewing.name || ''}</h1>
-            {/if}
+            <h1 class:mb-0={!$viewing?._id}>{$viewing.name || 'Select a file'}</h1>
             {@html renderedFile}
         </div>
     </div>
@@ -71,7 +69,8 @@
         line-height: 2rem;
         letter-spacing: -.2px;
         color: $dark;
-        transition: all 1s;
+        transition: width 1s, height 1s;
+        flex-grow: 1;
 
         :global(h1) {
             font-size: 2.25rem;

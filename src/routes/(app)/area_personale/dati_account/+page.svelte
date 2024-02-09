@@ -9,10 +9,18 @@
 
     let account = {...$user}
     if (!account.university) account.university = {}
-    if (!(typeof account.degree == 'object')) account.degree = {}
+    if (!account.degree) account.degree = {}
 
     async function save_changes() {
         if (checkValidity()) {
+            const resp = await fetch(`/api/user/${$user._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(account)
+            })
+            if(!account.degree) account.degree = {}
             $user = account
         }
     }
@@ -29,7 +37,6 @@
         }
         return false;
     }
-
     let changes = false;
     $: {
         changes = check_changes();
@@ -67,25 +74,18 @@
                         </div>
                     </div>
                     
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="userUsername" class="form-label">Username</label>
                         <div class="input-group has-validation">
                             <span class="input-icon-label input-group-text"><i class="bi bi-person-fill"></i></span>
                             <input class="form-control" bind:value={account.username} required>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="userEmail" class="form-label">e-mail</label>
                         <div class="input-group has-validation">
                             <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
                             <input class="form-control" bind:value={account.email} required>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="userPassword" class="form-label">Password</label>
-                        <div class="input-group has-validation">
-                            <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
-                            <input type="password" class="form-control" bind:value={account.password} required>
                         </div>
                     </div>
                 </div>

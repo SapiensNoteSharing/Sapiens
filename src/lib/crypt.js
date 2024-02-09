@@ -10,7 +10,7 @@ async function createHash(psw) {
 }
 
 async function compare(user) {
-    const dbUser = await User.findOne({email: user.email})
+    const dbUser = await User.findOne({$or: [{email: user.identifier}, {username: user.identifier}]})
 
     if (!dbUser) return false
     const res = await bcrypt.compare(user.password, dbUser.hash);

@@ -78,6 +78,7 @@ export async function render(data) {
             size = img[1];
         console.log('looking for', src)
         const imgtag = await File.findOne({ name: src });
+        console.log(imgtag)
         if (imgtag) {
             data = data.replace(image, `<center><img src="data:image/png;base64,${imgtag.content}" alt=${imgtag.name} width=${size}></center>`);
         }
