@@ -35,7 +35,7 @@
         Nel riquadro qui di sotto, inserisci il numero di <strong>Punti DNA</strong> che vuoi acquistare oppure <strong>l'importo</strong> che intendi convertire e premi il pulsante <strong>Acquista</strong>.
     </p>
 
-    <div class="transaction-container d-flex flex-column bg-light mt-5 mx-auto">
+    <!-- <div class="transaction-container d-flex flex-column bg-light mt-5 mx-auto">
         <div class="d-flex flex-row align-items-end mb-4">
             <div class="d-flex flex-column align-items-center">
                 <label for="euro" class="form-label display-5">Euro</label>
@@ -63,7 +63,7 @@
                 </div>
             </NormalButton>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <style lang="scss">

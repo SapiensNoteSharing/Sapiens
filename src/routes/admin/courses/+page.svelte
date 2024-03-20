@@ -135,12 +135,12 @@
 </script>
     
 <Modal title="Delete Course" yes="Delete" no="Cancel" bind:this={deleteModal} let:args>
-    Are you sure you want to delete {args?.name}?<br>This action cannot be undone
+    Sei sicuro di voler eliminare {args?.name}?<br>Questa azione non può essere annullata.
 </Modal>
         
 <div class="d-flex mb-2 justify-content-between align-items-center">
-    <h1 class="mb-0">Courses</h1>
-    <button class="ms-auto me-3 btn btn-primary btn-sm border-dark" on:click={() => goto('/admin/courses/new')} data-sveltekit-preload-data="hover">New</button>
+    <h1 class="mb-0">Corsi</h1>
+    <button class="ms-auto me-3 btn btn-primary btn-sm border-dark" on:click={() => goto('/admin/courses/new')} data-sveltekit-preload-data="hover">Nuovo</button>
 </div>
 
 <div class="table_container">

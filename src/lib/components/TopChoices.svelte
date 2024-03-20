@@ -75,7 +75,7 @@
                             <h4 class="">{course?.code} &bull; {course?.cfu} CFU</h4>
                             <div class="d-flex text-dark flex-row justify-content-between mb-2">
                                 <div>
-                                    {#each course?.professors as professor, i}
+                                    {#each (course?.professors || []) as professor, i}
                                         <span class="text-decoration-none professor">{professor}</span>{i != course?.professors?.length - 1 ? " / " : ""}
                                     {/each}
                                 </div>
@@ -85,7 +85,7 @@
 
                     <NormalButton class={"ms-3"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi/{course._id}">
+                            <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi_singoli/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}">
                                 Dettagli
                             </a>
                         </div>
@@ -106,7 +106,7 @@
         </NormalButton>
         <NormalButton class={"ms-3"}>
             <div slot="name">
-                <a type="button" class="btn btn-secondary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi">
+                <a type="button" class="btn btn-secondary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi_singoli">
                     Esplora tutti
                 </a>
             </div>

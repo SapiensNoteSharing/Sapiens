@@ -15,14 +15,14 @@
 
 <div class="d-flex h-100 align-self-stretch">
     <div class="col">
-        <NormalButton class={"me-3"}>
-            <div slot="name" class="page-btn rounded-4 mb-3">
-                <a class="btn btn-primary text-center px-4 py-2 rounded-4 w-100 text-dark fs-2" on:click={update}><i class="me-3 display-5 bi bi-arrow-clockwise"></i>Update</a>
+        <NormalButton class={""}>
+            <div slot="name">
+                <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click={update}><i class="me-3 display-5 bi bi-arrow-clockwise"></i>Aggiorna</a>
             </div>
         </NormalButton>
-        <p class="text mb-3">Usage: /{'<path of dir/file>'}</p>
+        <p class="text mb-3">Percorso: /{'<path of dir/file>'}</p>
         <input class="form-control mb-2" bind:value={href}>
-        <p class="text mb-3">Response:</p>
+        <p class="text mb-3">Risposta:</p>
         <textarea class="response">
             {body}
         </textarea>

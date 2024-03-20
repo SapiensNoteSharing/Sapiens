@@ -153,8 +153,8 @@
             <Table rows={current.chapters} cols={contentCols} border alternateRows on:click={(ev) => edit(ev.detail)}/>
         </div>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-secondary me-2" on:click={cancel} data-sveltekit-preload-data="hover">Cancel</button>
-            <button class="btn btn-primary me-1" on:click={save} data-sveltekit-preload-data="hover">Save</button>
+            <button class="btn btn-secondary me-2" on:click={cancel} data-sveltekit-preload-data="hover">Cancella</button>
+            <button class="btn btn-primary me-1" on:click={save} data-sveltekit-preload-data="hover">Salva</button>
         </div>
     </div>  
 </div>

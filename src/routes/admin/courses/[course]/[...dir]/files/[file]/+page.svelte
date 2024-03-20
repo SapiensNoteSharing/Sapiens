@@ -44,44 +44,44 @@
 
 <div class="d-flex position-relative align-items-center mb-2">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <span class="back" on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Back</span>
-    <h1 class="mx-auto mb-0">{current?._id ? 'Edit' : 'Create New'} File</h1>
+    <span class="back" on:click={cancel} style="cursor: pointer"><i class="bi bi-chevron-left"></i>Indietro</span>
+    <h1 class="mx-auto mb-0">{current?._id ? 'Modifica' : 'Crea nuovo'} File</h1>
 </div>
 
 <div class="row">
     <div class="col">
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
+            <label for="name" class="form-label">Nome</label>
             <input class="form-control" placeholder="File Name" bind:value={current.name}>
         </div>
     </div>
     <div class="col">
         <div class="mb-3">
-            <label for="name" class="form-label">Last Updated</label>
+            <label for="name" class="form-label">Ultima modifica</label>
             <input class="form-control" placeholder="Last Updated" value={(new Date(current.updatedAt || new Date().getTime()).toLocaleDateString())} disabled>
         </div>
     </div>
     <div class="col">
         <div class="mb-3">
-            <label for="gitUrl" class="form-label">Git Url (from Università)</label>
+            <label for="gitUrl" class="form-label">Link Git</label>
             <input class="form-control" placeholder="Git Url" bind:value={current.path}>
         </div>
     </div>
 </div>
 
-<div class="row justify-content-center">
+<div class="row justify-content-between">
     <div class="col">
-        <span class="text">Unformatted text</span>
-        <div bind:this={input} class="textarea p-2" bind:innerText={fileData} contenteditable="true" spellcheck="false"></div>
+        <span class="text">Contenuto non formattato</span>
+        <div bind:this={input} class="textarea p-4" bind:innerText={fileData} contenteditable="true" spellcheck="false"></div>
     </div>
     <div class="col">
-        <span class="text">Formatted text</span>
-        <div class="border rounded formatted mb-2 p-2 file-content-container">
+        <span class="text">Contenuto formattato</span>
+        <div class="border rounded formatted mb-2 p-4">
             {@html renderedData}
         </div>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-secondary me-2" on:click={cancel}>Cancel</button>
-            <button class="btn btn-primary me-1" on:click={save}>Save</button>
+            <button class="btn btn-secondary me-2" on:click={cancel}>Cancella</button>
+            <button class="btn btn-primary me-1" on:click={save}>Salva</button>
         </div>
     </div>
 </div>

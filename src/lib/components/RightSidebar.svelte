@@ -18,20 +18,20 @@
     export let open = true
     
     let faculties = [
-    "Ingegneria informatica",
-    "Ingegneria meccanica",
-    "Ingegneria gestionale",
-    "Ingegneria biomedica",
-    "Ingegneria elettronica",
-    "Ingegneria aereospaziale",
-    "Ingegneria civile",
-    "Ingegneria ambientale"
+        "Ingegneria informatica",
+        "Ingegneria meccanica",
+        "Ingegneria gestionale",
+        "Ingegneria biomedica",
+        "Ingegneria elettronica",
+        "Ingegneria aereospaziale",
+        "Ingegneria civile",
+        "Ingegneria ambientale"
     ]
     
     let degree_types = [
-    'Triennale',
-    'Magistrale',
-    'A Ciclo Unico'
+        'Triennale',
+        'Magistrale',
+        'A Ciclo Unico'
     ]
     
     // tags andranno presi dal database ( va fatto il crud )
@@ -70,7 +70,7 @@
         }
     }
 
-    $: isEnabled = $page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio/corsi';
+    $: isEnabled = $page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio/corsi_singoli';
 </script>
 
 
@@ -208,7 +208,7 @@
                     
                 </div>
             {/if}
-        {:else if $page.route.id == '/(app)/negozio/corsi'}
+        {:else if $page.route.id == '/(app)/negozio/corsi_singoli'}
             <div class="d-flex align-items-center my-5">
                 <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
             </div>

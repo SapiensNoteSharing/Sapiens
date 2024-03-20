@@ -26,7 +26,6 @@ export async function PUT({ request, url, locals, cookies, params }) {
                 const user = u.toObject()
                 delete user.hash
                 await setSession(sid, user)
-
             }
         }
         return new Response('OK');

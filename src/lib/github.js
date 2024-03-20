@@ -85,9 +85,12 @@ async function getMetadata(coursePath) {
     const resp = await fetch(`${base}${substitute(metadataPath)}`, options);
     const body = (resp.ok && await resp.json()) || {};
 
-    let data = JSON.parse(Buffer.from(body.content, 'base64').toString('utf-8'));
-    console.log(data);
-    return data;
+    if (body.content) {
+        let data = JSON.parse(Buffer.from(body.content, 'base64').toString('utf-8'));
+        console.log(data);
+        return data;
+    } 
+    return {};
 }
 
 async function getDir(gitDir) {
@@ -184,7 +187,7 @@ export async function update() {
             }
 
             let extra;
-            if(dbCourse.extra_content){
+            if (dbCourse.extra_content){
                 extra = await Directory.findOneAndUpdate({_id: dbCourse.extra_content}, {
                     name: `${course.name}:extraContent`,
                     directories: contentsIds.directories,
@@ -199,19 +202,21 @@ export async function update() {
             }
 
             console.log('extra content', extra)
-            const uni = await University.findOneAndUpdate({
-                name: new RegExp(`^${metadata.university_name}$`, 'i'),
-            }, {upsert: true})
+            
+            let uni;
+            if (metadata?.university_name) {
+                uni = await University.findOneAndUpdate({
+                    name: new RegExp(`^${metadata.university_name}$`, 'i'),
+                }, {upsert: true})
+            }
 
             let degree;
-            if(metadata?.degree?.name && metadata?.degree?.type ){
+            if (metadata?.degree?.name && metadata?.degree?.type) {
                 degree = await Degree.findOneAndUpdate({
                     name: new RegExp(`^${metadata.degree.name}$`, 'i'),
                     type: metadata.degree.type
                 }, {upsert: true})
             }
-
-            console.log('UNIVERSITà', metadata, uni, degree, new RegExp(`${metadata.degree.name}`, 'i').toString())
 
             const c = await Course.findOneAndUpdate({name: new RegExp(`^${course.name}$`, 'i')}, {
                 ...metadata,
