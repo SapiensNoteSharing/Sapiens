@@ -1,25 +1,18 @@
 <script>
-import { value, filter_tags } from "$lib/stores";
-import { filter_course_list, sort_course_list } from './searchbar_utils';
+    import { value, filter_tags } from "$lib/stores";
+    import { filter_and_sort } from '$lib/utils';
 
-let classes = "";
-export {classes as class};
-export let data = [];
+    let classes = "";
+    export {classes as class};
+    export let data = [];
 
-let sorting_method = "chronological_order";
+    let sorting_method = "chronological_order";
 
-function filter_and_sort(course_list) {
-    let filtered_course_list = filter_course_list(course_list)
-    sort_course_list(filtered_course_list)
-    return filtered_course_list
-}
+    let filtered_not_owned = filter_and_sort(data)
 
-let filtered_not_owned = filter_and_sort(data)
-
-$: if(sorting_method && $value !== undefined && $filter_tags){
-    filtered_not_owned =  filter_and_sort(data)
-}
-
+    $: if(sorting_method && $value !== undefined && $filter_tags){
+        filtered_not_owned =  filter_and_sort(data)
+    }
 </script>
 
 <div class="d-flex position-relative {classes}">

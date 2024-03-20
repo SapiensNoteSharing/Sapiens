@@ -1,6 +1,7 @@
 <script>
     import Bundle from '$lib/components/Bundle.svelte';
     import { user } from '$lib/stores'
+    import { sort_course_list } from '$lib/utils';
     export let data;
     let courses = data.courses || [];
     let owned = data.my_courses || [];
@@ -49,95 +50,6 @@
         }
 
         return degree_bundle_courses
-    }
-
-    function sort_course_list(course_list, sort_method = sorting_method) {
-        switch(sort_method) {
-            case "no_order":
-                course_list.sort((a, b) => {
-                    if (Math.random() < 0.5)
-                        return -1;
-                    else
-                        return 1;
-                });
-                break;
-            case "name_ascending":
-                course_list.sort((a, b) => {
-                    if (a.name < b.name)
-                        return -1;
-                    else if (a.name == b.name) 
-                        return 0;
-                    else
-                        return 1;
-                });
-                break;
-            case "name_descending":
-                course_list.sort((a, b) => {
-                    if (a.name > b.name)
-                        return -1;
-                    else if (a.name == b.name) 
-                        return 0;
-                    else
-                        return 1;
-                });
-                break;
-            case "code_ascending":
-                course_list.sort((a, b) => {
-                    if (a.code < b.code)
-                        return -1;
-                    else if (a.code == b.code) 
-                        return 0;
-                    else
-                        return 1;
-                });
-                break;
-            case "code_descending":
-                course_list.sort((a, b) => {
-                    if (a.code > b.code)
-                        return -1;
-                    else if (a.code == b.code) 
-                        return 0;
-                    else
-                        return 1;
-                });
-                break;
-            case "chronological_order":
-                course_list.sort((a, b) => {
-                    const yearOrder = { "Primo": 1, "Secondo": 2, "Terzo": 3 };
-                    const semesterOrder = { "Primo e secondo": 0, "Primo": 1, "Secondo": 2 };
-
-                    if (yearOrder[a.year] < yearOrder[b.year])
-                        return -1;
-                    else if (yearOrder[a.year] == yearOrder[b.year]) {
-                        if (semesterOrder[a.semester] < semesterOrder[b.semester])
-                            return -1;
-                        else if (semesterOrder[a.semester] == semesterOrder[b.semester])
-                            return 0;
-                        else
-                            return 1;
-                    } else
-                        return 1;
-                });
-                break;
-            case "chronological_reverse":
-                course_list.sort((a, b) => {
-                    const yearOrder = { "Primo": 1, "Secondo": 2, "Terzo": 3 };
-                    const semesterOrder = { "Primo e secondo": 0, "Primo": 1, "Secondo": 2 };
-
-                    if (yearOrder[a.year] < yearOrder[b.year])
-                        return 1;
-                    else if (yearOrder[a.year] == yearOrder[b.year]) {
-                        if (semesterOrder[a.semester] < semesterOrder[b.semester])
-                            return 1;
-                        else if (semesterOrder[a.semester] == semesterOrder[b.semester])
-                            return 0;
-                        else
-                            return -1;
-                    } else
-                        return -1;
-                });
-                break;
-        }
     }
 
     let semester_bundle_courses;
