@@ -42,7 +42,7 @@ const md = new MarkdownIt({
                     }
                     console.log(str)
                     let rendered = md2.render(str)
-                    return `<pre class="no-language"><code>` + rendered + '</code></pre>'
+                    return rendered
                 } catch(err) {
                     console.log(err)
                 }

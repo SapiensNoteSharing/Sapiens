@@ -105,7 +105,7 @@
     <div class="d-flex h-100 align-self-stretch">
         <LeftSidebar user={$user}/>
     
-        <div class="content flex-grow-1 position-relative p-5">
+        <div class="content flex-grow-1 position-relative p-4">
             <slot></slot>
         </div>
     </div>

@@ -17,12 +17,12 @@
         
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? 'active' : 'not-active'}
-        fill={$page.route.id.startsWith("/(app)/negozio/corsi_singoli") ? '-fill' : ''}
+        active={$page.route.id.startsWith("/(app)/negozio/corsi") ? 'active' : 'not-active'}
+        fill={$page.route.id.startsWith("/(app)/negozio/corsi") ? '-fill' : ''}
         class={"me-3"}
         text={"Corsi singoli"}
         icon={"bi-1-circle"}
-        href={"/negozio/corsi_singoli"}
+        href={"/negozio/corsi"}
         />
         
         <ActiveButton 

@@ -76,7 +76,7 @@
     </div>
     <div class="col">
         <span class="text">Formatted text</span>
-        <div class="border rounded formatted mb-2 p-2">
+        <div class="border rounded formatted mb-2 p-2 file-content-container">
             {@html renderedData}
         </div>
         <div class="d-flex justify-content-end">

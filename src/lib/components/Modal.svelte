@@ -50,9 +50,11 @@
 <div class="modal fade" bind:this={modalWin} tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true" data-bs-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered" class:modal-lg={large} class:modal-xl={xlarge} role="document">
 		<div class="modal-content">
-			<!-- <div class="modal-header {class}">
-				<h3 class="modal-title display-4 text-dark" id="modalTitle">{title}</h3>
-			</div> -->
+				<div class="modal-header">
+					<slot name="header">
+						<h3 class="modal-title display-4 text-dark" id="modalTitle">{title}</h3>
+					</slot>
+				</div>
 			
 			<div class="modal-body">
 				<slot/>

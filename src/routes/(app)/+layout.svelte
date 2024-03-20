@@ -11,7 +11,14 @@
     function formatPageTitle(page) {
         if (!page.route?.id) return ''
         
-        let route = page.route.id.split('/').pop().replace(/_/g, ' ')
+        let route = page.route.id.split('/').pop()
+
+        Object.keys(page.params).forEach(key => {
+            route = route.replace(new RegExp(`\\[${key}\\]`), page.data[key] ? page.data[key]?.name || page.data[key]?.title || page.data[key]?.label : page.params[key])
+        })
+
+        route = route.replace(/_/g, ' ')
+
         if (route == 'faq') return 'FAQ'
 
         const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1)

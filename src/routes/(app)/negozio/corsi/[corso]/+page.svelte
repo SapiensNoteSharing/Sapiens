@@ -61,7 +61,7 @@
         <div class="d-flex flex-row justify-content-center mt-3 align-items-start">
             <NormalButton class={"mx-2"}>
                 <div slot="name">
-                    <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" href="/negozio/corsi_singoli">Torna ai corsi</a>
+                    <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" href="/negozio/corsi">Torna ai corsi</a>
                 </div>
             </NormalButton>
 

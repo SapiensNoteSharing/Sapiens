@@ -2,10 +2,11 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     import TopChoices from '$lib/components/TopChoices.svelte';
     import { user } from '$lib/stores'
+    
     export let data;
+
     let courses = data.courses || []
-    let userCourses = new Set($user.courses.map(course => course.course));
-    let my_courses = courses.filter(course => userCourses.has(course._id)) || [];
+    let my_courses = data.my_courses || [];
     
     let league_names = ["Vetro", "Bronzo", "Argento", "Oro", "Diamante"];
 </script>

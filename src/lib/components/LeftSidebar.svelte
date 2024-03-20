@@ -115,8 +115,8 @@
 
             <ActiveButton 
             type={"navigation_link"}
-            active={$page.route.id == "/admin/courses" ? 'active' : 'not-active'}
-            fill={$page.route.id == "/admin/courses" ? '-fill' : ''}
+            active={$page.route.id.startsWith("/admin/courses") ? 'active' : 'not-active'}
+            fill={$page.route.id.startsWith("/admin/courses") ? '-fill' : ''}
             class={"my-2"}
             href={"/admin/courses"}
             text={"Admin"}
