@@ -2,7 +2,6 @@
     import CourseCard from '$lib/components/CourseCard.svelte';
     import { filters } from '$lib/stores';
     import { filter_and_sort } from '$lib/utils';
-    import Svelecte from 'svelecte';
 
     export let data;
     let courses = data.courses || [];
@@ -10,24 +9,14 @@
 
     let not_owned = courses.filter(course => !owned.includes(course));
 
-    let sorting_method = "chronological_order";
-    let sorting_methods = [
-        {id:"chronological_order", name:"Periodo · cronologico"},
-        {id:"chronological_reverse", name:"Periodo · cronologico inverso"},
-        {id:"name_ascending", name:"Nome · alfabetico crescente"},
-        {id:"name_descending", name:"Nome · alfabetico decrescente"},
-        {id:"code_ascending", name:"Codice · crescente"},
-        {id:"code_descending", name:"Codice · decrescente"},
-        {id:"no_order", name:"Nessun ordinamento"}
-    ]
-
-    let filtered_not_owned = filter_and_sort(not_owned);
+    $: filtered_not_owned = filter_and_sort(not_owned, $filters.search, $filters.sorting_method.field, $filters.sorting_method.secondary_field);
+    $: console.log(filtered_not_owned);
 </script>
 
 <div class="d-flex flex-column">
     <div class="d-flex mb-5 justify-content-between">
         <div class="d-flex align-items-center">
-            {#if $filters.tags?.length == 2}
+            <!-- {#if $filters.tags?.length == 2}
                 <span class=""><i class="icon bi bi-funnel"></i></span>
                 <h4 class="fs-6 ms-3 my-0">Nessun filtro selezionato</h4>
             {:else}
@@ -38,7 +27,7 @@
                 {#if tag.selected}
                     <span class="badge my-auto p-2 bg-{tag.color} ms-3 filter_badge text-dark">{tag.name}</span>
                 {/if}
-            {/each}
+            {/each} -->
         </div>
         
         <div class="d-flex align-items-center">
@@ -48,7 +37,7 @@
 
     {#if filtered_not_owned.length != 0}
         <div class="d-flex flex-wrap justify-content-between align-content-between">
-            {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
+            {#if $filters.sorting_method.field == "year"}
                 <div class="w-100 mb-3">
                     <h3 class="display-3 m-0">{filtered_not_owned[0].year} anno</h3>
                 </div>
@@ -72,7 +61,7 @@
                     {/if}
                     <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}"/>
                 {/each}
-            {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
+            {:else if $filters.sorting_method.field == "name"}
                 <div class="w-100 mt-3">
                     <h3 class="display-3 m-0">{filtered_not_owned[0].name[0]}</h3>
                 </div>

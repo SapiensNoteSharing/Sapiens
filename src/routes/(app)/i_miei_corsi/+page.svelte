@@ -1,16 +1,14 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
     import TopChoices from '$lib/components/TopChoices.svelte';
-    import { user } from '$lib/stores';
+    import { filters, user } from '$lib/stores';
     import { filter_and_sort } from '$lib/utils';
     
     export let data;
     let courses = data.courses || [];
     let my_courses = data.my_courses || [];
 
-    let sorting_method = "chronological_order";
-
-    let filtered_owned = filter_and_sort(my_courses)
+    let filtered_owned = filter_and_sort(my_courses, $filters.sorting_method.field, $filters.sorting_method.secondary_field);
 
     let suggestions_category = "best_sellers";
     let best_sellers = ["Algoritmi e strutture dati", "Analisi Matematica I", "Fisica I"];
@@ -63,7 +61,7 @@
         </div>
 
         <div class="d-flex flex-wrap justify-content-between align-content-between">
-            {#if sorting_method == "chronological_order" || sorting_method == "chronological_reverse"}
+            {#if $filters.sorting_method.field == "year"}
                 <div class="w-100 mb-3">
                     <h3 class="display-3 m-0">{filtered_owned[0].year} anno</h3>
                 </div>
@@ -87,7 +85,7 @@
                     {/if}
                     <CourseCard {course} owned=1 class="g-col-4 mb-5" href="/aula_studio"/>
                 {/each}
-            {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
+            {:else if $filters.sorting_method.field == "name"}
                 <div class="w-100 mt-3">
                     <h3 class="display-3 m-0">{filtered_owned[0].name[0]}</h3>
                 </div>

@@ -70,7 +70,7 @@
         }
     }
 
-    $: isEnabled = $page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio/corsi_singoli';
+    $: isEnabled = $page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio/corsi';
 </script>
 
 
@@ -208,7 +208,7 @@
                     
                 </div>
             {/if}
-        {:else if $page.route.id == '/(app)/negozio/corsi_singoli'}
+        {:else if $page.route.id == '/(app)/negozio/corsi'}
             <div class="d-flex align-items-center my-5">
                 <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
             </div>

@@ -1,17 +1,10 @@
 <script>
     import { filters } from "$lib/stores";
-    import { filter_and_sort, sorting_methods } from '$lib/utils';
+    import { sorting_methods } from '$lib/utils';
     import Svelecte from 'svelecte';
 
     let classes = "";
     export {classes as class};
-    export let data = [];
-
-    let filtered_not_owned = filter_and_sort(data);
-
-    $: if(sorting_method && value !== undefined && filter.tags) {
-        filtered_not_owned = filter_and_sort(data);
-    }
 </script>
 
 <div class="d-flex position-relative {classes}">
@@ -21,9 +14,9 @@
     <Svelecte
     style="width: 18rem;"
     placeholder="Ordina per:"
-    options={sorting_methods}
+    options={sorting_methods.map(sm => sm.field)}
     class="svelecte-control text-left selection-input"
-    bind:value={$filters.sorting_method}
+    bind:value={$filters.sorting_method.field}
     />
 </div>
 
