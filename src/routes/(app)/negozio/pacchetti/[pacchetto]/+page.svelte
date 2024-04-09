@@ -45,7 +45,7 @@
 
                         <NormalButton class={"ms-3"}>
                             <div slot="name">
-                                <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi_singoli/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}">
+                                <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsii/{course?._id}">
                                     Dettagli
                                 </a>
                             </div>

@@ -79,7 +79,7 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}"/>
+                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
                 {/each}
             {:else if sorting_method == "name_ascending" || sorting_method == "name_descending"}
                 <div class="w-100 mt-3">
@@ -93,11 +93,11 @@
                             </div>
                         {/if}
                     {/if}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}"/>
+                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
                 {/each}
             {:else}
                 {#each filtered_not_owned as course}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi_singoli/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}"/>
+                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
                 {/each}
             {/if}
         </div>

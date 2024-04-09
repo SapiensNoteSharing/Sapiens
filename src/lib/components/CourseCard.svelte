@@ -30,7 +30,7 @@
                 <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-plus-slash-minus"></i></a>
                 <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-chat-dots"></i></a>
                 {#if owned == true}
-                    <a class="course_extra_icon" href={`/negozio/corsi_singoli/${course.name.toLowerCase().replace(/\s/g, '_')}`}><i class="display-3 ms-4 me-2 bi bi-info-circle-fill"></i></a>
+                    <a class="course_extra_icon" href={`/negozio/corsi/${course._id}`}><i class="display-3 ms-4 me-2 bi bi-info-circle-fill"></i></a>
                 {/if}
             </div>
         </div>

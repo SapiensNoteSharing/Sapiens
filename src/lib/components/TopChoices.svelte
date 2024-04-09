@@ -85,7 +85,7 @@
 
                     <NormalButton class={"ms-3"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi_singoli/{course?._id}">
+                            <a type="button" class="btn btn-primary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi/{course?._id}">
                                 Dettagli
                             </a>
                         </div>
@@ -106,7 +106,7 @@
         </NormalButton>
         <NormalButton class={"ms-3"}>
             <div slot="name">
-                <a type="button" class="btn btn-secondary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi_singoli">
+                <a type="button" class="btn btn-secondary border-0 px-4 text-center w-100 text-dark fs-2" href="/negozio/corsi">
                     Esplora tutti
                 </a>
             </div>
