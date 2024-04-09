@@ -180,8 +180,8 @@ const CourseSchema = new Schema({
     cfu: Number,
     professors: [String],
     code: String,
-    year: String,
-    semester: String,
+    year: Number,
+    semester: Number,
     tags: [String],
     description: String,
     chapters: [

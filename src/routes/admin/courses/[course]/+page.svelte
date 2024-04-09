@@ -14,6 +14,15 @@
         'Marco Bertini'
     ]
 
+    let years = [
+        {value: 1, label: 'Primo'},
+        {value: 2, label: 'Secondo'},
+        {value: 3, label: 'Terzo'},
+        {value: 4, label: 'Quarto'},
+        {value: 5, label: 'Quinto'},
+        {value: 6, label: 'Sesto'}
+    ]
+
     async function save() {
         if (current.name) {
             await fetch(`/admin/api/courses`, {
@@ -116,8 +125,9 @@
         <div class="mb-3">
             <label for="name" class="form-label">Anno di insegnamento</label>
             <Svelecte 
-            options={['Primo', 'Secondo', 'Terzo']} 
-            labelAsValue
+            options={years} 
+            labelField="label"
+            valueField="value"
             bind:value={current.year} 
             placeholder="Seleziona anno di insegnamento"/>
         </div>

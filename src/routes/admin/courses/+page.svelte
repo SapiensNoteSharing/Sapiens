@@ -65,7 +65,7 @@
         {
             id: 'tags',
             label: 'tags',
-            format: val => val || '-'
+            format: val => val.join(', ')
         },
         // {
         //     id: 'description',
