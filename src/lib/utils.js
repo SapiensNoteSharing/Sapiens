@@ -1,11 +1,6 @@
-let sorting_methods = [
-    {id:"chronological_order", name:"Periodo · cronologico"},
-    {id:"chronological_reverse", name:"Periodo · cronologico inverso"},
-    {id:"name_ascending", name:"Nome · alfabetico crescente"},
-    {id:"name_descending", name:"Nome · alfabetico decrescente"},
-    {id:"code_ascending", name:"Codice · crescente"},
-    {id:"code_descending", name:"Codice · decrescente"},
-    {id:"no_order", name:"Nessun ordinamento"}
+export const sorting_methods = [
+    {field: "year", secondary_field: "semester"},
+    {field: "name"}
 ]
 
 function edit_distance(x, y) {
@@ -108,130 +103,45 @@ function replace_cost(key1, key2) {
 }
 
 export function sort_course_list(course_list, field, secondary_field, ascending = true) {
-    // da implementare
+    let multiplier = ascending ? 1 : -1;
+    course_list.sort((a, b) => {
+        if (a[field] < b[field])
+            return -1 * multiplier;
+        else if (a[field] == b[field]) {
+            if (secondary_field) { 
+                if (a[secondary_field] < b[secondary_field])
+                    return -1 * multiplier;
+                else if (a[secondary_field] == b[secondary_field])
+                    return 0;
+                else
+                    return 1 * multiplier;
+            } 
+            return 0;
+        } else
+            return 1 * multiplier;
+    });
 
-    // let multiplier = ascending ? 1 : -1;
-    // course_list.sort((a, b) => {
-    //     if (a[field] < b[field])
-    //         return -1 * multiplier;
-    //     else if (a[field] == b[field]) {
-    //         if (secondary_field) { 
-    //             if (a[secondary_field] < b[secondary_field])
-    //                 return -1 * multiplier;
-    //             else if (a[secondary_field] == b[secondary_field])
-    //                 return 0;
-    //             else
-    //                 return 1 * multiplier;
-    //         } 
-    //         return 0;
-    //     } else
-    //         return 1 * multiplier;
-    // });
-
-
-    switch(sort_method) {
-        case "no_order":
-            course_list.sort((a, b) => {
-                if (Math.random() < 0.5)
-                    return -1;
-                else
-                    return 1;
-            });
-            break;
-        case "name_ascending":
-            course_list.sort((a, b) => {
-                if (a.name < b.name)
-                    return -1;
-                else if (a.name == b.name) 
-                    return 0;
-                else
-                    return 1;
-            });
-            break;
-        case "name_descending":
-            course_list.sort((a, b) => {
-                if (a.name > b.name)
-                    return -1;
-                else if (a.name == b.name) 
-                    return 0;
-                else
-                    return 1;
-            });
-            break;
-        case "code_ascending":
-            course_list.sort((a, b) => {
-                if (a.code < b.code)
-                    return -1;
-                else if (a.code == b.code) 
-                    return 0;
-                else
-                    return 1;
-            });
-            break;
-        case "code_descending":
-            course_list.sort((a, b) => {
-                if (a.code > b.code)
-                    return -1;
-                else if (a.code == b.code) 
-                    return 0;
-                else
-                    return 1;
-            });
-            break;
-        case "chronological_order":
-            course_list.sort((a, b) => {
-                const yearOrder = { "Primo": 1, "Secondo": 2, "Terzo": 3 };
-                const semesterOrder = { "Primo e secondo": 0, "Primo": 1, "Secondo": 2 };
-                if (yearOrder[a.year] < yearOrder[b.year])
-                    return -1;
-                else if (yearOrder[a.year] == yearOrder[b.year]) {
-                    if (semesterOrder[a.semester] < semesterOrder[b.semester])
-                        return -1;
-                    else if (semesterOrder[a.semester] == semesterOrder[b.semester])
-                        return 0;
-                    else
-                        return 1;
-                } else
-                    return 1;
-            });
-            break;
-        case "chronological_reverse":
-            course_list.sort((a, b) => {
-                const yearOrder = { "Primo": 1, "Secondo": 2, "Terzo": 3 };
-                const semesterOrder = { "Primo e secondo": 0, "Primo": 1, "Secondo": 2 };
-                if (yearOrder[a.year] < yearOrder[b.year])
-                    return 1;
-                else if (yearOrder[a.year] == yearOrder[b.year]) {
-                    if (semesterOrder[a.semester] < semesterOrder[b.semester])
-                        return 1;
-                    else if (semesterOrder[a.semester] == semesterOrder[b.semester])
-                        return 0;
-                    else
-                        return -1;
-                } else
-                    return -1;
-            });
-            break;
-    }
+    return course_list;
 }
 
-export function filter_and_sort(course_list) {
-    let filtered_course_list = filter_course_list(course_list)
-    sort_course_list(filtered_course_list)
-    return filtered_course_list
+export function filter_and_sort(course_list, value, field, secondary_field, ascending = true) {
+    let filtered_course_list = filter_course_list(course_list, value);
+    filtered_course_list = sort_course_list(filtered_course_list, field, secondary_field, ascending);
+    return filtered_course_list;
 }
 
-export function filter_course_list(course_list) {
+export function filter_course_list(course_list, value) {
     let filtered_courses_list = [];
     // per ogni corso
     for (let course of course_list) {
         // si controllano prima i filtri
         let filtered_out = false;
-        for (let filter_tag of $filter_tags)
-            if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
-                filtered_out = true;
+        // for (let filter_tag of $filters.tags)
+        //     if (filter_tag.selected && course.tags.indexOf(filter_tag.name) == -1)
+        //         filtered_out = true;
+        
         // se il corso ha superato il test e se la barra di ricerca è vuota
-        if (!filtered_out && $value) {
+        if (!filtered_out && value) {
             let max_match;
             let min_dist = Infinity;
             let match_value = 0;
@@ -239,7 +149,7 @@ export function filter_course_list(course_list) {
             let n = 0;
             let dist_threshold = 2;
             // split the search bar input in its single words
-            let values = $value.split(" ");
+            let values = value.split(" ");
             for (let input of values) {
                 if (input != "" && input != "e" && input != "di" && input != "dei" && input != "I") {
                     max_match = 0;
@@ -298,7 +208,8 @@ export function filter_course_list(course_list) {
             filtered_courses_list.push(course);
         }
     }
-    if ($value) {
+
+    if (value) {
         filtered_courses_list.sort((a, b) => {
             if (a.match < b.match)
                 return 1;
@@ -308,5 +219,6 @@ export function filter_course_list(course_list) {
                 return -1;
         })
     }
+
     return filtered_courses_list;
 }

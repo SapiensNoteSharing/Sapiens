@@ -1,23 +1,23 @@
 <script>
-    import { value, filter_tags } from "$lib/stores";
-    import { filter_and_sort } from '$lib/utils';
+    import { filters } from "$lib/stores";
+    import { sorting_methods } from '$lib/utils';
+    import Svelecte from 'svelecte';
 
     let classes = "";
     export {classes as class};
-    export let data = [];
-
-    let sorting_method = "chronological_order";
-
-    let filtered_not_owned = filter_and_sort(data)
-
-    $: if(sorting_method && $value !== undefined && $filter_tags){
-        filtered_not_owned =  filter_and_sort(data)
-    }
 </script>
 
 <div class="d-flex position-relative {classes}">
-    <input class="form-control confined bg-light pe-5" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value={$value}>
+    <input class="form-control confined bg-light pe-5" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value={$filters.search}>
     <span class="searchbutton py-1"><i class="bi bi-search"></i></span>
+
+    <Svelecte
+    style="width: 18rem;"
+    placeholder="Ordina per:"
+    options={sorting_methods.map(sm => sm.field)}
+    class="svelecte-control text-left selection-input"
+    bind:value={$filters.sorting_method.field}
+    />
 </div>
 
 <style lang="scss">
