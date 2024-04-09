@@ -1,6 +1,7 @@
 <script>
     import CourseCard from '$lib/components/CourseCard.svelte';
-    import { value, filter_tags } from '$lib/stores';
+    import { filters } from '$lib/stores';
+    import { filter_and_sort } from '$lib/utils';
     import Svelecte from 'svelecte';
 
     export let data;
@@ -19,19 +20,21 @@
         {id:"code_descending", name:"Codice · decrescente"},
         {id:"no_order", name:"Nessun ordinamento"}
     ]
+
+    let filtered_not_owned = filter_and_sort(not_owned);
 </script>
 
 <div class="d-flex flex-column">
     <div class="d-flex mb-5 justify-content-between">
         <div class="d-flex align-items-center">
-            {#if $filter_tags.length == 2}
+            {#if $filters.tags?.length == 2}
                 <span class=""><i class="icon bi bi-funnel"></i></span>
                 <h4 class="fs-6 ms-3 my-0">Nessun filtro selezionato</h4>
             {:else}
                 <span class="py-2"><i class="icon bi bi-funnel-fill"></i></span>
             {/if}
 
-            {#each $filter_tags as tag}
+            {#each $filters.tags as tag}
                 {#if tag.selected}
                     <span class="badge my-auto p-2 bg-{tag.color} ms-3 filter_badge text-dark">{tag.name}</span>
                 {/if}
@@ -39,19 +42,7 @@
         </div>
         
         <div class="d-flex align-items-center">
-            {#if $value}
-                <select class="form-select me-3" placeholder="Ordina per:" aria-label="Default select example" bind:value={sorting_method} disabled>
-                    <option class="opt" value="match_ascending" selected>Corrispondenza</option>
-                </select>
-            {:else}
-                <Svelecte
-                style="width: 18rem;"
-                placeholder="Ordina per:"
-                options={sorting_methods}
-                class="svelecte-control text-left selection-input"
-                bind:value={sorting_method}
-                />
-            {/if}
+
         </div>
     </div>
 

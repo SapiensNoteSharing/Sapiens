@@ -58,11 +58,11 @@
 
     function load_bundles() {
         semester_bundle_courses = get_semester_bundle_courses()
-        sort_course_list(semester_bundle_courses, "chronological_order");
+        sort_course_list(semester_bundle_courses, "year", "semester");
         year_bundle_courses = get_year_bundle_courses()
-        sort_course_list(year_bundle_courses, "chronological_order");
+        sort_course_list(year_bundle_courses, "year", "semester");
         degree_bundle_courses = get_degree_bundle_courses()
-        sort_course_list(degree_bundle_courses, "chronological_order");
+        sort_course_list(degree_bundle_courses, "year", "semester");
     }
 
     load_bundles();
