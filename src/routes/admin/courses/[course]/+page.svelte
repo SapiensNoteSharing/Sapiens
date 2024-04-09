@@ -94,9 +94,10 @@
         <div class="mb-3">
             <label for="professors" class="form-label">Tags</label>
             <Svelecte 
-            options={['Best Seller', 'New', 'Best Reviews']} 
+            options={data.tags} 
             multiple 
-            labelAsValue 
+            labelAsValue
+            creatable
             bind:value={current.tags} 
             placeholder="Seleziona tags"/>
         </div>
