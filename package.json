@@ -6,7 +6,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"start": "vite build"
+		"start": "node build"
 	},
 	"devDependencies": {
 		"@bizmate-oss/sveltekit-components": "^1.0.53",
