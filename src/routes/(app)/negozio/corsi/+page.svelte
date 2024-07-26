@@ -10,7 +10,7 @@
     let not_owned = courses.filter(course => !owned.includes(course));
 
     $: filtered_not_owned = filter_and_sort(not_owned, $filters.search, $filters.sorting_method.field, $filters.sorting_method.secondary_field);
-    $: console.log(filtered_not_owned);
+    $: console.log(not_owned, filtered_not_owned);
 </script>
 
 <div class="d-flex flex-column">

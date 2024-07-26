@@ -54,13 +54,13 @@
             id: 'year',
             label: 'Anno',
             format: val => val || '-',
-            searchable: 'enum'
+            searchable: 'number'
         },
         {
             id: 'semester',
             label: 'Semestre',
             format: val => val || '-',
-            searchable: 'enum'
+            searchable: 'number'
         },
         {
             id: 'tags',

@@ -5,9 +5,9 @@
 
     export let data;
     const fetch = data.fetch;
-
-    let current = data.course || {}
     
+    let current = data.course || {}
+
     const professors = [
         'Giorgio Ottaviani', 
         'Caterina Stoppato',
@@ -23,7 +23,14 @@
         {value: 6, label: 'Sesto'}
     ]
 
+    let semesters = [
+        {value: 0, label: 'Primo e Secondo'},
+        {value: 1, label: 'Primo'},
+        {value: 2, label: 'Secondo'}
+    ]
+
     async function save() {
+        console.log(current)
         if (current.name) {
             await fetch(`/admin/api/courses`, {
                 method: current?._id ? 'PUT' : 'POST',
@@ -72,7 +79,6 @@
         const resp = await fetch(`/admin/api/courses/${current._id}`)
         current = (resp.ok && await resp.json()) || {}
     }
-
 </script>
 
 <div class="d-flex position-relative align-items-center mb-2">
@@ -125,9 +131,7 @@
         <div class="mb-3">
             <label for="name" class="form-label">Anno di insegnamento</label>
             <Svelecte 
-            options={years} 
-            labelField="label"
-            valueField="value"
+            options={years}
             bind:value={current.year} 
             placeholder="Seleziona anno di insegnamento"/>
         </div>
@@ -137,10 +141,9 @@
         <div class="mb-3">
             <label for="name" class="form-label">Semestre</label>
             <Svelecte 
-            options={['Primo', 'Secondo', 'Primo e Secondo']} 
-            labelAsValue
+            options={semesters} 
             bind:value={current.semester} 
-            placeholder="Seleziona anno di insegnamento"/>
+            placeholder="Seleziona semestre di insegnamento"/>
         </div>
     </div>
 
