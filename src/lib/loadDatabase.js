@@ -8,19 +8,16 @@ export async function loadDatabase() {
     try {
         const country = await State.insertMany(countries.map(country => ({_id: country.countryId, name: country.countryName})), {ordered: false})
     } catch(err) {
-        console.log(err)
     }
 
     try {
         const regio = await Region.insertMany(regions.map(region => ({_id: region.code, name: region.name, state: 118})), {ordered: false})
     } catch(err) {
-        console.log(err)
     }
 
     try {
         const province = await Province.insertMany(provinces.map(province => ({_id: province.provinceId, name: province.provinceName, region: province.regionId, state: 118})), {ordered: false})
     } catch(err) {
-        console.log(err)
     }
 
     try{
@@ -33,6 +30,5 @@ export async function loadDatabase() {
             await University.findOneAndUpdate({name: university.name, type: university.type}, {...university, state: 118}, {upsert: true, new: true})
         })
     } catch(err) {
-        console.log(err)
     }
 }

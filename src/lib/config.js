@@ -12,5 +12,5 @@ const config = {
         ttl: 3600
     }
 }
-
+console.log(env, config)
 export { config };
