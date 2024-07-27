@@ -8,7 +8,7 @@ const config = {
         access_token: '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',
     },
     redis: {
-        url: env.REDIS_URL || 'redis://127.0.0.1:6379/0',
+        url: env.REDIS_PUBLIC_URL || 'redis://127.0.0.1:6379/0',
         ttl: 3600
     }
 }
