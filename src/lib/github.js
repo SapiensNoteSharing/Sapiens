@@ -144,6 +144,7 @@ export async function update() {
 
         const resp = await fetch(`${base}${substitute('Università')}`, options);
         const body = (resp.ok && await resp.json()) || []
+        console.log('github resp body', body)
 
         let courses = []
 
@@ -153,6 +154,7 @@ export async function update() {
                 courses = [...courses, ...((res.ok && await res.json()) || [])]
             }
         }
+        console.log('start update', courses)
         
         courses.forEach(async course => {
             console.log('doing asynchronous')
