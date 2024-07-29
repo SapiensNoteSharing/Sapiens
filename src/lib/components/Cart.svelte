@@ -33,7 +33,7 @@
 <Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
     <div class="d-flex flex-column justify-content-between m-4">
         <div class="d-flex flex-row align-items-center mb-4">
-            <img class="me-4 course-icon" src="/src/style/course_icons/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}.png" alt="{course?.name}" style="width: 5rem; height: 5rem;">
+            <img class="me-4 course-icon" src="/course_icons/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}.png" alt="{course?.name}" style="width: 5rem; height: 5rem;">
 
             <div class="d-flex flex-column justify-content-between align-items-left">
                 <span class="display-6">{course.code}</span>
@@ -71,7 +71,7 @@
 
             <div class="d-flex">
                 <h2 class="align-self-center display-3 my-0">{(10 + course?.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2}</h2>
-                <img style="width: 2rem;" src="/src/style/dna.svg" alt="dna">
+                <img style="width: 2rem;" src="/dna.svg" alt="dna">
             </div>
         </div>
 

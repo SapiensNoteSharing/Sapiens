@@ -18,7 +18,7 @@
 
             <a class="href-box d-flex flex-column justify-content-between mb-4" href="/aula_studio">
                 <div class="d-flex flex-row justify-content-between align-items-center">
-                    <img class="mb-2" style="height: 4rem;" src="/src/style/course_icons/{my_courses[0]?.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{my_courses[0]?.name} icon">
+                    <img class="mb-2" style="height: 4rem;" src="/course_icons/{my_courses[0]?.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{my_courses[0]?.name} icon">
                     <div class="d-flex flex-column justify-content-between">
                         <NormalButton class={"mt-3 mx-3"}>
                             <div slot="name">
@@ -71,7 +71,7 @@
         <h1 class="display-4 my-4">Organizza lo studio</h1>
 
         <a class="href-box d-flex flex-row" href="/calendario">
-            <img style="width: 20rem;" src="/src/style/spaced repetition.png" alt="">
+            <img style="width: 20rem;" src="/spaced repetition.png" alt="">
         </a>
     </div>
 
@@ -80,7 +80,7 @@
 
         <div class="href-box d-flex flex-column mb-4">
             <div class="d-flex align-items-center flex-row mb-3">
-                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/streak.png" alt="streak">
+                <img class="dna-icon" style="height: 2.5rem;" src="/streak.png" alt="streak">
                 <span class="display-4 ms-3">Streak</span>
             </div>
             <span class="display-6">La tua streak è lunga {$user.streak} giorni!</span>
@@ -88,7 +88,7 @@
 
         <div class="href-box d-flex flex-column mb-4">
             <div class="d-flex align-items-center flex-row mb-3">
-                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/xp.png" alt="xp">
+                <img class="dna-icon" style="height: 2.5rem;" src="/xp.png" alt="xp">
                 <span class="display-4 ms-3">Punti XP</span>
             </div>
             <span class="display-6">Hai guadagnato un totale di {$user.xp} XP!</span>
@@ -97,7 +97,7 @@
         {#if $user.streak >= 14}
             <a class="href-box d-flex flex-column mb-4" href="/classifiche">
                 <div class="d-flex align-items-center flex-row mb-3">
-                    <img class="dna-icon" style="height: 2.5rem;" src="/src/style/league_level_{$user.league_level}.png" alt="league">
+                    <img class="dna-icon" style="height: 2.5rem;" src="/league_level_{$user.league_level}.png" alt="league">
                     <span class="display-4 ms-3">Lega</span>
                 </div>
                 <span class="display-6">Fai parte della Lega {league_names[$user.league_level]}!</span>
@@ -106,9 +106,9 @@
         
         <a class="href-box d-flex flex-column mb-4" href="negozio/punti_dna">
             <div class="d-flex align-items-center flex-row mb-3">
-                <img class="dna-icon" style="height: 2.5rem;" src="/src/style/dna.svg" alt="dna">
+                <img class="dna-icon" style="height: 2.5rem;" src="/dna.svg" alt="dna">
                 <span class="display-4 ms-3">Punti DNA e RNA</span>
-                <img class="dna-icon ms-3" style="height: 2.5rem;" src="/src/style/rna.png" alt="rna">
+                <img class="dna-icon ms-3" style="height: 2.5rem;" src="/rna.png" alt="rna">
             </div>
             <p class="mb-2 display-6">Il tuo bilancio è di:</p>
             <ul class="display-6 mb-0">

@@ -17,7 +17,7 @@
 <div class="course-details-container d-flex flex-column bg-light p-5">
     <div class="d-flex flex-row justify-content-between">
         <div class="d-flex flex-row justify-content-between">
-            <img class="me-5 course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
+            <img class="me-5 course-icon" src="/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
             
             <div class="d-flex flex-column">
                 <h2 class="display-3">{course.name}</h2>

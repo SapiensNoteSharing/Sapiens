@@ -4,8 +4,6 @@ import { config } from '$lib/config';
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
 
-console.log('init mongo', config.mongoUrl)
-
 mongoose.connect(config.mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true

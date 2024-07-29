@@ -44,7 +44,7 @@
         <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
             <div class="d-flex w-100 align-items-center">
                 <a href="/home">
-                    <img class="sapiens-logo" style="height: 4rem;" src="/src/style/sapiens_logo.svg" alt="Sapiens-Title">
+                    <img class="sapiens-logo" style="height: 4rem;" src="/sapiens_logo.svg" alt="Sapiens-Title">
                 </a>
                 
                 <h2 class="nav-primary display-3 text-decoration-none align-self-center m-0 ms-4">{pageTitle}</h2>
@@ -58,7 +58,7 @@
                     class={"m-2"}
                     type="user_stats"
                     text={$user.streak}
-                    src={"/src/style/streak.png"}
+                    src={"/streak.png"}
                     alt={"streak"}
                     />
 
@@ -66,7 +66,7 @@
                     class={"m-2"}
                     type="user_stats"
                     text={$user.xp}
-                    src={"/src/style/xp.png"}
+                    src={"/xp.png"}
                     alt={"xp"}
                     />
 
@@ -75,7 +75,7 @@
                         class={"m-2"}
                         type="user_stats"
                         text={($user.league_position || "n") + "°"}
-                        src={"/src/style/leagues/level_" + $user.league_level + ".png"}
+                        src={"/leagues/level_" + $user.league_level + ".png"}
                         alt={"league"}
                         href={"/classifiche"}
                         />
@@ -85,7 +85,7 @@
                     class={"m-2"}
                     type="user_stats"
                     text={$user.dna}
-                    src={"/src/style/dna.svg"}
+                    src={"/dna.svg"}
                     alt={"dna"}
                     href={"/negozio/punti_dna"}
                     />
@@ -94,13 +94,13 @@
                     class={"m-2"}
                     type="user_stats"
                     text={$user.rna}
-                    src={"/src/style/rna.png"}
+                    src={"/rna.png"}
                     alt={"rna"}
                     />
 
                     <ActiveButton active={$page.route.id == "/(app)/area_personale/dati_account" ? 'active' : 'not-active'} class={"m-2"}>
                         <div slot="name" class="display-6 rounded-4">
-                            <a href="/area_personale/dati_account"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
+                            <a href="/area_personale/dati_account"><img class="d-block user-icon" src="/user.jpg" alt="account"></a>
                         </div>
                     </ActiveButton>
                 </div>
@@ -120,7 +120,7 @@
         <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
             <div class="container-fluid">
                 <div>
-                    <img class="ms-3 footer-logo" src="/src/style/sapiens_logo.svg" alt="Sapiens-Title">
+                    <img class="ms-3 footer-logo" src="/sapiens_logo.svg" alt="Sapiens-Title">
                 </div>
 
                 <div class="d-flex align-items-center">

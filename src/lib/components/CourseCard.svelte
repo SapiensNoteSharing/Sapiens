@@ -23,7 +23,7 @@
 <div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="width: {width}%; {style}" on:click={() => goto(href)}>
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
-            <img class="mb-2 course-icon" src="/src/style/course_icons/{course?.name?.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
+            <img class="mb-2 course-icon" src="/course_icons/{course?.name?.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
 
             <div class="d-flex flex-row justify-content-between">
                 <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-pencil-square"></i></a>

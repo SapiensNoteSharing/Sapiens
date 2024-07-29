@@ -40,7 +40,7 @@
             <div class="d-flex flex-column align-items-center">
                 <label for="euro" class="form-label display-5">Euro</label>
                 <div class="input-group has-validation" style="font-size: 1rem !important;">
-                    <span class="input-icon-label input-group-text p-2"><img src="/src/style/paypal.png" alt="" style="width: 2rem;"></span>
+                    <span class="input-icon-label input-group-text p-2"><img src="/paypal.png" alt="" style="width: 2rem;"></span>
                     <input type="number" class="form-control" bind:value={euro} min="0" max="150" required on:input={updateDNA}>
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <div class="d-flex flex-column align-items-center">
                 <label for="dna" class="form-label display-5">Punti DNA</label>
                 <div class="input-group has-validation">
-                    <span class="input-icon-label input-group-text p-2"><img src="/src/style/dna.svg" alt="" style="width: 2rem;"></span>
+                    <span class="input-icon-label input-group-text p-2"><img src="/dna.svg" alt="" style="width: 2rem;"></span>
                     <input type="number" class="form-control" bind:value={dna} min="0" max="300" required on:input={updateEuro}>
                 </div>
             </div>

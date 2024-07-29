@@ -36,7 +36,7 @@
         </div>
         <div class="d-flex">
             <h2 class="align-self-center display-3 my-0"></h2>
-            <img style="width: 2rem;" src="/src/style/dna.svg" alt="dna">
+            <img style="width: 2rem;" src="/dna.svg" alt="dna">
         </div>
     </div>
 </Modal>
@@ -68,9 +68,9 @@
                 <!-- <div class="d-flex flex-row justify-content-between flex-wrap align-items-end">
                     {#each semester_bundle_courses as course}
                         {#if course.owned}
-                            <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
+                            <img class="bundle-course-icon" style="filter: grayscale(100%);" src="/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                         {:else}
-                            <img class="bundle-course-icon" src="/src/style/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
+                            <img class="bundle-course-icon" src="/course_icons/{course.name.toLowerCase().replace(/\s/g, '_')}.png" alt="">
                         {/if}
                     {/each}
                 </div> -->

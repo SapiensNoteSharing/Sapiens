@@ -1,8 +1,6 @@
 import Redis from 'ioredis';
 import { config } from '$lib/config';
 
-console.log('init redis', config.redis.url)
-
 const redis = new Redis(config.redis.url);
 
 redis.on('error', function(err) { 

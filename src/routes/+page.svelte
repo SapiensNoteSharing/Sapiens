@@ -126,7 +126,7 @@
 <div class="base-layer">
     <nav class="navbar navbar-expand-lg bg-light w-100">
         <div class="d-flex w-100 justify-content-center align-items-center">
-            <img style="width: 14rem;" src="/src/style/sapiens_logo.svg" alt="Sapiens-Title">
+            <img style="width: 14rem;" src="/sapiens_logo.svg" alt="Sapiens-Title">
         </div>
     </nav>
 
@@ -428,7 +428,7 @@
             </div>
         {/if}
 
-        <!-- <img src="/src/style/sapiens_logo_cartoon.png" alt="" class="landing-page-image m-5"> -->
+        <!-- <img src="/sapiens_logo_cartoon.png" alt="" class="landing-page-image m-5"> -->
     </div>
 
     <div class="presentation-item d-flex justify-content-evenly align-items-center bg-primary">
@@ -436,11 +436,11 @@
             <h1 class="title text-dark">Studia</h1>
             <h1 class="subtitle text-dark">Sfoglia tra decine di corsi universitari messi a disposizione dai tuoi colleghi</h1>
         </div>
-        <img src="/src/style/landing_page.png" alt="" class="presentation-image">
+        <img src="/landing_page.png" alt="" class="presentation-image">
     </div>
     
     <div class="presentation-item d-flex justify-content-evenly align-items-center bg-light">
-        <img src="/src/style/landing_page.png" alt="" class="presentation-image">
+        <img src="/landing_page.png" alt="" class="presentation-image">
         <div class="d-flex flex-column">
             <h1 class="title text-dark">Contribuisci</h1>
             <h1 class="subtitle text-dark">Aiutaci a migliorare Sapiens condividendo i tuoi appunti e ricevendo in cambio grandi ricompense!</h1>
@@ -452,14 +452,14 @@
             <h1 class="title text-dark">Valuta</h1>
             <h1 class="subtitle text-dark">Recensisci i contenuti proposti: vogliamo sapereno cosa ne pensi!</h1>
         </div>
-        <img src="/src/style/landing_page.png" alt="" class="presentation-image">
+        <img src="/landing_page.png" alt="" class="presentation-image">
     </div>
 
     <div class="d-flex footer">
         <nav class="navbar navbar-expand-lg bg-light w-100 border-bottom">
             <div class="container-fluid">
                 <div>
-                    <img class="ms-3 footer-logo" src="/src/style/sapiens_logo.svg" alt="Sapiens-Title">
+                    <img class="ms-3 footer-logo" src="/sapiens_logo.svg" alt="Sapiens-Title">
                 </div>
 
                 <div class="d-flex align-items-center">

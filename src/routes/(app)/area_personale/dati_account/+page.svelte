@@ -53,7 +53,7 @@
                     <label for="userProfilePicture" class="form-label">Immagine profilo</label>
                     <ActiveButton active={$page.route.id == "/(app)/area_personale/dati_account" ? 'active' : 'not-active'} class={"mt-1"}>
                         <div slot="name" class="display-6 rounded-4">
-                            <a href="/area_personale/dati_account"><img class="d-block user-icon" src="/src/style/user.jpg" alt="account"></a>
+                            <a href="/area_personale/dati_account"><img class="d-block user-icon" src="/user.jpg" alt="account"></a>
                         </div>
                     </ActiveButton>
                 </div>

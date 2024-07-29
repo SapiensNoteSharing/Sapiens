@@ -29,7 +29,7 @@
                 {#each showed as course}
                     <div class="d-flex flex-row text-decoration-none justify-content-between align-items-end">
                         <div class="d-flex flex-row align-items-center">
-                            <img class="me-4" style="height: 5rem;" src="/src/style/course_icons/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}.png" alt="{course?.name} icon">
+                            <img class="me-4" style="height: 5rem;" src="/course_icons/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}.png" alt="{course?.name} icon">
                             <div class="d-flex flex-column text-dark align-items-start">
                                 <h2 class="display-4">{course?.name}</h2>
                                 <h4 class="">{course?.code} &bull; {course?.cfu} CFU</h4>
