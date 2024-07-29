@@ -1,15 +1,17 @@
 import { compare } from '$lib/crypt'
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import { User } from '$lib/mongodb';
 import { setSession } from '$lib/redis';
 
 export async function POST({ url, locals, request, cookies }) {
     const body = await request.json()
-    const authenticated = await compare(body)
+
+    const dbUser = await User.findOne({$or: [{email: body.identifier}, {username: body.identifier}]})
+
+    const authenticated = await compare(body, dbUser)
 
     if (authenticated) {
-        const u = await User.findOne({$or: [{email: body.identifier}, {username: body.identifier}]});
-        const user = u.toObject()
+        const user = dbUser.toObject()
         delete user.hash
         const sid = crypto.randomUUID();
 
@@ -24,7 +26,9 @@ export async function POST({ url, locals, request, cookies }) {
         })
 
         return new Response('OK')
+    } else if(body.identifier == dbUser.email || body.identifier == dbUser.username) {
+        throw error(400, {field: 'identifier', msg: 'Email/Username errati'})
     } else {
-        throw redirect(300, '/')
+        throw error(400, {field: 'password', msg: 'Password Errata'})
     }
 }

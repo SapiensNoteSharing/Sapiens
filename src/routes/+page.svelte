@@ -8,6 +8,7 @@
     let userLogin = {}
     let userRegister = {}
     let validated = false;
+    let loginFailed = false
 
     let university_names = ["Università degli Studi di Firenze"]
     let faculties_names = [
@@ -34,6 +35,8 @@
 	});
 
     async function loginUser() {
+        validated = true
+        loginFailed = false
         const resp = await fetch(`/login`, {
             method: 'POST',
             headers: {
@@ -41,28 +44,34 @@
             },
             body: JSON.stringify(userLogin)
         })
-
         if (resp.ok) {
             goto('/home')
+        } else {
+            const err = await resp.json()
+            loginFailed = err.field
         }
     }
 
     async function registerUser() {
-        if (checkValidity()) {
-            const resp = await fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userRegister)
-            });
-            if (resp.ok) {
-                goto('/home')
-            }
+        const resp = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userRegister)
+        });
+
+        if (resp.ok) {
+            goto('/home')
+        } else {
+            let error = await resp.json()
+            console.log(error)
+            userRegister.invalid = error
+            first_step()
         }
     }
 
-    function checkValidity() {
+    function checkRegistrationValidity() {
         validated = true;
 
         return checkNameValidity(userRegister.name) &&
@@ -81,29 +90,32 @@
     }
 
     function checkUsernameValidity(username) {
-        // se l'username è già stato preso restituire -1
-        if (username?.match(/^[a-zA-Z0-9]+$/))
-            return 1;
-        else
+        let invalid = userRegister?.invalid?.find(field => field.field == 'username')
+        if (invalid && userRegister.username == invalid.val)
+            return -1
+        else if (!(username?.match(/^[a-zA-Z0-9]+$/)))
             return -2;
+        else 
+            return 1;
     }
 
     function checkEmailValidity(email) {
-        if (email?.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g))
-            return 1;
-        else if (email?.length > 0)
+        let invalid = userRegister?.invalid?.find(field => field.field == 'email')
+        if (invalid && userRegister.email == invalid.val)
             return -1;
-        else 
+        else if (!(email?.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)))
             return -2;
+        else 
+            return 1;
     }
 
     function checkPasswordValidity(password) {
-        if (password?.match(/^.{8,32}$/g))
-            return 1;
+        if (!(password?.match(/^.{8,32}$/g)))
+            return -1;
         else if (password?.length > 32)
             return -2;
         else
-            return -1;
+            return 1;
     }
 
     let step = 1;
@@ -111,7 +123,7 @@
     let second_progress_bar = 0;
 
     function second_step() {
-        if (checkValidity()) {
+        if (checkRegistrationValidity()) {
             step = 2;
             first_progress_bar = 100;
         }
@@ -121,6 +133,15 @@
         step = 1;
         first_progress_bar = 0;
     }
+
+    function togglePasswordVisibility(id){
+        let field = document.getElementById(id)
+        if(field.type == 'password')
+            field.type = 'text'
+        else
+            field.type = 'password'
+    }
+
 </script>
 
 <div class="base-layer">
@@ -134,15 +155,15 @@
         {#if accessMode == "login"}
             <div class="login-box d-flex flex-column p-5">
                 <h2 class="display-2 text-dark m-0 mb-2">Accedi</h2>
-                <span class="display-6 text-dark m-0">Non hai un account? <span class="text-decoration-underline text-dark register-link" on:click={() => accessMode = "registration"}>Registrati</span></span>
+                <span class="display-6 text-dark m-0">Non hai un account? <span class="text-decoration-underline text-dark register-link" on:click={() => {accessMode = "registration", validated = false}}>Registrati</span></span>
 
                 <div class="col-md-12">
-                    <label for="LoginEmail" class="form-label"></label>
+                    <label for="login" class="form-label"></label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                        <input placeholder="E-mail o username" class="form-control border-dark" bind:value={userLogin.identifier} required>
-                        <div id="validationLoginEmailFeedback" class="invalid-feedback">
-                            Non esiste nessun account collegato a questa Email. Riprova o vai alla registrazione
+                        <input placeholder="E-mail o username" class="form-control {validated ? (loginFailed != 'identifier' ? "is-valid" : "is-invalid") : ""} border-dark" bind:value={userLogin.identifier} required>
+                        <div class="invalid-feedback">
+                            Email o username errati
                         </div>
                     </div>
                 </div>
@@ -151,9 +172,9 @@
                     <label for="LoginPassword" class="form-label"></label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
-                        <input type="password" placeholder="Password" class="form-control border-dark" style="border-radius: 0rem 0.4rem 0.4rem 0rem; z-index: 1;" bind:value={userLogin.password} required>
-                        <i class="bi bi-eye-slash text-dark display-3 password-show-btn"></i>
-                        <div id="validationLoginPasswordFeedback" class="invalid-feedback">
+                        <input id="loginPass" type="password" placeholder="Password" class="form-control border-dark {validated ? (loginFailed != 'identifier' ? "is-valid" : "is-invalid") : ""}" style="border-radius: 0rem 0.4rem 0.4rem 0rem; z-index: 1;" bind:value={userLogin.password} required>
+                        <i class="bi bi-eye-slash text-dark display-3 password-show-btn" style="z-index: 20" on:click={() => togglePasswordVisibility('loginPass')}></i>
+                        <div class="invalid-feedback">
                             La password non è corretta. Riprova
                         </div>
                     </div>
@@ -200,7 +221,7 @@
                         </div>
                     </div>
                 </div>
-                <span class="display-6 text-dark m-0">Hai già un account? <span class="text-decoration-underline text-dark login-link" on:click={() => accessMode = "login"}>Effettua il login</span></span>
+                <span class="display-6 text-dark m-0">Hai già un account? <span class="text-decoration-underline text-dark login-link" on:click={() => {accessMode = "login", validated = false}}>Effettua il login</span></span>
                 
 				{#if step == 1}
                 	<form class="row g-3 needs-validation m-0 align-items-center" novalidate>
@@ -248,7 +269,7 @@
                                 <input class="form-control {validated ? (checkEmailValidity(userRegister.email) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.email}>
                                 <div class="invalid-feedback">
                                     {#if checkEmailValidity(userRegister.email) == -1}
-                                        Email non valida
+                                        Email non valida o già in uso
                                     {:else if checkEmailValidity(userRegister.email) == -2}
                                         Campo obbligatorio
                                     {/if}
@@ -259,7 +280,8 @@
                             <label for="RegistrationPassword" class="form-label">Password *</label>
                             <div class="input-group has-validation">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
-                                <input type="password" class="form-control {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.password} required>
+                                <input id="registrationPass" type="password" class="form-control {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.password} required>
+                                <i class="bi bi-eye-slash text-dark display-3 password-show-btn" style="z-index: 20" on:click={() => togglePasswordVisibility('registrationPass')}></i>
                                 <div class="invalid-feedback">
                                     {#if checkPasswordValidity(userRegister.password) == -1}
                                         La password deve contenere almeno 8 caratteri
