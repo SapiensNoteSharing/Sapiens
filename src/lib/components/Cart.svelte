@@ -3,10 +3,13 @@
     import Modal from '$lib/components/Modal.svelte';
     import { user } from '$lib/stores';
     import { goto } from '$app/navigation';
+
+    
     export let course;
     let selected_option = "complete"
 
     export let cartModal;
+
     export function openCart(ev) {
         ev.stopPropagation();
         ev.stopImmediatePropagation();

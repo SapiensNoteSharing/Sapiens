@@ -7,6 +7,7 @@
     import 'highlight.js/styles/github.css';
 
     export let data;
+    $user = data.user || {}
 
     $: pageTitle = formatPageTitle($page);
 

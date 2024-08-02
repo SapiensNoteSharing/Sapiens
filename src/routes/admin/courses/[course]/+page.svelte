@@ -3,7 +3,7 @@
     import { goto } from '$app/navigation'
     import { Table } from '@bizmate-oss/sveltekit-components'
     import { years, semesters } from '$lib/utils'
-
+    import { error, success } from '$lib/toast'
     export let data;
     const fetch = data.fetch;
     
@@ -24,7 +24,7 @@
                 },
                 body: JSON.stringify(current)
             });
-            goto(`/admin/courses/${current._id}`);
+            success('Updated Course')
         }
     }
 
@@ -84,9 +84,12 @@
         <div class="mb-3">
             <label for="professors" class="form-label">Docente/i</label>
             <Svelecte 
-            options={professors} 
+            options={current.professors.map(p => ({label: p}))} 
             multiple 
-            labelAsValue 
+            creatable
+            creatablePrefix=''
+            labelField="label"
+            valueField="label"
             bind:value={current.professors} 
             placeholder="Seleziona docenti"/>
         </div>

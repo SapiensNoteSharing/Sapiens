@@ -1,6 +1,8 @@
 const colors = {
     primary: '#9de3c4',
-    secondary: '#ff3666'
+    primary_shade: '#f5fcfb',
+    secondary: '#ff3666',
+    secondary_shade: '#eeedf7'
 }
 
 export let tagsPalette = {

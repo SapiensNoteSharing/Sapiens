@@ -2,6 +2,8 @@
     import { Table } from '@bizmate-oss/sveltekit-components'
     import Modal from '$lib/components/Modal.svelte';
     import { goto } from '$app/navigation';
+    import { info } from'$lib/toast';
+
     export let data;
 
     let courses = data.courses || [];
@@ -86,7 +88,9 @@
         {
             id: 'extra_content',
             label: 'Contenuti extra',
-            format: val => val ? true : false
+            icon: true,
+            align: 'center',
+            format: val => val ? `<i class="bi bi-check-circle"></i>` : false
         },
         {
             id: 'updatedAt',
@@ -128,6 +132,7 @@
                     },
                     body: JSON.stringify(current)
                 })
+                info(`Deleted Course ${current.name}`)
                 reload()
             }
         })

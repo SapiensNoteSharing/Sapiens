@@ -52,7 +52,7 @@
 
         <div class="d-flex flex-wrap justify-content-between align-items-end">
             <div>
-                <p class="text-dark d-block" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
+                <p class="text-dark d-block me-3" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
             </div>
             {#if owned == false}
             <div>

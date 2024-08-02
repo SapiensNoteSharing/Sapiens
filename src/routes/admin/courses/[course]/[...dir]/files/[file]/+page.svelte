@@ -64,7 +64,7 @@
     <div class="col">
         <div class="mb-3">
             <label for="gitUrl" class="form-label">Link Git</label>
-            <input class="form-control" placeholder="Git Url" bind:value={current.path}>
+            <input class="form-control" placeholder="Git Url" bind:value={current.path} disabled>
         </div>
     </div>
 </div>
