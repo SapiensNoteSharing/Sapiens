@@ -457,29 +457,34 @@
 
         <!-- <img src="/sapiens_logo_cartoon.png" alt="" class="landing-page-image m-5"> -->
     </div>
-
-    <div class="presentation-item d-flex justify-content-evenly align-items-center bg-primary">
-        <div class="d-flex flex-column">
-            <h1 class="title text-dark">Studia</h1>
-            <h1 class="subtitle text-dark">Sfoglia tra decine di corsi universitari messi a disposizione dai tuoi colleghi</h1>
+    <div class="row presentation-item mb-0 align-items-center bg-primary">
+        <div class="col-12 col-md-6">
+            <div class="d-flex flex-column">
+                <h1 class="title text-dark" style="--ft: {$mobile ? '3rem' : '4rem'}">Studia</h1>
+                <h1 class="subtitle text-dark" style="--ft: {$mobile ? '1.5rem' : '2rem'}">Sfoglia tra decine di corsi universitari messi a disposizione dai tuoi colleghi</h1>
+            </div>
         </div>
-        <img src="/landing_page.png" alt="" width={500} class="presentation-image">
-    </div>
-    
-    <div class="presentation-item d-flex justify-content-evenly align-items-center bg-light">
-        <img src="/landing_page.png" alt="" class="presentation-image">
-        <div class="d-flex flex-column">
-            <h1 class="title text-dark">Contribuisci</h1>
-            <h1 class="subtitle text-dark">Aiutaci a migliorare Sapiens condividendo i tuoi appunti e ricevendo in cambio grandi ricompense!</h1>
+        <div class="col-12 col-md-6">
+            <img src="/landing_page.png" alt="" style="width: 100%" class="presentation-image">
         </div>
     </div>
-    
-    <div class="presentation-item d-flex justify-content-evenly align-items-center bg-secondary">
-        <div class="d-flex flex-column">
-            <h1 class="title text-dark">Valuta</h1>
-            <h1 class="subtitle text-dark">Recensisci i contenuti proposti: vogliamo sapereno cosa ne pensi!</h1>
+    <div class="row presentation-item mb-0 align-items-center bg-light">
+        <div class="col-12 col-md-6">
+            <img src="/landing_page.png" alt="" style="width: 100%" class="presentation-image">
         </div>
-        <img src="/landing_page.png" alt="" class="presentation-image">
+        <div class="col-12 col-md-6">
+            <h1 class="title text-dark" style="--ft: {$mobile ? '3rem' : '4rem'}">Contribuisci</h1>
+            <h1 class="subtitle text-dark" style="--ft: {$mobile ? '1.5rem' : '2rem'}">Aiutaci a migliorare Sapiens condividendo i tuoi appunti e ricevendo in cambio grandi ricompense!</h1>
+        </div>
+    </div>
+    <div class="row presentation-item mb-0 align-items-center bg-secondary">
+        <div class="col-12 col-md-6">
+            <h1 class="title text-dark" style="--ft: {$mobile ? '3rem' : '4rem'}">Valuta</h1>
+            <h1 class="subtitle text-dark" style="--ft: {$mobile ? '1.5rem' : '2rem'}">Recensisci i contenuti proposti: vogliamo sapereno cosa ne pensi!</h1>
+        </div>
+        <div class="col-12 col-md-6">
+            <img src="/landing_page.png" alt="" style="width: 100%" class="presentation-image">
+        </div>
     </div>
 
     <div class="d-flex footer">
@@ -532,6 +537,7 @@
 
     .base-layer {
         background: $light;
+        width: 100%;
     }
 
     .full-height {
@@ -597,9 +603,9 @@
     }
 
     .presentation-item {
-        height: 80vh;
+        height: fit-content;
         border: 1px solid $dark;
-        padding: 0rem 5rem;
+        padding: 5rem;
     }
 
     .presentation-image {
@@ -619,11 +625,11 @@
     }
     
     .title {
-        font-size: 6rem;
+        font-size: var(--ft);
     }
     
     .subtitle {
-        font-size: 2rem;
+        font-size: var(--ft);
     }
     
     .icon {
