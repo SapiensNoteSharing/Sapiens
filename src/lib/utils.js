@@ -120,7 +120,6 @@ function replace_cost(key1, key2) {
 }
 
 export function sort_course_list(course_list, field, secondary_field, ascending = true) {
-    console.log('sort course list', ascending)
     let multiplier = ascending ? 1 : -1;
     course_list.sort((a, b) => {
         if (a[field] < b[field])

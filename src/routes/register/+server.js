@@ -12,10 +12,10 @@ export async function POST({ url, locals, cookies, request }) {
 
     let matchingUniqueFields = []
 
-    if (existingUser.username == body.username) {
+    if (existingUser?.username == body?.username) {
         matchingUniqueFields.push({field: 'username', msg: 'This username is already used by another user', val: body.username})
     } 
-    if (existingUser.email == body.email){
+    if (existingUser?.email == body?.email){
         matchingUniqueFields.push({field: 'email', msg: 'This email is already used by another user', val: body.email})
     }
 

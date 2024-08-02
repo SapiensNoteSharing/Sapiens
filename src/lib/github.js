@@ -87,7 +87,6 @@ async function getMetadata(coursePath) {
 
     if (body.content) {
         let data = JSON.parse(Buffer.from(body.content, 'base64').toString('utf-8'));
-        console.log(data);
         return data;
     } 
     return {};
