@@ -2,6 +2,7 @@
     import Svelecte from "svelecte";
     import { goto } from '$app/navigation'
     import { Table } from '@bizmate-oss/sveltekit-components'
+    import { years, semesters } from '$lib/utils'
 
     export let data;
     const fetch = data.fetch;
@@ -14,23 +15,7 @@
         'Marco Bertini'
     ]
 
-    let years = [
-        {value: 1, label: 'Primo'},
-        {value: 2, label: 'Secondo'},
-        {value: 3, label: 'Terzo'},
-        {value: 4, label: 'Quarto'},
-        {value: 5, label: 'Quinto'},
-        {value: 6, label: 'Sesto'}
-    ]
-
-    let semesters = [
-        {value: 0, label: 'Primo e Secondo'},
-        {value: 1, label: 'Primo'},
-        {value: 2, label: 'Secondo'}
-    ]
-
     async function save() {
-        console.log(current)
         if (current.name) {
             await fetch(`/admin/api/courses`, {
                 method: current?._id ? 'PUT' : 'POST',
@@ -79,6 +64,7 @@
         const resp = await fetch(`/admin/api/courses/${current._id}`)
         current = (resp.ok && await resp.json()) || {}
     }
+
 </script>
 
 <div class="d-flex position-relative align-items-center mb-2">
@@ -109,10 +95,12 @@
         <div class="mb-3">
             <label for="professors" class="form-label">Tags</label>
             <Svelecte 
-            options={data.tags} 
+            options={data.tags.map(tag => ({label: tag}))} 
             multiple 
-            labelAsValue
+            labelField="label"
+            valueField="label"
             creatable
+            creatablePrefix=''
             bind:value={current.tags} 
             placeholder="Seleziona tags"/>
         </div>

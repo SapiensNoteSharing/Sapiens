@@ -12,13 +12,13 @@ import { user } from '$lib/stores'
 <div class="d-flex flex-column">
     <div class="d-flex flex-row justify-content-center align-items-center">
         {#each Array(before) as _}
-            <img class="league-icon" src="src/style/leagues/blank.png" alt="">
+            <img class="league-icon" src="/leagues/blank.png" alt="">
         {/each}      
         {#each Array(5) as _, i}
-            <img class="league-icon {$user.league_level == i ? "my-league" : ""}" src="src/style/leagues/level_{i}.png" alt="">
+            <img class="league-icon {$user.league_level == i ? "my-league" : ""}" src="/leagues/level_{i}.png" alt="">
         {/each}  
         {#each Array(after) as _}
-            <img class="league-icon" src="src/style/leagues/blank.png" alt="">
+            <img class="league-icon" src="/leagues/blank.png" alt="">
         {/each}       
     </div>
     <h2 class="text-dark display-3 mx-auto my-2">Lega {league_names[$user.league_level]}</h2>

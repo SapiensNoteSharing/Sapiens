@@ -8,7 +8,7 @@
     let courses = data.courses || [];
     let my_courses = data.my_courses || [];
 
-    let filtered_owned = filter_and_sort(my_courses, $filters.sorting_method.field, $filters.sorting_method.secondary_field);
+    let filtered_owned = filter_and_sort(my_courses, $filters.sorting_method.field, $filters.sorting_method.secondary_field, $filters.sorting_method.ascending);
 
     let suggestions_category = "best_sellers";
     let best_sellers = ["Algoritmi e strutture dati", "Analisi Matematica I", "Fisica I"];

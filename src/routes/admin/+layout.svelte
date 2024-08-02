@@ -3,36 +3,10 @@
     import ActiveButton from '$lib/components/ActiveButton.svelte'
     import { page } from '$app/stores'
     import { user } from '$lib/stores'
+    import { formatPageTitle } from '$lib/utils'
     import 'highlight.js/styles/github.css';
 
     export let data;
-
-    function formatPageTitle(page) {
-        if (!page.route?.id) 
-            return ''
-        
-        let route = page.route.id.split('/').pop()
-
-        Object.keys(page.params).forEach(key => {
-            route = route.replace(new RegExp(`\\[${key}\\]`), page.data[key] ? page.data[key]?.name || page.data[key]?.title || page.data[key]?.label : page.params[key])
-        })
-
-        route = route.replace(/_/g, ' ')
-
-        if (route == 'faq') 
-            return 'FAQ'
-
-        const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1)
-        return capitalise(route)
-    } 
-
-
-    function substitute(text) {
-        text = text.replace(/\[course\]/, $page.data?.course?.name);
-        text = text.replace(/\[...dir\]/, $page.data?.directory?.name)
-        text = text.replace(/\[file\]/, $page.data?.file?.name)
-        return text
-    }
 
     $: pageTitle = formatPageTitle($page);
 

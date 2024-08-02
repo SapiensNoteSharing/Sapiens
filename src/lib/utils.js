@@ -1,6 +1,23 @@
 export const sorting_methods = [
-    {field: "year", secondary_field: "semester"},
-    {field: "name"}
+    {val: 0, field: "year", secondary_field: "semester", ascending: true, label: 'Year - Asc'},
+    {val: 1, field: "year", secondary_field: "semester", ascending: false, label: 'Year - Disc'},
+    {val: 2, field: "name", ascending: true, label: 'Name - Asc'},
+    {val: 3, field: "name", ascending: false, label: 'Name - Disc'}
+]
+
+export const years = [
+    {value: 1, label: 'Primo'},
+    {value: 2, label: 'Secondo'},
+    {value: 3, label: 'Terzo'},
+    {value: 4, label: 'Quarto'},
+    {value: 5, label: 'Quinto'},
+    {value: 6, label: 'Sesto'}
+]
+
+export const semesters = [
+    {value: 0, label: 'Primo e Secondo'},
+    {value: 1, label: 'Primo'},
+    {value: 2, label: 'Secondo'}
 ]
 
 function edit_distance(x, y) {
@@ -103,6 +120,7 @@ function replace_cost(key1, key2) {
 }
 
 export function sort_course_list(course_list, field, secondary_field, ascending = true) {
+    console.log('sort course list', ascending)
     let multiplier = ascending ? 1 : -1;
     course_list.sort((a, b) => {
         if (a[field] < b[field])
@@ -222,3 +240,22 @@ export function filter_course_list(course_list, value) {
 
     return filtered_courses_list;
 }
+
+export function formatPageTitle(page) {
+    if (!page.route?.id) 
+        return ''
+    
+    let route = page.route.id.split('/').pop()
+
+    Object.keys(page.params).forEach(key => {
+        route = route.replace(new RegExp(`\\[${key}\\]`), page.data[key] ? page.data[key]?.name || page.data[key]?.title || page.data[key]?.label : page.params[key])
+    })
+
+    route = route.replace(/_/g, ' ')
+
+    if (route == 'faq') 
+        return 'FAQ'
+
+    const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1)
+    return capitalise(route)
+} 

@@ -41,7 +41,7 @@
 
     <div class="my-4">
         <h2 class="display-4">Argomenti del corso</h2>
-        <p >fsafhdjskafhdjsaolfhdjskalhfdjksalfhdjsaklfdhsafiud shafjds afhudso afhdusioa fhdusiaof dsuaof egwuiof dgsuyifod sbafhjdio sgavyucdos bcdjhsao fdguysaio fdcsaio fdsuaif dgsuio </p>
+        {course.description || ''}
     </div>
 
     <div class="navigation d-flex flex-row justify-content-between">

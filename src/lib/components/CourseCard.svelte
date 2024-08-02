@@ -20,7 +20,7 @@
 <Cart {course} bind:this={cartModal}/>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="width: {width}%; {style}" on:click={() => goto(href)}>
+<div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="min-width: fit-content; width: {width}%; {style}" on:click={() => goto(href)}>
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
             <img class="mb-2 course-icon" src="/course_icons/{course?.name?.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
@@ -50,10 +50,12 @@
             <p>{course.description}</p>
         </div>
 
-        <div class="d-flex justify-content-between align-items-end">
-            <p class="text-dark" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
-
+        <div class="d-flex flex-wrap justify-content-between align-items-end">
+            <div>
+                <p class="text-dark d-block" style="margin: 0px;">{course.year} anno &bull; {course.semester} semestre</p>
+            </div>
             {#if owned == false}
+            <div>
                 <NormalButton class={""}>
                     <div slot="name">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -63,6 +65,7 @@
                         </a>
                     </div>
                 </NormalButton>
+            </div>
             {/if}
         </div>
     </div>

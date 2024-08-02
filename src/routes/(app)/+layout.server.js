@@ -1,5 +1,3 @@
-import { getSession } from "$lib/redis";
-
 export async function load({ url, locals, cookies, fetch, depends }) {
     let user = locals.user
 

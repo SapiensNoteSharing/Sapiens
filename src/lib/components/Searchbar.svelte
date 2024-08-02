@@ -5,6 +5,7 @@
 
     let classes = "";
     export {classes as class};
+    $: console.log('filter', $filters.sorting_method)
 </script>
 
 <div class="d-flex position-relative {classes}">
@@ -14,9 +15,12 @@
     <Svelecte
     style="width: 18rem;"
     placeholder="Ordina per:"
-    options={sorting_methods.map(sm => sm.field)}
+    labelField="label"
+    valueAsObject
+    options={sorting_methods}
     class="svelecte-control text-left selection-input"
-    bind:value={$filters.sorting_method.field}
+    bind:value={$filters.sorting_method}
+    on:change={(ev) => {console.log(ev); $filters.sorting_method = ev.detail}}
     />
 </div>
 
