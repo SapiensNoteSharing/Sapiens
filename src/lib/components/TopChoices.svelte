@@ -1,71 +1,51 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
     import ActiveButton from '$lib/components/ActiveButton.svelte';
+    import { onMount } from 'svelte';
 
     let classes = "";
     export {classes as class}
     export let style = "";
-    export let courses = [];
-    export let best_sellers = [];
-    export let new_courses = [];
-    export let best_courses = [];
-    let suggestions_category = "best_sellers";
 
-    let showed = []
-    function load_showed_courses(suggestions_category) {
-        showed = [];
-        switch (suggestions_category) {
-            case "best_sellers":
-                for (let i = 0; i < best_sellers.length; i++)
-                    showed.push(courses.find(course => course.name == best_sellers[i]));
-                break;
-            case "new_courses":
-                for (let i = 0; i < new_courses.length; i++)
-                    showed.push(courses.find(course => course.name == new_courses[i]));
-                break;
-            case "best_reviewed":
-                for (let i = 0; i < best_courses.length; i++)
-                    showed.push(courses.find(course => course.name == best_courses[i]));
-                break;
-        }
+    let icons = {
+        'New!': 'bi-bookmark-plus',
+        'Best Seller': 'bi-graph-up-arrow',
+        'Best Reviewed': 'bi-star'
     }
 
-    $: load_showed_courses(suggestions_category);
+    let suggestions;
+    let suggestions_category;
+
+    let showed;
+
+    async function load_suggestions(){
+        const resp = await fetch(`/api/courses/topchoices`);
+        suggestions = (resp.ok && await resp.json()) || []
+        suggestions_category = suggestions?.[0]?._id
+    }
+
+    onMount(() => {
+        load_suggestions()
+    })
+
+$: showed = suggestions?.find(sugg => sugg._id == suggestions_category)?.courses || []
 </script>
 
 <div class="href-box d-flex flex-column justify-content-between align-self-center mb-4 {classes}" style={style}>
     <div class="d-flex flex-row mb-5">
+        {#each suggestions?.map(sugg => sugg._id) || [] as tag}
         <ActiveButton
         type={"navigation_link"}
-        active={suggestions_category == "best_sellers" ? 'active' : 'not-active'}
+        active={suggestions_category == tag ? 'active' : 'not-active'}
         class={"me-3"}
-        text={"I più venduti"}
-        icon={"bi-graph-up-arrow"}
-        on:click={() => suggestions_category = "best_sellers"}
+        text={tag}
+        icon={icons[tag]}
+        on:click={() => suggestions_category = tag}
         />
-        
-        <ActiveButton 
-        type={"navigation_link"}
-        active={suggestions_category == "new_courses" ? 'active' : 'not-active'}
-        fill={suggestions_category == "new_courses" ? '-fill' : ''}
-        class={"me-3"}
-        text={"Nuovi"}
-        icon={"bi-bookmark-plus"}
-        on:click={() => suggestions_category = "new_courses"}
-        />
-
-        <ActiveButton 
-        type={"navigation_link"}
-        active={suggestions_category == "best_reviewed" ? 'active' : 'not-active'}
-        fill={suggestions_category == "best_reviewed" ? '-fill' : ''}
-        class={"me-3"}
-        text={"Migliori recensioni"}
-        icon={"bi-star"}
-        on:click={() => suggestions_category = "best_reviewed"}
-        />
+        {/each}
     </div>
     <div class="d-flex flex-column justify-content-between mb-1">
-        {#if showed.length > 0}
+        {#if showed?.length > 0}
             {#each showed as course}
                 <div class="d-flex flex-row text-decoration-none justify-content-between align-items-end">
                     <div class="d-flex flex-row align-items-center">

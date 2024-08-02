@@ -1,16 +1,17 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
+    import { onMount } from 'svelte';
 
     export let type = "";
     export let title = "";
     export let subtitle = "";
-    export let courses = [];
     export let href = ""
     export let enabled = false;
     let classes = "";
     export {classes as class}
 
+    let courses = []
     let max_list_length = 5;
 
     let cartModal;
@@ -21,6 +22,13 @@
             }
         })
     }
+
+    onMount(async () => {
+        if(enabled){
+            const resp = await fetch(`/api/shop/bundles/${type}`)
+            courses = (resp.ok && await resp.json()) || []
+        }
+    })
 </script>
 
 <Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
@@ -45,23 +53,16 @@
     <div class="bundle">
         <h2 class="display-3"><span class="text-dark">{title}</span></h2>
 
-        {#if enabled == true}
+        {#if enabled}
             {#if courses.length > 0}
                 <h2 class="display-5 my-3"><span class="text-dark">{subtitle} &bull; {courses.length} corsi</span></h2>
 
                 <div class="d-flex flex-column justify-content-between mt-4">
-                    {#if courses.length <= max_list_length}
-                        {#each courses as course}
-                            <p class="display-6 text-truncate">{course.name}</p>
-                        {/each}
-                    {:else}
-                        {#each courses as course, i}
-                            {#if i < max_list_length - 1}
-                                <p class="display-6 text-truncate">{course.name}</p>
-                            {/if}
-                        {/each}
-
-                        <p class="display-6">... +{courses.length - max_list_length + 1}</p>
+                    {#each courses.filter((course, i) => i < max_list_length) as course}
+                        <p class="display-6 text-truncate">{course.name}</p>
+                    {/each}
+                    {#if courses.length >= max_list_length}
+                    <p class="display-6">... +{courses.length - max_list_length + 1}</p>
                     {/if}
                 </div>
                     

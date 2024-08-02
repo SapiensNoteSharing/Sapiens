@@ -58,14 +58,7 @@
         {:else}
             <h1 class="display-4 mb-4">Acquista il tuo primo corso</h1>
             
-            <TopChoices
-            courses={courses}
-            class={"w-100"}
-            style={""}
-            best_sellers={["Algoritmi e strutture dati", "Analisi Matematica I", "Fisica I"]}
-            new_courses={["Fisica II", "Geometria e algebra lineare", "Algoritmi e strutture dati"]}
-            best_courses={["Fondamenti di ricerca operativa", "Fondamenti di informatica", "Fondamenti di segnali e trasmissione"]}
-            />
+            <TopChoices class={"w-100"} style={""} />
         {/if}
 
         <h1 class="display-4 my-4">Organizza lo studio</h1>
