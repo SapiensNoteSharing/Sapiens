@@ -3,8 +3,9 @@
 	import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import Svelecte from 'svelecte'
+    import { mobile } from '$lib/stores';
 
-    let accessMode = "login";
+    let accessMode = "registration";
     let userLogin = {}
     let userRegister = {}
     let validated = false;
@@ -209,10 +210,10 @@
             </div>
         {:else}
             <div class="registration-box d-flex flex-column p-5">
-                <div class="d-flex flex-row justify-content-between align-items-center">
+                <div class="d-flex flex-row flex-wrap justify-content-between align-items-center">
                     <h2 class="display-2 text-dark m-0 mb-2">Registrati</h2>
 
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row mb-1">
                         <div class="progress-bar me-3">
                             <div style="--first_progress_bar:{first_progress_bar}" class="first-step bg-primary"></div>
                         </div>
@@ -227,117 +228,121 @@
                 	<form class="row g-3 needs-validation m-0 align-items-center" novalidate>
                         <h2 class="display-3 my-4 ps-0" id="dati_personali">Dati personali</h2>
                         
-                        <div class="field col-md-6 ps-0" style="margin-bottom: {validated ? (checkNameValidity(userRegister.name) == 1 ? "2.55" : "1") : "2.55"}rem;">
-                            <label for="RegistrationName" class="form-label">Nome *</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
-                                <input class="form-control {validated ? (checkNameValidity(userRegister.name) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.name}>
-                                <div class="invalid-feedback">
-                                    Campo obbligatorio
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field col-md-6 pe-0" style="margin-bottom: {validated ? (checkLastNameValidity(userRegister.surname) == 1 ? "2.55" : "1") : "2.55"}rem;">
-                            <label for="RegistrationLastName" class="form-label">Cognome *</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
-                                <input class="form-control {validated ? (checkLastNameValidity(userRegister.surname) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.surname}>
-                                <div class="invalid-feedback">
-                                    Campo obbligatorio
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="field col-md-4 ps-0" style="margin-bottom: {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "2.55" : "1") : "2.55"}rem;">
-                            <label for="RegistrationUsername" class="form-label">Username *</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-person-fill"></i></span>
-                                <input class="form-control {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.username}>
-                                <div class="invalid-feedback">
-                                    {#if checkUsernameValidity(userRegister.username) == -1}
-                                        Nome utente già esistente
-                                    {:else if checkUsernameValidity(userRegister.username) == -2}
+                        <div class="d-flex justify-content-between flex-wrap ps-0 mt-0">
+                            <div class="field col-md-6" style="margin-bottom: {validated ? (checkNameValidity(userRegister.name) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                                <label for="RegistrationName" class="form-label">Nome *</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
+                                    <input class="form-control {validated ? (checkNameValidity(userRegister.name) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.name}>
+                                    <div class="invalid-feedback">
                                         Campo obbligatorio
-                                    {/if}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="field col-md-4" style="margin-bottom: {validated ? (checkEmailValidity(userRegister.email) == 1 ? "2.55" : "1") : "2.55"}rem;">
-                            <label for="RegistrationEmail" class="form-label">e-mail *</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                                <input class="form-control {validated ? (checkEmailValidity(userRegister.email) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.email}>
-                                <div class="invalid-feedback">
-                                    {#if checkEmailValidity(userRegister.email) == -1}
-                                        Email non valida o già in uso
-                                    {:else if checkEmailValidity(userRegister.email) == -2}
+                            <div class="field col-md-6 {!$mobile ? 'ps-3' : ''}" style="margin-bottom: {validated ? (checkLastNameValidity(userRegister.surname) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                                <label for="RegistrationLastName" class="form-label">Cognome *</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-icon-label input-group-text"><i class="bi bi-type"></i></span>
+                                    <input class="form-control {validated ? (checkLastNameValidity(userRegister.surname) ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.surname}>
+                                    <div class="invalid-feedback">
                                         Campo obbligatorio
-                                    {/if}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="field col-md-4 pe-0" style="margin-bottom: {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "2.55" : "1") : "2.55"}rem;">
-                            <label for="RegistrationPassword" class="form-label">Password *</label>
-                            <div class="input-group has-validation">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
-                                <input id="registrationPass" type="password" class="form-control {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.password} required>
-                                <i class="bi bi-eye-slash text-dark display-3 password-show-btn" style="z-index: 20" on:click={() => togglePasswordVisibility('registrationPass')}></i>
-                                <div class="invalid-feedback">
-                                    {#if checkPasswordValidity(userRegister.password) == -1}
-                                        La password deve contenere almeno 8 caratteri
-                                    {:else if checkPasswordValidity(userRegister.password) == -2}
-                                        La password deve contenere al massimo 32 caratteri
-                                    {/if}
+                        <div class="d-flex justify-content-between flex-wrap ps-0 mt-0">
+                            <div class="field col-md-4 ps-0" style="margin-bottom: {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                                <label for="RegistrationUsername" class="form-label">Username *</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-icon-label input-group-text"><i class="bi bi-person-fill"></i></span>
+                                    <input class="form-control {validated ? (checkUsernameValidity(userRegister.username) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.username}>
+                                    <div class="invalid-feedback">
+                                        {#if checkUsernameValidity(userRegister.username) == -1}
+                                            Nome utente già esistente
+                                        {:else if checkUsernameValidity(userRegister.username) == -2}
+                                            Campo obbligatorio
+                                        {/if}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field col-md-4 {!$mobile ? 'ps-3' : ''}" style="margin-bottom: {validated ? (checkEmailValidity(userRegister.email) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                                <label for="RegistrationEmail" class="form-label">e-mail *</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
+                                    <input class="form-control {validated ? (checkEmailValidity(userRegister.email) == 1 ? "is-valid" : "is-invalid") : ""}" bind:value={userRegister.email}>
+                                    <div class="invalid-feedback">
+                                        {#if checkEmailValidity(userRegister.email) == -1}
+                                            Email non valida o già in uso
+                                        {:else if checkEmailValidity(userRegister.email) == -2}
+                                            Campo obbligatorio
+                                        {/if}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field col-md-4 {!$mobile ? 'ps-3' : ''}" style="margin-bottom: {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "2.55" : "1") : "2.55"}rem;">
+                                <label for="RegistrationPassword" class="form-label">Password *</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
+                                    <input id="registrationPass" type="password" class="form-control {validated ? (checkPasswordValidity(userRegister.password) == 1 ? "is-valid" : "is-invalid") : ""}" style="border-radius: 0rem 0.4rem 0.4rem 0rem; z-index: 1;" bind:value={userRegister.password} required>
+                                    <i class="bi bi-eye-slash text-dark display-3 password-show-btn" style="z-index: 20" on:click={() => togglePasswordVisibility('registrationPass')}></i>
+                                    <div class="invalid-feedback">
+                                        {#if checkPasswordValidity(userRegister.password) == -1}
+                                            La password deve contenere almeno 8 caratteri
+                                        {:else if checkPasswordValidity(userRegister.password) == -2}
+                                            La password deve contenere al massimo 32 caratteri
+                                        {/if}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="field col-md-3 ps-0">
-                            <label for="RegistrationBirthCountry" class="form-label">Stato</label>
-                            <div class="d-flex has-validation svelecte-custom-selection">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <Svelecte
-                                placeholder="Seleziona stato"
-                                fetch="/api/states"
-                                valueAsObject
-                                valueField="_id"
-                                labelField="name"
-                                autocomplete="off"
-                                class="svelecte-control text-center selection-input m-0"
-                                bind:value={userRegister.country}
-                                />
+                        <div class="d-flex justify-content-between flex-wrap ps-0 mt-0">
+                            <div class="field col-md-3 ps-0">
+                                <label for="RegistrationBirthCountry" class="form-label">Stato</label>
+                                <div class="d-flex has-validation svelecte-custom-selection">
+                                    <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                    <Svelecte
+                                    placeholder="Seleziona stato"
+                                    fetch="/api/states"
+                                    valueAsObject
+                                    valueField="_id"
+                                    labelField="name"
+                                    autocomplete="off"
+                                    class="svelecte-control text-center selection-input m-0"
+                                    bind:value={userRegister.country}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div class="field col-md-4">
-                            <label for="RegistrationBirthRegion" class="form-label">Regione</label>
-                            <div class="d-flex has-validation svelecte-custom-selection">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <Svelecte
-                                placeholder="Seleziona regione"
-                                fetch="/api/regions?s={userRegister.country?._id}"
-                                valueAsObject
-                                valueField="_id"
-                                labelField="name"
-                                autocomplete="off"
-                                class="svelecte-control text-center selection-input m-0"
-                                bind:value={userRegister.region}
-                                />
+                            <div class="field col-md-4">
+                                <label for="RegistrationBirthRegion" class="form-label">Regione</label>
+                                <div class="d-flex has-validation svelecte-custom-selection">
+                                    <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                    <Svelecte
+                                    placeholder="Seleziona regione"
+                                    fetch="/api/regions?s={userRegister.country?._id}"
+                                    valueAsObject
+                                    valueField="_id"
+                                    labelField="name"
+                                    autocomplete="off"
+                                    class="svelecte-control text-center selection-input m-0"
+                                    bind:value={userRegister.region}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div class="field col-md-4">
-                            <label for="RegistrationBirthCity" class="form-label">Città</label>
-                            <div class="d-flex has-validation svelecte-custom-selection">
-                                <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <Svelecte
-                                placeholder="Seleziona provincia"
-                                fetch="/api/provinces?s={userRegister.country?._id}&r={userRegister.region?._id}"
-                                valueAsObject
-                                valueField="_id"
-                                labelField="name"
-                                autocomplete="off"
-                                class="svelecte-control text-center selection-input m-0"
-                                bind:value={userRegister.city}
-                                />
+                            <div class="field col-md-4">
+                                <label for="RegistrationBirthCity" class="form-label">Città</label>
+                                <div class="d-flex has-validation svelecte-custom-selection">
+                                    <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                    <Svelecte
+                                    placeholder="Seleziona provincia"
+                                    fetch="/api/provinces?s={userRegister.country?._id}&r={userRegister.region?._id}"
+                                    valueAsObject
+                                    valueField="_id"
+                                    labelField="name"
+                                    autocomplete="off"
+                                    class="svelecte-control text-center selection-input m-0"
+                                    bind:value={userRegister.city}
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -458,7 +463,7 @@
             <h1 class="title text-dark">Studia</h1>
             <h1 class="subtitle text-dark">Sfoglia tra decine di corsi universitari messi a disposizione dai tuoi colleghi</h1>
         </div>
-        <img src="/landing_page.png" alt="" class="presentation-image">
+        <img src="/landing_page.png" alt="" width={500} class="presentation-image">
     </div>
     
     <div class="presentation-item d-flex justify-content-evenly align-items-center bg-light">
@@ -541,12 +546,12 @@
     }
 
     .login-box {
-        min-width: 40%;
+        min-width: 400px;
         width: 40%;
     }
 
     .registration-box {
-        min-width: 75%;
+        min-width: 400px;
         width: 75%;
     }
 
@@ -587,6 +592,10 @@
         margin: 0px;
         margin-bottom: 1rem;
     }
+    .selection-input {
+        width: 100%;    
+    }
+
     .presentation-item {
         height: 80vh;
         border: 1px solid $dark;
