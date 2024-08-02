@@ -56,8 +56,8 @@ const UserSchema = new Schema({
         type: ObjectId,
         ref: 'Degree'
     },
-    year: String,
-    semester: String,
+    year: Number,
+    semester: Number,
     student_id: String,
     league_xp: {type: Number, default: 0},
     league_position: Number,

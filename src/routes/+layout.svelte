@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+    import { SvelteToast } from '@zerodevx/svelte-toast'
     import '$css/global.scss';
 
     let bootstrap;
@@ -7,6 +8,8 @@
         bootstrap = await import('bootstrap');
     })
 </script>
+
+<SvelteToast/>
 
 <slot></slot>
 

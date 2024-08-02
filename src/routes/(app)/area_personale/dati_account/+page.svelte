@@ -4,6 +4,8 @@
     import Svelecte from 'svelecte'
     import { page } from '$app/stores';
     import { user } from '$lib/stores';
+    import { success, info } from '$lib/toast';
+    import { years, semesters } from '$lib/utils';
 
     export let data;
 
@@ -22,6 +24,9 @@
             })
             if(!account.degree) account.degree = {}
             $user = account
+            success('User Profile Updated')
+        } else {
+            info('Could not update user info')
         }
     }
 
@@ -194,8 +199,9 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
                     <Svelecte
                     placeholder="Scegli anno"
-                    options={["Primo", "Secondo", "Terzo"]}
-                    labelAsValue
+                    options={years}
+                    labelField="label"
+                    valueField="value"
                     class="svelecte-control text-center selection-input m-0"
                     bind:value={account.year}
                     />
@@ -206,9 +212,10 @@
                 <div class="d-flex has-validation svelecte-custom-selection">
                     <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
                     <Svelecte
-                    placeholder="Scegli anno"
-                    options={["Primo", "Secondo"]}
-                    labelAsValue
+                    placeholder="Scegli semestre"
+                    options={semesters.filter(s => s.value != 0)}
+                    labelField="label"
+                    valueField="value"
                     class="svelecte-control text-center selection-input m-0"
                     bind:value={account.semester}
                     />
