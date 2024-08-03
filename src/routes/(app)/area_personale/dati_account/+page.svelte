@@ -185,7 +185,7 @@
                     labelField="label"
                     valueField="label"
                     class="svelecte-control text-center selection-input m-0"
-                    value={account.degree.name}
+                    value={account.degree?.name}
                     on:change={(ev) => account.degree.name = ev.detail}
                     />
                 </div>
@@ -201,7 +201,7 @@
                     labelField="label"
                     valueField="label"
                     class="svelecte-control text-center selection-input m-0"
-                    value={account.degree.type}
+                    value={account.degree?.type}
                     on:change={(ev) => account.degree.type = ev.detail}
                     />
                 </div>
