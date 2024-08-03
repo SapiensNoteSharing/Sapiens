@@ -9,8 +9,8 @@
 
 </script>
 
-<div class="course-details-container d-flex flex-column bg-light p-5 pt-4">
-    <h1>Pacchetto {data.type}</h1>
+<div class="course-details-container d-flex flex-column bg-light p-4">
+    <h2 class="display-3 text-dark">Pacchetto {data.type}</h2>
 
 
     <div class="my-4">

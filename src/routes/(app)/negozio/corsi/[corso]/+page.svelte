@@ -35,7 +35,7 @@
         <div class="d-flex flex-column align-items-end">
             <h4 class="display-4">{course?.university?.name}</h4>
             <h4 class="">{course?.degree?.name} &bull; {course?.degree?.type}</h4>
-            <h4 class="">{course?.year} anno &bull; {course?.semester} semestre</h4>
+            <h4 class="">{course?.year}° anno &bull; {course?.semester == 0 ? 'Annuale' : `${course.semester}° semestre`}</h4>
         </div>
     </div>
 

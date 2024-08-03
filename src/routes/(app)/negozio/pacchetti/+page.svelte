@@ -15,7 +15,7 @@
             type="semestre" 
             class="col-md-4"
             title={"Pacchetto semestrale"} 
-            subtitle={`${$user?.semester}` + " semestre"} 
+            subtitle={`${$user?.semester}°` + " semestre"} 
             href="/negozio/pacchetti/semestre" 
             enabled={$user?.semester != null && $user?.year != null && $user?.degree?.name != undefined}>
         </Bundle>
@@ -24,7 +24,7 @@
             type="anno" 
             class="col-md-4" 
             title={"Pacchetto annuale"} 
-            subtitle={`${$user?.year}` + " anno"} 
+            subtitle={`${$user?.year}°` + " anno"} 
             href="/negozio/pacchetti/anno" 
             enabled={$user?.year != null && $user?.degree?.name != undefined}>
         </Bundle>

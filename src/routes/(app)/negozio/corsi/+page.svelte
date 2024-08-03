@@ -42,11 +42,11 @@
                             <h3 class="display-3 m-0">{years?.[course?.year-1]?.label} anno</h3>
                         </div>
                         <div class="w-100 mb-4">
-                            <h3 class="display-4 m-0">{semesters?.[course?.semester]?.label} semestre</h3>
+                            <h3 class="display-4 m-0">{course.semester == 0 ? 'Annuale' : `${semesters?.[course?.semester]?.label} semestre`}</h3>
                         </div>
                     {:else if course.semester != filtered_not_owned[i - 1].semester}
                         <div class="w-100 mb-4">
-                            <h3 class="display-4 m-0">{semesters?.[course?.semester]?.label} semestre</h3>
+                            <h3 class="display-4 m-0">{course.semester == 0 ? 'Annuale' : `${semesters?.[course?.semester]?.label} semestre`}</h3>
                         </div>
                     {/if}
                     <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
