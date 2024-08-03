@@ -6,7 +6,6 @@
     export let data;
     let courses = data.courses || [];
     let owned = data.my_courses || [];
-
     let not_owned = courses.filter(course => !owned.includes(course));
 
     $: filtered_not_owned = filter_and_sort(not_owned, $filters.search, $filters.sorting_method.field, $filters.sorting_method.secondary_field, $filters.sorting_method.ascending);
