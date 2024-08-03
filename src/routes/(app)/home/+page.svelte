@@ -1,7 +1,7 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
     import TopChoices from '$lib/components/TopChoices.svelte';
-    import { user } from '$lib/stores'
+    import { user, viewing } from '$lib/stores'
     
     export let data;
 
@@ -9,6 +9,15 @@
     let my_courses = data.my_courses || [];
     
     let league_names = ["Vetro", "Bronzo", "Argento", "Oro", "Diamante"];
+
+    function setViewing(course){
+        let bookmark = $user.courses.find(c => c.course == course._id)?.bookmark
+        if(bookmark){
+            $viewing = {_id: bookmark, course: course}
+        } else {
+            $viewing = {course: course}
+        }
+    }
 </script>
 
 <div class="d-flex flex-row">
@@ -16,7 +25,7 @@
         {#if my_courses.length > 0}
             <h1 class="display-4 mb-4">Continua da dove hai interrotto</h1>
 
-            <a class="href-box d-flex flex-column justify-content-between mb-4" href="/aula_studio">
+            <a class="href-box d-flex flex-column justify-content-between mb-4" href="/aula_studio" on:click={() => setViewing(my_courses[0])}>
                 <div class="d-flex flex-row justify-content-between align-items-center">
                     <img class="mb-2" style="height: 4rem;" src="/course_icons/{my_courses[0]?.name.toLowerCase().replace(/\s/g, '_')}.png" alt="{my_courses[0]?.name} icon">
                     <div class="d-flex flex-column justify-content-between">
