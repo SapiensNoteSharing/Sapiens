@@ -88,7 +88,7 @@
                 <slot></slot>
             </div>
     
-            <RightSidebar courses={data.courses}></RightSidebar>
+            <RightSidebar courses={$user.role == 'admin' ? data.courses : data.my_courses}></RightSidebar>
         </div>
     </div>
 

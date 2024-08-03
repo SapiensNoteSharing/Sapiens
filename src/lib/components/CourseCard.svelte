@@ -1,6 +1,7 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Cart from '$lib/components/Cart.svelte';
+    import { viewing, user } from '$lib/stores';
     import { goto } from '$app/navigation';
     export let course = {};
 
@@ -15,22 +16,33 @@
     let cartModal;
 
     let selected_option = "complete"
+
+
+    function setViewing(){
+        let bookmark = $user.courses.find(c => c.course == course._id)?.bookmark
+        if(bookmark){
+            $viewing = {_id: bookmark, course: course}
+        } else {
+            $viewing = {course: course}
+        }
+    }
+
 </script>
 
 <Cart {course} bind:this={cartModal}/>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="min-width: fit-content; width: {width}%; {style}" on:click={() => goto(href)}>
+<div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="min-width: fit-content; width: {width}%; {style}" on:click={() => {if(!owned) goto(href)}}>
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
             <img class="mb-2 course-icon" src="/course_icons/{course?.name?.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
 
             <div class="d-flex flex-row justify-content-between">
-                <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-pencil-square"></i></a>
-                <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-plus-slash-minus"></i></a>
-                <a class="course_extra_icon {course.owned == true ? "" : "disabled"}" href={course.owned == true ? "/aula_studio" : href}><i class="display-3 ms-4 bi bi-chat-dots"></i></a>
-                {#if owned == true}
-                    <a class="course_extra_icon" href={`/negozio/corsi/${course._id}`}><i class="display-3 ms-4 me-2 bi bi-info-circle-fill"></i></a>
+                {#if owned}
+                <a class="course_extra_icon {owned ? "" : "disabled"}" href={href} on:click={setViewing}><i class="display-3 ms-4 bi bi-pencil-square"></i></a>
+                <a class="course_extra_icon {owned ? "" : "disabled"}" href={href} on:click={setViewing}><i class="display-3 ms-4 bi bi-plus-slash-minus"></i></a>
+                <a class="course_extra_icon {owned ? "" : "disabled"}" href={href} on:click={setViewing}><i class="display-3 ms-4 bi bi-chat-dots"></i></a>
+                <a class="course_extra_icon" href={`/negozio/corsi/${course._id}`}><i class="display-3 ms-4 me-2 bi bi-info-circle-fill"></i></a>
                 {/if}
             </div>
         </div>
@@ -54,7 +66,7 @@
             <div>
                 <p class="text-dark d-block me-3" style="margin: 0px;">{course.year}° anno &bull; {course.semester == 0 ? 'Annuale' : `${course.semester}° semestre`}</p>
             </div>
-            {#if owned == false}
+            {#if !owned}
             <div>
                 <NormalButton class={""}>
                     <div slot="name">

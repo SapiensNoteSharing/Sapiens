@@ -1,6 +1,7 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte'
-    import { viewing } from '$lib/stores';
+    import { viewing, user } from '$lib/stores';
+    import { beforeNavigate, afterNavigate } from '$app/navigation'
     import 'highlight.js/styles/github.css';
     export let data;
     const fetch = data.fetch;
@@ -18,6 +19,23 @@
         }
     }
 
+    afterNavigate(render)
+
+    beforeNavigate(async () => {
+        if($viewing?._id){
+            const resp = await fetch(`/api/user/${$viewing.course._id}/bookmark`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify($viewing._id)
+            })
+            if(resp.ok){
+                const u = await resp.json()
+                $user = u
+            }
+        }
+    })
     let focus_mode = false
 </script>
 

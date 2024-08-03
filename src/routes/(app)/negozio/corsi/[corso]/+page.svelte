@@ -51,7 +51,7 @@
                 <Item collapsible obj={chapter} icon="chevron" class="chapter">
                     <div slot="menu">
                         {#each chapter.files || [] as file}
-                        <Item obj={file} class="file" on:click={(ev) => $viewing = ev.detail}></Item>
+                        <Item obj={file} class="file" on:click={(ev) => $viewing = {...ev.detail, course: course}}></Item>
                         {/each}
                     </div>
                 </Item>

@@ -49,7 +49,7 @@
                             <h3 class="display-4 m-0">{course.semester == 0 ? 'Annuale' : `${semesters?.[course?.semester]?.label} semestre`}</h3>
                         </div>
                     {/if}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
+                    <CourseCard {course} class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
                 {/each}
             {:else if $filters.sorting_method.field == "name"}
                 {#each filtered_not_owned as course, i}
@@ -58,11 +58,11 @@
                             <h3 class="display-4">{course.name[0]}</h3>
                         </div>
                     {/if}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
+                    <CourseCard {course} class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
                 {/each}
             {:else}
                 {#each filtered_not_owned as course}
-                    <CourseCard {course} owned=0 class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
+                    <CourseCard {course} class="g-col-4 mb-5" href="/negozio/corsi/{course?._id}"/>
                 {/each}
             {/if}
         </div>

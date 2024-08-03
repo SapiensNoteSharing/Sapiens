@@ -16,8 +16,6 @@
     let sidebar_page = "chapters";
     let exercises_category = 1;
     export let open = true
-
-    $: console.log($viewing)
     
     let faculties = [
         "Ingegneria informatica",
