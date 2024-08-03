@@ -11,11 +11,13 @@
     import Svelecte from 'svelecte';
     
     export let courses;
-    let course = courses[0] || {};
+    let course = $viewing.course || courses[0] || {};
     let _course = course._id ? course : undefined;
     let sidebar_page = "chapters";
     let exercises_category = 1;
     export let open = true
+
+    $: console.log($viewing)
     
     let faculties = [
         "Ingegneria informatica",
