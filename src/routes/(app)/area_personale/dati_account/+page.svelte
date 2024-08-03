@@ -6,10 +6,11 @@
     import { user } from '$lib/stores';
     import { success, info } from '$lib/toast';
     import { years, semesters } from '$lib/utils';
+    import { afterNavigate } from '$app/navigation';
 
     export let data;
 
-    let account = {...$user}
+    let account = JSON.parse(JSON.stringify($user))
     if (!account.university) account.university = {}
     if (!account.degree) account.degree = {}
 
@@ -30,6 +31,10 @@
         }
     }
 
+    afterNavigate(() => {
+        account = JSON.parse(JSON.stringify($user))
+    })
+
     function checkValidity() {
         return true
     }
@@ -46,6 +51,7 @@
     $: {
         changes = check_changes();
     }
+    $: console.log('acc', account, $user)
 </script>
 
 <div>
@@ -103,12 +109,13 @@
                     <Svelecte
                     placeholder="Seleziona stato"
                     fetch="/api/states"
-                    valueAsObject
                     valueField="_id"
                     labelField="name"
                     autocomplete="off"
+                    valueAsObject
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.country}
+                    value={account.state}
+                    on:change={(ev) => {console.log('firing', ev); account.state = ev.detail}}
                     />
                 </div>
             </div>
@@ -118,15 +125,15 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona regione"
-                    disabled={!account.country}
-                    fetch="/api/regions?s={account.country?._id}"
+                    fetch="/api/regions?s={account.state?._id}"
                     minQuery={1}
-                    valueAsObject
                     valueField="_id"
                     labelField="name"
                     autocomplete="off"
+                    valueAsObject
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.region}
+                    value={account.region}
+                    on:change={(ev) => account.region = ev.detail}
                     />
                 </div>
             </div>
@@ -136,15 +143,15 @@
                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                     <Svelecte
                     placeholder="Seleziona provincia"
-                    disabled={!account.region}
                     minQuery={1}
-                    fetch="/api/provinces?s={account.country?._id}&r={account.region?._id}"
-                    valueAsObject
+                    fetch="/api/provinces?s={account.state?._id}&r={account.region?._id}"
                     valueField="_id"
                     labelField="name"
                     autocomplete="off"
+                    valueAsObject
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.province}
+                    value={account.province}
+                    on:change={(ev) => account.province = ev.detail}
                     />
                 </div>
             </div>
@@ -158,11 +165,12 @@
                     <Svelecte
                     placeholder="Seleziona Università"
                     fetch="/api/universities"
-                    valueAsObject
                     valueField="_id"
                     labelField="name"
+                    valueAsObject
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.university}
+                    value={account.university}
+                    on:change={(ev) => account.university = ev.detail}
                     />
                 </div>
             </div>
@@ -171,11 +179,14 @@
                 <div class="d-flex has-validation svelecte-custom-selection">
                     <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                     <Svelecte
+                    fetch="/api/degrees"
+                    fetchCallback={(obj => obj.map(o => ({label: o})))}
                     placeholder="Seleziona facoltà"
-                    options={[...new Set(data.degrees)]}
-                    labelAsValue
+                    labelField="label"
+                    valueField="label"
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.degree.name}
+                    value={account.degree.name}
+                    on:change={(ev) => account.degree.name = ev.detail}
                     />
                 </div>
             </div>
@@ -184,11 +195,14 @@
                 <div class="d-flex has-validation svelecte-custom-selection">
                     <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                     <Svelecte
+                    fetch="/api/degrees/type"
+                    fetchCallback={(obj => obj.map(o => ({label: o})))}
                     placeholder="Scegli tipologia"
-                    options={['Triennale', 'Magistrale', 'A Ciclo Unico']}
-                    labelAsValue
+                    labelField="label"
+                    valueField="label"
                     class="svelecte-control text-center selection-input m-0"
-                    bind:value={account.degree.type}
+                    value={account.degree.type}
+                    on:change={(ev) => account.degree.type = ev.detail}
                     />
                 </div>
             </div>

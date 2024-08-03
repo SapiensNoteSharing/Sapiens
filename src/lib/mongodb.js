@@ -36,7 +36,7 @@ const UserSchema = new Schema({
     email: String,
     username: String,
     paypal_email: String,
-    country: {
+    state: {
         type: Number,
         ref: 'State'
     },
@@ -87,7 +87,7 @@ UserSchema.index({email: 1}, {unique: true})
 UserSchema.index({username: 1}, {unique: true})
 
 UserSchema.pre('findOne', function (next) {
-    this.populate('country')
+    this.populate('state')
     this.populate('region')
     this.populate('province')
     this.populate('university')
@@ -96,7 +96,7 @@ UserSchema.pre('findOne', function (next) {
 })
 
 UserSchema.pre('findOneAndUpdate', function (next) {
-    this.populate('country')
+    this.populate('state')
     this.populate('region')
     this.populate('province')
     this.populate('university')
@@ -107,7 +107,7 @@ UserSchema.pre('findOneAndUpdate', function (next) {
 const UniversitySchema = new Schema({
     name: String,
     type: String,
-    country: {
+    state: {
         type: Number,
         ref: 'State'
     },

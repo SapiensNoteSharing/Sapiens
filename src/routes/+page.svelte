@@ -4,20 +4,13 @@
     import { goto } from '$app/navigation';
     import Svelecte from 'svelecte'
     import { mobile } from '$lib/stores';
+    import { years, semesters } from '$lib/utils';
 
-    let accessMode = "registration";
+    let accessMode = "login";
     let userLogin = {}
     let userRegister = {}
     let validated = false;
     let loginFailed = false
-
-    let university_names = ["Università degli Studi di Firenze"]
-    let faculties_names = [
-        "Ingegneria informatica",
-        "Ingegneria gestionale",
-        "Ingegneria elettronica",
-        "Ingegneria civile",
-    ]
 
 	onMount(() => {
 		const forms = document.querySelectorAll('.needs-validation');
@@ -54,6 +47,7 @@
     }
 
     async function registerUser() {
+        console.log('dati registrazione', userRegister)
         const resp = await fetch('/register', {
             method: 'POST',
             headers: {
@@ -94,7 +88,7 @@
         let invalid = userRegister?.invalid?.find(field => field.field == 'username')
         if (invalid && userRegister.username == invalid.val)
             return -1
-        else if (!(username?.match(/^[a-zA-Z0-9]+$/)))
+        else if (!(username?.match(/^[a-zA-Z0-9_]+$/)))
             return -2;
         else 
             return 1;
@@ -303,12 +297,12 @@
                                     <Svelecte
                                     placeholder="Seleziona stato"
                                     fetch="/api/states"
-                                    valueAsObject
                                     valueField="_id"
                                     labelField="name"
                                     autocomplete="off"
+                                    valueAsObject
                                     class="svelecte-control text-center selection-input m-0"
-                                    bind:value={userRegister.country}
+                                    bind:value={userRegister.state}
                                     />
                                 </div>
                             </div>
@@ -318,11 +312,11 @@
                                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                                     <Svelecte
                                     placeholder="Seleziona regione"
-                                    fetch="/api/regions?s={userRegister.country?._id}"
-                                    valueAsObject
+                                    fetch="/api/regions?s={userRegister.state?._id}"
                                     valueField="_id"
                                     labelField="name"
                                     autocomplete="off"
+                                    valueAsObject
                                     class="svelecte-control text-center selection-input m-0"
                                     bind:value={userRegister.region}
                                     />
@@ -334,13 +328,13 @@
                                     <span class="input-icon-label input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                                     <Svelecte
                                     placeholder="Seleziona provincia"
-                                    fetch="/api/provinces?s={userRegister.country?._id}&r={userRegister.region?._id}"
-                                    valueAsObject
+                                    fetch="/api/provinces?s={userRegister.state?._id}&r={userRegister.region?._id}"
                                     valueField="_id"
                                     labelField="name"
                                     autocomplete="off"
+                                    valueAsObject
                                     class="svelecte-control text-center selection-input m-0"
-                                    bind:value={userRegister.city}
+                                    bind:value={userRegister.province}
                                     />
                                 </div>
                             </div>
@@ -361,11 +355,13 @@
                             <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                                 <Svelecte
+                                fetch="/api/universities"
                                 placeholder="Seleziona Università"
-                                options={university_names}
-                                labelAsValue
+                                labelField="name"
+                                valueField="_id"
+                                valueAsObject
                                 class="svelecte-control text-center selection-input m-0"
-                                bind:value={userRegister.university_name}
+                                bind:value={userRegister.university}
                                 />
                             </div>
                         </div>
@@ -374,9 +370,11 @@
                             <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                                 <Svelecte
+                                fetch="/api/degrees"
+                                fetchCallback={(obj) => obj.map(o => ({label: o}))}
                                 placeholder="Seleziona facoltà"
-                                options={faculties_names}
-                                labelAsValue
+                                labelField="label"
+                                valueField="label"
                                 class="svelecte-control text-center selection-input m-0"
                                 bind:value={userRegister.faculty_name}
                                 />
@@ -387,9 +385,11 @@
                             <div class="d-flex has-validation svelecte-custom-selection">
                                 <span class="input-icon-label input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                                 <Svelecte
+                                fetch="/api/degrees/type"
+                                fetchCallback={(obj) => obj.map(o => ({label: o}))}
                                 placeholder="Scegli tipologia"
-                                options={["Triennale", "Magistrale", "A ciclo unico"]}
-                                labelAsValue
+                                labelField="label"
+                                valueField="label"
                                 class="svelecte-control text-center selection-input m-0"
                                 bind:value={userRegister.faculty_type}
                                 />
@@ -402,8 +402,9 @@
                                 <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
                                 <Svelecte
                                 placeholder="Scegli anno"
-                                options={["Primo", "Secondo", "Terzo"]}
-                                labelAsValue
+                                options={years}
+                                labelField="label"
+                                valueField="value"
                                 class="svelecte-control text-center selection-input m-0"
                                 bind:value={userRegister.year}
                                 />
@@ -415,8 +416,9 @@
                                 <span class="input-icon-label input-group-text"><i class="bi bi-person-badge"></i></span>
                                 <Svelecte
                                 placeholder="Scegli semestre"
-                                options={["Primo", "Secondo"]}
-                                labelAsValue
+                                options={semesters.filter(s => s.value != 0)}
+                                labelField="label"
+                                valueField="value"
                                 class="svelecte-control text-center selection-input m-0"
                                 bind:value={userRegister.semester}
                                 />

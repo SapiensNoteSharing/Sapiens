@@ -112,15 +112,15 @@ async function getDir(gitDir) {
                 const fileName = obj.name.replace(/\.[^.]*$/, '');
                 if (fileName != dir.name) {
                     const oldFile = await File.deleteMany({name: obj.name})
-                    console.log('getting file', fileName)
+                    //console.log('getting file', fileName)
                     const dbFile = await File.findOne({name: fileName}) || {}
-                    console.log('dbfile', dbFile.name || 'not found')
+                    //console.log('dbfile', dbFile.name || 'not found')
                     // if (dbFile.sha != obj.sha) {
                         const resp = await fetch(obj.url, options)
                         const fileObj = (resp.ok && await resp.json())
     
                         const file = await File.findOneAndUpdate({ name: fileName }, {...fileObj, name: fileName}, {upsert: true, new: true})
-                        console.log('saved file', fileName, file.name)
+                        //console.log('saved file', fileName, file.name)
                         childFiles.push(file._id)
                     // }
                 }
@@ -143,7 +143,6 @@ export async function update() {
 
         const resp = await fetch(`${base}${substitute('Università')}`, options);
         const body = (resp.ok && await resp.json()) || []
-        console.log('github resp body', body)
 
         let courses = []
 
@@ -201,22 +200,20 @@ export async function update() {
                     files: contentsIds.files,
                 })
             }
-
-            console.log('extra content', extra)
             
             let uni;
             if (metadata?.university_name) {
-                uni = await University.findOneAndUpdate({
+                uni = await University.findOne({
                     name: new RegExp(`^${metadata.university_name}$`, 'i'),
-                }, {upsert: true})
+                })
             }
 
             let degree;
             if (metadata?.degree?.name && metadata?.degree?.type) {
-                degree = await Degree.findOneAndUpdate({
+                degree = await Degree.findOne({
                     name: new RegExp(`^${metadata.degree.name}$`, 'i'),
                     type: metadata.degree.type
-                }, {upsert: true})
+                })
             }
 
             const c = await Course.findOneAndUpdate({name: new RegExp(`^${course.name}$`, 'i')}, {
@@ -233,7 +230,6 @@ export async function update() {
         const gitCoursesNames = new Set(courses.map(course => course.name))
         let orphanCourses = dbCourses.filter(course => !gitCoursesNames.has(course.name))
 
-        console.log('done update function')
     } catch(err) {
         console.log(err)
     }
