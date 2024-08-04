@@ -156,7 +156,7 @@
                     <label for="login" class="form-label"></label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-at"></i></span>
-                        <input placeholder="E-mail o username" class="form-control {validated ? (loginFailed != 'identifier' ? "is-valid" : "is-invalid") : ""} border-dark" bind:value={userLogin.identifier} required>
+                        <input placeholder="E-mail o username" class="form-control {validated ? (loginFailed == 'identifier' ? "is-invalid" : "is-valid") : ""} border-dark" bind:value={userLogin.identifier} required>
                         <div class="invalid-feedback">
                             Email o username errati
                         </div>
@@ -167,7 +167,7 @@
                     <label for="LoginPassword" class="form-label"></label>
                     <div class="input-group has-validation">
                         <span class="input-icon-label input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
-                        <input id="loginPass" type="password" placeholder="Password" class="form-control border-dark {validated ? (loginFailed != 'identifier' ? "is-valid" : "is-invalid") : ""}" style="border-radius: 0rem 0.4rem 0.4rem 0rem; z-index: 1;" bind:value={userLogin.password} required>
+                        <input id="loginPass" type="password" placeholder="Password" class="form-control border-dark {validated ? (loginFailed == 'password' ? "is-invalid" : "is-valid") : ""}" style="border-radius: 0rem 0.4rem 0.4rem 0rem; z-index: 1;" bind:value={userLogin.password} required>
                         <i class="bi bi-eye-slash text-dark display-3 password-show-btn me-2" style="z-index: 20" on:click={() => togglePasswordVisibility('loginPass')}></i>
                         <div class="invalid-feedback">
                             La password non è corretta. Riprova

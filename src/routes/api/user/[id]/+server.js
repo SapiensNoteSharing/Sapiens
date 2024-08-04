@@ -16,10 +16,6 @@ export async function PUT({ request, url, locals, cookies, params }) {
             if (user) {
                 let degree = await Degree.findOne({name: body?.degree?.name, type: body?.degree?.type}) || {}
 
-                if (!degree?._id && body?.degree?.name && body?.degree?.type) {
-                    degree = await Degree.create({name: body.degree.name, type: body.degree.type})
-                }
-
                 body.degree = degree?._id || null
 
                 const u = await User.findByIdAndUpdate(params.id, body, {new: true})
