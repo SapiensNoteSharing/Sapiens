@@ -62,12 +62,25 @@ const UserSchema = new Schema({
     league_xp: {type: Number, default: 0},
     league_position: Number,
     league_level: {type: Number, default: 0},
+    cart: {
+        type: [
+            {
+                course: {
+                    type: ObjectId,
+                    ref: 'Course'
+                },
+                plan: Boolean
+            }
+        ],
+        default: [],
+    },
     courses: [
         {
             course: {
                 type: ObjectId,
                 ref: 'Course'
             },
+            plan: Boolean,
             bookmark: {
                 type: ObjectId,
                 ref: 'File'

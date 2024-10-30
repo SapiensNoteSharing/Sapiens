@@ -3,10 +3,13 @@
     import Modal from '$lib/components/Modal.svelte';
     import { user } from '$lib/stores';
     import { goto } from '$app/navigation';
-
+    import { costFormula } from '$lib/utils';
     
-    export let course;
+    export let items;
+    export let courses;
     let selected_option = "complete"
+
+    //TODO: cambiare selected_option come booleano
 
     export let cartModal;
 
@@ -16,15 +19,17 @@
 
         cartModal.show().then(async res => {
             if (res) {
-                const cost = (10 + course?.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2
-                if ($user.dna >= cost) {
-                    let update = {
-                        dna: $user.dna - cost,
-                        courses: [...$user.courses, {
-                            course: course._id
-                        }]
-                    }
-                    $user = {...$user, ...update};
+                const resp = await fetch(`/api/user/${$user._id}/buy`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(items.map(i => ({_id: i._id, plan: i.selected_option})))
+                })
+                const body = (resp.ok && await resp.json())
+
+                if(body.success){
+                    $user.courses.push(items.map(i => ({course: i._id, plan: i.selected_option})))
                 } else {
                     goto('/negozio/punti_dna')
                 }
@@ -33,7 +38,11 @@
     }
 </script>
 
+<!--TODO: fix icona-->
+<i class="bi bi-cart border border-1" on:click={openCart}></i>
 <Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
+    {#each items.map(item => ({course: courses.find(c => c._id == item.course), plan: item.plan})) as item}
+    {@const course = item.course}
     <div class="d-flex flex-column justify-content-between m-4">
         <div class="d-flex flex-row align-items-center mb-4">
             <img class="me-4 course-icon" src="/course_icons/{course?.name?.toLowerCase()?.replace(/\s/g, '_')}.png" alt="{course?.name}" style="width: 5rem; height: 5rem;">
@@ -73,7 +82,7 @@
             </div>
 
             <div class="d-flex">
-                <h2 class="align-self-center display-3 my-0">{(10 + course?.cfu * 5 / 6) * (selected_option == "base" ? 0.8 : 1) * 2}</h2>
+                <h2 class="align-self-center display-3 my-0">{costFormula(course.cfu, course.plan)}</h2>
                 <img style="width: 2rem;" src="/dna.svg" alt="dna">
             </div>
         </div>
@@ -85,4 +94,8 @@
             <p class="m-0">Appunti, esercizi svolti, formulario e lo storico delle domande poste alla prova orale</p>
         {/if}
     </div>
+    {/each}
+    {#if !items.length}
+    Carrello vuoto
+    {/if}
 </Modal>
