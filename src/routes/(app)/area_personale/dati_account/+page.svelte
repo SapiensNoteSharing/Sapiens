@@ -8,7 +8,7 @@
     import { years, semesters } from '$lib/utils';
     import { afterNavigate } from '$app/navigation';
 
-    export let data;
+    // export let data;
 
     let account = JSON.parse(JSON.stringify($user))
     if (!account.university) account.university = {}
@@ -23,7 +23,10 @@
                 },
                 body: JSON.stringify(account)
             })
-            if(!account.degree) account.degree = {}
+            
+            if (!account.degree) 
+                account.degree = {}
+            
             $user = account
             success('User Profile Updated')
         } else {
@@ -47,10 +50,13 @@
         }
         return false;
     }
+
     let changes = false;
+    
     $: {
         changes = check_changes();
     }
+    
     $: console.log('acc', account, $user)
 </script>
 

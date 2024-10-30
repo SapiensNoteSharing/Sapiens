@@ -4,8 +4,5 @@ export async function load({fetch, parent}) {
     const resp = await fetch(`/api/degrees`);
     const degrees = (resp.ok && await resp.json()) || []
 
-    return {
-        user,
-        degrees
-    }
+    return { user, degrees }
 }

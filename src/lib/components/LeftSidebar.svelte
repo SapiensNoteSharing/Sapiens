@@ -47,7 +47,7 @@
         class={"my-2"}
         href={"/calendario"}
         text={"Calendario"}
-        icon={"bi-calendar2-event"}
+        icon={"bi-calendar-week"}
         >
         </ActiveButton>
 

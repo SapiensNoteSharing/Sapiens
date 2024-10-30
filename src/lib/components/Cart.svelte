@@ -3,7 +3,6 @@
     import Modal from '$lib/components/Modal.svelte';
     import { user } from '$lib/stores';
     import { goto } from '$app/navigation';
-
     
     export let course;
     let selected_option = "complete"
