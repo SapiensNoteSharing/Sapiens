@@ -1,18 +1,22 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
-    import Cart from '$lib/components/Cart.svelte';
     import Item from '$lib/components/Item.svelte';
     import { viewing } from '$lib/stores';
+    import { user } from '$lib/stores';
 
     export let data;
     let course = data.course || [];
 
-    let cartModal;
-
     // let selected_content = "chapters"
+    $: console.log('course page user', $user)
+    function addToCart(course){
+        $user = {
+            ...$user,
+            cart: [...$user.cart, {course: course._id, plan: 0}]
+        }
+    }
 </script>
 
-<Cart {course} bind:this={cartModal}/>
 
 <div class="course-details-container d-flex flex-column bg-light p-5">
     <div class="d-flex flex-row justify-content-between">
@@ -67,7 +71,7 @@
 
             <NormalButton class={"mx-2"}>
                 <div slot="name">
-                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={cartModal.openCart}>Ottieni</a>
+                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={() => addToCart(course)}>Aggiungi al carrello</a>
                 </div>
             </NormalButton>
         </div>

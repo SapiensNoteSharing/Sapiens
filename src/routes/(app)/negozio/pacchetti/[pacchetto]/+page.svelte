@@ -1,6 +1,5 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
-    import Cart from '$lib/components/Cart.svelte';
 
     export let data;
     let courses = data.courses || [];

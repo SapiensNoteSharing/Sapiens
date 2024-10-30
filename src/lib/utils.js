@@ -20,6 +20,9 @@ export const semesters = [
     {value: 2, label: 'Secondo'}
 ]
 
+export const costFormula = (cfu, plan) => (10 + (cfu * 5 / 6)) * (plan ? 1 : 0.8)*2
+
+
 function edit_distance(x, y) {
     let m = x.length;
     let n = y.length;

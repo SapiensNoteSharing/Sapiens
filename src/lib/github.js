@@ -142,14 +142,20 @@ export async function update() {
         const dbCourses = await Course.find({})
 
         const resp = await fetch(`${base}${substitute('Università')}`, options);
+        console.log('answ', resp)
         const body = (resp.ok && await resp.json()) || []
+
+        console.log('cosa aggiornare', body)
 
         let courses = []
 
         for (let dir of body) {
             if (dir.name != 'Hidden') {
                 const res = await fetch(`${base}${substitute(dir.path)}`, options)
-                courses = [...courses, ...((res.ok && await res.json()) || [])]
+                const b = (res.ok && await res.json()) || []
+
+                console.log('corso body', b)
+                courses = [...courses, ...b]
             }
         }
         console.log('start update', courses)

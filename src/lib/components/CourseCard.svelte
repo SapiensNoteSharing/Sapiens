@@ -1,6 +1,5 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
-    import Cart from '$lib/components/Cart.svelte';
     import { viewing, user } from '$lib/stores';
     import { goto } from '$app/navigation';
     export let course = {};
@@ -13,11 +12,6 @@
     export let owned;
     export let width = 47;
 
-    let cartModal;
-
-    let selected_option = "complete"
-
-
     function setViewing(){
         let bookmark = $user.courses.find(c => c.course == course._id)?.bookmark
         if(bookmark){
@@ -27,9 +21,14 @@
         }
     }
 
-</script>
+    function addToCart(ev){
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
 
-<Cart {course} bind:this={cartModal}/>
+        
+    }
+
+</script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="min-width: fit-content; width: {width}%; {style}" on:click={() => {if(!owned) goto(href)}}>
@@ -72,8 +71,9 @@
                     <div slot="name">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <!-- svelte-ignore a11y-missing-attribute -->
-                        <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click={cartModal?.openCart}>
-                            Ottieni
+                        <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={addToCart}>
+                            <!-- Aggiungere if sul testo con check se è nel carrello -->
+                            Aggiungi al carrello
                         </a>
                     </div>
                 </NormalButton>
