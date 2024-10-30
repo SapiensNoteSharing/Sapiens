@@ -9,13 +9,13 @@ export async function PUT({ request, url, locals, cookies, params }) {
     try {
         let body = await request.json()
 
-        if(!body) return new Response('No items')
+        if (!body) return new Response('No items')
         
         const sid = cookies.get('sid')
         if (sid) {
             const user = await getSession(sid);
             if (user) {
-                //TODO: controllare che non possegga già i corsi che vuole comprare
+                // TODO: controllare che non possegga già i corsi che vuole comprare
                 const buying = (await Course.find({_id: {$in: body.map(course => course._id)}}))
 
                 const cost = buying.reduce((cost, curr) => cost + costFormula(curr.cfu, curr.plan), 0)

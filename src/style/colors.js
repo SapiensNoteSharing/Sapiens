@@ -10,7 +10,7 @@ export let tagsPalette = {
     'New!': colors.primary
 }
 
-export function updateTagsColors(tags){
+export function updateTagsColors(tags) {
     tagsPalette = Object.keys(tags).reduce((obj, tagKey) => {obj[tags[tagKey].label] = tags[tagKey].color; return obj}, {})
 }
 

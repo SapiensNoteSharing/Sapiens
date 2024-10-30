@@ -18,7 +18,7 @@
 
     let showed;
 
-    async function load_suggestions(){
+    async function load_suggestions() {
         const resp = await fetch(`/api/courses/topchoices`);
         suggestions = (resp.ok && await resp.json()) || []
         suggestions_category = suggestions?.[0]?._id

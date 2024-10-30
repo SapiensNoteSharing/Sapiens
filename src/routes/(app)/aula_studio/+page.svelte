@@ -22,7 +22,7 @@
     afterNavigate(render)
 
     beforeNavigate(async () => {
-        if($viewing?._id){
+        if ($viewing?._id) {
             const resp = await fetch(`/api/user/${$viewing.course._id}/bookmark`, {
                 method: 'PUT',
                 headers: {
@@ -30,7 +30,7 @@
                 },
                 body: JSON.stringify($viewing._id)
             })
-            if(resp.ok){
+            if (resp.ok) {
                 const u = await resp.json()
                 $user = u
             }

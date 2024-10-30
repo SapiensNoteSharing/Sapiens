@@ -12,20 +12,20 @@ export async function POST({ url, locals, cookies, request }) {
 
     let matchingUniqueFields = []
 
-    if (existingUser?.username == body?.username) {
+    if (existingUser?.username == body?.username)
         matchingUniqueFields.push({field: 'username', msg: 'This username is already used by another user', val: body.username})
-    } 
-    if (existingUser?.email == body?.email){
-        matchingUniqueFields.push({field: 'email', msg: 'This email is already used by another user', val: body.email})
-    }
 
-    if(matchingUniqueFields.length > 0){
+    if (existingUser?.email == body?.email)
+        matchingUniqueFields.push({field: 'email', msg: 'This email is already used by another user', val: body.email})
+
+    if (matchingUniqueFields.length > 0)
         throw error(409, matchingUniqueFields)
-    }
+
     let degree;
-    if(body?.faculty_name && body?.faculty_type){
+    if (body?.faculty_name && body?.faculty_type) {
         degree = await Degree.findOne({name: body.faculty_name, type: body.faculty_type})
-        if(degree) body.degree = degree
+        if (degree)
+            body.degree = degree
     }
 
     const u = await User.create({...body, hash: hash})

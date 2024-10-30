@@ -7,8 +7,8 @@ export async function GET({ url, locals }) {
         const params = url.searchParams
         const query = {}
 
-        if(user.university) query.university = new ObjectId(user.university._id)
-        if(user.degree) query.degree = new ObjectId(user.degree._id)
+        if (user.university) query.university = new ObjectId(user.university._id)
+        if (user.degree) query.degree = new ObjectId(user.degree._id)
 
 
         const docs = await Course.find(query)

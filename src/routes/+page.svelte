@@ -129,9 +129,9 @@
         first_progress_bar = 0;
     }
 
-    function togglePasswordVisibility(id){
+    function togglePasswordVisibility(id) {
         let field = document.getElementById(id)
-        if(field.type == 'password')
+        if (field.type == 'password')
             field.type = 'text'
         else
             field.type = 'password'

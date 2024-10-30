@@ -26,7 +26,7 @@ export async function POST({ url, locals, request, cookies }) {
         })
 
         return new Response('OK')
-    } else if(body.identifier == dbUser?.email || body.identifier == dbUser?.username) {
+    } else if (body.identifier == dbUser?.email || body.identifier == dbUser?.username) {
         throw error(400, {field: 'password', msg: 'Password Errata'})
     } else {
         throw error(400, {field: 'identifier', msg: 'Username/Email errata'})

@@ -10,9 +10,9 @@
     
     let league_names = ["Vetro", "Bronzo", "Argento", "Oro", "Diamante"];
 
-    function setViewing(course){
+    function setViewing(course) {
         let bookmark = $user.courses.find(c => c.course == course._id)?.bookmark
-        if(bookmark){
+        if (bookmark) {
             $viewing = {_id: bookmark, course: course}
         } else {
             $viewing = {course: course}

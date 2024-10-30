@@ -18,7 +18,7 @@ export async function loadDatabase() {
         const province = await Province.insertMany(provinces.map(province => ({_id: province.provinceId, name: province.provinceName, region: province.regionId, state: 118})), {ordered: false})
     } catch(err) {}
 
-    try{
+    try {
         universities.forEach(async university => {
             const region = await Region.findOne({name: university.region})
             const province = await Province.findOne({name: university.province})
@@ -28,13 +28,13 @@ export async function loadDatabase() {
 
             await University.findOneAndUpdate({name: university.name, type: university.type}, {...university, state: 118}, {upsert: true, new: true})
         })
-    } catch(err) {
-    }
-    try{
+    } catch(err) {} 
+    
+    try {
         degrees.forEach(async degree => {
             const d = await Degree.findOneAndUpdate({name: degree.name, type: degree.type}, degree, {upsert: true})
         })
-    }catch(err){
+    } catch(err) {
         console.log(err)
     }
 }

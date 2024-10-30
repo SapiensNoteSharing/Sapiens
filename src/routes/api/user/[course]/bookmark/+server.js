@@ -14,7 +14,7 @@ export async function PUT({ request, url, locals, cookies, params }) {
             user = await getSession(sid);
             if (user) {
                 const u = await User.findOneAndUpdate({_id: user._id, "courses.course": new ObjectId(params.course)}, {$set: {"courses.$.bookmark": new ObjectId(body)}}, {new: true})
-                if(u){
+                if (u) {
                     user = u.toObject()
                     delete user.hash
                     await setSession(sid, user)

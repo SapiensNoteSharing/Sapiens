@@ -24,7 +24,7 @@
     }
 
     onMount(async () => {
-        if(enabled){
+        if (enabled) {
             const resp = await fetch(`/api/shop/bundles/${type}`)
             courses = (resp.ok && await resp.json()) || []
         }

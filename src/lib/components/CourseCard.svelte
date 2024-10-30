@@ -12,26 +12,37 @@
     export let owned;
     export let width = 47;
 
-    function setViewing(){
+    function setViewing() {
         let bookmark = $user.courses.find(c => c.course == course._id)?.bookmark
-        if(bookmark){
+        if (bookmark)
             $viewing = {_id: bookmark, course: course}
-        } else {
+        else
             $viewing = {course: course}
-        }
     }
 
-    function addToCart(ev){
+    function addToCart(ev) {
         ev.stopPropagation();
         ev.stopImmediatePropagation();
 
-        
+        $user = {
+            ...$user,
+            cart: [...$user.cart, {course: course._id, plan: 0}]
+        }
     }
 
+    function removeFromCart(ev) {
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+
+        $user = {
+            ...$user,
+            cart: $user.cart.filter(c => c.course != course._id)
+        }
+    }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="min-width: fit-content; width: {width}%; {style}" on:click={() => {if(!owned) goto(href)}}>
+<div class="course-card d-flex flex-row justify-content-between text-decoration-none {classes}" style="min-width: fit-content; width: {width}%; {style}" on:click={() => {if (!owned) goto(href)}}>
     <div class="d-flex flex-column justify-content-between w-100">
         <div class="d-flex flex-row justify-content-between align-items-top">
             <img class="mb-2 course-icon" src="/course_icons/{course?.name?.toLowerCase().replace(/\s/g, '_')}.png" alt="{course.name}">
@@ -71,10 +82,15 @@
                     <div slot="name">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <!-- svelte-ignore a11y-missing-attribute -->
-                        <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={addToCart}>
-                            <!-- Aggiungere if sul testo con check se è nel carrello -->
-                            Aggiungi al carrello
-                        </a>
+                        {#if $user.cart.find(c => c.course == course._id)}
+                            <a type="button" class="btn btn-secondary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={removeFromCart}>
+                                Rimuovi dal carrello
+                            </a>
+                        {:else}
+                            <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={addToCart}>
+                                Aggiungi al carrello
+                            </a>
+                        {/if}
                     </div>
                 </NormalButton>
             </div>

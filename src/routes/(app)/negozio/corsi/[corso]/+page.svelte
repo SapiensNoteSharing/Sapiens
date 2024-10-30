@@ -9,10 +9,17 @@
 
     // let selected_content = "chapters"
     $: console.log('course page user', $user)
-    function addToCart(course){
+    function addToCart(course) {
         $user = {
             ...$user,
             cart: [...$user.cart, {course: course._id, plan: 0}]
+        }
+    }
+
+    function removeFromCart(course) {
+        $user = {
+            ...$user,
+            cart: $user.cart.filter(c => c.course != course._id)
         }
     }
 </script>
@@ -55,7 +62,7 @@
                 <Item collapsible obj={chapter} icon="chevron" class="chapter">
                     <div slot="menu">
                         {#each chapter.files || [] as file}
-                        <Item obj={file} class="file" on:click={(ev) => $viewing = {...ev.detail, course: course}}></Item>
+                            <Item obj={file} class="file" on:click={(ev) => $viewing = {...ev.detail, course: course}}></Item>
                         {/each}
                     </div>
                 </Item>
@@ -65,13 +72,23 @@
         <div class="d-flex flex-row justify-content-center mt-3 align-items-start">
             <NormalButton class={"mx-2"}>
                 <div slot="name">
-                    <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" href="/negozio/corsi">Torna ai corsi</a>
+                    <a type="button" class="btn btn-secondary text-center w-100 text-dark fs-2" href="/negozio/corsi">
+                        Torna ai corsi
+                    </a>
                 </div>
             </NormalButton>
 
             <NormalButton class={"mx-2"}>
                 <div slot="name">
-                    <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={() => addToCart(course)}>Aggiungi al carrello</a>
+                    {#if $user.cart.find(c => c.course == course._id)}
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={() => removeFromCart(course)}>
+                            Rimuovi dal carrello
+                        </a>
+                    {:else}
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={() => addToCart(course)}>
+                            Aggiungi al carrello
+                        </a>
+                    {/if}
                 </div>
             </NormalButton>
         </div>

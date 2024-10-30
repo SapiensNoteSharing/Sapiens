@@ -136,7 +136,7 @@ $: if (calendar && options) updateCalendarOptions();
         text-decoration: none;
         color: white;
     }
-    :global(.fc-view-harness.fc-view-harness-active){
+    :global(.fc-view-harness.fc-view-harness-active) {
         background-color: white;
     }
 </style>

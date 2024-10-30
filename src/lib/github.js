@@ -193,7 +193,7 @@ export async function update() {
             }
 
             let extra;
-            if (dbCourse.extra_content){
+            if (dbCourse.extra_content) {
                 extra = await Directory.findOneAndUpdate({_id: dbCourse.extra_content}, {
                     name: `${course.name}:extraContent`,
                     directories: contentsIds.directories,

@@ -1,4 +1,3 @@
-
 <svelte:window bind:innerWidth={width}/>
 <script>
     import { onMount } from "svelte";

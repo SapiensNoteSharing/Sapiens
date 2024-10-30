@@ -7,9 +7,9 @@ export async function GET({ url, locals }) {
         const params = url.searchParams
         const matches = {}
         
-        if(user.university) matches.university = new ObjectId(user.university._id)
-        if(user.degree) matches.degree = new ObjectId(user.degree._id)
-        if(user.year) matches.year = user.year
+        if (user.university) matches.university = new ObjectId(user.university._id)
+        if (user.degree) matches.degree = new ObjectId(user.degree._id)
+        if (user.year) matches.year = user.year
         
         const query = [
             {
