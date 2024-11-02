@@ -2,10 +2,10 @@
     import ActiveButton from '$lib/components/ActiveButton.svelte';
     import NormalButton from '$lib/components/NormalButton.svelte';
     import Modal from '$lib/components/Modal.svelte';
-
     import { user } from '$lib/stores';
     import { goto } from '$app/navigation';
-    import { costFormula } from '$lib/utils';    
+    import { costFormula } from '$lib/utils';  
+    import { error } from '$lib/toast'
 
     export let items;
     export let courses;
@@ -22,17 +22,23 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(items.map(i => ({_id: i._id, plan: i.plan})))
+                    body: JSON.stringify({})
                 })
                 const body = (resp.ok && await resp.json())
 
                 if (body.success)
-                    $user.courses.push(items.map(i => ({course: i._id, plan: i.plan})))
-                else
+                    $user = {
+                        ...$user,
+                        courses: [...$user.courses, ...items.map(i => ({course: i.course, plan: i.plan}))]
+                    } 
+                else {
+                    error('Fondi Insufficienti')
                     goto('/negozio/punti_dna')
+                }
             };
         })
     }
+    $: console.log('cart courses', courses)
 </script>
 
 <NormalButton>

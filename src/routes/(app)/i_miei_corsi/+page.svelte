@@ -14,8 +14,9 @@
 
 <div class="d-flex flex-column">
     {#if filtered_owned.length > 0}
+        <!--
+
         <div class="d-flex mb-5 justify-content-between">
-            <!--
             <div class="d-flex align-items-center">
                 {#if $filters.tags.length == 2}
                     <span class=""><i class="icon bi bi-funnel"></i></span>
@@ -30,12 +31,13 @@
                     {/if}
                 {/each}
             </div>
-        -->
             
             <div class="d-flex align-items-center">
 
             </div>
         </div>
+        -->
+
 
         <div class="d-flex flex-wrap justify-content-between align-content-between">
             {#if $filters.sorting_method.field == "year"}

@@ -3,25 +3,17 @@
     import Item from '$lib/components/Item.svelte';
     import { viewing } from '$lib/stores';
     import { user } from '$lib/stores';
+    import { addToCart, removeFromCart } from '$lib/utils';
+
 
     export let data;
     let course = data.course || [];
 
     // let selected_content = "chapters"
     $: console.log('course page user', $user)
-    function addToCart(course) {
-        $user = {
-            ...$user,
-            cart: [...$user.cart, {course: course._id, plan: 0}]
-        }
-    }
 
-    function removeFromCart(course) {
-        $user = {
-            ...$user,
-            cart: $user.cart.filter(c => c.course != course._id)
-        }
-    }
+
+
 </script>
 
 
@@ -62,7 +54,7 @@
                 <Item collapsible obj={chapter} icon="chevron" class="chapter">
                     <div slot="menu">
                         {#each chapter.files || [] as file}
-                            <Item obj={file} class="file" on:click={(ev) => $viewing = {...ev.detail, course: course}}></Item>
+                            <Item obj={file} class="file"></Item>
                         {/each}
                     </div>
                 </Item>
@@ -80,12 +72,16 @@
 
             <NormalButton class={"mx-2"}>
                 <div slot="name">
-                    {#if $user.cart.find(c => c.course == course._id)}
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={() => removeFromCart(course)}>
+                    {#if $user.courses.find(c => c.course == course._id)}
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
+                            Possiedi già questo corso!
+                        </a>
+                    {:else if $user.cart.find(c => c.course == course._id)}
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={async () => $user = await removeFromCart(course, $user)}>
                             Rimuovi dal carrello
                         </a>
                     {:else}
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={() => addToCart(course)}>
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={async () => $user = await addToCart(course, $user)}>
                             Aggiungi al carrello
                         </a>
                     {/if}

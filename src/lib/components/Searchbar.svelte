@@ -9,19 +9,21 @@
 </script>
 
 <div class="d-flex position-relative {classes}">
-    <input class="form-control confined bg-light pe-5" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value={$filters.search}>
+    <input class="form-control confined" placeholder="Cerca corso.." autocomplete="off" name="search" bind:value={$filters.search}>
     <span class="searchbutton py-1"><i class="bi bi-search"></i></span>
 
-    <Svelecte
-    style="width: 18rem;"
-    placeholder="Ordina per:"
-    labelField="label"
-    valueAsObject
-    options={sorting_methods}
-    class="svelecte-control text-left selection-input"
-    bind:value={$filters.sorting_method}
-    on:change={(ev) =>  $filters.sorting_method = ev.detail}
-    />
+    <div class="svelecte-custom-selection">
+        <Svelecte
+        placeholder="Ordina per:"
+        labelField="label"
+        valueAsObject
+        options={sorting_methods}
+        class="svelecte-control text-left selection-input"
+        bind:value={$filters.sorting_method}
+        on:change={(ev) =>  $filters.sorting_method = ev.detail}
+        />
+    </div>
+
 </div>
 
 <style lang="scss">
@@ -41,11 +43,12 @@
 
     .confined {
         border: 1px solid rgba($dark, 0.25);
-        border-radius: .5rem;
+        border-radius: .5rem 0 0 .5rem;
     }
 
     .confined:focus {
         border: 1px solid $dark;
+        box-shadow: none;
     }
 
     ::placeholder {

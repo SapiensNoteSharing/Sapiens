@@ -1,3 +1,73 @@
+import { error, info } from '$lib/toast'
+
+//Cart utils
+
+export const costFormula = (cfu, plan) => (10 + (cfu * 5 / 6)) * (plan ? 1 : 0.8) * 2
+
+export function serializeCart(){
+
+}
+
+export function unserializeCart(){
+    
+}
+
+export async function addToCart(item, user, ev) {
+    if(ev){
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+    }
+
+    const resp = await fetch(`/api/user/cart`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({course: item._id, plan: 0})
+    })
+    const answ = (resp.ok && await resp.json()) || {}
+
+    if(answ.success){
+        info('Added to cart')
+        return {
+            ...user,
+            cart: [...user.cart, {course: item._id, plan: 0}]
+        }
+    } else {
+        error('Could not add item to cart. Contact Support')
+        return user
+    }
+}
+
+export async function removeFromCart(item, user, ev){
+    if(ev){
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+    }
+
+    const resp = await fetch(`/api/user/cart`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({course: item._id})
+    })
+    const answ = (resp.ok && await resp.json()) || {}
+    if(answ.success){
+        info('Removed from cart')
+        return {
+            ...user,
+            cart: user.cart.filter(c => c.course != item._id)
+        }
+    } else {
+        error('Could not remove item from cart. Contact Support')
+        return user
+    }
+}
+
+
+//sorting & filtering
+
 export const sorting_methods = [
     {val: 0, field: "year", secondary_field: "semester", ascending: true, label: 'Year - Asc'},
     {val: 1, field: "year", secondary_field: "semester", ascending: false, label: 'Year - Disc'},
@@ -19,8 +89,6 @@ export const semesters = [
     {value: 1, label: 'Primo'},
     {value: 2, label: 'Secondo'}
 ]
-
-export const costFormula = (cfu, plan) => (10 + (cfu * 5 / 6)) * (plan ? 1 : 0.8) * 2
 
 function edit_distance(x, y) {
     let m = x.length;
@@ -241,6 +309,8 @@ export function filter_course_list(course_list, value) {
 
     return filtered_courses_list;
 }
+
+//Format page title
 
 export function formatPageTitle(page) {
     if (!page.route?.id) 

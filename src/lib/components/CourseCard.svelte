@@ -2,6 +2,8 @@
     import NormalButton from '$lib/components/NormalButton.svelte';
     import { viewing, user } from '$lib/stores';
     import { goto } from '$app/navigation';
+    import { addToCart, removeFromCart } from '$lib/utils'
+
     export let course = {};
 
     let classes = '';
@@ -18,26 +20,6 @@
             $viewing = {_id: bookmark, course: course}
         else
             $viewing = {course: course}
-    }
-
-    function addToCart(ev) {
-        ev.stopPropagation();
-        ev.stopImmediatePropagation();
-
-        $user = {
-            ...$user,
-            cart: [...$user.cart, {course: course._id, plan: 0}]
-        }
-    }
-
-    function removeFromCart(ev) {
-        ev.stopPropagation();
-        ev.stopImmediatePropagation();
-
-        $user = {
-            ...$user,
-            cart: $user.cart.filter(c => c.course != course._id)
-        }
     }
 </script>
 
@@ -82,12 +64,16 @@
                     <div slot="name">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <!-- svelte-ignore a11y-missing-attribute -->
-                        {#if $user.cart.find(c => c.course == course._id)}
-                            <a type="button" class="btn btn-secondary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={removeFromCart}>
+                        {#if $user.courses.find(c => c.course == course._id)}
+                            <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2">
+                                Possiedi già questo corso!
+                            </a>
+                        {:else if $user.cart.find(c => c.course == course._id)}
+                            <a type="button" class="btn btn-secondary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={async (ev) => $user = await removeFromCart(course, $user, ev)}>
                                 Rimuovi dal carrello
                             </a>
                         {:else}
-                            <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={addToCart}>
+                            <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={async (ev) => $user = await addToCart(course, $user, ev)}>
                                 Aggiungi al carrello
                             </a>
                         {/if}

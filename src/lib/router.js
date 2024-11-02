@@ -38,7 +38,7 @@ class Router {
 }
 
 const router = new Router()
-    .unrestrict('.*:/')
+    .unrestrict('^.*:/$')
     .unrestrict('.*:/login')
     .unrestrict('.*:/register')
     .unrestrict('.*:/logout')

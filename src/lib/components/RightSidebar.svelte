@@ -9,14 +9,21 @@
     import { page } from '$app/stores';
     import Item from './Item.svelte'
     import Svelecte from 'svelecte';
+    import { afterNavigate } from '$app/navigation'
     
+    export let open = true
     export let courses;
     let course = $viewing.course || courses[0] || {};
     let _course = course._id ? course : undefined;
+
     let sidebar_page = "chapters";
     let exercises_category = 1;
-    export let open = true
     
+    afterNavigate(() => {
+        course = $viewing.course || courses[0] || {};
+        _course = course._id ? course : undefined;
+    })
+
     let faculties = [
         "Ingegneria informatica",
         "Ingegneria meccanica",
@@ -70,7 +77,7 @@
         }
     }
 
-    $: isEnabled = $page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio/corsi';
+    $: isEnabled = $page.route.id == '/(app)/aula_studio' || $page.route.id == '/(app)/negozio/corsi' || $page.route.id == '/(app)/i_miei_corsi';
 </script>
 
 
@@ -208,7 +215,7 @@
                     
                 </div>
             {/if}
-        {:else if $page.route.id == '/(app)/negozio/corsi'}
+        {:else if $page.route.id == '/(app)/negozio/corsi' || $page.route.id == '/(app)/i_miei_corsi'}
             <div class="d-flex align-items-center my-5">
                 <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
             </div>
@@ -246,52 +253,6 @@
                         <div class="me-2 mb-2">
                             <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
                         </div>
-                    {/each}
-                </AccordionItem>
-                <AccordionItem class="filter-category">
-                    <div slot="name">
-                        Rating
-                    </div>
-                </AccordionItem>
-            </Accordion>
-        {:else if $page.route.id == '/(app)/i_miei_corsi'}
-            <div class="d-flex align-items-center my-5">
-                <h1 class="mb-0 m-auto display-3 align-bottom text-dark">Filtri</h1>
-            </div>
-            
-            <Searchbar class="align-self-center mb-5"></Searchbar>
-            
-            <Accordion let:id class="mb-5">
-                <AccordionItem class="filter-category">
-                    <div slot="name">
-                        Corso Di Laurea
-                    </div>
-                    <div class="d-flex flex-wrap">
-                        {#each faculties as faculty}
-                        <div class="me-2 mb-2">
-                            <button class="btn filter" class:btn-primary={filters.faculty.includes(faculty)} on:click={() => toggleFilter('faculty', faculty)}>{faculty}</button>
-                        </div>
-                        {/each}
-                    </div>
-                </AccordionItem>
-                <AccordionItem class="filter-category">
-                    <div slot="name">
-                        Tipo di Laurea
-                    </div>
-                    {#each degree_types as type}
-                    <div class="me-2 mb-2">
-                        <button class="btn filter" class:btn-primary={filters.degree_type.includes(type)} on:click={() => toggleFilter('degree_type', type)}>{type}</button>
-                    </div>
-                    {/each}
-                </AccordionItem>
-                <AccordionItem class="filter-category">
-                    <div slot="name">
-                        Tags
-                    </div>
-                    {#each tags as tag}
-                    <div class="me-2 mb-2">
-                        <button class="btn filter {filters.tags.includes(tag.name) ? `btn-${tag.color}` : ''}" on:click={() => toggleFilter('tags', tag.name)}>{tag.name}</button>
-                    </div>
                     {/each}
                 </AccordionItem>
                 <AccordionItem class="filter-category">

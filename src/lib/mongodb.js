@@ -63,30 +63,34 @@ const UserSchema = new Schema({
     league_position: Number,
     league_level: {type: Number, default: 0},
     cart: {
+        type: [Object],
+        /* 
+            TODO: CAMBIARE IN SERIALIZZAZIONE per implementare bundle
+        [
+            {
+                course: -,
+                plan: 0|1  
+            }
+        ]
+        */
+        default: [],
+    },
+    courses: {
         type: [
             {
                 course: {
                     type: ObjectId,
                     ref: 'Course'
                 },
-                plan: Boolean
+                plan: Boolean,
+                bookmark: {
+                    type: ObjectId,
+                    ref: 'File'
+                }
             }
         ],
-        default: [],
+        default: []
     },
-    courses: [
-        {
-            course: {
-                type: ObjectId,
-                ref: 'Course'
-            },
-            plan: Boolean,
-            bookmark: {
-                type: ObjectId,
-                ref: 'File'
-            }
-        }
-    ],
     dna: {type: Number, default: 0},
     rna: {type: Number, default: 0},
     streak: {type: Number, default: 0},

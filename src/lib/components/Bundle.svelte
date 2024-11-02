@@ -1,7 +1,7 @@
 <script>
     import NormalButton from '$lib/components/NormalButton.svelte';
-    import Modal from '$lib/components/Modal.svelte';
     import { onMount } from 'svelte';
+    import { addToCart, removeFromCart } from '$lib/utils'
 
     export let type = "";
     export let title = "";
@@ -14,15 +14,6 @@
     let courses = []
     let max_list_length = 5;
 
-    let cartModal;
-    function openCart() {
-        cartModal.show().then(async res => {
-            if (res) {
-                
-            }
-        })
-    }
-
     onMount(async () => {
         if (enabled) {
             const resp = await fetch(`/api/shop/bundles/${type}`)
@@ -30,24 +21,6 @@
         }
     })
 </script>
-
-<Modal title="Carrello" yes="Acquista" no="Annulla" class="" theme="btn-outline-primary" bind:this={cartModal}>
-    <div class="d-flex m-4 justify-content-between">
-        <div>
-            <div class="d-flex mt-3">
-                <section class="btn-group">
-                    <div class="d-flex flex-row justify-content-start me-2">
-                        
-                    </div>
-                </section>
-            </div>
-        </div>
-        <div class="d-flex">
-            <h2 class="align-self-center display-3 my-0"></h2>
-            <img style="width: 2rem;" src="/dna.svg" alt="dna">
-        </div>
-    </div>
-</Modal>
 
 <div class={classes} style="--bs-gutter-x: 1.5rem">
     <div class="bundle">
@@ -85,7 +58,7 @@
 
                     <NormalButton class={"mx-2"}>
                         <div slot="name">
-                            <a type="button" class="btn btn-secondary text-center w-100 fs-2" on:click={openCart}>Ottieni</a>
+                            <a type="button" class="btn btn-secondary text-center w-100 fs-2" on:click={async (ev) => {}}>Ottieni</a>
                         </div>
                     </NormalButton>
                 </div>
