@@ -20,17 +20,6 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id == "/(app)/i_miei_corsi" ? 'active' : 'not-active'} 
-        fill={$page.route.id == "/(app)/i_miei_corsi" ? '-fill' : ''}
-        class={"my-2"}
-        href={"/i_miei_corsi"}
-        text={"I miei corsi"}
-        icon={"bi-backpack2"}
-        >
-        </ActiveButton>
-
-        <ActiveButton 
-        type={"navigation_link"}
         active={$page.route.id == "/(app)/aula_studio" ? 'active' : 'not-active'} 
         fill={$page.route.id == "/(app)/aula_studio" ? '-fill' : ''}
         class={"my-2"}
@@ -66,12 +55,23 @@
 
         <ActiveButton 
         type={"navigation_link"}
-        active={$page.route.id.startsWith("/(app)/contribuisci") ? 'active' : 'not-active'} 
-        fill={$page.route.id.startsWith("/(app)/contribuisci") ? '-fill' : ''}
+        active={$page.route.id.startsWith("/(app)/contribuzione") ? 'active' : 'not-active'} 
+        fill={$page.route.id.startsWith("/(app)/contribuzione") ? '-fill' : ''}
         class={"my-2"}
-        href={"/contribuisci/condividi_appunti"}
-        text={"Contribuisci"}
+        href={"/contribuzione/condividi_appunti"}
+        text={"Contribuzione"}
         icon={"bi-puzzle"}
+        >
+        </ActiveButton>
+
+        <ActiveButton 
+        type={"navigation_link"}
+        active={$page.route.id == "/(app)/forum" ? 'active' : 'not-active'} 
+        fill={$page.route.id == "/(app)/forum" ? '-fill' : ''}
+        class={"my-2"}
+        href={"/forum"}
+        text={"Forum"}
+        icon={"bi-chat-dots"}
         >
         </ActiveButton>
 
