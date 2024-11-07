@@ -4,7 +4,7 @@
     import { viewing } from '$lib/stores';
     import { user } from '$lib/stores';
     import { addToCart, removeFromCart } from '$lib/utils';
-
+    import Reviews from '$lib/components/Reviews.svelte';
 
     export let data;
     let course = data.course || [];
@@ -77,11 +77,11 @@
                             Possiedi già questo corso!
                         </a>
                     {:else if $user.cart.find(c => c.course == course._id)}
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={async () => $user = await removeFromCart(course, $user)}>
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={async () => removeFromCart(course)}>
                             Rimuovi dal carrello
                         </a>
                     {:else}
-                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={async () => $user = await addToCart(course, $user)}>
+                        <a type="button" class="btn btn-primary text-center w-100 text-dark fs-2" on:click={async () => addToCart(course)}>
                             Aggiungi al carrello
                         </a>
                     {/if}
@@ -89,6 +89,7 @@
             </NormalButton>
         </div>
     </div>
+    <Reviews course={course} />
 </div>
 
 <style lang="scss">

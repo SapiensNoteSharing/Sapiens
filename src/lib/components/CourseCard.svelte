@@ -69,11 +69,11 @@
                                 Possiedi già questo corso!
                             </a>
                         {:else if $user.cart.find(c => c.course == course._id)}
-                            <a type="button" class="btn btn-secondary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={async (ev) => $user = await removeFromCart(course, $user, ev)}>
+                            <a type="button" class="btn btn-secondary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={async (ev) => removeFromCart(course, ev)}>
                                 Rimuovi dal carrello
                             </a>
                         {:else}
-                            <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={async (ev) => $user = await addToCart(course, $user, ev)}>
+                            <a type="button" class="btn btn-primary px-4 py-2 text-center w-100 text-dark fs-2" on:click|preventDefault={async (ev) => addToCart(course, ev)}>
                                 Aggiungi al carrello
                             </a>
                         {/if}

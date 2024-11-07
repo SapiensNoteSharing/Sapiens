@@ -150,13 +150,24 @@ const DegreeSchema = new Schema({
 DegreeSchema.index({name: 1, type: 1}, {unique: true})
 
 const ReviewSchema = new Schema({
-    written_by: String,
+    user: {
+        type: ObjectId,
+        ref: 'User'
+    },
+    title: String,
     description: String,
-    rating: Number
+    rating: Number,
+    course: {
+        type: ObjectId,
+        ref: 'Course'
+    }
 }, {
     timestamps: true
 })
-
+ReviewSchema.pre('find', function (next) {
+    this.populate('user');
+    next()
+})
 const FileSchema = new Schema({
     name: String,
     content: String,

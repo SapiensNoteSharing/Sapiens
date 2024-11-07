@@ -7,7 +7,7 @@
     import { formatPageTitle } from '$lib/utils'
 
     export let data;
-    $user = data.user || {}
+    $: $user = data.user || {}
 
     $: pageTitle = formatPageTitle($page);
 </script>
@@ -88,7 +88,7 @@
                 <slot></slot>
             </div>
     
-            <RightSidebar courses={$user.role == 'admin' ? data.courses : data.my_courses}></RightSidebar>
+            <RightSidebar courses={data.my_courses}></RightSidebar>
         </div>
     </div>
 

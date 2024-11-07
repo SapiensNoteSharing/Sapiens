@@ -6,6 +6,7 @@
     import { goto } from '$app/navigation';
     import { costFormula } from '$lib/utils';  
     import { error } from '$lib/toast'
+    import { invalidate } from '$app/navigation';
 
     export let items;
     export let courses;
@@ -17,7 +18,7 @@
 
         cartModal.show().then(async res => {
             if (res) {
-                const resp = await fetch(`/api/user/${$user._id}/buy`, {
+                const resp = await fetch(`/api/user/buy`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -25,13 +26,10 @@
                     body: JSON.stringify({})
                 })
                 const body = (resp.ok && await resp.json())
-
-                if (body.success)
-                    $user = {
-                        ...$user,
-                        courses: [...$user.courses, ...items.map(i => ({course: i.course, plan: i.plan}))]
-                    } 
-                else {
+                console.log('cart answer', body)
+                if (body.success) {
+                    invalidate('app:user')
+                } else {
                     error('Fondi Insufficienti')
                     goto('/negozio/punti_dna')
                 }

@@ -8,7 +8,7 @@
     let euro = 0;
 
     async function addDNA() {
-        const resp = await fetch(`/api/user/${$user._id}`, {
+        const resp = await fetch(`/api/user`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

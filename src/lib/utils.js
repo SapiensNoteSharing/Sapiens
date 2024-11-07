@@ -1,5 +1,5 @@
 import { error, info } from '$lib/toast'
-
+import { invalidate } from '$app/navigation';
 //Cart utils
 
 export const costFormula = (cfu, plan) => (10 + (cfu * 5 / 6)) * (plan ? 1 : 0.8) * 2
@@ -12,7 +12,7 @@ export function unserializeCart(){
     
 }
 
-export async function addToCart(item, user, ev) {
+export async function addToCart(item, ev) {
     if(ev){
         ev.stopPropagation();
         ev.stopImmediatePropagation();
@@ -29,17 +29,13 @@ export async function addToCart(item, user, ev) {
 
     if(answ.success){
         info('Added to cart')
-        return {
-            ...user,
-            cart: [...user.cart, {course: item._id, plan: 0}]
-        }
+        invalidate('app:user')
     } else {
         error('Could not add item to cart. Contact Support')
-        return user
     }
 }
 
-export async function removeFromCart(item, user, ev){
+export async function removeFromCart(item, ev){
     if(ev){
         ev.stopPropagation();
         ev.stopImmediatePropagation();
@@ -53,15 +49,12 @@ export async function removeFromCart(item, user, ev){
         body: JSON.stringify({course: item._id})
     })
     const answ = (resp.ok && await resp.json()) || {}
+
     if(answ.success){
         info('Removed from cart')
-        return {
-            ...user,
-            cart: user.cart.filter(c => c.course != item._id)
-        }
+        invalidate('app:user')
     } else {
         error('Could not remove item from cart. Contact Support')
-        return user
     }
 }
 

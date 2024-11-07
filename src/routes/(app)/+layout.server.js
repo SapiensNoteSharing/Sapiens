@@ -1,5 +1,6 @@
 export async function load({ url, locals, cookies, fetch, depends }) {
     let user = locals.user
+    depends('app:user')
 
     const resp = await fetch(`/api/courses`);
     const courses = (resp.ok && await resp.json()) || []

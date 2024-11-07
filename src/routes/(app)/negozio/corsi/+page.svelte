@@ -9,7 +9,7 @@
     let not_owned = courses.filter(course => !owned.includes(course));
     // TODO: filtrare anche quelli nel carrello
 
-    $: filtered_not_owned = filter_and_sort(not_owned, $filters.search, $filters.sorting_method.field, $filters.sorting_method.secondary_field, $filters.sorting_method.ascending);
+    $: filtered_not_owned = filter_and_sort(courses, $filters.search, $filters.sorting_method.field, $filters.sorting_method.secondary_field, $filters.sorting_method.ascending);
 </script>
 
 <div class="d-flex flex-column">

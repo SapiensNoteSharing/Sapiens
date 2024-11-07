@@ -6,7 +6,7 @@
     import { user } from '$lib/stores';
     import { success, info } from '$lib/toast';
     import { years, semesters } from '$lib/utils';
-    import { afterNavigate } from '$app/navigation';
+    import { afterNavigate, invalidate } from '$app/navigation';
 
     // export let data;
 
@@ -16,7 +16,7 @@
 
     async function save_changes() {
         if (checkValidity()) {
-            const resp = await fetch(`/api/user/${$user._id}`, {
+            const resp = await fetch(`/api/user`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,7 +27,7 @@
             if (!account.degree) 
                 account.degree = {}
             
-            $user = account
+            invalidate('app:user')
             success('User Profile Updated')
         } else {
             info('Could not update user info')
@@ -57,7 +57,6 @@
         changes = check_changes();
     }
     
-    $: console.log('acc', account, $user)
 </script>
 
 <div>

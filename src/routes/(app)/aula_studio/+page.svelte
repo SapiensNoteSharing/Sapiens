@@ -3,6 +3,7 @@
     import { viewing, user } from '$lib/stores';
     import { beforeNavigate, afterNavigate } from '$app/navigation'
     import 'highlight.js/styles/github.css';
+    import { invalidate } from '$app/navigation';
     export let data;
     const fetch = data.fetch;
 
@@ -31,8 +32,7 @@
                 body: JSON.stringify($viewing._id)
             })
             if (resp.ok) {
-                const u = await resp.json()
-                $user = u
+                invalidate('app:user')
             }
         }
     })
